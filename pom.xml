@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.cell</groupId>
+  <artifactId>cell</artifactId>
+  <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>cell-base</module>
+    </modules>
+    <packaging>pom</packaging>
+
+  <name>ering</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <main.class></main.class>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.0</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <!-- commons -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.7</version>
+    </dependency>
+
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>4.12</version>
+        <scope>test</scope>
+      </dependency>
+
+
+      <!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- -->
+      <dependency>
+        <groupId>cn.jnta</groupId>
+        <artifactId>hsmGeneralFinance</artifactId>
+        <version>2.1.2</version>
+        <scope>system</scope>
+        <systemPath>/Users/joker/.m2/repository/cn/jnta/hsmGeneralFinance/2.1.2/hsmGeneralFinance-2.1.2.jar
+        </systemPath>
+      </dependency>
+
+      <dependency>
+        <groupId>gdca</groupId>
+        <artifactId>cesecore-common</artifactId>
+        <version>6.8.0</version>
+        <scope>system</scope>
+        <systemPath>/Users/joker/.m2/repository/gdca/cesecore-common/6.8.0/cesecore-common-6.8.0.jar
+        </systemPath>
+      </dependency>
+      <dependency>
+        <groupId>commons-configuration</groupId>
+        <artifactId>commons-configuration</artifactId>
+        <version>1.8</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>4.0.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.rholder</groupId>
+        <artifactId>guava-retrying</artifactId>
+        <version>2.0.0</version>
+      </dependency>
+
+      <dependency>
+        <groupId>cn.sanwei</groupId>
+        <artifactId>bxcrypto</artifactId>
+        <version>3.0.0</version>
+        <scope>system</scope>
+        <systemPath>/Users/joker/.m2/repository/cn/sanwei/bxcrypto/3.0.0/bxcrypto-3.0.0.jar</systemPath>
+      </dependency>
+      <dependency>
+        <groupId>com.sjsm</groupId>
+        <artifactId>sjsm-sm2</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2/1.0.0/sjsm-sm2-1.0.0.jar</systemPath>
+      </dependency>
+      <dependency>
+        <groupId>com.sjsm</groupId>
+        <artifactId>sjsm-sm2-cert</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2-cert/1.0.0/sjsm-sm2-cert-1.0.0.jar
+        </systemPath>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.19.1</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.7.0</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+
+      <!-- 解决maven test命令时console出现中文乱码乱码 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.7.2</version>
+        <configuration>
+          <forkMode>once</forkMode>
+          <argLine>-Dfile.encoding=UTF-8</argLine>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>list</id>
+            <phase>package</phase>
+            <goals>
+              <goal>list</goal>
+            </goals>
+            <configuration>
+              <outputFile>${project.build.directory}/DEPENDENCIES</outputFile>
+              <includeScope>runtime</includeScope>
+              <outputAbsoluteArtifactFilename>true</outputAbsoluteArtifactFilename>
+              <outputScope>false</outputScope>
+            </configuration>
+          </execution>
+          <execution>
+            <id>tree</id>
+            <phase>package</phase>
+            <goals>
+              <goal>tree</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <mainClass>${main.class}</mainClass>
+            <outputDirectory>${project.build.directory}</outputDirectory>
+            <includeSystemScope>true</includeSystemScope>
+          </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal><!--可以把依赖的包都打包到生成的Jar包中-->
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-jar-plugin</artifactId>-->
+        <!--<configuration>-->
+        <!--<archive>-->
+        <!--<manifest>-->
+        <!--<addClasspath>true</addClasspath>-->
+        <!--<classpathPrefix>lib/</classpathPrefix>-->
+        <!--<mainClass>${bcpkix-jdk15onbidsun.main}</mainClass>-->
+        <!--</manifest>-->
+        <!--</archive>-->
+        <!--<finalName>${project.artifactId}-${version}-bidsun-executable</finalName>-->
+        <!--</configuration>-->
+        <!--</plugin>-->
+
+        <!--<plugin>-->
+        <!--<artifactId>maven-assembly-plugin</artifactId>-->
+        <!--<configuration>-->
+        <!--<archive>-->
+        <!--<manifest>-->
+        <!--<mainClass>${bidsun.main}</mainClass>-->
+        <!--</manifest>-->
+        <!--</archive>-->
+        <!--<descriptorRefs>-->
+        <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
+        <!--</descriptorRefs>-->
+        <!--<finalName>${project.artifactId}-${version}-bidsun-executable</finalName>-->
+        <!--<appendAssemblyId>false</appendAssemblyId>-->
+        <!--</configuration>-->
+        <!--</plugin>-->
+
+        <!--<plugin>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+        <!--<version>${spring-boot.version}</version>-->
+        <!--<configuration>-->
+        <!--<mainClass>${bidsun.main}</mainClass>-->
+        <!--</configuration>-->
+
+        <!--&lt;!&ndash;<executions> &ndash;&gt;-->
+        <!--&lt;!&ndash;<execution> &ndash;&gt;-->
+        <!--&lt;!&ndash;<goals> &ndash;&gt;-->
+        <!--&lt;!&ndash;<goal>repackage</goal>&lt;!&ndash;可以把依赖的包都打包到生成的Jar包中&ndash;&gt; &ndash;&gt;-->
+        <!--&lt;!&ndash;</goals> &ndash;&gt;-->
+        <!--&lt;!&ndash;</execution> &ndash;&gt;-->
+        <!--&lt;!&ndash;</executions> &ndash;&gt;-->
+        <!--</plugin>-->
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
