@@ -9,6 +9,7 @@
   <version>1.0-SNAPSHOT</version>
     <modules>
         <module>cell-base</module>
+      <module>cell-bee</module>
     </modules>
     <packaging>pom</packaging>
 
