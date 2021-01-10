@@ -1,4 +1,4 @@
-package com.cell.services;
+package com.cell.filters;
 
 import com.cell.enums.FilterEnums;
 
