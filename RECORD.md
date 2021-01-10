@@ -3,3 +3,9 @@
     - 先把日志模块给整了,因为日志总是很麻烦的感觉,不同的环境
     - feature:
         - 可以单独的抽离(既不需要依赖太多,可以单独的作为一个BEE)
+- 2021-01-10
+    - 日志模块,dispatcher,policy,encoder 都写了一点,还有很多空着
+    - TODO:
+        - log 之前,直接先通过logLevel过滤掉,而不要组装成logEvent再过滤
+        - mediator的存在,是为了统一管理,mediator 的具体实现都是各个子类
+        - filter 这个需要提供一个factory,便于随时生成一个即插即用的filterManager(既可以不使用全局的filterManager,每个module都可以有一个,cache也是同理)
