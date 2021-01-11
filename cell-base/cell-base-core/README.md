@@ -19,6 +19,10 @@
     - 所有的日志都由统一的包装entry
     - 所有日志都有sequenceId跟踪
 - 流程:
-    ```$xslt
+ ```$xslt
  
 ```
+
+
+## filter
+- 有一个全局的filter,会自动的扫描被@CellFilter所注解的类,然后注入

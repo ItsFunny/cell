@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.JSONSerializer;
 import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.cell.json.GsonInterfaceAdapter;
 import com.google.gson.*;
 
 import java.io.FileNotFoundException;
@@ -33,7 +32,6 @@ public class JSONUtil
     {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("yyyy-MM-dd HH:mm:ss");
-        gsonBuilder.registerTypeAdapter(Serializable.class, new GsonInterfaceAdapter());
         gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer<Date>()
         {
             private SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

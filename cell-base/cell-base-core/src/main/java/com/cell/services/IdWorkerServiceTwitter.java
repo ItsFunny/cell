@@ -1,7 +1,8 @@
 package com.cell.services;
 
 
-import com.cell.log.IEringLogger;
+
+import com.cell.log.ICellLogger;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public class IdWorkerServiceTwitter implements IdWorkerService
 {
-	private static IEringLogger logger;
+	private static ICellLogger logger;
 //	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private long workerId;

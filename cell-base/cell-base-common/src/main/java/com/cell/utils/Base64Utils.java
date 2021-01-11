@@ -1,9 +1,9 @@
 package com.cell.utils;
 
-import org.apache.commons.codec.binary.Base64;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+import java.util.Base64;
 
 /**
  * @author Charlie
@@ -27,12 +27,12 @@ public class Base64Utils
 
     public static String encode(byte[] binaryData)
     {
-        return Base64.encodeBase64String(binaryData);
+        return Base64.getEncoder().encodeToString(binaryData);
     }
 
     public static byte[] decode(String base64String)
     {
-        return Base64.decodeBase64(base64String);
+        return Base64.getDecoder().decode(base64String);
     }
 
     public static byte[] longToBytes(Long x)
