@@ -1,30 +1,33 @@
 package com.cell.enums;
 
-
 /**
  * @author Charlie
  * @When
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-01-08 23:10
+ * @Date 创建时间：2021-01-12 09:48
  */
-public enum Bees
+public enum GroupEnums
 {
-
+    GLOBAL(1, "全局"),
     ;
-    Bees(Integer id, String desc)
+
+    GroupEnums(int id, String desc)
     {
         this.id = id;
         this.desc = desc;
     }
 
-    public Integer getId()
+    private int id;
+    private String desc;
+
+    public int getId()
     {
         return id;
     }
 
-    public void setId(Integer id)
+    public void setId(int id)
     {
         this.id = id;
     }
@@ -37,10 +40,4 @@ public enum Bees
     public void setDesc(String desc)
     {
         this.desc = desc;
-    }
-
-    private Integer id;
-    private String desc;
-
-
-}
+    }}

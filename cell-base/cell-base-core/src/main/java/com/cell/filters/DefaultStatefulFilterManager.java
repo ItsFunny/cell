@@ -1,21 +1,19 @@
 package com.cell.filters;
 
+import com.cell.annotations.CellFilter;
 import com.cell.config.AbstractInitOnce;
+import com.cell.config.IInitOnce;
 import com.cell.decorators.TypeStateful;
 import com.cell.enums.FilterEnums;
+import com.cell.enums.GroupEnums;
 import com.cell.exceptions.ConfigException;
 import com.cell.services.IDataDecorator;
-import org.reflections.Reflections;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
+import com.cell.utils.ReflectionUtils;
 
-import javax.swing.tree.AbstractLayoutCache;
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.security.AlgorithmConstraints;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Charlie
@@ -25,7 +23,7 @@ import java.util.Set;
  * @Attention:
  * @Date 创建时间：2021-01-07 17:10
  */
-public class DefaultStatefulFilterManager extends AbstractInitOnce implements ITypeFilterManager<FilterEnums>
+public class DefaultStatefulFilterManager extends AbstractInitOnce implements ITypeFilterManager<FilterEnums, GroupEnums>
 {
     // 默认是以list的形式,如果过于缓慢的话,更改为map也是可以的
     private final List<ITypeStatefulFilter<FilterEnums>> stateFulFilters = new ArrayList<>();
@@ -65,6 +63,13 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
         }
     }
 
+    @Override
+    public GroupEnums getType()
+    {
+        return GroupEnums.GLOBAL;
+    }
+
+
     static class AAA implements ITypeStatefulFilter<FilterEnums>, IDataDecorator<String>
     {
 
@@ -90,32 +95,37 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
     @Override
     protected void init() throws ConfigException
     {
-        Reflections reflections = new Reflections(this.getClass().getName());
-        Set<Class<? extends ITypeStatefulFilter>> subTypesOf = reflections.getSubTypesOf(ITypeStatefulFilter.class);
-        for (Class<? extends ITypeStatefulFilter> aClass : subTypesOf)
+        List<Class> allGenesisClassByInterface = ReflectionUtils.getAllGenesisClassByInterface(ITypeStatefulFilter.class, FilterEnums.class, (c) ->
         {
-            Type[] genericInterfaces = aClass.getGenericInterfaces();
-            String filterEnumsName = FilterEnums.class.getName();
-            for (Type genericInterface : genericInterfaces)
+            CellFilter annotation = c.getAnnotation(CellFilter.class);
+            if (annotation == null)
             {
-                ParameterizedTypeImpl parameterizedType= (ParameterizedTypeImpl) genericInterface;
-                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
-                for (Type actualTypeArgument : actualTypeArguments)
-                {
-                    Class c= (Class) actualTypeArgument;
-                    boolean assignableFrom = c.isAssignableFrom(FilterEnums.class);
-                    String name = c.getName();
-                    String typeName = genericInterface.getTypeName();
-                    System.out.println(typeName);
-                }
+                return true;
             }
-            ITypeStatefulFilter filter = null;
+            if (!annotation.active())
+            {
+                return false;
+            }
+            if (this.getType().getId() - annotation.filterGroup() == 0)
+            {
+                return true;
+            }
+            return false;
+        });
+        for (Class aClass : allGenesisClassByInterface)
+        {
             try
             {
-                filter = aClass.newInstance();
+                Object o = aClass.newInstance();
+                if (o instanceof IInitOnce)
+                {
+                    IInitOnce iInitOnce = (IInitOnce) o;
+                    iInitOnce.initOnce();
+                }
+                this.registerFilter((ITypeStatefulFilter<FilterEnums>) o);
             } catch (Exception e)
             {
-                throw new ConfigException("反射初始化失败:" + e.getMessage());
+                throw new ConfigException("失败:" + e.getMessage());
             }
         }
     }

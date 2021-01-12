@@ -10,14 +10,20 @@ package com.cell.enums;
  */
 public enum FilterEnums
 {
-    SATISFIED(1),
-    UN_SATISFIED(2),
-    CONTINUE(3),
-    BREAK(4),
+
+
+
+
+    SATISFIED(100),
+    UN_SATISFIED(101),
+    CONTINUE(102),
+    BREAK(103),
 
 
     // 用于logic
-    LOGIC_LOG(10),
+    LOGIC_LOG(1000),
+
+
 
     ;
     private int status;

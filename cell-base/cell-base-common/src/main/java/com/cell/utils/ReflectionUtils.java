@@ -1,14 +1,15 @@
 package com.cell.utils;
 
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import java.io.File;
+import java.lang.reflect.Type;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -20,9 +21,87 @@ import java.util.jar.JarFile;
  * @Attention:
  * @Date 创建时间：2021-01-12 05:36
  */
-public class ReflectionUtils
+public class ReflectionUtils extends org.reflections.ReflectionUtils
 {
     private static final Logger LOG = LoggerFactory.getLogger(ReflectionUtils.class);
+
+    private static final String DEFAULT_PREFIX = "com.cell";
+
+
+    /**
+     * Gets all genesis class by interface.
+     * 获取泛型接口的所有实现
+     *
+     * @param prefix         the prefix 扫描包的前缀
+     * @param interfaceClazz the interface clazz 接口名称
+     * @param genesisClazz   the genesis clazz 还会有一个泛型类型判断
+     * @return the all genesis class by interface
+     */
+    public static List<Class> getAllGenesisClassByInterface(String prefix, Class interfaceClazz, Class genesisClazz, ScanTillSatisfiedClazzHandler handler)
+    {
+        List<Class> result = new ArrayList<>();
+        if (StringUtils.isNullOrEmpty(prefix))
+        {
+            prefix = DEFAULT_PREFIX;
+        }
+        Reflections reflections = new Reflections(prefix);
+
+        Set<Class<?>> subTypesOf = reflections.getSubTypesOf(interfaceClazz);
+        for (Class<?> c : subTypesOf)
+        {
+            // 获取这个类所实现的所有接口
+            Type[] genericInterfaces = c.getGenericInterfaces();
+            for (Type genericInterface : genericInterfaces)
+            {
+                boolean isBreak = false;
+                // 获取这个类在这个接口上的的泛型信息
+                ParameterizedTypeImpl parameterizedType = (ParameterizedTypeImpl) genericInterface;
+                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+                for (Type actualTypeArgument : actualTypeArguments)
+                {
+                    // 转换为class
+                    Class actualClass = (Class) actualTypeArgument;
+                    // 匹配是否是这个子类或者是能强转的
+                    if (actualClass.isAssignableFrom(genesisClazz))
+                    {
+                        if (handler.handle(c))
+                        {
+                            result.add(c);
+                        }
+                        isBreak = true;
+                        break;
+                    }
+                }
+                if (isBreak)
+                {
+                    break;
+                }
+            }
+        }
+
+//        subTypesOf.stream().forEach(c->{
+//            Type[] genericInterfaces = c.getGenericInterfaces();
+//            Arrays.stream(genericInterfaces).forEach(g->{
+//                ParameterizedTypeImpl parameterizedType= (ParameterizedTypeImpl) g;
+//                Type[] actualTypeArguments = parameterizedType.getActualTypeArguments();
+//                Arrays.stream(actualTypeArguments).forEach(t->{
+//
+//                });
+//            });
+//        });
+
+        return result;
+    }
+
+    public static List<Class> getAllGenesisClassByInterface(Class interfaceClazz, Class genesisClazz, ScanTillSatisfiedClazzHandler handler)
+    {
+        return getAllGenesisClassByInterface(DEFAULT_PREFIX, interfaceClazz, genesisClazz,handler);
+    }
+
+    public static interface ScanTillSatisfiedClazzHandler
+    {
+        boolean handle(Class<?> clazz);
+    }
 
     public static ArrayList<Class> getAllClassByInterface(Class clazz)
     {
