@@ -1,5 +1,7 @@
-package com.cell.services;
+package com.cell.decorators;
 
+
+import com.cell.decorators.IDataDecorator;
 
 /**
  * @author Charlie

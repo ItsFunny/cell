@@ -2,7 +2,7 @@ package com.cell.services;
 
 
 
-import com.cell.log.ICellLogger;
+import com.cell.log_origin.ICellLogger;
 
 import java.util.Collection;
 import java.util.LinkedList;

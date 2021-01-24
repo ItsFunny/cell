@@ -10,5 +10,5 @@ package com.cell.decorators;
  */
 public interface Stateful<T>
 {
-    T getStatus();
+    T getState();
 }

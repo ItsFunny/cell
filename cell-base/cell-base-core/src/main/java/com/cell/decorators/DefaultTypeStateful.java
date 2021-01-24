@@ -1,6 +1,6 @@
 package com.cell.decorators;
 
-import com.cell.enums.FilterEnums;
+import com.cell.enums.ChainEnums;
 import com.cell.models.Couple;
 
 /**
@@ -11,12 +11,12 @@ import com.cell.models.Couple;
  * @Attention:
  * @Date 创建时间：2021-01-07 17:49
  */
-public abstract class DefaultTypeStateful implements TypeStateful<FilterEnums>
+public abstract class DefaultTypeStateful implements TypeStateful<ChainEnums>
 {
     private long status;
 
     @Override
-    public Long getStatus()
+    public Long getState()
     {
         return this.status;
     }

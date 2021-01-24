@@ -9,11 +9,11 @@ package com.cell.enums;
  * @Attention:
  * @Date 创建时间：2021-01-08 23:10
  */
-public enum Bees
+public enum BeeEnums
 {
 
     ;
-    Bees(Integer id, String desc)
+    BeeEnums(Integer id, String desc)
     {
         this.id = id;
         this.desc = desc;

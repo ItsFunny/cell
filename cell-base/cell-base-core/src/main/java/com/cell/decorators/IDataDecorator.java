@@ -1,4 +1,4 @@
-package com.cell.services;
+package com.cell.decorators;
 
 import com.cell.utils.Base64Utils;
 import org.bouncycastle.util.io.pem.PemObject;
@@ -17,7 +17,7 @@ import java.io.StringWriter;
  */
 public interface IDataDecorator<T>
 {
-    byte[] decorate(T data) throws IOException;
+    T decorate(T data);
 
 //    IDataDecorator<byte[]> CERTIFICATE_DECORATOR = (data) ->
 //    {

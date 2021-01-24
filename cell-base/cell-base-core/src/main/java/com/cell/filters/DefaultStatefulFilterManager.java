@@ -1,16 +1,13 @@
 package com.cell.filters;
 
-import com.cell.annotations.CellFilter;
-import com.cell.config.AbstractInitOnce;
-import com.cell.config.IInitOnce;
+import com.cell.comparators.CompareSatisfiedFunc;
+import com.cell.config.AbsReflectAbleInitOnce;
 import com.cell.decorators.TypeStateful;
+import com.cell.enums.BeeEnums;
+import com.cell.enums.ChainEnums;
 import com.cell.enums.FilterEnums;
 import com.cell.enums.GroupEnums;
-import com.cell.exceptions.ConfigException;
-import com.cell.services.IDataDecorator;
-import com.cell.utils.ReflectionUtils;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,10 +20,10 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-01-07 17:10
  */
-public class DefaultStatefulFilterManager extends AbstractInitOnce implements ITypeFilterManager<FilterEnums, GroupEnums>
+public class DefaultStatefulFilterManager extends AbsReflectAbleInitOnce implements ITypeFilterManager<ChainEnums, BeeEnums, GroupEnums>
 {
     // 默认是以list的形式,如果过于缓慢的话,更改为map也是可以的
-    private final List<ITypeStatefulFilter<FilterEnums>> stateFulFilters = new ArrayList<>();
+    private final List<ITypeStatefulFilter<ChainEnums>> stateFulFilters = new ArrayList<>();
     private static final DefaultStatefulFilterManager INSTANCE = new DefaultStatefulFilterManager();
 
     public static DefaultStatefulFilterManager getInstance()
@@ -35,11 +32,11 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
     }
 
     @Override
-    public void filter(TypeStateful<FilterEnums> t, FilterLogicHandlerTrue filterLogicHandler)
+    public void filter(TypeStateful<ChainEnums> t, CompareSatisfiedFunc<ChainEnums> compareSatisfiedFunc, FilterLogicHandlerTrue filterLogicHandler)
     {
-        for (ITypeStatefulFilter<FilterEnums> filter : stateFulFilters)
+        for (ITypeStatefulFilter<ChainEnums> filter : stateFulFilters)
         {
-            if ((filter.getType().getStatus() & t.getType().getStatus()) > 0)
+            if (compareSatisfiedFunc.satisfied(filter.getType()))
             {
                 FilterEnums filterEnums = filter.filter(t);
                 if (filterEnums.equals(FilterEnums.UN_SATISFIED))
@@ -55,7 +52,7 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
     }
 
     @Override
-    public void registerFilter(ITypeStatefulFilter<FilterEnums>... filter)
+    public void registerFilter(ITypeStatefulFilter<ChainEnums>... filter)
     {
         synchronized (this)
         {
@@ -64,70 +61,28 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
     }
 
     @Override
-    public GroupEnums getType()
+    public BeeEnums getType()
     {
-        return GroupEnums.GLOBAL;
+        return null;
     }
 
 
-    static class AAA implements ITypeStatefulFilter<FilterEnums>, IDataDecorator<String>
+    @Override
+    protected void register(Object o)
     {
-
-        @Override
-        public FilterEnums filter(TypeStateful<FilterEnums> filterEnumsTypeStateful)
-        {
-            return null;
-        }
-
-        @Override
-        public FilterEnums getType()
-        {
-            return null;
-        }
-
-        @Override
-        public byte[] decorate(String data) throws IOException
-        {
-            return new byte[0];
-        }
+        this.registerFilter((ITypeStatefulFilter<ChainEnums>) o);
     }
 
     @Override
-    protected void init() throws ConfigException
+    protected Class getConsumerClazz()
     {
-        List<Class> allGenesisClassByInterface = ReflectionUtils.getAllGenesisClassByInterface(ITypeStatefulFilter.class, FilterEnums.class, (c) ->
-        {
-            CellFilter annotation = c.getAnnotation(CellFilter.class);
-            if (annotation == null)
-            {
-                return true;
-            }
-            if (!annotation.active())
-            {
-                return false;
-            }
-            if (this.getType().getId() - annotation.filterGroup() == 0)
-            {
-                return true;
-            }
-            return false;
-        });
-        for (Class aClass : allGenesisClassByInterface)
-        {
-            try
-            {
-                Object o = aClass.newInstance();
-                if (o instanceof IInitOnce)
-                {
-                    IInitOnce iInitOnce = (IInitOnce) o;
-                    iInitOnce.initOnce();
-                }
-                this.registerFilter((ITypeStatefulFilter<FilterEnums>) o);
-            } catch (Exception e)
-            {
-                throw new ConfigException("失败:" + e.getMessage());
-            }
-        }
+        return ITypeStatefulFilter.class;
+    }
+
+    @Override
+    protected Class getConsumerSpecialGenesisClazzIfExist()
+    {
+        return ChainEnums.class;
     }
 
     public static void main(String[] args) throws Exception
@@ -135,4 +90,9 @@ public class DefaultStatefulFilterManager extends AbstractInitOnce implements IT
         DefaultStatefulFilterManager.getInstance().init();
     }
 
+    @Override
+    public GroupEnums getGroup()
+    {
+        return null;
+    }
 }

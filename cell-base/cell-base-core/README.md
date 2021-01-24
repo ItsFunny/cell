@@ -25,4 +25,13 @@
 
 
 ## filter
-- 有一个全局的filter,会自动的扫描被@CellFilter所注解的类,然后注入
+- 有一个全局的filter,会自动的扫包,然后如下的类会被注入:
+    - @CellFilter所注解的类
+        - 处于active状态 并且 模块Id与当前这个相同filterManager相同
+
+## consumers
+- 作用: 
+    - 依据consumerType,自动获取对应的所有consumer,然后消费信息,消费的主体依旧为event
+        -   如logConsumer
+- 有一个全局的consumerManager
+       
