@@ -1,6 +1,6 @@
 package com.cell.filters;
 
-import com.cell.enums.ChainEnums;
+import com.cell.enums.TypeEnums;
 
 /**
  * @author Charlie
@@ -12,5 +12,5 @@ import com.cell.enums.ChainEnums;
  */
 public interface FilterLogicHandlerTrue
 {
-    ChainEnums handlerTrue();
+    TypeEnums handlerTrue();
 }

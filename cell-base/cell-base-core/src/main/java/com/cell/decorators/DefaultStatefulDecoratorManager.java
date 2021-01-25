@@ -2,7 +2,8 @@ package com.cell.decorators;
 
 import com.cell.comparators.CompareSatisfiedFunc;
 import com.cell.config.AbsReflectAbleInitOnce;
-import com.cell.enums.ChainEnums;
+import com.cell.enums.BeeEnums;
+import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;
 import com.cell.enums.TypeEnums;
 
@@ -19,15 +20,19 @@ import java.util.Map;
  * @Attention:
  * @Date 创建时间：2021-01-23 23:03
  */
-public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce implements ITypeDecoratorManager<ChainEnums, TypeEnums, GroupEnums>
+public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce implements ITypeDecoratorManager<TypeEnums, TypeEnums, GroupEnums>
 {
-    private Map<ChainEnums, List<ITypeStatefulDecorator<ChainEnums>>> stateFulDecorators = new HashMap<>();
-
-    @Override
-    public TypeStateful<ChainEnums> decorate(TypeStateful<ChainEnums> t, CompareSatisfiedFunc<ChainEnums> compareFunc)
+    private Map<BeeEnums, List<ITypeStatefulDecorator<TypeEnums>>> stateFulDecorators = new HashMap<>();
+    private static final  DefaultStatefulDecoratorManager INSTANCE=new DefaultStatefulDecoratorManager();
+    public static DefaultStatefulDecoratorManager getInstance()
     {
-        List<ITypeStatefulDecorator<ChainEnums>> decorators = stateFulDecorators.get(t.getType());
-        for (ITypeStatefulDecorator<ChainEnums> decorator : decorators)
+        return INSTANCE;
+    }
+    @Override
+    public TypeStateful<TypeEnums> decorate(TypeStateful<TypeEnums> t, CompareSatisfiedFunc<TypeEnums> compareFunc)
+    {
+        List<ITypeStatefulDecorator<TypeEnums>> decorators = stateFulDecorators.get(t.getBee());
+        for (ITypeStatefulDecorator<TypeEnums> decorator : decorators)
         {
             if (!compareFunc.satisfied(decorator.getType()))
             {
@@ -39,18 +44,19 @@ public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce impl
     }
 
     @Override
-    public void registerDecorator(ITypeStatefulDecorator<ChainEnums>... filter)
+    public void registerDecorator(ITypeStatefulDecorator<TypeEnums>... filter)
     {
         synchronized (this.stateFulDecorators)
         {
-            for (ITypeStatefulDecorator<ChainEnums> decorator : filter)
+            for (ITypeStatefulDecorator<TypeEnums> decorator : filter)
             {
-                ChainEnums type = decorator.getType();
-                List<ITypeStatefulDecorator<ChainEnums>> decorators = this.stateFulDecorators.get(type);
+                BeeEnums bee = decorator.getBee();
+//                TypeEnums type = decorator.getType();
+                List<ITypeStatefulDecorator<TypeEnums>> decorators = this.stateFulDecorators.get(bee);
                 if (decorators == null || decorators.size() == 0)
                 {
                     decorators = new ArrayList<>();
-                    this.stateFulDecorators.put(type, decorators);
+                    this.stateFulDecorators.put(bee, decorators);
                 }
                 decorators.add(decorator);
             }
@@ -72,7 +78,7 @@ public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce impl
     @Override
     protected void register(Object o)
     {
-        this.registerDecorator((ITypeStatefulDecorator<ChainEnums>) o);
+        this.registerDecorator((ITypeStatefulDecorator<TypeEnums>) o);
     }
 
     @Override
@@ -84,6 +90,6 @@ public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce impl
     @Override
     protected Class getConsumerSpecialGenesisClazzIfExist()
     {
-        return ChainEnums.class;
+        return TypeEnums.class;
     }
 }

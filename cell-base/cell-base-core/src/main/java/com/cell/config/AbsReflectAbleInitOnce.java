@@ -2,7 +2,7 @@ package com.cell.config;
 
 import com.cell.annotations.CellAutoAble;
 import com.cell.annotations.CellFilter;
-import com.cell.enums.ChainEnums;
+import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;
 import com.cell.exceptions.ConfigException;
 import com.cell.filters.ITypeStatefulFilter;
@@ -33,7 +33,6 @@ public abstract class AbsReflectAbleInitOnce extends AbstractInitOnce implements
     @Override
     protected void init() throws ConfigException
     {
-        // FIXME 抽象 ,动态查找
         List<Class> allGenesisClassByInterface = ReflectionUtils.getAllGenesisClassByInterface(getConsumerClazz(), this.getConsumerSpecialGenesisClazzIfExist(), (c) ->
         {
             CellAutoAble annotation = c.getAnnotation(CellAutoAble.class);
@@ -61,7 +60,7 @@ public abstract class AbsReflectAbleInitOnce extends AbstractInitOnce implements
                     IInitOnce iInitOnce = (IInitOnce) o;
                     iInitOnce.initOnce();
                 }
-//                this.registerFilter((ITypeStatefulFilter<ChainEnums>) o);
+//                this.registerFilter((ITypeStatefulFilter<TypeEnums>) o);
                 this.register(o);
             } catch (Exception e)
             {

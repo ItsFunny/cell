@@ -11,6 +11,7 @@ package com.cell.enums;
 public enum GroupEnums
 {
     GLOBAL(1, "全局"),
+    AS_PART(2,"局部"),
     ;
 
     GroupEnums(int id, String desc)

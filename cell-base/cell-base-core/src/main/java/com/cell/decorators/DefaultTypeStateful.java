@@ -1,6 +1,6 @@
 package com.cell.decorators;
 
-import com.cell.enums.ChainEnums;
+import com.cell.enums.TypeEnums;
 import com.cell.models.Couple;
 
 /**
@@ -11,7 +11,7 @@ import com.cell.models.Couple;
  * @Attention:
  * @Date 创建时间：2021-01-07 17:49
  */
-public abstract class DefaultTypeStateful implements TypeStateful<ChainEnums>
+public abstract class DefaultTypeStateful implements TypeStateful<TypeEnums>
 {
     private long status;
 

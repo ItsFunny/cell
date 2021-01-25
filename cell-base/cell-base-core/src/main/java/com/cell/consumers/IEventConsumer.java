@@ -11,7 +11,7 @@ import com.cell.events.IEventResult;
  * @Attention:
  * @Date 创建时间：2021-01-13 22:57
  */
-public interface IEventConsumer extends IConsumer<IEvent, IEventResult>
+public interface IEventConsumer<T extends IEvent, V extends IEventResult> extends IConsumer<T, V>
 {
 
 }

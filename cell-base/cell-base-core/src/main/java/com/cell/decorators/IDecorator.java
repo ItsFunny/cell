@@ -15,7 +15,7 @@ import java.io.StringWriter;
  * @Attention:
  * @Date 创建时间：2020-10-05 14:35
  */
-public interface IDataDecorator<T>
+public interface IDecorator<T>
 {
     T decorate(T data);
 
