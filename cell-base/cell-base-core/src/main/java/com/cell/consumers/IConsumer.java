@@ -1,6 +1,5 @@
 package com.cell.consumers;
 
-import com.cell.enums.ConsumeEnums;
 
 /**
  * @author Charlie
