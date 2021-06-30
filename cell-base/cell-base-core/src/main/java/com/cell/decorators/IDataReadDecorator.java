@@ -1,7 +1,6 @@
 package com.cell.decorators;
 
 
-import com.cell.decorators.IDataDecorator;
 
 /**
  * @author Charlie
@@ -11,7 +10,7 @@ import com.cell.decorators.IDataDecorator;
  * @Attention:
  * @Date 创建时间：2020-10-05 17:33
  */
-public interface IDataReadDecorator<T> extends IDataDecorator<byte[]>
+public interface IDataReadDecorator<T> extends IDecorator<byte[]>
 {
 
 //    IDataReadDecorator<byte[]> PUBLICKEY_READER = (data) -> PemUtils.replace(PemConstant.PUBLICKEY, data);

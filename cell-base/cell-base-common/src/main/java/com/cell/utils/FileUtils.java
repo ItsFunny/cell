@@ -297,4 +297,41 @@ public class FileUtils
     }
 
 
+    public static String getAbsolutePath(String path) {
+        try {
+            File file = new File(path);
+            if (!file.exists()) {
+                return null;
+            }
+            return file.getCanonicalPath();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+
+    /**
+     * 返回一个相对于relatedPath的路径 如果path为绝对路径，那么使用path
+     * 如果path为相对路径，那么返回相对于releatedPath的绝对路径 *
+     */
+    public static String getAbsolutePathRelated(String relatedPath, String path) {
+        if (new File(path).isAbsolute())
+            return path;
+
+        File relatedFile = new File(relatedPath);
+        if (relatedFile.isDirectory()) {
+            try {
+                return new File(relatedFile + "/" + path).getCanonicalPath();
+            } catch (IOException e) {
+                return null;
+            }
+        } else {
+            try {
+                return new File(relatedFile.getParentFile() + "/" + path).getCanonicalPath();
+            } catch (IOException e) {
+                return null;
+            }
+        }
+    }
+
 }

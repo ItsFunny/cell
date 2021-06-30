@@ -6,6 +6,7 @@ import com.cell.enums.BeeEnums;
 import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;
 import com.cell.enums.TypeEnums;
+import com.cell.utils.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce impl
     public TypeStateful<TypeEnums> decorate(TypeStateful<TypeEnums> t, CompareSatisfiedFunc<TypeEnums> compareFunc)
     {
         List<ITypeStatefulDecorator<TypeEnums>> decorators = stateFulDecorators.get(t.getBee());
+        if (CollectionUtils.isEmpty(decorators))return t;
         for (ITypeStatefulDecorator<TypeEnums> decorator : decorators)
         {
             if (!compareFunc.satisfied(decorator.getType()))

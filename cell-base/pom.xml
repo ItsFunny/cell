@@ -19,7 +19,7 @@
     <modules>
         <module>cell-base-common</module>
         <module>cell-base-core</module>
-        <module>cell-base-log</module>
+        <module>cell-base-configuration</module>
     </modules>
 
 

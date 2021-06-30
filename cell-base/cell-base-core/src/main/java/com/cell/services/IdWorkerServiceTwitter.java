@@ -2,7 +2,9 @@ package com.cell.services;
 
 
 
-import com.cell.log_origin.ICellLogger;
+
+import com.cell.log.ICellLogger;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -14,7 +16,7 @@ import java.util.List;
  */
 public class IdWorkerServiceTwitter implements IdWorkerService
 {
-	private static ICellLogger logger;
+	private static Logger logger;
 //	private final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private long workerId;

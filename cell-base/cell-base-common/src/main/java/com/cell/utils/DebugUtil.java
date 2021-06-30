@@ -2,6 +2,9 @@ package com.cell.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
 
 /**
  * @author Charlie
@@ -36,5 +39,14 @@ public class DebugUtil
     public static void infoPrint(Object obj)
     {
         infoPrint(null,obj);
+    }
+
+
+    public static String exceptionStackTraceToString(Throwable throwable)
+    {
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
+        throwable.printStackTrace(pw);
+        return sw.toString();
     }
 }
