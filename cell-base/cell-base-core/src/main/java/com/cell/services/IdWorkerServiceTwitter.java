@@ -3,7 +3,6 @@ package com.cell.services;
 
 
 
-import com.cell.log.ICellLogger;
 import org.slf4j.Logger;
 
 import java.util.Collection;
