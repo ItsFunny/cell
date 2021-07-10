@@ -1,5 +1,6 @@
 package com.cell.config;
 
+import com.cell.context.InitCTX;
 import com.cell.exceptions.ConfigException;
 
 /**
@@ -12,5 +13,5 @@ import com.cell.exceptions.ConfigException;
  */
 public interface IInitOnce
 {
-    void initOnce() throws ConfigException;
+    void initOnce(InitCTX ctx);
 }

@@ -87,7 +87,7 @@ public class DefaultStatefulFilterManager extends AbsReflectAbleInitOnce impleme
 
     public static void main(String[] args) throws Exception
     {
-        DefaultStatefulFilterManager.getInstance().init();
+        DefaultStatefulFilterManager.getInstance().initOnce(null);
     }
 
     @Override

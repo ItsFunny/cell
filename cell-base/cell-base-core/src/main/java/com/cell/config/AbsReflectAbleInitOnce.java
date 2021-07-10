@@ -2,6 +2,7 @@ package com.cell.config;
 
 import com.cell.annotations.CellAutoAble;
 import com.cell.annotations.CellFilter;
+import com.cell.context.InitCTX;
 import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;
 import com.cell.exceptions.ConfigException;
@@ -31,7 +32,7 @@ public abstract class AbsReflectAbleInitOnce extends AbstractInitOnce implements
     protected abstract Class getConsumerSpecialGenesisClazzIfExist();
 
     @Override
-    protected void init() throws ConfigException
+    protected void onInit(InitCTX ctx)
     {
         List<Class> allGenesisClassByInterface = ReflectionUtils.getAllGenesisClassByInterface(getConsumerClazz(), this.getConsumerSpecialGenesisClazzIfExist(), (c) ->
         {
@@ -58,7 +59,7 @@ public abstract class AbsReflectAbleInitOnce extends AbstractInitOnce implements
                 if (o instanceof IInitOnce)
                 {
                     IInitOnce iInitOnce = (IInitOnce) o;
-                    iInitOnce.initOnce();
+                    iInitOnce.initOnce(ctx);
                 }
 //                this.registerFilter((ITypeStatefulFilter<TypeEnums>) o);
                 this.register(o);

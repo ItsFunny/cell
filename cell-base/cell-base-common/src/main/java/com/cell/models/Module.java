@@ -16,6 +16,7 @@ import java.util.Map;
 public enum Module
 {
     ALL((short) 0, "全部模块"),
+    LOG((short)1,"日志模块"),
     COMMON((short) 10001, "公共模块"),
     NETWORK((short) 10002, "network"),
     RPC((short) 10003, "rpc"),

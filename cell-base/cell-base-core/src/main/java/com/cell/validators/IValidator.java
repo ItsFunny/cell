@@ -1,0 +1,17 @@
+package com.cell.validators;
+
+import com.cell.exceptions.ValidateException;
+
+/**
+ * @author Charlie
+ * @When
+ * @Description
+ * @Detail
+ * @Attention:
+ * @Date 创建时间：2021-07-09 21:10
+ */
+public interface IValidator
+{
+    void valid() throws ValidateException;
+
+}

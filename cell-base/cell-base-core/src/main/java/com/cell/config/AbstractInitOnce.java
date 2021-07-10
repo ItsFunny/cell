@@ -1,7 +1,9 @@
 package com.cell.config;
 
-import com.cell.exceptions.ConfigException;
+import com.cell.context.InitCTX;
 import lombok.Data;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Charlie
@@ -14,19 +16,40 @@ import lombok.Data;
 @Data
 public abstract class AbstractInitOnce implements IInitOnce
 {
-    private boolean init;
+    protected AtomicBoolean init = new AtomicBoolean();
 
-    @Override
-    public void initOnce() throws ConfigException
+
+    public void initOnce(InitCTX ctx)
     {
-        if (init)
+        // FIXME
+        if (this.init.get())
         {
             return;
         }
-        this.init();
-        init = true;
+        try
+        {
+            if (this.init.compareAndSet(false, true))
+            {
+                // FIXME CTX SHOULD HAVE STAGE
+                if (null==ctx){
+                    ctx=new InitCTX();
+                }else{
+
+                }
+                this.onInit(ctx);
+            }
+        } catch (Exception e)
+        {
+            this.init.compareAndSet(true, false);
+            throw e;
+        }
     }
 
-    protected abstract void init() throws ConfigException;
+    protected abstract void onInit(InitCTX ctx);
+
+    public void refresh()
+    {
+        this.init.compareAndSet(false, true);
+    }
 
 }

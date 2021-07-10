@@ -1,5 +1,6 @@
 package com.cell.config;
 
+import com.cell.context.InitCTX;
 import com.cell.enums.ConfigurableEnums;
 import com.cell.exceptions.ConfigException;
 
@@ -14,7 +15,7 @@ import com.cell.exceptions.ConfigException;
 public abstract class AbsIntergrationInitOnce extends AbstractInitOnce implements  IIntegrationConfigurable
 {
     @Override
-    protected void init() throws ConfigException
+    protected void onInit(InitCTX ctx)
     {
         this.config();
     }
