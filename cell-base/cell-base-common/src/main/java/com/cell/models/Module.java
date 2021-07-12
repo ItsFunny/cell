@@ -33,10 +33,11 @@ public enum Module
     NETFLIX((short) 45, "netflix"),
     NOTIFICATION((short) 46, "notification"),
     MYBATIS((short) 47, "mybatis"),
+    FABRIC_CLIENT((short) 200, "fabric client"),
+    HTTP_CLIENT((short) 10006, "http client"),
     TASK_CA((short) 48, "CA task"),
     DRUID((short) 49, "druid"),
-
-
+    MICROMETER((short) 10008, "micrometer"),
     ;
     private short moduleId;
     private String desc;
