@@ -1,5 +1,8 @@
 package com.cell.initializer;
 
+import com.cell.bridge.SpringExtensionManager;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -16,5 +19,7 @@ public class SpringInitializer implements ApplicationContextInitializer<Configur
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext)
     {
+        LOG.info(Module.CONTAINER, "begin");
+        applicationContext.getBeanFactory().addBeanPostProcessor(SpringExtensionManager.getInstance());
     }
 }

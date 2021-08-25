@@ -10,6 +10,8 @@ import com.cell.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.models.Module;
+import com.cell.tool.Banner;
+import com.cell.utils.DateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -32,7 +34,6 @@ import org.springframework.context.ApplicationListener;
 
 public class SpringExtensionManager implements ApplicationListener<SpringApplicationEvent>, BeanPostProcessor
 {
-
     private List<INodeExtension> extensions = new ArrayList<>();
     private Set<String> unimportedSet = new HashSet<>();
     private SpringNodeContext ctx;
@@ -96,7 +97,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
                         {
                             if (allOps.hasOption(op.getOpt()))
                             {
-                                ContainerException cex = new ContainerException(String.format("duplicated opt name [%s]", op.getOpt()));
+                                ContainerException cex = new ContainerException(String.format("duplicated opt name [{}]", op.getOpt()));
                                 LOG.error(Module.CONTAINER, cex, "extension {} have duplicated arg opt {}", gbdef.getBeanClass(), op.getOpt());
                                 throw cex;
                             } else
@@ -109,28 +110,10 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
             }
         }
         SpringNodeContext dCtx = (SpringNodeContext) ctx;
-//		alist = addReg(alist);
         CommandLine commands = parser.parse(allOps, alist);
         dCtx.setCommandLine(commands);
     }
 
-    private String[] addReg(String[] alist)
-    {
-        String[] defaultReg = new String[]{"-reg", "lilei1234546", "-cluster", "lilei1234546"};
-        for (String cmd : alist)
-        {
-            if (cmd.equals("-reg"))
-            {
-                return alist;
-            }
-        }
-
-        int len = alist.length + 2;
-        String[] result = new String[len];
-        System.arraycopy(alist, 0, result, 0, alist.length);
-        System.arraycopy(defaultReg, 0, result, alist.length, 2);
-        return result;
-    }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
@@ -144,7 +127,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
                     initCommandLine();
                 } catch (Throwable e)
                 {
-//                    LOG.error(BSModule.CONTAINER, e, "init command line fail");
+                    LOG.error(Module.CONTAINER, e, "init command line fail");
                     throw new FatalBeanException("init command line fail", e);
                 }
                 isInit = true;
@@ -157,18 +140,18 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
                     final long startTime = System.currentTimeMillis();
                     newEx.init(ctx);
                     final long costTime = System.currentTimeMillis() - startTime;
-//                    LOG.info(BSModule.CONTAINER, "extension init success, extension = %s, costTime = %s", newEx.getName(), DateUtil.getBeforeTimeStr(new Date(costTime)));
+                    LOG.info(Module.CONTAINER, "extension init success, extension = {}, costTime = {}", newEx.getName(), DateUtils.getBeforeTimeStr(new Date(costTime)));
                 }
             } catch (Throwable e)
             {
                 if (newEx.isRequired())
                 {
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s init fail", newEx);
-                    throw new FatalBeanException(String.format("init extension %s fail", newEx), e);
+                    LOG.error(Module.CONTAINER, e, "extension {} init fail", newEx);
+                    throw new FatalBeanException(String.format("init extension {} fail", newEx), e);
                 } else
                 {
                     unimportedSet.add(newEx.getName());
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s init fail and stop to import it", newEx);
+                    LOG.error(Module.CONTAINER, e, "extension {} init fail and stop to import it", newEx);
                 }
             }
         }
@@ -180,54 +163,53 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
     {
         if (event instanceof ApplicationEnvironmentPreparedEvent)
         {
-            //LOG.info(BSModule.CONTAINER, "\n%s", Banner.INIT);
             if (state == 0)
             {
                 state = 1;
             } else
             {
-//                LOG.warning(BSModule.CONTAINER, "environment prepared twice");
+                LOG.warn(Module.CONTAINER, "environment prepared twice");
             }
         } else if (event instanceof ApplicationPreparedEvent)
         {
             if (state == 1)
             {
                 initContext((ApplicationPreparedEvent) event);
-//                LOG.info(BSModule.CONTAINER, "\n%s", Banner.INIT);
+                LOG.info(Module.CONTAINER, "\n{}", Banner.INIT);
                 state = 2;
             } else
             {
-//                LOG.warning(BSModule.CONTAINER, "application int twice");
+                LOG.warn(Module.CONTAINER, "application int twice");
             }
         } else if (event instanceof ApplicationStartedEvent)
         {
             if (state == 2)
             {
                 onStart((ApplicationStartedEvent) event);
-//                LOG.info(BSModule.CONTAINER, "\n%s", Banner.START);
+                LOG.info(Module.CONTAINER, "\n{}", Banner.START);
                 state = 3;
             } else
             {
-//                LOG.warning(BSModule.CONTAINER, "application start twice");
+                LOG.warn(Module.CONTAINER, "application start twice");
             }
         } else if (event instanceof ApplicationReadyEvent)
         {
             if (state == 3)
             {
                 onReady((ApplicationReadyEvent) event);
-//                LOG.warning(BSModule.CONTAINER, "\n%s", Banner.READY);
-//                LOG.info(BSModule.CONTAINER, "this jar arg list: %s", allOps);
+                LOG.warn(Module.CONTAINER, "\n{}", Banner.READY);
+                LOG.info(Module.CONTAINER, "this jar arg list: {}", allOps);
                 for (INodeExtension e : extensions)
                 {
                     if (!unimportedSet.contains(e.getName()))
                     {
-//                        LOG.info(BSModule.CONTAINER, "successfully load extension %s", e.getClass().getName());
+                        LOG.info(Module.CONTAINER, "successfully load extension {}", e.getClass().getName());
                     }
                 }
                 state = 4;
             } else
             {
-//                LOG.warning(BSModule.CONTAINER, "application ready twice");
+                LOG.warn(Module.CONTAINER, "application ready twice");
             }
         }
     }
@@ -235,7 +217,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
     void addExcludeExtension(String eName)
     {
         unimportedSet.add(eName);
-//        LOG.info(BSModule.CONTAINER, "extension %s is adding to exclusive list", eName);
+//        LOG.info(Module.CONTAINER, "extension {} is adding to exclusive list", eName);
     }
 
 
@@ -291,12 +273,12 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
             {
                 if (extension.isRequired())
                 {
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s start fail", extension);
-                    throw new ExtensionImportException(String.format("start extension %s fail", extension), e);
+                    LOG.error(Module.CONTAINER, e, "extension {} start fail", extension);
+                    throw new ExtensionImportException(String.format("start extension {} fail", extension), e);
                 } else
                 {
                     addExcludeExtension(extension.getName());
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s start fail and stop to import it", extension);
+                    LOG.error(Module.CONTAINER, e, "extension {} start fail and stop to import it", extension);
                 }
             }
         }
@@ -320,7 +302,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
         });
         for (ExtensionCostTime extensionCostTime : costTimeList)
         {
-//            LOG.info(BSModule.CONTAINER, "extension start success, extension = %s, costTime = %s", extensionCostTime.extension, extensionCostTime.costTime);
+//            LOG.info(Module.CONTAINER, "extension start success, extension = {}, costTime = {}", extensionCostTime.extension, extensionCostTime.costTime);
         }
     }
 
@@ -351,17 +333,17 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
             {
                 if (extension.isRequired())
                 {
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s start fail", extension);
+//                    LOG.error(Module.CONTAINER, e, "extension {} start fail", extension);
                     List<INodeExtension> toCloseList = new ArrayList<>();
                     for (int i = 0; i < index; ++i)
                     {
                         toCloseList.add(this.extensions.get(i));
                     }
                     close(ctx, toCloseList);
-                    throw new ExtensionImportException(String.format("start extension %s fail", extension), e);
+                    throw new ExtensionImportException(String.format("start extension {} fail", extension), e);
                 } else
                 {
-//                    LOG.error(BSModule.CONTAINER, e, "extension %s start fail and stop to import it", extension);
+//                    LOG.error(Module.CONTAINER, e, "extension {} start fail and stop to import it", extension);
                 }
             }
             ++index;
@@ -380,7 +362,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
                 }
             } catch (Throwable e)
             {
-//                LOG.error(BSModule.CONTAINER, e, "extension %s close fail", extension);
+//                LOG.error(Module.CONTAINER, e, "extension {} close fail", extension);
             }
         }
     }
@@ -391,7 +373,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
         @Override
         public void run()
         {
-//            LOG.info(BSModule.CONTAINER, "node shutdown by signal");
+//            LOG.info(Module.CONTAINER, "node shutdown by signal");
             close(ctx);
         }
     }
@@ -408,11 +390,11 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
 //				}
 //			} catch(Throwable e) {
 //				if(extension.isRequired()) {
-//					LOG.error(BSModule.CONTAINER, e, "extension %s init fail", extension);
-//					throw new ExtensionImportException(String.format("init extension %s fail", extension), e);
+//					LOG.error(Module.CONTAINER, e, "extension {} init fail", extension);
+//					throw new ExtensionImportException(String.format("init extension {} fail", extension), e);
 //				} else {
 //					unimportedSet.add(extension);
-//					LOG.warning(BSModule.CONTAINER, e, "extension %s init fail and stop to import it", extension);
+//					LOG.warning(Module.CONTAINER, e, "extension {} init fail and stop to import it", extension);
 //				}
 //			}
 //		}
@@ -433,11 +415,11 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
 //					}
 //				} catch(Throwable e) {
 //					if(extension.isRequired()) {
-//						LOG.error(BSModule.CONTAINER, e, "extension %s install fail", extension);
-//						throw new ExtensionImportException(String.format("install extension %s fail", extension), e);
+//						LOG.error(Module.CONTAINER, e, "extension {} install fail", extension);
+//						throw new ExtensionImportException(String.format("install extension {} fail", extension), e);
 //					} else {
 //						unimportedSet.add(extension);
-//						LOG.warning(BSModule.CONTAINER, e, "extension %s install fail and stop to import it", extension);
+//						LOG.warning(Module.CONTAINER, e, "extension {} install fail and stop to import it", extension);
 //					}
 //				}
 //			}
