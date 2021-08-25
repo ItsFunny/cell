@@ -23,6 +23,13 @@ public class FileUtils
 {
     private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
+    static
+    {
+        logger.info("123");
+        logger.warn("file warn");
+        logger.error("456");
+    }
+
     // 1m大小
     private static final int _1_M = 1024 * 1024;
 
@@ -245,7 +252,6 @@ public class FileUtils
     }
 
     /**
-     *
      * 描述:写入text到文件。如果文件存在，之前的内容将被替换。
      *
      * @param pathFile
@@ -264,7 +270,6 @@ public class FileUtils
 
 
     /**
-     *
      * 描述:将文件的内容作为String 读出
      *
      * @param pathFile
@@ -280,16 +285,19 @@ public class FileUtils
         String fileContext = "";
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, "utf-8"));
         String line;
-        try {
+        try
+        {
             line = reader.readLine();
-            while (line != null) { // 如果 line 为空说明读完了
+            while (line != null)
+            { // 如果 line 为空说明读完了
                 fileContext += line;
                 fileContext += '\n';
                 line = reader.readLine(); // 读取下一行
             }
             reader.close();
             is.close();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             return "";
         } // 读取第一行
 
@@ -297,14 +305,18 @@ public class FileUtils
     }
 
 
-    public static String getAbsolutePath(String path) {
-        try {
+    public static String getAbsolutePath(String path)
+    {
+        try
+        {
             File file = new File(path);
-            if (!file.exists()) {
+            if (!file.exists())
+            {
                 return null;
             }
             return file.getCanonicalPath();
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             return null;
         }
     }
@@ -314,21 +326,30 @@ public class FileUtils
      * 返回一个相对于relatedPath的路径 如果path为绝对路径，那么使用path
      * 如果path为相对路径，那么返回相对于releatedPath的绝对路径 *
      */
-    public static String getAbsolutePathRelated(String relatedPath, String path) {
+    public static String getAbsolutePathRelated(String relatedPath, String path)
+    {
         if (new File(path).isAbsolute())
+        {
             return path;
+        }
 
         File relatedFile = new File(relatedPath);
-        if (relatedFile.isDirectory()) {
-            try {
+        if (relatedFile.isDirectory())
+        {
+            try
+            {
                 return new File(relatedFile + "/" + path).getCanonicalPath();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 return null;
             }
-        } else {
-            try {
+        } else
+        {
+            try
+            {
                 return new File(relatedFile.getParentFile() + "/" + path).getCanonicalPath();
-            } catch (IOException e) {
+            } catch (IOException e)
+            {
                 return null;
             }
         }

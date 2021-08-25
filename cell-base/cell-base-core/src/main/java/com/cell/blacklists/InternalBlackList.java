@@ -13,11 +13,12 @@ import java.util.List;
  */
 public class InternalBlackList
 {
-    public static final List<String> logInternalBlackList= Arrays.asList(
+    public static final List<String> logInternalBlackList = Arrays.asList(
             "com.cell.log.impl.CellLoggerContext",
             "com.cell.log.impl.AbstractCellLogger",
             "Slf4JLogger",
-            "org.apache.cxf.common.logging"
+            "org.apache.cxf.common.logging",
+            "com.cell.log.bridge.LOGLoggerWrapper"
     );
 
 }

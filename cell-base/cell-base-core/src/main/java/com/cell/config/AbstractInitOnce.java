@@ -18,7 +18,9 @@ public abstract class AbstractInitOnce implements IInitOnce
 {
     protected AtomicBoolean init = new AtomicBoolean();
 
-
+    public boolean inited(){
+        return init.get();
+    }
     public void initOnce(InitCTX ctx)
     {
         // FIXME
@@ -28,15 +30,22 @@ public abstract class AbstractInitOnce implements IInitOnce
         }
         try
         {
-            if (this.init.compareAndSet(false, true))
+            synchronized (this)
             {
+                if (this.init.get())
+                {
+                    return;
+                }
                 // FIXME CTX SHOULD HAVE STAGE
-                if (null==ctx){
-                    ctx=new InitCTX();
-                }else{
+                if (null == ctx)
+                {
+                    ctx = new InitCTX();
+                } else
+                {
 
                 }
                 this.onInit(ctx);
+                this.init.set(true);
             }
         } catch (Exception e)
         {

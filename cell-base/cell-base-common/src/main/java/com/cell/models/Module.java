@@ -23,6 +23,7 @@ public enum Module
     THIRD_PARTY((short) 10004, "third party"),
     COMMONS_CONFIG((short) 10009, "commons config"),
 
+    CONTAINER((short) 101, "container"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
