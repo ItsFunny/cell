@@ -2,6 +2,8 @@ package com.cell.adapter;
 
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
+import java.util.List;
+
 /**
  * @author Charlie
  * @When
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProce
  * @Attention:
  * @Date 创建时间：2021-08-27 01:48
  */
-public interface BeanDefinitionRegistryPostProcessorAdapter extends BeanDefinitionRegistryPostProcessor
+public interface IBeanDefinitionRegistryPostProcessorAdapter extends BeanDefinitionRegistryPostProcessor
 {
+    List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor();
 }

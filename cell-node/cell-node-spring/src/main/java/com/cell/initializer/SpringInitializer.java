@@ -1,6 +1,5 @@
 package com.cell.initializer;
 
-import com.cell.postprocessfactory.DefaultSpringActivePluginCollector;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.postprocessfactory.SpringDependecyFactoryProcessor;
@@ -24,8 +23,8 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     {
         this.initOnce(null);
         applicationContext.addBeanFactoryPostProcessor(SpringBeanRegistry.getInstance());
-        applicationContext.addBeanFactoryPostProcessor(SpringDependecyFactoryProcessor.getInstance());
-        applicationContext.addBeanFactoryPostProcessor(ExtensionClassFactoryProcessor.getInstance());
+//        applicationContext.addBeanFactoryPostProcessor(SpringDependecyFactoryProcessor.getInstance());
+//        applicationContext.addBeanFactoryPostProcessor(ExtensionClassFactoryProcessor.getInstance());
     }
 
     @Override

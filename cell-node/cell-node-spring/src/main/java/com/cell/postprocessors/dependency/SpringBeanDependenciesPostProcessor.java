@@ -1,5 +1,7 @@
 package com.cell.postprocessors.dependency;
 
+import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
+import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.beans.BeanUtils;
@@ -36,12 +38,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
-        implements MergedBeanDefinitionPostProcessor, PriorityOrdered, BeanFactoryAware
+        implements MergedBeanDefinitionPostProcessor, PriorityOrdered, BeanFactoryAware, IBeanPostProcessortAdapter
 {
 
     public SpringBeanDependenciesPostProcessor()
     {
-        
+
     }
 
 

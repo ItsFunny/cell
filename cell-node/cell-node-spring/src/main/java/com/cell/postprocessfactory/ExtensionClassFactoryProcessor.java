@@ -1,15 +1,19 @@
 package com.cell.postprocessfactory;
 
+import com.cell.adapter.AbstractBeanDefiinitionRegistry;
+import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.bridge.ExtensionClass;
 import com.cell.bridge.ExtensionClassBeanDefinitionReader;
 import com.cell.bridge.ExtensionClassParser;
 import com.cell.config.AbstractInitOnce;
+import com.cell.config.IInitOnce;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ExtensionClassUtil;
+import jdk.internal.org.objectweb.asm.tree.IincInsnNode;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -34,9 +38,8 @@ import org.springframework.util.ClassUtils;
 
 import java.util.*;
 
-// 处理 @Plugin
-public class ExtensionClassFactoryProcessor extends AbstractInitOnce implements BeanDefinitionRegistryPostProcessor,
-        PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware
+public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegistry implements BeanDefinitionRegistryPostProcessor,
+        PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware, IInitOnce
 {
 
     private static final ExtensionClassFactoryProcessor instance = new ExtensionClassFactoryProcessor();
@@ -70,6 +73,7 @@ public class ExtensionClassFactoryProcessor extends AbstractInitOnce implements 
     public ExtensionClassFactoryProcessor()
     {
     }
+
     // 必须在 plugin 注册之后
     @Override
     public int getOrder()
@@ -234,8 +238,21 @@ public class ExtensionClassFactoryProcessor extends AbstractInitOnce implements 
     }
 
     @Override
-    protected void onInit(InitCTX ctx)
+    public void initOnce(InitCTX ctx)
     {
+        new innerInit().initOnce(ctx);
+    }
 
+    @Override
+    public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()
+    {
+        return null;
+    }
+
+    private class innerInit extends AbstractInitOnce
+    {
+        @Override
+        protected void onInit(InitCTX ctx)
+        { }
     }
 }

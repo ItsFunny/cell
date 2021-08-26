@@ -1,5 +1,7 @@
 package com.cell.adapter;
 
+import org.springframework.beans.factory.config.BeanPostProcessor;
+
 /**
  * @author Charlie
  * @When
@@ -8,7 +10,7 @@ package com.cell.adapter;
  * @Attention:
  * @Date 创建时间：2021-08-27 01:49
  */
-public interface BeanPostProcessortAdapter
+public interface IBeanPostProcessortAdapter extends BeanPostProcessor
 {
 
 }
