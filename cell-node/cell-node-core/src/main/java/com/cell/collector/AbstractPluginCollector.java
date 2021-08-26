@@ -1,12 +1,21 @@
 package com.cell.collector;
 
+import com.cell.annotation.ActivePlugin;
+import com.cell.annotation.AutoPlugin;
+import com.cell.annotation.Exclude;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.enums.CellError;
+import com.cell.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.utils.ClassUtil;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.ClassUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -22,25 +31,15 @@ import java.util.*;
 @Data
 public abstract class AbstractPluginCollector extends AbstractInitOnce implements IActivePluginCollector
 {
-    private Set<Class<?>> activePlugins;
-    private String defaultPluginPrefixGroup;
-
+    protected Set<Class<?>> activePlugins;
+    protected String defaultPluginPrefixGroup = "activePlugin.";
+    private static String SCAN_ROOT = "com.cell";
 
     @Override
     public <T> List<T> getPlugins(Class<T> superclz)
     {
         List<Class<?>> clzs = getClassBySuperClz(this.activePlugins, superclz);
-        List<T> res = new ArrayList<>();
-        for (Class<?> clz : clzs)
-        {
-            T b = this.getInstance(clz);
-            if (b == null)
-            {
-                LOG.erroring(Module.CONTAINER, "unexisted clz instance in bean factory: [%s]", clz);
-            }
-            res.add(b);
-        }
-        return res;
+        return getTs(clzs);
     }
 
     protected abstract <T> T getInstance(Class<?> clz);
@@ -78,6 +77,11 @@ public abstract class AbstractPluginCollector extends AbstractInitOnce implement
     {
         List<Class<?>> clzs = getClassBySuperClz(this.activePlugins, superclz);
         clzs = getClassByAnno(clzs, ano);
+        return getTs(clzs);
+    }
+
+    private <T> List<T> getTs(List<Class<?>> clzs)
+    {
         List<T> res = new ArrayList<>();
         for (Class<?> clz : clzs)
         {
@@ -97,9 +101,6 @@ public abstract class AbstractPluginCollector extends AbstractInitOnce implement
         return null;
     }
 
-    @Override
-    protected void onInit(InitCTX ctx)
-    {
 
-    }
+
 }

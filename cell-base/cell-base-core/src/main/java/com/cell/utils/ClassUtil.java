@@ -1,7 +1,9 @@
 package com.cell.utils;
 
 
+import com.cell.annotations.CellOrder;
 import com.cell.concurrent.base.DefaultThreadFactory;
+import com.cell.constants.Constants;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import io.netty.channel.DefaultEventLoopGroup;
@@ -115,7 +117,7 @@ public class ClassUtil
                 return invokeMethod(obj, methodName);
             } catch (Exception e2)
             {
-                LOG.warning(Module.COMMON, e, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+                LOG.warning(Module.COMMON, e, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
                 throw e2;
             }
         }
@@ -135,14 +137,14 @@ public class ClassUtil
             Field field = getField(fields, fieldName);
             if (field == null)
             {
-//    			LOG.warning(Module.COMMON, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+//    			LOG.warning(Module.COMMON, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
                 return null;
             }
             field.setAccessible(true);
             return field.get(obj);
         } catch (Exception e)
         {
-            LOG.warning(Module.COMMON, e, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+            LOG.warning(Module.COMMON, e, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
         }
         return null;
     }
@@ -161,14 +163,14 @@ public class ClassUtil
             Field field = getField(fields, fieldName);
             if (field == null)
             {
-//    			LOG.warning(Module.COMMON, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+//    			LOG.warning(Module.COMMON, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
                 return null;
             }
             field.setAccessible(true);
             return field;
         } catch (Exception e)
         {
-            LOG.warning(Module.COMMON, e, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+            LOG.warning(Module.COMMON, e, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
         }
         return null;
     }
@@ -236,7 +238,7 @@ public class ClassUtil
             invokeMethodValue(obj, methodName, value, type);
         } catch (Exception e)
         {
-            LOG.warning(Module.COMMON, e, "%s反射Field %s失败， obj = %s", clazz, fieldName, obj);
+            LOG.warning(Module.COMMON, e, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
 //			String methodName = "is" + StringUtils.firstToUpper(fieldName);
 //			invokeMethodValue(obj, methodName, value);
         }
@@ -252,7 +254,7 @@ public class ClassUtil
             method.invoke(obj, value);
         } catch (Exception e)
         {
-            LOG.warning(Module.COMMON, e, "%s 反射 %s 失败， obj = %s", clazz, methodName, obj);
+            LOG.warning(Module.COMMON, e, "{} 反射 {} 失败， obj = {}", clazz, methodName, obj);
         }
     }
 
@@ -266,7 +268,7 @@ public class ClassUtil
             return method.invoke(obj);
         } catch (Exception e)
         {
-            LOG.warn(Module.COMMON, "%s 反射 %s 失败， obj = %s", clazz, methodName, obj);
+            LOG.warn(Module.COMMON, "{} 反射 {} 失败， obj = {}", clazz, methodName, obj);
             throw e;
         }
     }
@@ -323,7 +325,7 @@ public class ClassUtil
 
             for (Resource resource : resources)
             {
-                LOG.debug(Module.COMMON, "Scan classpath: [%s]", resource.getURI().toString());
+                LOG.debug(Module.COMMON, "Scan classpath: [{}]", resource.getURI().toString());
             }
 
             final DefaultEventLoopGroup scanPackageGroup = new DefaultEventLoopGroup(12, new DefaultThreadFactory("scanPackage"));
@@ -341,7 +343,7 @@ public class ClassUtil
                             scanPackage(packageName, resource, classFilter, classes);
                         } catch (IOException | ClassNotFoundException e)
                         {
-                            LOG.error(Module.COMMON, e, "scan packageName [%s] error, resource = %s", packageName, resource);
+                            LOG.error(Module.COMMON, e, "scan packageName [{}] error, resource = {}", packageName, resource);
                         } finally
                         {
                             latch.countDown();
@@ -352,18 +354,18 @@ public class ClassUtil
             latch.await();
         } catch (Exception e)
         {
-            LOG.error(Module.COMMON, e, "scan packageName [%s] error", packageName);
+            LOG.error(Module.COMMON, e, "scan packageName [{}] error", packageName);
         }
         final long costTime = System.currentTimeMillis() - startTime;
         final String costTimeStr = DateUtils.getBeforeTimeStr(new Date(costTime));
-        LOG.minfo(Module.COMMON, "Scan classpath complete, packageName = %s, costTime = %s", packageName, costTimeStr);
+        LOG.minfo(Module.COMMON, "Scan classpath complete, packageName = {}, costTime = {}", packageName, costTimeStr);
 
 //        if (StringUtils.isNullEmpty(packageName)) throw new NullPointerException("packageName can't be blank!");
 //        packageName = getWellFormedPackageName(packageName);
 //
 //        final Set<Class<?>> classes = new HashSet<Class<?>>();
 //        for (String classPath : getClassPaths(packageName)) {
-//            LOG.debug(Module.COMMON, "Scan classpath: [%s]", classPath);
+//            LOG.debug(Module.COMMON, "Scan classpath: [{}]", classPath);
 //            // 填充 classes
 //            fillClasses(classPath, packageName, classFilter, classes);
 //        }
@@ -371,7 +373,7 @@ public class ClassUtil
 //        //如果在项目的ClassPath中未找到，去系统定义的ClassPath里找
 //        if (classes.isEmpty()) {
 //            for (String classPath : getJavaClassPaths()) {
-//                LOG.debug(Module.COMMON, "Scan java classpath: [%s]", classPath);
+//                LOG.debug(Module.COMMON, "Scan java classpath: [{}]", classPath);
 //                // 填充 classes
 //                fillClasses(new File(classPath), packageName, classFilter, classes);
 //            }
@@ -385,7 +387,7 @@ public class ClassUtil
 //        LOG.info(Module.COMMON, "Scan class: --------------------------------");
 //
 //        for (Class<?> clazz : classes) {
-//            LOG.info(Module.COMMON, "Scan class: [%s]", clazz);
+//            LOG.info(Module.COMMON, "Scan class: [{}]", clazz);
 //        }
         return classes;
     }
@@ -398,7 +400,7 @@ public class ClassUtil
         String name = url.substring(start, end);
         name = name.replace("/", ".");
         final Class<?> clazz = Thread.currentThread().getContextClassLoader().loadClass(name);
-        LOG.debug(Module.COMMON, "Find class: [%s]", clazz);
+        LOG.debug(Module.COMMON, "Find class: [{}]", clazz);
 
         if (classFilter != null)
         {
@@ -461,7 +463,7 @@ public class ClassUtil
             resources = Thread.currentThread().getContextClassLoader().getResources(packagePath);
         } catch (IOException e)
         {
-            LOG.error(Module.COMMON, e, "Error when load classPath [%s]", packagePath);
+            LOG.error(Module.COMMON, e, "Error when load classPath [{}]", packagePath);
             return null;
         }
         Set<String> paths = new HashSet<>();
@@ -742,7 +744,7 @@ public class ClassUtil
             }
         } catch (Throwable ex)
         {
-            LOG.error(Module.COMMON, ex, "Error when process jar file [%s]", file);
+            LOG.error(Module.COMMON, ex, "Error when process jar file [{}]", file);
         }
     }
 
@@ -767,7 +769,7 @@ public class ClassUtil
                 }
             } catch (Throwable ex)
             {
-                LOG.error(Module.COMMON, ex, "Error when fill Class [%s]", className);
+                LOG.error(Module.COMMON, ex, "Error when fill Class [{}]", className);
             }
         }
     }
@@ -822,5 +824,14 @@ public class ClassUtil
         final String genericTypeName = field.getGenericType().getTypeName();
         final String innerClassName = genericTypeName.substring(genericTypeName.indexOf("<") + 1, genericTypeName.indexOf(">"));
         return innerClassName;
+    }
+
+    public static int ordererCompare(Class<?> clz1, Class<?> clz2)
+    {
+        CellOrder anno1 = clz1.getAnnotation(CellOrder.class);
+        CellOrder anno2 = clz2.getAnnotation(CellOrder.class);
+        int value1 = anno1 != null ? anno1.value() : Constants.DEFAULT_ORDER;
+        int value2 = anno2 != null ? anno2.value() : Constants.DEFAULT_ORDER;
+        return Integer.compare(value1, value2);
     }
 }

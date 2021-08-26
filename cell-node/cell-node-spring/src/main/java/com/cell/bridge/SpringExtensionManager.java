@@ -2,7 +2,9 @@ package com.cell.bridge;
 
 import java.util.*;
 
+import com.cell.config.AbstractInitOnce;
 import com.cell.context.INodeContext;
+import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
 import com.cell.exception.ContainerException;
 import com.cell.exception.ExtensionImportException;
@@ -32,13 +34,12 @@ import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.context.ApplicationListener;
 
 
-public class SpringExtensionManager implements ApplicationListener<SpringApplicationEvent>, BeanPostProcessor
+public class SpringExtensionManager extends AbstractInitOnce implements ApplicationListener<SpringApplicationEvent>, BeanPostProcessor
 {
     private List<INodeExtension> extensions = new ArrayList<>();
     private Set<String> unimportedSet = new HashSet<>();
     private SpringNodeContext ctx;
     private Map<String, BeanDefinition> BeanDefinitionMap;
-    private boolean isInit = false;
     private Options allOps;
     private int state = 0;
     private KillThread killThread = new KillThread();
@@ -120,18 +121,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
     {
         if (bean instanceof INodeExtension)
         {
-            if (!isInit)
-            {
-                try
-                {
-                    initCommandLine();
-                } catch (Throwable e)
-                {
-                    LOG.error(Module.CONTAINER, e, "init command line fail");
-                    throw new FatalBeanException("init command line fail", e);
-                }
-                isInit = true;
-            }
+            this.initOnce(null);
             INodeExtension newEx = addExtension((INodeExtension) bean);
             try
             {
@@ -217,7 +207,7 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
     void addExcludeExtension(String eName)
     {
         unimportedSet.add(eName);
-//        LOG.info(Module.CONTAINER, "extension {} is adding to exclusive list", eName);
+        LOG.info(Module.CONTAINER, "extension {} is adding to exclusive list", eName);
     }
 
 
@@ -302,7 +292,20 @@ public class SpringExtensionManager implements ApplicationListener<SpringApplica
         });
         for (ExtensionCostTime extensionCostTime : costTimeList)
         {
-//            LOG.info(Module.CONTAINER, "extension start success, extension = {}, costTime = {}", extensionCostTime.extension, extensionCostTime.costTime);
+            LOG.info(Module.CONTAINER, "extension start success, extension = {}, costTime = {}", extensionCostTime.extension, extensionCostTime.costTime);
+        }
+    }
+
+    @Override
+    protected void onInit(InitCTX ctx)
+    {
+        try
+        {
+            initCommandLine();
+        } catch (Exception e)
+        {
+            LOG.error(Module.CONTAINER, e, "init command line fail");
+            throw new FatalBeanException("init command line fail", e);
         }
     }
 
