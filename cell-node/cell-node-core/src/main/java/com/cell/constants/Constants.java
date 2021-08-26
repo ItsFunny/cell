@@ -13,7 +13,6 @@ public interface Constants
     String SCAN_ROOT = "com.cell";
     int DEFAULT_ORDER = Integer.MAX_VALUE - 100;
 
-    int EXTESNION_MIN_NUM_ORDER= 1000;
 
-    public static final String BEAN_NAME_ATTR = "activePluginBeanName";
+    int EXTESNION_MIN_NUM_ORDER = 1000;
 }

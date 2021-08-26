@@ -1,4 +1,4 @@
-package com.cell.dependenciesprocessor;
+package com.cell.postprocessors.dependency;
 
 import java.util.HashMap;
 import java.util.HashSet;

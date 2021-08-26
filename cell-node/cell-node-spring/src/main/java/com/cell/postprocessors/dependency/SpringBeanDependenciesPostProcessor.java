@@ -1,6 +1,5 @@
-package com.cell.dependenciesprocessor;
+package com.cell.postprocessors.dependency;
 
-import cn.tass.math.raw.Mod;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.beans.BeanUtils;
@@ -36,10 +35,15 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
-public class BeanDependenciesPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
+public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanPostProcessorAdapter
         implements MergedBeanDefinitionPostProcessor, PriorityOrdered, BeanFactoryAware
 {
+
+    public SpringBeanDependenciesPostProcessor()
+    {
+        
+    }
+
 
     private boolean requiredParameterValue = true;
     private String requiredParameterName = "required";

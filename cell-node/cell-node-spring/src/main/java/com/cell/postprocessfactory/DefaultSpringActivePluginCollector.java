@@ -5,16 +5,16 @@ import com.cell.annotation.AutoPlugin;
 import com.cell.annotation.CellOrder;
 import com.cell.annotation.Exclude;
 import com.cell.bridge.ISpringNodeExtension;
-import com.cell.bridge.SpringExtensionManager;
 import com.cell.collector.AbstractPluginCollector;
 import com.cell.constants.Constants;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
-import com.cell.dependenciesprocessor.BeanDependenciesPostProcessor;
 import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;
+import com.cell.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.ExtensionClassUtil;
 import lombok.Data;
@@ -47,19 +47,15 @@ import java.util.*;
 public class DefaultSpringActivePluginCollector extends AbstractPluginCollector implements
         PriorityOrdered, BeanDefinitionRegistryPostProcessor, BeanFactoryAware
 {
-    private static final DefaultSpringActivePluginCollector instance = new DefaultSpringActivePluginCollector();
     private BeanFactory factory;
     private Map<String, BeanDefinition> pluginBeanDefinitions = new HashMap<>();
     private AutoPluginResolver resolver;
 
     private DefaultSpringActivePluginCollector()
     {
+        this.initOnce(null);
     }
 
-    public static DefaultSpringActivePluginCollector getInstance()
-    {
-        return instance;
-    }
 
     @Override
     protected <T> T getInstance(Class<?> clz)
@@ -68,17 +64,20 @@ public class DefaultSpringActivePluginCollector extends AbstractPluginCollector 
         return b;
     }
 
-
+    // FIXME ,需要设置beanFactory: 用途: 找到这个bean,或者是提前,将这个注册为bean
+    // TODO: 可以写一个manager,专门用于自定义factoryPostProcessor 注册到bean 中
     @Override
     public void setBeanFactory(BeanFactory beanFactory) throws BeansException
     {
         this.factory = beanFactory;
         AutowiredAnnotationBeanPostProcessor processor = this.factory.getBean(AutowiredAnnotationBeanPostProcessor.class);
         processor.setAutowiredAnnotationTypes(this.resolver.getAnnotations());
+
         try
         {
-            BeanDependenciesPostProcessor processor2 = this.factory.getBean(BeanDependenciesPostProcessor.class);
-            processor2.setAutowiredAnnotationTypes(this.resolver.getAnnotations());
+//            SpringBeanDependenciesPostProcessor processor2 = this.factory.getBean(SpringBeanDependenciesPostProcessor.class);
+//            processor2.setAutowiredAnnotationTypes(this.resolver.getAnnotations());
+            SpringBeanDependenciesPostProcessor.getInstance().setAutowiredAnnotationTypes(this.resolver.getAnnotations());
         } catch (Throwable e)
         {
 
@@ -97,12 +96,12 @@ public class DefaultSpringActivePluginCollector extends AbstractPluginCollector 
             Class<?> clz = ((GenericBeanDefinition) def).getBeanClass();
             if (ISpringNodeExtension.class.isAssignableFrom(clz))
             {
-                registry.registerBeanDefinition((String) def.getAttribute(Constants.BEAN_NAME_ATTR), def);
-                LOG.info(Module.CONTAINER_REGISTRY, "register node extension name %s and beanDefination %s", def.getAttribute(Constants.BEAN_NAME_ATTR), def);
+                registry.registerBeanDefinition((String) def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
+                LOG.info(Module.CONTAINER_REGISTRY, "register node extension name %s and beanDefination %s", def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
             } else
             {
-                registry.registerBeanDefinition((String) def.getAttribute(Constants.BEAN_NAME_ATTR), def);
-                LOG.info(Module.CONTAINER_REGISTRY, "register beanName %s and beanDefination %s", def.getAttribute(Constants.BEAN_NAME_ATTR), def);
+                registry.registerBeanDefinition((String) def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
+                LOG.info(Module.CONTAINER_REGISTRY, "register beanName %s and beanDefination %s", def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
             }
         }
     }
@@ -116,12 +115,13 @@ public class DefaultSpringActivePluginCollector extends AbstractPluginCollector 
     @Override
     public int getOrder()
     {
-        return 0;
+        return SpringBridge.BEAN_REGISTER_ORDERER + 1;
     }
 
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.resolver = new AutoPluginResolver();
         this.activePlugins = ClassUtil.scanPackage(Constants.SCAN_ROOT, new AutoClassFilter());
         for (Class<?> clz : activePlugins)
         {

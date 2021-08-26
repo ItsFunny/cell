@@ -1,11 +1,11 @@
 package com.cell.initializer;
 
-import com.cell.bridge.SpringExtensionManager;
 import com.cell.postprocessfactory.DefaultSpringActivePluginCollector;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
-import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.postprocessfactory.SpringDependecyFactoryProcessor;
+import com.cell.postprocessfactory.ExtensionClassFactoryProcessor;
+import com.cell.postprocessfactory.SpringBeanRegistry;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -23,13 +23,16 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     public void initialize(ConfigurableApplicationContext applicationContext)
     {
         this.initOnce(null);
-        LOG.info(Module.CONTAINER, "begin");
-        applicationContext.addBeanFactoryPostProcessor(DefaultSpringActivePluginCollector.getInstance());
+        applicationContext.addBeanFactoryPostProcessor(SpringBeanRegistry.getInstance());
+        applicationContext.addBeanFactoryPostProcessor(SpringDependecyFactoryProcessor.getInstance());
+        applicationContext.addBeanFactoryPostProcessor(ExtensionClassFactoryProcessor.getInstance());
     }
 
     @Override
     protected void onInit(InitCTX ctx)
     {
-        DefaultSpringActivePluginCollector.getInstance().initOnce(ctx);
+        SpringBeanRegistry.getInstance().initOnce(ctx);
+        SpringDependecyFactoryProcessor.getInstance().initOnce(ctx);
+        ExtensionClassFactoryProcessor.getInstance().initOnce(ctx);
     }
 }

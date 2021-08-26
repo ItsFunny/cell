@@ -1,7 +1,8 @@
-package com.cell.bridge;
+package com.cell.postprocessors.extension;
 
 import java.util.*;
 
+import com.cell.bridge.ISpringNodeExtension;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
@@ -90,27 +91,29 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 GenericBeanDefinition gbdef = (GenericBeanDefinition) def;
                 if (ISpringNodeExtension.class.isAssignableFrom(gbdef.getBeanClass()))
                 {
+                    // FIXME factory proxy
                     ISpringNodeExtension ex = (ISpringNodeExtension) gbdef.getBeanClass().newInstance();
                     Options ops = ex.getOptions();
-                    if (ops != null)
+                    if (ops == null)
                     {
-                        for (Option op : ops.getOptions())
+                        continue;
+                    }
+                    for (Option op : ops.getOptions())
+                    {
+                        if (allOps.hasOption(op.getOpt()))
                         {
-                            if (allOps.hasOption(op.getOpt()))
-                            {
-                                ContainerException cex = new ContainerException(String.format("duplicated opt name [{}]", op.getOpt()));
-                                LOG.error(Module.CONTAINER, cex, "extension {} have duplicated arg opt {}", gbdef.getBeanClass(), op.getOpt());
-                                throw cex;
-                            } else
-                            {
-                                allOps.addOption(op);
-                            }
+                            ContainerException cex = new ContainerException(String.format("duplicated opt name [{}]", op.getOpt()));
+                            LOG.error(Module.CONTAINER, cex, "extension {} have duplicated arg opt {}", gbdef.getBeanClass(), op.getOpt());
+                            throw cex;
+                        } else
+                        {
+                            allOps.addOption(op);
                         }
                     }
                 }
             }
         }
-        SpringNodeContext dCtx = (SpringNodeContext) ctx;
+        SpringNodeContext dCtx = ctx;
         CommandLine commands = parser.parse(allOps, alist);
         dCtx.setCommandLine(commands);
     }
@@ -119,30 +122,32 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
     {
-        if (bean instanceof INodeExtension)
+        boolean is = bean instanceof ISpringNodeExtension;
+        if (!is)
         {
-            this.initOnce(null);
-            INodeExtension newEx = addExtension((INodeExtension) bean);
-            try
+            return bean;
+        }
+        this.initOnce(null);
+        INodeExtension newEx = addExtension((INodeExtension) bean);
+        try
+        {
+            if (!unimportedSet.contains(newEx.getName()))
             {
-                if (!unimportedSet.contains(newEx.getName()))
-                {
-                    final long startTime = System.currentTimeMillis();
-                    newEx.init(ctx);
-                    final long costTime = System.currentTimeMillis() - startTime;
-                    LOG.info(Module.CONTAINER, "extension init success, extension = {}, costTime = {}", newEx.getName(), DateUtils.getBeforeTimeStr(new Date(costTime)));
-                }
-            } catch (Throwable e)
+                final long startTime = System.currentTimeMillis();
+                newEx.init(ctx);
+                final long costTime = System.currentTimeMillis() - startTime;
+                LOG.info(Module.CONTAINER, "extension init success, extension = {}, costTime = {}", newEx.getName(), DateUtils.getBeforeTimeStr(new Date(costTime)));
+            }
+        } catch (Throwable e)
+        {
+            if (newEx.isRequired())
             {
-                if (newEx.isRequired())
-                {
-                    LOG.error(Module.CONTAINER, e, "extension {} init fail", newEx);
-                    throw new FatalBeanException(String.format("init extension {} fail", newEx), e);
-                } else
-                {
-                    unimportedSet.add(newEx.getName());
-                    LOG.error(Module.CONTAINER, e, "extension {} init fail and stop to import it", newEx);
-                }
+                LOG.error(Module.CONTAINER, e, "extension {} init fail", newEx);
+                throw new FatalBeanException(String.format("init extension {} fail", newEx), e);
+            } else
+            {
+                unimportedSet.add(newEx.getName());
+                LOG.error(Module.CONTAINER, e, "extension {} init fail and stop to import it", newEx);
             }
         }
         return bean;

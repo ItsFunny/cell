@@ -1,8 +1,6 @@
 package com.cell.listener;
 
-import com.cell.bridge.SpringExtensionManager;
-import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.postprocessors.extension.SpringExtensionManager;
 import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.context.ApplicationListener;
 

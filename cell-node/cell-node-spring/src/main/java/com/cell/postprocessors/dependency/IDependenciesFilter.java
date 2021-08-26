@@ -1,4 +1,4 @@
-package com.cell.dependenciesprocessor;
+package com.cell.postprocessors.dependency;
 
 public interface IDependenciesFilter {
 	boolean targetable(Class<?> target, String beanName);

@@ -1,5 +1,7 @@
 package com.cell.constants;
 
+import org.springframework.core.Ordered;
+
 /**
  * @author Charlie
  * @When
@@ -10,7 +12,11 @@ package com.cell.constants;
  */
 public interface SpringBridge
 {
+    int BEAN_REGISTER_ORDERER = Ordered.HIGHEST_PRECEDENCE;
     String PLUGIN_COLLECTOR = "activePluginCollector";
     String EXTENSION_FLAG_ATTR = "ActiveExtension";
     String BEAN_NAME_ATTR = "activePluginBeanName";
+
+
+    String SPRING_BEAN_DEPANDENCIES = "SPRING_BEAN_DEPANDENCIES";
 }
