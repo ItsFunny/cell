@@ -1,6 +1,5 @@
 package com.cell.models;
 
-import cn.tass.math.raw.Mod;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,7 @@ import java.util.Map;
 public enum Module
 {
     ALL((short) 0, "全部模块"),
-    LOG((short)1,"日志模块"),
+    LOG((short) 1, "日志模块"),
     COMMON((short) 10001, "公共模块"),
     NETWORK((short) 10002, "network"),
     RPC((short) 10003, "rpc"),
@@ -24,6 +23,7 @@ public enum Module
     COMMONS_CONFIG((short) 10009, "commons config"),
     CONTAINER_REGISTRY((short) 100, "container registry"),
     CONTAINER((short) 101, "container"),
+    HTTP_FRAMEWORK((short) 102, "HTTP_FRAMEWORK"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
@@ -52,36 +52,40 @@ public enum Module
     private final static Map<Short, Module> MODULE_ENUM_MAP = new HashMap<>();
     private static IllegalStateException duplicatedException = null;
 
-    static {
+    static
+    {
         registerModuleEnum(Module.values());
     }
-    /**
-     * 描述:这个方法是根据模块id获取一个模块枚举
-     *
-     * @return
-     * @author Terry
-     * @time 2016年7月13日-上午10:34:28
-     */
-    public static Module getModule(short moduleId) {
+
+    public static Module getModule(short moduleId)
+    {
         return MODULE_ENUM_MAP.get(moduleId);
     }
 
-    public short getModuleId() {
+    public short getModuleId()
+    {
         return moduleId;
     }
 
-    public static Module getModule(short moduleId, Module def) {
+    public static Module getModule(short moduleId, Module def)
+    {
         Module ret = MODULE_ENUM_MAP.get(moduleId);
-        if (ret != null) {
+        if (ret != null)
+        {
             return ret;
         }
         return def;
     }
-    public static void registerModuleEnum(Module[] origineModules) {
-        if (origineModules != null) {
-            for (Module module : origineModules) {
+
+    public static void registerModuleEnum(Module[] origineModules)
+    {
+        if (origineModules != null)
+        {
+            for (Module module : origineModules)
+            {
                 Module old = MODULE_ENUM_MAP.put(module.getModuleId(), module);
-                if (old != null) {
+                if (old != null)
+                {
                     System.out.println("重复的Module:" + old + ", " + module);
                     duplicatedException = new IllegalStateException("重复的Module:" + old.name());
                     throw duplicatedException;

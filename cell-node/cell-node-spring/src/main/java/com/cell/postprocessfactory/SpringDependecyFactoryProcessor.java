@@ -76,7 +76,7 @@ public class SpringDependecyFactoryProcessor extends AbstractBeanDefiinitionRegi
     public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()
     {
         List<Class<? extends IBeanPostProcessortAdapter>> ret = new ArrayList<>();
-        ret.add((Class<? extends IBeanPostProcessortAdapter>) SpringBeanDependenciesPostProcessor.class);
+        ret.add(SpringBeanDependenciesPostProcessor.class);
         return ret;
     }
 }

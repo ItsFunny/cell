@@ -4,11 +4,9 @@ import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotation.ActivePlugin;
-import com.cell.annotation.AutoPlugin;
 import com.cell.annotation.CellOrder;
 import com.cell.annotation.Exclude;
 import com.cell.bridge.ISpringNodeExtension;
-import com.cell.collector.AbstractPluginCollector;
 import com.cell.config.AbstractInitOnce;
 import com.cell.constants.Constants;
 import com.cell.constants.SpringBridge;
@@ -17,7 +15,6 @@ import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;
 import com.cell.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
@@ -25,21 +22,13 @@ import com.cell.utils.ExtensionClassUtil;
 import io.netty.util.internal.ConcurrentSet;
 import lombok.Data;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.util.ClassUtils;
 
-import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
@@ -172,8 +161,10 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
             }
         }
         LOG.info(Module.CONTAINER, "DefaultActivePluginCollector init success");
-
         SpringExtensionManager.getInstance().setBeanDefinitionMap(pluginBeanDefinitions);
+
+        SpringDependecyFactoryProcessor.getInstance().initOnce(ctx);
+        ExtensionClassFactoryProcessor.getInstance().initOnce(ctx);
     }
 
     private void processExtension(GenericBeanDefinition beanDefinition)
@@ -228,7 +219,6 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
 
     public static class BeanDefListComparator implements Comparator<BeanDefinition>
     {
-
         @Override
         public int compare(BeanDefinition o1, BeanDefinition o2)
         {
@@ -236,6 +226,5 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
             Class<?> clz2 = ((GenericBeanDefinition) o2).getBeanClass();
             return ClassUtil.ordererCompare(clz1, clz2);
         }
-
     }
 }

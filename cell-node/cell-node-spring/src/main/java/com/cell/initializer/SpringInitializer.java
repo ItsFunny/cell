@@ -23,15 +23,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     {
         this.initOnce(null);
         applicationContext.addBeanFactoryPostProcessor(SpringBeanRegistry.getInstance());
-//        applicationContext.addBeanFactoryPostProcessor(SpringDependecyFactoryProcessor.getInstance());
-//        applicationContext.addBeanFactoryPostProcessor(ExtensionClassFactoryProcessor.getInstance());
     }
 
     @Override
     protected void onInit(InitCTX ctx)
     {
         SpringBeanRegistry.getInstance().initOnce(ctx);
-        SpringDependecyFactoryProcessor.getInstance().initOnce(ctx);
-        ExtensionClassFactoryProcessor.getInstance().initOnce(ctx);
     }
 }
