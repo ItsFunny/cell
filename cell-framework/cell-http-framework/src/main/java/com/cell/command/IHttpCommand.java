@@ -6,8 +6,9 @@ package com.cell.command;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-08-27 21:58
+ * @Date 创建时间：2021-08-28 11:04
  */
-public interface ICommand
+public interface IHttpCommand extends ICommand
 {
+
 }

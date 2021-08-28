@@ -8,7 +8,7 @@ package com.cell.constant;
  * @Attention:
  * @Date 创建时间：2021-08-27 22:51
  */
-public class HttpConstants
+public interface HttpConstants
 {
     public static final String PLATFORM = "X-Platform";
     public static final String VERSION_INT = "X-VersionInt";
@@ -26,4 +26,7 @@ public class HttpConstants
     public static final String SIGN_PUBLIC_KEY_HEADER_KEY = "signPublicKey";
 
     public static final long DEFAULT_RESULT_TIME_OUT = 60 * 1000;
+
+
+    long HTTP_ARCHIVE_NOT_READY = 1;
 }

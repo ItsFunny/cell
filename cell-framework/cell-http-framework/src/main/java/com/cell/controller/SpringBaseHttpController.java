@@ -7,6 +7,7 @@ import com.cell.handler.IHttpExceptionHandler;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.CommandContext;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @author Charlie
@@ -38,24 +40,43 @@ public class SpringBaseHttpController
     {
         try
         {
-//            DeferredResult<Object> res = this.fireRead(request, response, command);
-//            return res;
+            DeferredResult<Object> res = this.execute(request, response, command);
+            return res;
         } catch (Throwable e)
         {
 //            response.setStatus(400);
             LOG.error(Module.HTTP_FRAMEWORK, e, "controller request handle fail command id %s", command);
             return this.exceptionHandler.handle(response, e);
         }
-        return null;
     }
 
     private DeferredResult<Object> execute(HttpServletRequest request, HttpServletResponse response, String command) throws HttpFramkeworkException
     {
+        try
+        {
+            this.deny(response);
+            return null;
+        } catch (Throwable e)
+        {
+
+        }
+        if (!this.dispatcher.ready())
+        {
+
+        }
         long resultTimeout = this.getResultTimeout();
         DeferredResult<Object> result = new DeferredResult<>(resultTimeout);
         CommandContext context = new CommandContext(request, response, result, command);
+
         this.dispatcher.dispath(context);
         return result;
+    }
+
+    private void deny(HttpServletResponse response) throws IOException
+    {
+        response.addHeader("code", String.valueOf(HttpConstants.HTTP_ARCHIVE_NOT_READY));
+        response.addHeader("msg", "not ready");
+        response.sendError(HttpStatus.OK.value());
     }
 
 

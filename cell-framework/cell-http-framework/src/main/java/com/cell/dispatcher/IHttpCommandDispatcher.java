@@ -18,4 +18,6 @@ public interface IHttpCommandDispatcher
     void setPort(short port);
 
     void dispath(CommandContext ctx) throws HttpFramkeworkException;
+
+    boolean ready();
 }
