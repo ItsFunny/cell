@@ -44,7 +44,6 @@ public class SpringBaseHttpController
             return res;
         } catch (Throwable e)
         {
-//            response.setStatus(400);
             LOG.error(Module.HTTP_FRAMEWORK, e, "controller request handle fail command id %s", command);
             return this.exceptionHandler.handle(response, e);
         }

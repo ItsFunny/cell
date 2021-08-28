@@ -1,5 +1,7 @@
 package com.cell.command;
 
+import com.cell.model.CommandExecuteResult;
+
 /**
  * @author Charlie
  * @When
@@ -10,5 +12,5 @@ package com.cell.command;
  */
 public interface ICommand
 {
-
+    ICommandExecuteResult execute();
 }

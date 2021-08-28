@@ -2,7 +2,9 @@ package com.cell.manager;
 
 import com.cell.hook.IHttpCommandHook;
 import com.cell.utils.CollectionUtils;
+import lombok.Data;
 
+import javax.annotation.sql.DataSourceDefinitions;
 import java.util.Collection;
 import java.util.Set;
 
@@ -14,6 +16,7 @@ import java.util.Set;
  * @Attention:
  * @Date 创建时间：2021-08-28 14:56
  */
+@Data
 public class CmdHookManager implements IReflectManager
 {
     private static final CmdHookManager instance = new CmdHookManager();

@@ -1,6 +1,4 @@
-package com.cell.annotation;
-
-import com.cell.constants.ManagerConstants;
+package com.cell.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,15 +10,12 @@ import java.lang.annotation.Target;
  * @When
  * @Description
  * @Detail
- * @date 创建时间：2021-08-28 13:27
+ * @date 创建时间：2021-08-28 13:29
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ManagerNode
+public @interface Manager
 {
-    String name() default ManagerConstants.defaultManagerNodeName;
-
+    String name() default "default";
     boolean override() default false;
-
-    String group() default ManagerConstants.defaultManagerName;
 }
