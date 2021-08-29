@@ -25,9 +25,8 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-08-27 21:59
  */
-public class SpringBaseHttpController
+public abstract class SpringBaseHttpController
 {
-
     private IHttpExceptionHandler exceptionHandler;
 
     private IHttpCommandDispatcher dispatcher;
@@ -51,22 +50,22 @@ public class SpringBaseHttpController
 
     private DeferredResult<Object> execute(HttpServletRequest request, HttpServletResponse response, String command) throws HttpFramkeworkException
     {
-        try
-        {
-            this.deny(response);
-            return null;
-        } catch (Throwable e)
-        {
 
-        }
         if (!this.dispatcher.ready())
         {
-
+            try
+            {
+                this.deny(response);
+                return null;
+            } catch (Throwable e)
+            {
+                return null;
+            }
         }
+
         long resultTimeout = this.getResultTimeout();
         DeferredResult<Object> result = new DeferredResult<>(resultTimeout);
         CommandContext context = new CommandContext(request, response, result, command);
-
         this.dispatcher.dispath(context);
         return result;
     }

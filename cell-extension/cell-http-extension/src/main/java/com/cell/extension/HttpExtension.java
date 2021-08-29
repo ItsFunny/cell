@@ -2,9 +2,11 @@ package com.cell.extension;
 
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
+import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.postprocessor.ReactorCache;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
+import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
 
 import java.util.Collection;
@@ -21,6 +23,8 @@ public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
 
+    private IHttpCommandDispatcher dispatcher;
+
     @Plugin
     public IDynamicControllerService dynamicControllerService()
     {
@@ -30,7 +34,8 @@ public class HttpExtension extends AbstractSpringNodeExtension
     @Override
     public void init(INodeContext ctx) throws Exception
     {
-        this.dynamicControllerService=new DynamicControllerServiceImpl();
+        this.dynamicControllerService = new DynamicControllerServiceImpl();
+        this.dispatcher = new DefaultHttpCommandDispatcher();
     }
 
     @Override

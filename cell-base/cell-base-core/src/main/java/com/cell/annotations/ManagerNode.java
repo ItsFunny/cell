@@ -1,6 +1,7 @@
 package com.cell.annotations;
 
 import com.cell.constants.ManagerConstants;
+import com.cell.enums.EnumLifeCycle;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
@@ -23,6 +24,8 @@ public @interface ManagerNode
     boolean override() default false;
 
     String group() default ManagerConstants.defaultManagerName;
+
+    EnumLifeCycle lifeCycle() default EnumLifeCycle.ONCE;
 
     @AliasFor(
             annotation = CellOrder.class,

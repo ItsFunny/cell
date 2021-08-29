@@ -3,7 +3,6 @@ package com.cell.hook;
 import com.cell.chain.IChain;
 import com.cell.command.IHttpCommand;
 import com.cell.hooks.IDeltaChainHook;
-import com.cell.hooks.IHook;
 
 /**
  * @author Charlie

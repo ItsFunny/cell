@@ -18,6 +18,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AnnotaionManagerWrapper
 {
     IReflectManager manager;
-    Map<String, Object> managerNodes = new ConcurrentHashMap<>();
+    Map<String, AnnotationNodeWrapper> managerNodes = new ConcurrentHashMap<>();
 
 }

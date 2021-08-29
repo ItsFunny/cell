@@ -1,12 +1,10 @@
-package com.cell.manager;
+package com.cell.hook;
 
-import com.cell.hook.IHttpCommandHook;
+import com.cell.manager.IReflectManager;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
 
-import javax.annotation.sql.DataSourceDefinitions;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Charlie
@@ -25,29 +23,34 @@ public class CmdHookManager implements IReflectManager
 
     private boolean setted;
 
+    public static CmdHookManager getInstance()
+    {
+        return instance;
+    }
+
 
     @Override
     public void invokeInterestNodes(Collection<Object> nodes)
     {
-        if (instance.setted || CollectionUtils.isEmpty(nodes)) return;
-        IHttpCommandHook tmp = instance.hook;
+        if (this.setted || CollectionUtils.isEmpty(nodes)) return;
+        IHttpCommandHook tmp = this.hook;
         for (Object node : nodes)
         {
             if (!(node instanceof IHttpCommandHook))
             {
                 continue;
             }
-            if (null == instance.hook)
+            if (null == this.hook)
             {
-                instance.hook = (IHttpCommandHook) node;
-                tmp = instance.hook;
+                this.hook = (IHttpCommandHook) node;
+                tmp = this.hook;
             } else
             {
                 tmp.registerNext((IHttpCommandHook) node);
                 tmp = (IHttpCommandHook) node;
             }
         }
-        instance.setted = true;
+        this.setted = true;
     }
 
     @Override

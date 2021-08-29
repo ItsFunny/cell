@@ -1,6 +1,7 @@
 package com.cell.hook;
 
 import com.cell.command.IHttpCommand;
+import com.cell.protocol.CommandContext;
 import lombok.Data;
 
 /**
@@ -15,5 +16,8 @@ import lombok.Data;
 public class HookCommandWrapper
 {
     private IHttpCommand cmd;
+
+    private CommandContext ctx;
+
     private HttpCommandHookResult lastResult;
 }

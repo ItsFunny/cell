@@ -1,6 +1,7 @@
 package com.cell.postprocessors.extension;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.config.AbstractInitOnce;
@@ -12,9 +13,12 @@ import com.cell.exception.ExtensionImportException;
 import com.cell.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
+import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.tool.Banner;
 import com.cell.utils.DateUtils;
+import com.cell.wrapper.AnnotaionManagerWrapper;
+import com.cell.wrapper.AnnotationNodeWrapper;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -41,6 +45,9 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     private Set<String> unimportedSet = new HashSet<>();
     private SpringNodeContext ctx;
     private Map<String, BeanDefinition> BeanDefinitionMap;
+    private Set<Class<?>> nodesSet;
+    private Map<String, AnnotaionManagerWrapper> managers;
+
     private Options allOps;
     private int state = 0;
     private KillThread killThread = new KillThread();
@@ -73,6 +80,23 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     {
         BeanDefinitionMap = beanDefinitionMap;
     }
+
+    public void setManagers(Map<String, AnnotaionManagerWrapper> managers)
+    {
+        this.nodesSet = new HashSet<>();
+        Collection<AnnotaionManagerWrapper> values = managers.values();
+        for (AnnotaionManagerWrapper value : values)
+        {
+            Map<String, AnnotationNodeWrapper> managerNodes = value.getManagerNodes();
+            Collection<AnnotationNodeWrapper> nodes = managerNodes.values();
+            for (AnnotationNodeWrapper node : nodes)
+            {
+                this.nodesSet.add(node.getClass());
+            }
+        }
+        this.managers = managers;
+    }
+
 
     void initCommandLine() throws ContainerException, ParseException, InstantiationException, IllegalAccessException, IllegalStateException
     {
@@ -118,6 +142,12 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         dCtx.setCommandLine(commands);
     }
 
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException
+    {
+        this.replace(bean, beanName);
+        return bean;
+    }
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
@@ -170,7 +200,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             if (state == 1)
             {
                 initContext((ApplicationPreparedEvent) event);
-                LOG.info(Module.CONTAINER, "\n{}", Banner.INIT);
+                LOG.info(Module.CONTAINER, "\n{}", Banner.菩萨保佑);
                 state = 2;
             } else
             {
@@ -180,6 +210,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         {
             if (state == 2)
             {
+                this.finalHandleManager();
                 onStart((ApplicationStartedEvent) event);
                 LOG.info(Module.CONTAINER, "\n{}", Banner.START);
                 state = 3;
@@ -202,10 +233,24 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                     }
                 }
                 state = 4;
+                this.flush();
             } else
             {
                 LOG.warn(Module.CONTAINER, "application ready twice");
             }
+        }
+    }
+
+
+    private void finalHandleManager()
+    {
+        Set<String> keys = managers.keySet();
+        for (String key : keys)
+        {
+            AnnotaionManagerWrapper wrapper = managers.get(key);
+            IReflectManager manager = wrapper.getManager();
+            List<Object> collect = wrapper.getManagerNodes().values().stream().map(p -> p.getNode()).collect(Collectors.toList());
+            manager.invokeInterestNodes(collect);
         }
     }
 
@@ -386,51 +431,33 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         }
     }
 
-//	private void onInit(ApplicationPreparedEvent event) {
-//	init(ctx);
-//}
+    private void replace(Object bean, String beanName)
+    {
+        if (!this.nodesSet.contains(bean.getClass()))
+        {
+            return;
+        }
+        Set<String> keys = this.managers.keySet();
+        for (String key : keys)
+        {
+            AnnotaionManagerWrapper annotaionManagerWrapper = this.managers.get(key);
+            Map<String, AnnotationNodeWrapper> managerNodes = annotaionManagerWrapper.getManagerNodes();
+            Map<String, AnnotationNodeWrapper> nodes = annotaionManagerWrapper.getManagerNodes();
+            Collection<AnnotationNodeWrapper> values = nodes.values();
+            for (AnnotationNodeWrapper value : values)
+            {
+                if (value.getNode() != null && value.getNode().getClass().equals(bean.getClass()))
+                {
+                    LOG.info(Module.CONTAINER, "bean 替换,origin:{},after:{},name:{}", value.getNode(), bean, beanName);
+                    value.setNode(bean);
+                }
+            }
+        }
+    }
 
-//	void init(INodeContext ctx) {
-//		for(INodeExtension extension : extensions) {
-//			try {
-//				if(!unimportedSet.contains(extension)) {
-//					extension.init(ctx);
-//				}
-//			} catch(Throwable e) {
-//				if(extension.isRequired()) {
-//					LOG.error(Module.CONTAINER, e, "extension {} init fail", extension);
-//					throw new ExtensionImportException(String.format("init extension {} fail", extension), e);
-//				} else {
-//					unimportedSet.add(extension);
-//					LOG.warning(Module.CONTAINER, e, "extension {} init fail and stop to import it", extension);
-//				}
-//			}
-//		}
-//	}
-
-
-    //private void onInstall(ApplicationEnvironmentPreparedEvent event) {
-//		install(ctx);
-    //}
-
-
-    //
-//		void install(INodeContext ctx) {
-//			for(INodeExtension extension : extensions) {
-//				try {
-//					if(!unimportedSet.contains(extension)) {
-//						extension.install(ctx);
-//					}
-//				} catch(Throwable e) {
-//					if(extension.isRequired()) {
-//						LOG.error(Module.CONTAINER, e, "extension {} install fail", extension);
-//						throw new ExtensionImportException(String.format("install extension {} fail", extension), e);
-//					} else {
-//						unimportedSet.add(extension);
-//						LOG.warning(Module.CONTAINER, e, "extension {} install fail and stop to import it", extension);
-//					}
-//				}
-//			}
-//		}
+    private void flush()
+    {
+        this.nodesSet = null;
+    }
 
 }

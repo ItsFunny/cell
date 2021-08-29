@@ -23,6 +23,7 @@ import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;
 import com.cell.wrapper.AnnotaionManagerWrapper;
+import com.cell.wrapper.AnnotationNodeWrapper;
 import io.netty.util.internal.ConcurrentSet;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -74,7 +75,6 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = filter.factories;
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> dropOffFactories = new HashSet<>();
-
         for (Class<? extends IBeanDefinitionRegistryPostProcessorAdapter> clz : factories)
         {
             LifeCycle anno = clz.getAnnotation(LifeCycle.class);
@@ -108,7 +108,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         final Map<String, AnnotaionManagerWrapper> managers = new ConcurrentHashMap<>();
 
         final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
-        final Map<String, List<Object>> annotationNodes = new HashMap<>();
+        final Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>();
 
         final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList(ReactorAnno.class);
         final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
@@ -222,16 +222,18 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                 Object node = ReflectUtil.newInstance(clazz);
                 String group = managerNode.group();
                 String name = managerNode.name();
+                boolean asBean = managerNode.lifeCycle() == EnumLifeCycle.ONCE;
                 synchronized (this.annotationNodes)
                 {
-                    List<Object> objects = this.annotationNodes.get(group);
+                    List<AnnotationNodeWrapper> objects = this.annotationNodes.get(group);
                     boolean contains = !CollectionUtils.isEmpty(objects);
                     if (!contains)
                     {
                         objects = new ArrayList<>();
                         this.annotationNodes.put(group, objects);
                     }
-                    objects.add(node);
+                    AnnotationNodeWrapper wp = new AnnotationNodeWrapper(node, asBean);
+                    objects.add(wp);
                     LOG.info(Module.CONTAINER, "nodeManger添加 被注解所包裹的node,group:{},node:{}", group, name);
                 }
             } catch (Exception e)
@@ -247,7 +249,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         Collections.sort(factories, new OrderComparator());
         Set<String> keys = filter.managers.keySet();
 
-        Map<String, List<Object>> annotationNodes = new HashMap<>(filter.annotationNodes);
+        Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>(filter.annotationNodes);
         for (String key : keys)
         {
             if (annotationNodes.containsKey(key)) continue;
@@ -258,13 +260,13 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         {
             IManagerNodeFactory nodeFactory = factory.newInstance();
             IManagerNode node = nodeFactory.createNode();
-            List<Object> objects = annotationNodes.get(node.group());
+            List<AnnotationNodeWrapper> objects = annotationNodes.get(node.group());
             if (CollectionUtils.isEmpty(objects)) continue;
-            objects.add(node);
+            objects.add(new AnnotationNodeWrapper(node, false));
         }
         for (String key : annotationNodes.keySet())
         {
-            List<Object> objects = annotationNodes.get(key);
+            List<AnnotationNodeWrapper> objects = annotationNodes.get(key);
             if (CollectionUtils.isEmpty(objects)) continue;
             Collections.sort(objects, (o1, o2) -> ClassUtil.ordererCompare(o1.getClass(), o2.getClass()));
             AnnotaionManagerWrapper annotaionManagerWrapper = filter.managers.get(key);
@@ -275,8 +277,9 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             String name = null;
             String group = null;
             boolean override = false;
-            for (Object object : objects)
+            for (AnnotationNodeWrapper wp : objects)
             {
+                Object object = wp.getNode();
                 if (object instanceof IManagerNode)
                 {
                     name = ((IManagerNode) object).name();
@@ -296,10 +299,9 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                 }
                 if (!contains || override)
                 {
-                    annotaionManagerWrapper.getManagerNodes().put(name, object);
+                    annotaionManagerWrapper.getManagerNodes().put(name, wp);
                 }
             }
         }
     }
-
 }

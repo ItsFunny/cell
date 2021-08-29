@@ -10,6 +10,7 @@ package com.cell.enums;
  */
 public enum EnumLifeCycle
 {
+    // 代表着不注册为bean
     ONCE((byte) 0),
     LONG_LIFE((byte) 1),
     ;

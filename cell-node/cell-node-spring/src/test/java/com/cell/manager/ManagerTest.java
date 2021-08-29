@@ -1,5 +1,6 @@
 package com.cell.manager;
 
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.initializer.SpringInitializerTest;
 import org.springframework.boot.SpringApplication;
@@ -24,7 +25,14 @@ public class ManagerTest
 
 
     @ManagerNode(group = "mym")
-    public static  class MYONode
+    public static class MYONode
+    {
+
+    }
+
+    @ManagerNode(group = "mym", name = "node2")
+    @ActivePlugin
+    public static class MYONode2
     {
 
     }
@@ -68,6 +76,8 @@ public class ManagerTest
     public static void main(String[] args)
     {
         ApplicationContext ctx = SpringApplication.run(SpringInitializerTest.class, args);
+        MYONode2 bean = ctx.getBean(MYONode2.class);
+        System.out.println(bean);
         System.out.println(ctx);
     }
 

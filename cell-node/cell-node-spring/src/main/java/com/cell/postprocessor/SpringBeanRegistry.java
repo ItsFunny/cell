@@ -170,32 +170,12 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
         }
         LOG.info(Module.CONTAINER, "DefaultActivePluginCollector init success");
         Map<String, AnnotaionManagerWrapper> managers= (Map<String, AnnotaionManagerWrapper>) ctx.getData().get(ConfigConstants.MANAGERS);
-        try
-        {
-            this.finalHandleManager(managers);
-        } catch (Exception e)
-        {
-            // FIXME
-            throw new RuntimeException(e);
-        }
 
         SpringExtensionManager.getInstance().setBeanDefinitionMap(pluginBeanDefinitions);
-        SpringDependecyFactoryProcessor.getInstance().initOnce(ctx);
-        ExtensionClassFactoryProcessor.getInstance().initOnce(ctx);
+        SpringExtensionManager.getInstance().setManagers(managers);
     }
 
 
-
-    private void finalHandleManager(Map<String, AnnotaionManagerWrapper> managers) throws Exception
-    {
-        Set<String> keys = managers.keySet();
-        for (String key : keys)
-        {
-            AnnotaionManagerWrapper wrapper = managers.get(key);
-            IReflectManager manager = wrapper.getManager();
-            manager.invokeInterestNodes(wrapper.getManagerNodes().values());
-        }
-    }
 
     private void processExtension(GenericBeanDefinition beanDefinition)
     {
