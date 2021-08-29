@@ -10,5 +10,4 @@ package com.cell.command;
  */
 public interface IHttpCommand extends ICommand
 {
-
 }

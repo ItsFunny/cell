@@ -1,5 +1,6 @@
 package com.cell.service.impl;
 
+import com.cell.command.ICommandExecuteResult;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
@@ -14,6 +15,7 @@ import com.cell.protocol.CommandContext;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 
+import java.security.acl.LastOwnerException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +33,8 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     private volatile boolean ready;
     private short port;
 
-    private IHttpCommandHook hook;
-
+    private IHttpCommandHook requestHook;
+    private IHttpCommandHook responseHook;
 
     private Map<String, Class<? extends IHttpCommand>> cmdMap = new HashMap<>();
 
@@ -62,7 +64,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             HookCommandWrapper wp = new HookCommandWrapper();
             wp.setCtx(ctx);
             wp.setCmd(cmd);
-            this.hook.hook(wp);
+            this.requestHook.hook(wp);
         } catch (Throwable e)
         {
             throw new HttpFramkeworkException(e.getMessage(), e);
@@ -90,10 +92,11 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
     private class cmdExecuteHook extends AbstractHttpCommandHook
     {
-
         @Override
         protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
         {
+            CommandContext ctx = wrapper.getCtx();
+            ICommandExecuteResult execute = wrapper.getCmd().execute();
             return null;
         }
 
@@ -107,6 +110,8 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        this.hook.registerNext(new cmdExecuteHook());
+        cmdExecuteHook last = new cmdExecuteHook();
+        this.requestHook.registerNext(last);
+        this.responseHook = this.requestHook.revert();
     }
 }

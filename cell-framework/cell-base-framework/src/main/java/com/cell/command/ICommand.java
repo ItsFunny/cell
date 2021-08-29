@@ -13,4 +13,14 @@ import com.cell.model.CommandExecuteResult;
 public interface ICommand
 {
     ICommandExecuteResult execute();
+
+    ICommand getCouple();
+
+
+    default String getId()
+    {
+        return "0";
+    }
+
+    void setId(String id);
 }

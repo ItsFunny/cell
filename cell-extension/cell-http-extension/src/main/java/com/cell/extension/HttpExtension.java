@@ -3,6 +3,7 @@ package com.cell.extension;
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.hook.CmdHookManager;
 import com.cell.postprocessor.ReactorCache;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
@@ -36,6 +37,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         this.dynamicControllerService = new DynamicControllerServiceImpl();
         this.dispatcher = new DefaultHttpCommandDispatcher();
+        ((DefaultHttpCommandDispatcher) this.dispatcher).setHook(CmdHookManager.getInstance().getHook());
     }
 
     @Override

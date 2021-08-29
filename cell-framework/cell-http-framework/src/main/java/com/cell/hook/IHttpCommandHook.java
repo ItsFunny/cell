@@ -15,4 +15,17 @@ import com.cell.hooks.IDeltaChainHook;
 public interface IHttpCommandHook extends IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult>
 {
     void registerNext(IHttpCommandHook next);
+
+    default IHttpCommandHook revert()
+    {
+        IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> ret = this;
+        IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> tmp = this;
+        while (null != tmp)
+        {
+            tmp = tmp.next();
+            ((IHttpCommandHook) ret).registerNext((IHttpCommandHook) tmp);
+            ret = tmp;
+        }
+        return (IHttpCommandHook) ret;
+    }
 }
