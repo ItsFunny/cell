@@ -2,6 +2,7 @@ package com.cell.context;
 
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -21,5 +22,7 @@ public class CTX
         this.data = data;
     }
 
-
+    public CTX(){
+        this.data=new HashMap<>();
+    }
 }

@@ -10,6 +10,7 @@ import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.PriorityOrdered;
 
 import java.util.ArrayList;
@@ -24,13 +25,19 @@ import java.util.List;
  * @Date 创建时间：2021-08-26 22:26
  */
 public class SpringDependecyFactoryProcessor extends AbstractBeanDefiinitionRegistry implements
-        PriorityOrdered, IInitOnce
+        PriorityOrdered
 {
     private static final SpringDependecyFactoryProcessor instance = new SpringDependecyFactoryProcessor();
 
     public static SpringDependecyFactoryProcessor getInstance()
     {
         return instance;
+    }
+
+    @Override
+    protected void onInit(InitCTX ctx)
+    {
+
     }
 
     private class innerInit extends AbstractInitOnce
@@ -43,17 +50,14 @@ public class SpringDependecyFactoryProcessor extends AbstractBeanDefiinitionRegi
         }
     }
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException
-    {
-        SpringBeanDependenciesPostProcessor processor = new SpringBeanDependenciesPostProcessor();
-    }
+
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
+    protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
-//        factory.addBeanPostProcessor(SpringBeanDependenciesPostProcessor.getInstance());
+
     }
+
 
     @Override
     public int getOrder()
@@ -61,11 +65,6 @@ public class SpringDependecyFactoryProcessor extends AbstractBeanDefiinitionRegi
         return SpringBridge.BEAN_REGISTER_ORDERER + 1;
     }
 
-    @Override
-    public void initOnce(InitCTX ctx)
-    {
-        new innerInit().initOnce(ctx);
-    }
 
     @Override
     public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()

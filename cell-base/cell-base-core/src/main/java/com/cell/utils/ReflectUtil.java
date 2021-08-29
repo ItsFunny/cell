@@ -114,13 +114,11 @@ public class ReflectUtil
     }
 
     // FIXME
-    public static Object simpleReflectNew(Class<?> clazz)
+    public static Object newInstance(Class<?> clazz)
     {
         try
         {
-            Constructor cons = clazz.getDeclaredConstructor(null);
-            cons.setAccessible(true);
-            return cons.newInstance(null);
+            return sun.reflect.misc.ReflectUtil.newInstance(clazz);
         } catch (Exception e)
         {
             throw new RuntimeException(e);

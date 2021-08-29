@@ -3,8 +3,11 @@ package com.cell.postprocessor;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.Exclude;
+import com.cell.annotations.LifeCycle;
 import com.cell.annotations.Plugin;
 import com.cell.annotations.ReactorAnno;
+import com.cell.context.InitCTX;
+import com.cell.enums.EnumLifeCycle;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
@@ -25,6 +28,7 @@ import java.util.Map;
  * @Attention:
  * @Date 创建时间：2021-08-29 06:53
  */
+@LifeCycle(lifeCycle = EnumLifeCycle.ONCE)
 public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
 {
     @Override
@@ -59,14 +63,15 @@ public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
     }
 
 
-    @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry beanDefinitionRegistry) throws BeansException
-    {
 
+    @Override
+    protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
+    {
+        System.out.println(2);
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException
+    protected void onInit(InitCTX ctx)
     {
 
     }

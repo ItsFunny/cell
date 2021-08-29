@@ -17,6 +17,8 @@ public interface SpringBridge
     String EXTENSION_FLAG_ATTR = "ActiveExtension";
     String BEAN_NAME_ATTR = "activePluginBeanName";
 
-
+    String defaultPluginPrefixGroup = "activePlugin";
+    String factoryBeanPostPrefix = "factoryPost";
+    String beanPostPrefix="beanPostPrefix";
     String SPRING_BEAN_DEPANDENCIES = "SPRING_BEAN_DEPANDENCIES";
 }

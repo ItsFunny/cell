@@ -1,5 +1,7 @@
 package com.cell;
 
+import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.ICommandExecuteResult;
 import com.cell.command.IDynamicHttpCommand;
 import com.cell.extension.HttpExtension;
@@ -14,6 +16,7 @@ import java.util.List;
 @SpringBootApplication(scanBasePackages = {"com.cell"})
 public class HttpExtensionTest
 {
+    @ReactorAnno
     public static class MyReactor implements IDynamicHttpReactor
     {
         @Override
@@ -23,6 +26,7 @@ public class HttpExtensionTest
         }
     }
 
+    @HttpCmdAnno(uri = "/test")
     public static class MyCmd1 implements IDynamicHttpCommand
     {
         @Override

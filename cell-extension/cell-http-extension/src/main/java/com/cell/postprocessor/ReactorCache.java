@@ -2,6 +2,7 @@ package com.cell.postprocessor;
 
 import com.cell.reactor.IDynamicHttpReactor;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,5 +21,9 @@ public class ReactorCache
     public static void register(Class<?> c, IDynamicHttpReactor h)
     {
         REACTOR_MAP.putIfAbsent(c, h);
+    }
+
+    public static Collection<IDynamicHttpReactor>getReactors(){
+        return REACTOR_MAP.values();
     }
 }

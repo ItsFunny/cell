@@ -38,7 +38,7 @@ import org.springframework.util.ClassUtils;
 import java.util.*;
 
 public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegistry implements BeanDefinitionRegistryPostProcessor,
-        PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware, IInitOnce
+        PriorityOrdered, ResourceLoaderAware, BeanClassLoaderAware
 {
 
     private static final ExtensionClassFactoryProcessor instance = new ExtensionClassFactoryProcessor();
@@ -121,7 +121,7 @@ public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegis
 
 
     @Override
-    public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
+    protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
         int registryId = System.identityHashCode(registry);
         if (this.registriesPostProcessed.contains(registryId))
@@ -236,8 +236,9 @@ public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegis
         }
     }
 
+
     @Override
-    public void initOnce(InitCTX ctx)
+    protected void onInit(InitCTX ctx)
     {
         new innerInit().initOnce(ctx);
     }

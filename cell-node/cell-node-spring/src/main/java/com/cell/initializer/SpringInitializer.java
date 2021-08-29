@@ -2,26 +2,32 @@ package com.cell.initializer;
 
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
-import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.Exclude;
-import com.cell.annotations.ManagerNode;
+import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
+import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
+import com.cell.config.ConfigConstants;
+import com.cell.constants.Constants;
 import com.cell.context.InitCTX;
+import com.cell.enums.EnumLifeCycle;
 import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.manager.IManagerFactory;
+import com.cell.manager.IManagerNode;
 import com.cell.manager.IManagerNodeFactory;
 import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.postprocessor.SpringBeanRegistry;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.ReflectUtil;
+import com.cell.wrapper.AnnotaionManagerWrapper;
 import io.netty.util.internal.ConcurrentSet;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
-import sun.reflect.misc.ReflectUtil;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -37,26 +43,64 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class SpringInitializer extends AbstractInitOnce implements ApplicationContextInitializer<ConfigurableApplicationContext>
 {
+    private List<IBeanDefinitionRegistryPostProcessorAdapter> processors = new ArrayList<>();
+
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext)
     {
-        this.initOnce(null);
+        this.initOnce(new InitCTX());
         applicationContext.addBeanFactoryPostProcessor(SpringBeanRegistry.getInstance());
+        for (IBeanDefinitionRegistryPostProcessorAdapter processor : processors)
+        {
+            applicationContext.addBeanFactoryPostProcessor(processor);
+        }
+        this.processors = null;
     }
 
 
     @Override
     protected void onInit(InitCTX ctx)
     {
+        MultiFilter filter = new MultiFilter();
+        Set<Class<?>> activePlugins = ClassUtil.scanPackage(Constants.SCAN_ROOT, filter);
+        try
+        {
+            this.firstAfterScan(filter);
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+
+        Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = filter.factories;
+        Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> dropOffFactories = new HashSet<>();
+
+        for (Class<? extends IBeanDefinitionRegistryPostProcessorAdapter> clz : factories)
+        {
+            LifeCycle anno = clz.getAnnotation(LifeCycle.class);
+            if (anno != null && anno.lifeCycle() == EnumLifeCycle.ONCE)
+            {
+                IBeanDefinitionRegistryPostProcessorAdapter adapter = (IBeanDefinitionRegistryPostProcessorAdapter) ReflectUtil.newInstance(clz);
+                adapter.choseInterestAnnotations(filter.interestAnnotationsClazzs);
+                processors.add(adapter);
+                continue;
+            }
+            dropOffFactories.add(clz);
+        }
+
+
+        ctx.getData().put(ConfigConstants.ACTIVE_PLUGINS, activePlugins);
+        ctx.getData().put(ConfigConstants.FACTORIES, dropOffFactories);
+        ctx.getData().put(ConfigConstants.MANAGERS, filter.managers);
+        ctx.getData().put(ConfigConstants.interestAnnotationsClazzs, filter.interestAnnotationsClazzs);
         SpringBeanRegistry.getInstance().initOnce(ctx);
+
+        for (IBeanDefinitionRegistryPostProcessorAdapter adapter : processors)
+        {
+            adapter.initOnce(ctx);
+        }
     }
 
-
-    class AnnotaionManagerWrapper
-    {
-        IReflectManager manager;
-        Map<String, Object> managerNodes = new ConcurrentHashMap<>();
-    }
 
     class MultiFilter implements ClassUtil.ClassFilter
     {
@@ -66,8 +110,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
         final Map<String, List<Object>> annotationNodes = new HashMap<>();
 
-        //        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList(HttpCmdAnno.class);
-        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList();
+        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList(ReactorAnno.class);
         final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
 
         // FIXME ,太傻了这种写法
@@ -75,7 +118,10 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         public boolean accept(Class<?> clazz)
         {
             String s = clazz.getName().toLowerCase();
-            if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class) || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs"))
+            if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class)
+                    || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs")
+                    // 特殊指定该类,不对其进行特殊处理
+                    || clazz.equals(SpringBeanRegistry.class))
             {
                 return false;
             }
@@ -147,12 +193,12 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                         LOG.warn(Module.CONTAINER, "重复的managerName,{}", name);
                         if (instance.override())
                         {
-                            wrapper.manager = instance;
+                            wrapper.setManager(instance);
                         }
                     } else
                     {
                         wrapper = new AnnotaionManagerWrapper();
-                        wrapper.manager = instance;
+                        wrapper.setManager(instance);
                         this.managers.put(name, wrapper);
                     }
                 }
@@ -195,5 +241,65 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         }
     }
 
+    private void firstAfterScan(MultiFilter filter) throws Exception
+    {
+        List<Class<? extends IManagerNodeFactory>> factories = new ArrayList<>(filter.nodeFactories);
+        Collections.sort(factories, new OrderComparator());
+        Set<String> keys = filter.managers.keySet();
+
+        Map<String, List<Object>> annotationNodes = new HashMap<>(filter.annotationNodes);
+        for (String key : keys)
+        {
+            if (annotationNodes.containsKey(key)) continue;
+            annotationNodes.put(key, new ArrayList<>());
+        }
+
+        for (Class<? extends IManagerNodeFactory> factory : factories)
+        {
+            IManagerNodeFactory nodeFactory = factory.newInstance();
+            IManagerNode node = nodeFactory.createNode();
+            List<Object> objects = annotationNodes.get(node.group());
+            if (CollectionUtils.isEmpty(objects)) continue;
+            objects.add(node);
+        }
+        for (String key : annotationNodes.keySet())
+        {
+            List<Object> objects = annotationNodes.get(key);
+            if (CollectionUtils.isEmpty(objects)) continue;
+            Collections.sort(objects, (o1, o2) -> ClassUtil.ordererCompare(o1.getClass(), o2.getClass()));
+            AnnotaionManagerWrapper annotaionManagerWrapper = filter.managers.get(key);
+            if (annotaionManagerWrapper == null)
+            {
+                continue;
+            }
+            String name = null;
+            String group = null;
+            boolean override = false;
+            for (Object object : objects)
+            {
+                if (object instanceof IManagerNode)
+                {
+                    name = ((IManagerNode) object).name();
+                    group = ((IManagerNode) object).group();
+                    override = ((IManagerNode) object).override();
+                } else
+                {
+                    name = object.getClass().getAnnotation(ManagerNode.class).name();
+                    group = object.getClass().getAnnotation(ManagerNode.class).group();
+                    override = object.getClass().getAnnotation(ManagerNode.class).override();
+                }
+
+                boolean contains = annotaionManagerWrapper.getManagerNodes().containsKey(name);
+                if (contains)
+                {
+                    LOG.warn(Module.CONTAINER, "重复的node,group:{},name:{}", group, name);
+                }
+                if (!contains || override)
+                {
+                    annotaionManagerWrapper.getManagerNodes().put(name, object);
+                }
+            }
+        }
+    }
 
 }

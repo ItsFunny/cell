@@ -8,6 +8,9 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
@@ -25,10 +28,12 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-08-29 06:19
  */
-public class DynamicControllerServiceImpl implements IDynamicControllerService
+public class DynamicControllerServiceImpl implements IDynamicControllerService, ApplicationContextAware
 {
     @AutoPlugin
     private RequestMappingHandlerMapping handlerMapping;
+
+    private ApplicationContext context;
 
     private static final String executeMethod = "execute";
 
@@ -41,7 +46,7 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
         {
             for (IDynamicHttpCommand cmd : cmds)
             {
-                this.registerCmd(cmd);
+//                this.registerCmd(cmd);
             }
         } catch (Exception e)
         {
@@ -65,6 +70,9 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
         RequestMethodsRequestCondition requestMethodsRequestCondition = new RequestMethodsRequestCondition(getRequestMethod(requestType));
         RequestMappingInfo mappingInfo = new RequestMappingInfo(patternsRequestCondition, requestMethodsRequestCondition, null, null, null, null, null);
         handlerMapping.registerMapping(mappingInfo, annotation.group(), method); // 注册映射处理
+//        Method detectHandlerMethods = handlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
+//        method.setAccessible(true);
+//        method.invoke(requestMappingHandlerMapping,"myc");
     }
 
     public RequestMethod getRequestMethod(EnumHttpRequestType requestType)
@@ -78,6 +86,12 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
             default:
                 throw new RuntimeException("asd");
         }
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
+    {
+        this.context = applicationContext;
     }
 }
 
