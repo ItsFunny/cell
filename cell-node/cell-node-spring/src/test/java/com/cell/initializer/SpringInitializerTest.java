@@ -1,13 +1,12 @@
 package com.cell.initializer;
 
-import com.cell.annotation.ActivePlugin;
-import com.cell.annotation.AutoPlugin;
-import com.cell.annotation.Plugin;
+import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.AutoPlugin;
+import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;

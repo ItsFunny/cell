@@ -12,6 +12,7 @@
         <module>cell-bee</module>
         <module>cell-node</module>
         <module>cell-framework</module>
+        <module>cell-extension</module>
     </modules>
     <packaging>pom</packaging>
 

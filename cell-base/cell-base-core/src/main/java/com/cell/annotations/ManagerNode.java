@@ -23,4 +23,10 @@ public @interface ManagerNode
     boolean override() default false;
 
     String group() default ManagerConstants.defaultManagerName;
+
+    @AliasFor(
+            annotation = CellOrder.class,
+            attribute = "value"
+    )
+    int orderValue() default 0;
 }

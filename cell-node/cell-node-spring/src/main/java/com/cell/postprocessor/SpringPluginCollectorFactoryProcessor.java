@@ -1,8 +1,8 @@
-package com.cell.postprocessfactory;
+package com.cell.postprocessor;
 
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.annotation.AutoPlugin;
+import com.cell.annotations.AutoPlugin;
 import com.cell.collector.AbstractPluginCollector;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostP
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.core.PriorityOrdered;
 import org.springframework.util.ClassUtils;
 

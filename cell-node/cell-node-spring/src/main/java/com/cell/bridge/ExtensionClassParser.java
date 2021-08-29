@@ -1,6 +1,6 @@
 package com.cell.bridge;
 
-import com.cell.annotation.Plugin;
+import com.cell.annotations.Plugin;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.postprocessors.extension.PluginMethod;

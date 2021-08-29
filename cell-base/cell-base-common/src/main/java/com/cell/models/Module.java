@@ -24,6 +24,7 @@ public enum Module
     CONTAINER_REGISTRY((short) 100, "container registry"),
     CONTAINER((short) 101, "container"),
     HTTP_FRAMEWORK((short) 102, "HTTP_FRAMEWORK"),
+    MVC((short) 103, "MVC"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

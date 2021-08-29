@@ -1,16 +1,14 @@
-package com.cell.postprocessfactory;
+package com.cell.postprocessor;
 
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.annotation.Exclude;
+import com.cell.annotations.Exclude;
 import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class SpringBeanRegistryTest
 {

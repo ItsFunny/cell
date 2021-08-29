@@ -1,4 +1,4 @@
-package com.cell.annotation;
+package com.cell.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

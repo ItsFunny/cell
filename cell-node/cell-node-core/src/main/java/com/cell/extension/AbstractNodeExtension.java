@@ -1,7 +1,7 @@
 package com.cell.extension;
 
-import com.cell.annotation.ActivePlugin;
-import com.cell.annotation.Required;
+import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.Required;
 
 /**
  * @author Charlie

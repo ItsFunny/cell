@@ -1,14 +1,13 @@
-package com.cell.annotation;
+package com.cell.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.TYPE)
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-// Configuration
-public @interface ActivePlugin
+public @interface Plugin
 {
-    String name() default "";
+	String[] name() default {};
 }

@@ -1,9 +1,9 @@
-package com.cell.postprocessfactory;
+package com.cell.postprocessor;
 
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.annotation.*;
+import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
@@ -31,10 +31,9 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.core.PriorityOrdered;
-import org.springframework.format.support.FormatterPropertyEditorAdapter;
-import sun.reflect.generics.scope.ClassScope;
 import sun.reflect.misc.ReflectUtil;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -159,6 +158,7 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
             try
             {
                 IBeanDefinitionRegistryPostProcessorAdapter adapter = clz.newInstance();
+                adapter.choseInterestAnnotations(filter.interestAnnotationsClazzs);
                 List<Class<? extends IBeanPostProcessortAdapter>> toRegistryPostProcessor = adapter.getToRegistryPostProcessor();
                 if (CollectionUtils.isEmpty(toRegistryPostProcessor))
                 {
@@ -251,7 +251,6 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
                     annotaionManagerWrapper.managerNodes.put(name, object);
                 }
             }
-
         }
 //        AnnotaionManagerWrapper annotaionManagerWrapper = filter.managers.get(node.group());
 //        if (annotaionManagerWrapper == null)
@@ -301,12 +300,15 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
 
     class MultiFilter implements ClassUtil.ClassFilter
     {
-
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = new ConcurrentSet<>();
         final Map<String, AnnotaionManagerWrapper> managers = new ConcurrentHashMap<>();
 
         final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
         final Map<String, List<Object>> annotationNodes = new HashMap<>();
+
+        //        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList(HttpCmdAnno.class);
+        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList();
+        final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
 
         // FIXME ,太傻了这种写法
         @Override
@@ -348,6 +350,23 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
         // 只扫描2种factory的类
         private void handleIsSpecial(Class<?> clazz)
         {
+            for (Class<? extends Annotation> c : this.interestAnnotations)
+            {
+                if (clazz.getAnnotation(c) != null)
+                {
+                    synchronized (this.interestAnnotationsClazzs)
+                    {
+                        List<Class<?>> classes = this.interestAnnotationsClazzs.get(c);
+                        if (CollectionUtils.isEmpty(classes))
+                        {
+                            classes = new ArrayList<>();
+                            this.interestAnnotationsClazzs.put(c, classes);
+                        }
+                        classes.add(clazz);
+                    }
+                }
+            }
+
             if (IManagerFactory.class.isAssignableFrom(clazz))
             {
                 IManagerFactory factory = null;
@@ -404,7 +423,7 @@ public class SpringBeanRegistry extends AbstractInitOnce implements
                     if (!contains)
                     {
                         objects = new ArrayList<>();
-                        this.annotationNodes.put(group,objects);
+                        this.annotationNodes.put(group, objects);
                     }
                     objects.add(node);
                     LOG.info(Module.CONTAINER, "nodeManger添加 被注解所包裹的node,group:{},node:{}", group, name);

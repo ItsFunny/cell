@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.annotation.ManagerNode;
+import com.cell.annotations.ManagerNode;
 import com.cell.initializer.SpringInitializerTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Charlie
