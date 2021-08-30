@@ -13,4 +13,9 @@ import java.io.IOException;
 public interface IContext
 {
     void discard() throws IOException;
+
+    // 自动返回错误
+    void success(Object ret);
+
+    void fail(Object obj);
 }

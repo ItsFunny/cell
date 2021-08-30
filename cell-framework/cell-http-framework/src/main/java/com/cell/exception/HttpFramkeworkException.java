@@ -1,5 +1,6 @@
 package com.cell.exception;
 
+import com.cell.command.IHttpCommand;
 import com.cell.enums.CellError;
 import com.cell.exceptions.AbstractZZException;
 
@@ -13,10 +14,13 @@ import com.cell.exceptions.AbstractZZException;
  */
 public class HttpFramkeworkException extends AbstractZZException
 {
+    private IHttpCommand command;
+    private String errorDesc; // 业务返回的错误信息
 
-    public HttpFramkeworkException(String msg)
+    public HttpFramkeworkException(IHttpCommand command,String errorDesc,String msg)
     {
         super(msg);
+        this.errorDesc=errorDesc;
     }
 
     public HttpFramkeworkException(String message, String message1)

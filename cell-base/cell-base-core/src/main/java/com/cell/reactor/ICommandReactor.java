@@ -1,6 +1,8 @@
 package com.cell.reactor;
 
+import com.cell.exceptions.CommandException;
 import com.cell.protocol.ICommand;
+import com.cell.protocol.IContext;
 
 /**
  * @author Charlie
@@ -12,5 +14,7 @@ import com.cell.protocol.ICommand;
  */
 public interface ICommandReactor
 {
-    void execute(ICommand cmd);
+    void execute(IContext context) throws CommandException;
+
+    void registerCmd(ICommand cmd);
 }

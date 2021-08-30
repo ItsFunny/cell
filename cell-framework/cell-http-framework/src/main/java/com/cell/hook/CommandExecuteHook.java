@@ -4,7 +4,9 @@ import com.cell.annotations.CellOrder;
 import com.cell.annotations.ManagerNode;
 import com.cell.command.IHttpCommand;
 import com.cell.constant.HookConstants;
+import com.cell.exceptions.CommandException;
 import com.cell.hooks.IDeltaChainHook;
+import com.cell.reactor.IHttpReactor;
 
 /**
  * @author Charlie
@@ -18,12 +20,17 @@ import com.cell.hooks.IDeltaChainHook;
 @CellOrder(value = Integer.MAX_VALUE)
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
-
     @Override
     protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
     {
-        IHttpCommand cmd = wrapper.getCmd();
-        cmd.execute();
+        IHttpReactor reactor = wrapper.getReactor();
+        try
+        {
+            reactor.execute(wrapper.getContext());
+        } catch (CommandException e)
+        {
+            // FIXME ?
+        }
         return null;
     }
 

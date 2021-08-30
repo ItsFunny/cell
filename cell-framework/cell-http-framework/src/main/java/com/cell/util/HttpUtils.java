@@ -37,6 +37,4 @@ public class HttpUtils
         }
         return ip.trim();
     }
-
-
 }

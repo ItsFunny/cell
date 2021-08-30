@@ -38,6 +38,7 @@ public abstract class AbstractCommand implements ICommand
     public AbstractCommand()
     {
         this.commandAnnotation = CommandUtils.getCommandAnno(this.getClass());
+        this.current=this;
         this.head = newHead();
     }
 

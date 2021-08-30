@@ -14,7 +14,10 @@ public interface IDeltaChainHook<T, R>
 {
     R hook(T t);
 
+    void exceptionCaught(Exception e);
     IDeltaChainHook<T, R> next();
+
+
 
 
     boolean active();

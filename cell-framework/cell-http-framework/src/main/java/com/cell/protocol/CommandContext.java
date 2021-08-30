@@ -33,7 +33,6 @@ public class CommandContext
     private Throwable exception;
     private String sessionKey;
     private String funcName;
-
     private HttpSummary summary;
 
     public CommandContext(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
@@ -97,7 +96,6 @@ public class CommandContext
                 {
                     getHttpResponse().sendError(HttpStatus.BAD_REQUEST.value());
                 }
-
             } else
             {
                 if (!getHttpResponse().isCommitted())

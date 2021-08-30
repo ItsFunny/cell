@@ -4,6 +4,7 @@ package com.cell.utils;
 import com.cell.annotations.CellOrder;
 import com.cell.concurrent.base.DefaultThreadFactory;
 import com.cell.constants.Constants;
+import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import io.netty.channel.DefaultEventLoopGroup;
@@ -834,6 +835,16 @@ public class ClassUtil
         int value1 = anno1 != null ? anno1.value() : Constants.DEFAULT_ORDER;
         int value2 = anno2 != null ? anno2.value() : Constants.DEFAULT_ORDER;
         return Integer.compare(value1, value2);
+    }
+
+    public static Annotation mustGetAnnotation(Class<?> clz, Class<? extends Annotation> a)
+    {
+        Annotation annotation = getAnnotation(clz, a);
+        if (null == annotation)
+        {
+            throw new ProgramaException("as");
+        }
+        return annotation;
     }
 
     public static Annotation getAnnotation(Class<?> clz, Class<? extends Annotation> a)

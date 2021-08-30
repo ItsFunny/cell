@@ -16,6 +16,7 @@ import com.cell.utils.ClassUtil;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +36,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     private short port;
 
     private IHttpCommandHook requestHook;
-    private IHttpCommandHook responseHook;
+    private IHttpCommandHook reverseHook;
 
     private Map<String, Class<? extends IHttpCommand>> cmdMap = new HashMap<>();
     private Map<String, IHttpReactor> reactorMap = new HashMap<>();
@@ -57,14 +58,16 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     {
         try
         {
-            IHttpCommand cmd = this.getCmd(ctx);
-            if (null == cmd)
+            IHttpReactor reactor = this.getReactor(ctx.getURI());
+            if (null == reactor)
             {
                 ctx.discard();
                 return;
             }
             HookCommandWrapper wp = new HookCommandWrapper();
-            wp.setCmd(cmd);
+            wp.setReactor(reactor);
+            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, reverseHook);
+            wp.setContext(commandContext);
             this.requestHook.hook(wp);
         } catch (Throwable e)
         {
@@ -89,23 +92,28 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         }
     }
 
-    private IHttpCommand getCmd(CommandContext ctx) throws IllegalAccessException, InstantiationException
+//    private IHttpCommand getCmd(CommandContext ctx) throws IllegalAccessException, InstantiationException
+//    {
+//        Class<? extends IHttpCommand> cmd = this.cmdMap.get(ctx.getURI());
+//        if (cmd == null)
+//        {
+//            return null;
+//        }
+//        IHttpReactor reactor = this.reactorMap.get(ctx.getURI());
+//        if (null == reactor)
+//        {
+//            throw new ProgramaException("asd");
+//        }
+//        IHttpCommand ret = cmd.newInstance();
+//        ret.setReactor(reactor);
+//        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx);
+//        ret.setCtx(commandContext);
+//        return ret;
+//    }
+
+    private IHttpReactor getReactor(String uri)
     {
-        Class<? extends IHttpCommand> cmd = this.cmdMap.get(ctx.getURI());
-        if (cmd == null)
-        {
-            return null;
-        }
-        IHttpReactor reactor = this.reactorMap.get(ctx.getURI());
-        if (null == reactor)
-        {
-            throw new ProgramaException("asd");
-        }
-        IHttpCommand ret = cmd.newInstance();
-        ret.setReactor(reactor);
-        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx);
-        ret.setCtx(commandContext);
-        return ret;
+        return this.reactorMap.get(uri);
     }
 
     @Override
@@ -124,6 +132,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        this.responseHook = this.requestHook.revert();
+        this.reverseHook = this.requestHook.revert();
     }
 }

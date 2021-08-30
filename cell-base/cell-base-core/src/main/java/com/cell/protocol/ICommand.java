@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public interface ICommand extends ISerializable
 {
-    ICommandExecuteResult execute(ICommandReactor reactor);
+    ICommandExecuteResult execute();
 
     void discard() throws IOException;
 

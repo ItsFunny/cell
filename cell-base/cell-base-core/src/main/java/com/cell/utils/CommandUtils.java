@@ -22,4 +22,17 @@ public class CommandUtils
         }
         return anno;
     }
+//    public static String getSequenceId(ICommand cmd)
+//    {
+//        if (cmd == null)
+//        {
+//            return null;
+//        }
+//        String sequenceId = cmd.getId();
+//        if (StringUtils.isEmpty(sequenceId) || "0".equals(sequenceId))
+//        {
+//            sequenceId = cmd.getCtx().getHttpSummary().getSequenceId();
+//        }
+//        return sequenceId;
+//    }
 }

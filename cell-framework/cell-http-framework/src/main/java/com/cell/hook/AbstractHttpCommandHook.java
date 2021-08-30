@@ -38,6 +38,15 @@ public abstract class AbstractHttpCommandHook implements IHttpCommandHook
         }
     }
 
+    @Override
+    public void exceptionCaught(Exception e)
+    {
+        this.onExceptionCaught(e);
+        if (null != this.next && this.next.active())
+        {
+            this.next.exceptionCaught(e);
+        }
+    }
 
     @Override
     public void registerNext(IHttpCommandHook next)

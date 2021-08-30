@@ -1,5 +1,6 @@
 package com.cell.context;
 
+import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.CommandContext;
 import lombok.Data;
 
@@ -14,8 +15,8 @@ import lombok.Data;
 @Data
 public class DefaultHttpCommandContext extends AbstractHttpCommandContext
 {
-    public DefaultHttpCommandContext(CommandContext commandContext)
+    public DefaultHttpCommandContext(CommandContext commandContext, IHttpCommandHook hk)
     {
-        super(commandContext);
+        super(commandContext,hk);
     }
 }

@@ -27,4 +27,6 @@ public class HttpSummary
     private String deviceId;
     private String networkType;
     private String sequenceId;
+
+    private long timeOut;
 }
