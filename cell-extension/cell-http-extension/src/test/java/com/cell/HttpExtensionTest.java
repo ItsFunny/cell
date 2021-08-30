@@ -1,20 +1,11 @@
 package com.cell;
 
-import com.cell.annotations.HttpCmdAnno;
-import com.cell.annotations.ReactorAnno;
-import com.cell.command.ICommandExecuteResult;
-import com.cell.command.IDynamicHttpCommand;
 import com.cell.controller.SpringBaseHttpController;
 import com.cell.extension.HttpExtension;
-import com.cell.reactor.IDynamicHttpReactor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.bind.annotation.RequestMapping;
-import sun.jvm.hotspot.jdi.SAPIDAttachingConnector;
-
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication(scanBasePackages = {"com.cell"})
 public class HttpExtensionTest

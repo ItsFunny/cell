@@ -15,6 +15,7 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -833,5 +834,15 @@ public class ClassUtil
         int value1 = anno1 != null ? anno1.value() : Constants.DEFAULT_ORDER;
         int value2 = anno2 != null ? anno2.value() : Constants.DEFAULT_ORDER;
         return Integer.compare(value1, value2);
+    }
+
+    public static Annotation getAnnotation(Class<?> clz, Class<? extends Annotation> a)
+    {
+        Annotation annotation = clz.getAnnotation(a);
+        if (null == annotation)
+        {
+            throw new RuntimeException("asd");
+        }
+        return annotation;
     }
 }

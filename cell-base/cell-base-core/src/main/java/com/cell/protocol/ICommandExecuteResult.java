@@ -1,4 +1,4 @@
-package com.cell.command;
+package com.cell.protocol;
 
 /**
  * @author Charlie

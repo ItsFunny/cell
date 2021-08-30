@@ -17,7 +17,5 @@ public class HookCommandWrapper
 {
     private IHttpCommand cmd;
 
-    private CommandContext ctx;
-
     private HttpCommandHookResult lastResult;
 }

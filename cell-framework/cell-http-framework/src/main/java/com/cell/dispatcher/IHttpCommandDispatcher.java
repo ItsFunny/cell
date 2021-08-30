@@ -2,6 +2,7 @@ package com.cell.dispatcher;
 
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.protocol.CommandContext;
+import com.cell.reactor.IHttpReactor;
 
 /**
  * @author Charlie
@@ -18,6 +19,8 @@ public interface IHttpCommandDispatcher
     void setPort(short port);
 
     void dispath(CommandContext ctx) throws HttpFramkeworkException;
+
+    void addReactor(IHttpReactor reactor);
 
     boolean ready();
 }

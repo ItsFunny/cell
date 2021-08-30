@@ -13,6 +13,7 @@
         <module>cell-node</module>
         <module>cell-framework</module>
         <module>cell-extension</module>
+        <module>cell-demo</module>
     </modules>
     <packaging>pom</packaging>
 

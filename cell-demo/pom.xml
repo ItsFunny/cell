@@ -3,24 +3,30 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell-framework</artifactId>
+        <artifactId>cell</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-base-framework</artifactId>
+    <artifactId>cell-demo</artifactId>
+    <packaging>pom</packaging>
 
-    <name>cell-base-framework</name>
+    <name>cell-demo</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <modules>
+        <module>cell-demo-http</module>
+    </modules>
 
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-core</artifactId>
+            <artifactId>cell-http-framework</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
+
     </dependencies>
 </project>

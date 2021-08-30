@@ -1,5 +1,7 @@
 package com.cell.controller;
 
+import cn.tass.math.raw.Mod;
+import com.cell.annotations.AutoPlugin;
 import com.cell.constant.HttpConstants;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
@@ -30,6 +32,22 @@ public abstract class SpringBaseHttpController
     private IHttpExceptionHandler exceptionHandler;
 
     private IHttpCommandDispatcher dispatcher;
+
+    protected abstract void initDispatcher(IHttpCommandDispatcher dispatcher);
+
+    @AutoPlugin
+    public void setDispacther(IHttpCommandDispatcher dispatcher) throws Exception
+    {
+        this.dispatcher = dispatcher;
+        try
+        {
+            initDispatcher(dispatcher);
+        } catch (Throwable e)
+        {
+            LOG.error(Module.HTTP_FRAMEWORK, e, "init dispacther fail");
+            throw e;
+        }
+    }
 
 
     @RequestMapping("/{command}")
@@ -77,11 +95,8 @@ public abstract class SpringBaseHttpController
         response.sendError(HttpStatus.OK.value());
     }
 
-
     public long getResultTimeout()
     {
         return HttpConstants.DEFAULT_RESULT_TIME_OUT;
     }
-
-
 }

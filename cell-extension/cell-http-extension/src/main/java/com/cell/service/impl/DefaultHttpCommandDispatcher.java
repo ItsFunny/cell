@@ -1,22 +1,23 @@
 package com.cell.service.impl;
 
-import com.cell.command.ICommandExecuteResult;
+import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
+import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
-import com.cell.hook.AbstractHttpCommandHook;
+import com.cell.exceptions.ProgramaException;
 import com.cell.hook.HookCommandWrapper;
-import com.cell.hook.HttpCommandHookResult;
 import com.cell.hook.IHttpCommandHook;
-import com.cell.hooks.IDeltaChainHook;
 import com.cell.protocol.CommandContext;
+import com.cell.reactor.IHttpReactor;
+import com.cell.utils.ClassUtil;
 import lombok.Data;
 import org.springframework.beans.factory.InitializingBean;
 
-import java.security.acl.LastOwnerException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     private IHttpCommandHook responseHook;
 
     private Map<String, Class<? extends IHttpCommand>> cmdMap = new HashMap<>();
+    private Map<String, IHttpReactor> reactorMap = new HashMap<>();
 
     @Override
     public short getPort()
@@ -62,7 +64,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
                 return;
             }
             HookCommandWrapper wp = new HookCommandWrapper();
-            wp.setCtx(ctx);
             wp.setCmd(cmd);
             this.requestHook.hook(wp);
         } catch (Throwable e)
@@ -72,10 +73,39 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
     }
 
+    @Override
+    public void addReactor(IHttpReactor reactor)
+    {
+        List<Class<? extends IHttpCommand>> clist = reactor.getHttpCommandList();
+        for (Class<? extends IHttpCommand> cc : clist)
+        {
+            HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
+            if (this.cmdMap.containsKey(anno.uri()))
+            {
+                throw new ProgramaException(String.format("duplicated command %s uri %s", cc, anno.uri()));
+            }
+            this.cmdMap.put(anno.uri(), cc);
+            this.reactorMap.put(anno.uri(), reactor);
+        }
+    }
+
     private IHttpCommand getCmd(CommandContext ctx) throws IllegalAccessException, InstantiationException
     {
         Class<? extends IHttpCommand> cmd = this.cmdMap.get(ctx.getURI());
-        return cmd == null ? null : cmd.newInstance();
+        if (cmd == null)
+        {
+            return null;
+        }
+        IHttpReactor reactor = this.reactorMap.get(ctx.getURI());
+        if (null == reactor)
+        {
+            throw new ProgramaException("asd");
+        }
+        IHttpCommand ret = cmd.newInstance();
+        ret.setReactor(reactor);
+        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx);
+        ret.setCtx(commandContext);
+        return ret;
     }
 
     @Override
@@ -90,28 +120,10 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         this.ready = true;
     }
 
-    private class cmdExecuteHook extends AbstractHttpCommandHook
-    {
-        @Override
-        protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
-        {
-            CommandContext ctx = wrapper.getCtx();
-            ICommandExecuteResult execute = wrapper.getCmd().execute();
-            return null;
-        }
-
-        @Override
-        public IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> next()
-        {
-            return null;
-        }
-    }
 
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        cmdExecuteHook last = new cmdExecuteHook();
-        this.requestHook.registerNext(last);
         this.responseHook = this.requestHook.revert();
     }
 }

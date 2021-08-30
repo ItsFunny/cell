@@ -23,7 +23,14 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
     protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
     {
         IHttpCommand cmd = wrapper.getCmd();
+        cmd.execute();
         return null;
+    }
+
+    @Override
+    protected void onExceptionCaught(Exception e)
+    {
+
     }
 
     @Override

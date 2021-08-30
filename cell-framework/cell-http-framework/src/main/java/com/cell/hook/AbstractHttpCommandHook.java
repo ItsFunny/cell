@@ -13,6 +13,8 @@ public abstract class AbstractHttpCommandHook implements IHttpCommandHook
 {
     protected abstract HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper);
 
+    protected abstract void onExceptionCaught(Exception e);
+
     private IHttpCommandHook next;
 
     private boolean active = true;
@@ -20,13 +22,20 @@ public abstract class AbstractHttpCommandHook implements IHttpCommandHook
     @Override
     public HttpCommandHookResult hook(HookCommandWrapper wrapper)
     {
-        HttpCommandHookResult res = this.onDeltaHook(wrapper);
-        if (null != this.next && this.next.active())
+        try
         {
-            wrapper.setLastResult(res);
-            res = this.next.hook(wrapper);
+            HttpCommandHookResult res = this.onDeltaHook(wrapper);
+            if (null != this.next && this.next.active())
+            {
+                wrapper.setLastResult(res);
+                res = this.next.hook(wrapper);
+            }
+            return res;
+        } catch (Exception e)
+        {
+            this.onExceptionCaught(e);
+            throw e;
         }
-        return res;
     }
 
 

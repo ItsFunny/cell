@@ -1,5 +1,7 @@
 package com.cell.command;
 
+import com.cell.protocol.ICommand;
+
 /**
  * @author Charlie
  * @When

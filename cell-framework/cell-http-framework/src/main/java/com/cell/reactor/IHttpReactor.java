@@ -12,7 +12,7 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-08-28 22:51
  */
-public interface IHttpReactor extends IReactor
+public interface IHttpReactor extends ICommandReactor
 {
-    List<IHttpCommand> getHttpCommandList();
+    List<Class<? extends IHttpCommand>> getHttpCommandList();
 }

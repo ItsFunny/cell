@@ -37,12 +37,12 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         this.dynamicControllerService = new DynamicControllerServiceImpl();
         this.dispatcher = new DefaultHttpCommandDispatcher();
-        ((DefaultHttpCommandDispatcher) this.dispatcher).setHook(CmdHookManager.getInstance().getHook());
     }
 
     @Override
     public void start(INodeContext ctx) throws Exception
     {
+        ((DefaultHttpCommandDispatcher) this.dispatcher).setRequestHook(CmdHookManager.getInstance().getHook());
         Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
         for (IDynamicHttpReactor reactor : reactors)
         {
