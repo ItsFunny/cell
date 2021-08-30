@@ -31,6 +31,11 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         return this.dynamicControllerService;
     }
+    @Plugin
+    public IHttpCommandDispatcher dispatcher()
+    {
+        return this.dispatcher;
+    }
 
     @Override
     public void init(INodeContext ctx) throws Exception

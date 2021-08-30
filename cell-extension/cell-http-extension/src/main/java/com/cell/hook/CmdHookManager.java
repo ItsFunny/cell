@@ -1,5 +1,6 @@
 package com.cell.hook;
 
+import com.cell.constant.HookConstants;
 import com.cell.manager.IReflectManager;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
@@ -56,7 +57,7 @@ public class CmdHookManager implements IReflectManager
     @Override
     public String name()
     {
-        return "HOOK";
+        return HookConstants.GROUP_HOOK;
     }
 
     @Override

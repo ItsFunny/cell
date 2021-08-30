@@ -33,7 +33,7 @@ import java.util.Map;
 public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean
 {
     private volatile boolean ready;
-    private short port;
+    private short port=8080;
 
     private IHttpCommandHook requestHook;
     private IHttpCommandHook reverseHook;
@@ -125,6 +125,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.reverseHook = this.requestHook.revert();
         this.ready = true;
     }
 
@@ -132,6 +133,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        this.reverseHook = this.requestHook.revert();
+
     }
 }

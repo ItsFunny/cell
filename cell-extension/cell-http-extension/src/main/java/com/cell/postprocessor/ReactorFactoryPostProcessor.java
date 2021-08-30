@@ -11,6 +11,7 @@ import com.cell.enums.EnumLifeCycle;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -35,6 +36,9 @@ public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
     public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
         List<Class<?>> reactors = classListMap.get(ReactorAnno.class);
+        if (CollectionUtils.isEmpty(reactors)){
+            return;
+        }
         for (Class<?> reactor : reactors)
         {
             if (reactor.getAnnotation(Plugin.class) != null || reactor.getAnnotation(Exclude.class) != null)

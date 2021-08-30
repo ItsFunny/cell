@@ -26,6 +26,11 @@
             <artifactId>cell-base-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-base-configuration</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>
 

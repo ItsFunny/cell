@@ -1,6 +1,7 @@
 package com.cell;
 
 import com.cell.controller.SpringBaseHttpController;
+import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.extension.HttpExtension;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,6 +36,11 @@ public class HttpExtensionTest
     public static class MyController extends SpringBaseHttpController
     {
 
+        @Override
+        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
+        {
+
+        }
     }
 
     public static void main(String[] args)

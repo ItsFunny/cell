@@ -23,9 +23,24 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-http-framework</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-node-spring</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-node-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
