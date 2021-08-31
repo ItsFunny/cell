@@ -11,4 +11,5 @@ package com.cell.constants;
 public interface NetworkConstants
 {
     String SESSION_KEY = "SESSION_KEY";
+    String TIME_OUT = "TIME_OUT";
 }

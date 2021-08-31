@@ -43,7 +43,7 @@ public class App
     }
 
     @Command(commandId = 1, couple = MyCmdCouple.class)
-    @HttpCmdAnno(uri = "/demo")
+    @HttpCmdAnno(uri = "/my/demo")
     public static class MyCMd extends AbstractHttpCommand
     {
 

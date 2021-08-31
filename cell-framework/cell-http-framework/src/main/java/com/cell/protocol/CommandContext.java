@@ -6,6 +6,7 @@ import com.cell.enums.CellError;
 import com.cell.exceptions.CommonBusinessException;
 import com.cell.exceptions.MessageNotDoneException;
 import com.cell.util.HttpUtils;
+import com.cell.utils.StringUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -36,16 +37,31 @@ public class CommandContext
     private HttpSummary summary;
 
     public CommandContext(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                          DeferredResult<Object> responseResult, String thirdPath)
+                          long defaultTimeount,
+                          String thirdPath)
     {
+
         this.httpRequest = httpRequest;
         this.httpResponse = httpResponse;
-        this.responseResult = responseResult;
+
         this.requestTimestamp = System.currentTimeMillis();
         this.funcName = thirdPath;
         summary = collectSummary(); // 从servletRequest中收集基本信息
         sessionKey = getHeaderData(NetworkConstants.SESSION_KEY);
+        String timeout = getHeaderData(NetworkConstants.TIME_OUT);
+        if (!StringUtils.isEmpty(timeout))
+        {
+            try
+            {
+                defaultTimeount = Long.parseLong(timeout);
+            } catch (Exception e)
+            {
+            }
+        }
+        DeferredResult<Object> responseResult = new DeferredResult<>(defaultTimeount);
+        this.responseResult = responseResult;
     }
+
 
     private HttpSummary collectSummary()
     {
@@ -106,7 +122,9 @@ public class CommandContext
             }
         }
     }
-    public String getURI() {
+
+    public String getURI()
+    {
         return this.httpRequest.getRequestURI();
     }
 }

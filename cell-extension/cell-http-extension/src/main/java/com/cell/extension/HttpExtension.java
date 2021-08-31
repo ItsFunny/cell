@@ -31,6 +31,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         return this.dynamicControllerService;
     }
+
     @Plugin
     public IHttpCommandDispatcher dispatcher()
     {
@@ -48,6 +49,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     public void start(INodeContext ctx) throws Exception
     {
         ((DefaultHttpCommandDispatcher) this.dispatcher).setRequestHook(CmdHookManager.getInstance().getHook());
+        ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
         Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
         for (IDynamicHttpReactor reactor : reactors)
         {

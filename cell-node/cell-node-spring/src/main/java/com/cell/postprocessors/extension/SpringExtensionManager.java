@@ -16,6 +16,7 @@ import com.cell.log.LogLevel;
 import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.tool.Banner;
+import com.cell.utils.CollectionUtils;
 import com.cell.utils.DateUtils;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
@@ -433,6 +434,10 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
 
     private void replace(Object bean, String beanName)
     {
+        if (CollectionUtils.isEmpty(this.nodesSet))
+        {
+            return;
+        }
         if (!this.nodesSet.contains(bean.getClass()))
         {
             return;

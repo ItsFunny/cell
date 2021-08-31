@@ -68,7 +68,6 @@ public abstract class SpringBaseHttpController
 
     private DeferredResult<Object> execute(HttpServletRequest request, HttpServletResponse response, String command) throws HttpFramkeworkException
     {
-
         if (!this.dispatcher.ready())
         {
             try
@@ -81,11 +80,9 @@ public abstract class SpringBaseHttpController
             }
         }
 
-        long resultTimeout = this.getResultTimeout();
-        DeferredResult<Object> result = new DeferredResult<>(resultTimeout);
-        CommandContext context = new CommandContext(request, response, result, command);
+        CommandContext context = new CommandContext(request, response, this.getResultTimeout(), command);
         this.dispatcher.dispath(context);
-        return result;
+        return context.getResponseResult();
     }
 
     private void deny(HttpServletResponse response) throws IOException
