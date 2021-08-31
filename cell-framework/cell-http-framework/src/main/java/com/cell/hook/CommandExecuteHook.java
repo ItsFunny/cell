@@ -2,10 +2,9 @@ package com.cell.hook;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.ManagerNode;
-import com.cell.command.IHttpCommand;
 import com.cell.constant.HookConstants;
 import com.cell.exceptions.CommandException;
-import com.cell.hooks.IDeltaChainHook;
+import com.cell.exceptions.InternalWrapperException;
 import com.cell.reactor.IHttpReactor;
 
 /**
@@ -16,8 +15,7 @@ import com.cell.reactor.IHttpReactor;
  * @Attention:
  * @Date 创建时间：2021-08-28 22:12
  */
-@ManagerNode(group = HookConstants.GROUP_HOOK, name = HookConstants.NAME_HOOK)
-@CellOrder(value = Integer.MAX_VALUE)
+@ManagerNode(group = HookConstants.GROUP_HOOK, name = HookConstants.NAME_HOOK, orderValue = Integer.MAX_VALUE)
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
     @Override
@@ -30,8 +28,17 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
         } catch (CommandException e)
         {
             // FIXME ?
+            throw new InternalWrapperException(e);
         }
-        return null;
+        HttpCommandHookResult res = new HttpCommandHookResult();
+        res.setContext(wrapper.getContext());
+        return res;
+    }
+
+    @Override
+    protected void onTrackEnd(HttpCommandHookResult res)
+    {
+
     }
 
     @Override
@@ -40,9 +47,4 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
 
     }
 
-    @Override
-    public IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> next()
-    {
-        return null;
-    }
 }

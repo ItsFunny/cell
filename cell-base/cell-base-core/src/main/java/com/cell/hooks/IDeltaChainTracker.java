@@ -10,14 +10,17 @@ import com.cell.manager.IManagerNode;
  * @Attention:
  * @Date 创建时间：2021-08-28 11:30
  */
-public interface IDeltaChainHook<T, R>
+public interface IDeltaChainTracker<T, R>
 {
-    R hook(T t);
+    R trackBegin(T t);
+
+    void trackEnd(R r);
 
     void exceptionCaught(Exception e);
-    IDeltaChainHook<T, R> next();
 
+    IDeltaChainTracker<T, R> prev();
 
+    IDeltaChainTracker<T, R> next();
 
 
     boolean active();

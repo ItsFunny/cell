@@ -21,9 +21,4 @@ public interface IHttpCommand extends ICommand
 
     // 是否是一体化的那种模式 如果不为空,返回的是modelAndView
     String modelAndView();
-
-
-    void setReactor(IHttpReactor reactor);
-
-    IHttpReactor getReactor();
 }

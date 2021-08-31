@@ -10,6 +10,7 @@ package com.cell.constant;
  */
 public interface HookConstants
 {
-    String GROUP_HOOK="hook";
-    String NAME_HOOK="hook";
+    String GROUP_HOOK = "hook";
+    String NAME_HOOK = "hook";
+    String COMMAND_HOOK_TIMEOUT = "COMMAND_HOOK_TIMEOUT";
 }

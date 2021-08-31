@@ -3,6 +3,7 @@ package com.cell.protocol;
 import com.cell.annotations.Command;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.reactor.IReactor;
 import com.cell.utils.CommandUtils;
 import lombok.Data;
 
@@ -31,6 +32,7 @@ public abstract class AbstractCommand implements ICommand
 
     private IContext ctx;
 
+
     private String id;
 
     private List<String> callStack = new ArrayList<>(1);
@@ -38,7 +40,7 @@ public abstract class AbstractCommand implements ICommand
     public AbstractCommand()
     {
         this.commandAnnotation = CommandUtils.getCommandAnno(this.getClass());
-        this.current=this;
+        this.current = this;
         this.head = newHead();
     }
 
@@ -51,6 +53,10 @@ public abstract class AbstractCommand implements ICommand
     public ICommand couple()
     {
         Class<? extends ICommand> couple = this.commandAnnotation.couple();
+        if (couple == ICommand.class)
+        {
+            return null;
+        }
         try
         {
             ICommand ret = couple.newInstance();
@@ -62,7 +68,6 @@ public abstract class AbstractCommand implements ICommand
             return null;
         }
     }
-
 
 //    @Override
 //    public ICommand couple()

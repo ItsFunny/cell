@@ -9,6 +9,7 @@ import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.hook.HookCommandWrapper;
+import com.cell.hook.HttpCommandHookResult;
 import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.CommandContext;
 import com.cell.reactor.IHttpReactor;
@@ -33,10 +34,9 @@ import java.util.Map;
 public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean
 {
     private volatile boolean ready;
-    private short port=8080;
+    private short port = 8080;
 
-    private IHttpCommandHook requestHook;
-    private IHttpCommandHook reverseHook;
+    private IHttpCommandHook tracker;
 
     private Map<String, Class<? extends IHttpCommand>> cmdMap = new HashMap<>();
     private Map<String, IHttpReactor> reactorMap = new HashMap<>();
@@ -66,9 +66,10 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             }
             HookCommandWrapper wp = new HookCommandWrapper();
             wp.setReactor(reactor);
-            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, reverseHook);
+            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, tracker);
             wp.setContext(commandContext);
-            this.requestHook.hook(wp);
+            HttpCommandHookResult httpCommandHookResult = this.tracker.trackBegin(wp);
+            this.tracker.trackEnd(httpCommandHookResult);
         } catch (Throwable e)
         {
             throw new HttpFramkeworkException(e.getMessage(), e);
@@ -125,7 +126,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     protected void onInit(InitCTX ctx)
     {
-        this.reverseHook = this.requestHook.revert();
         this.ready = true;
     }
 

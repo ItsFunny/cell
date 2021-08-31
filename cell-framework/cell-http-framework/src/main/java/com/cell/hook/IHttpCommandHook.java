@@ -1,8 +1,6 @@
 package com.cell.hook;
 
-import com.cell.chain.IChain;
-import com.cell.command.IHttpCommand;
-import com.cell.hooks.IDeltaChainHook;
+import com.cell.hooks.IDeltaChainTracker;
 
 /**
  * @author Charlie
@@ -12,14 +10,16 @@ import com.cell.hooks.IDeltaChainHook;
  * @Attention:
  * @Date 创建时间：2021-08-28 11:01
  */
-public interface IHttpCommandHook extends IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult>
+public interface IHttpCommandHook extends IDeltaChainTracker<HookCommandWrapper, HttpCommandHookResult>
 {
     void registerNext(IHttpCommandHook next);
 
+    void registerPrev(IHttpCommandHook prev);
+
     default IHttpCommandHook revert()
     {
-        IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> ret = this;
-        IDeltaChainHook<HookCommandWrapper, HttpCommandHookResult> tmp = this;
+        IDeltaChainTracker<HookCommandWrapper, HttpCommandHookResult> ret = this;
+        IDeltaChainTracker<HookCommandWrapper, HttpCommandHookResult> tmp = this;
         while (null != tmp)
         {
             tmp = tmp.next();

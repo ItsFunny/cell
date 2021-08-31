@@ -14,8 +14,12 @@ public interface IContext
 {
     void discard() throws IOException;
 
-    // 自动返回错误
-    void success(Object ret);
+    void response(ContextResponseWrapper wp);
 
-    void fail(Object obj);
+    long getRequestTimestamp();
+
+    void setSequenceId(String sequenceId);
+
+    String getSequenceId();
+
 }

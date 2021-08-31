@@ -30,7 +30,6 @@ public class CommandContext
     private HttpServletRequest httpRequest;
     private HttpServletResponse httpResponse;
     private DeferredResult<Object> responseResult;
-    private long requestTimestamp;
     private Throwable exception;
     private String sessionKey;
     private String funcName;
@@ -44,7 +43,6 @@ public class CommandContext
         this.httpRequest = httpRequest;
         this.httpResponse = httpResponse;
 
-        this.requestTimestamp = System.currentTimeMillis();
         this.funcName = thirdPath;
         summary = collectSummary(); // 从servletRequest中收集基本信息
         sessionKey = getHeaderData(NetworkConstants.SESSION_KEY);

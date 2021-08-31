@@ -2,14 +2,16 @@ package com.cell.command.impl;
 
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.context.IHttpContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
-import com.cell.log.LOG;
-import com.cell.models.Module;
-import com.cell.protocol.AbstractCommand;
-import com.cell.protocol.ICommand;
-import com.cell.protocol.IHead;
+import com.cell.exceptions.InternalWrapperException;
+import com.cell.protocol.*;
+import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.reactor.IReactor;
+import com.cell.serialize.IInputArchive;
+import com.cell.serialize.IOutputArchive;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
 
@@ -50,11 +52,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         IHttpCommand couple = (IHttpCommand) f;
     }
 
-    @Override
-    public void discard() throws IOException
-    {
-        this.getCtx().discard();
-    }
 
     @Override
     public String modelAndView()
@@ -72,5 +69,43 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     public EnumHttpResponseType getResponseType()
     {
         return this.httpCmdAnno.responseType();
+    }
+
+    protected abstract ICommandExecuteResult onExecute(IHttpContext ctx) throws IOException;
+
+    protected IHttpContext getHttpContext()
+    {
+        return (IHttpContext) this.getCtx();
+    }
+
+    // 解析参数
+    @Override
+    public void read(IInputArchive input) throws IOException
+    {
+
+    }
+
+    @Override
+    public void write(IOutputArchive output) throws IOException
+    {
+
+    }
+
+    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
+    {
+        return ContextResponseWrapper.builder()
+                .reactor(this.reactor);
+    }
+
+    @Override
+    public ICommandExecuteResult execute(IContext ctx)
+    {
+        try
+        {
+            return this.onExecute((IHttpContext) ctx);
+        } catch (IOException e)
+        {
+            throw new InternalWrapperException(e);
+        }
     }
 }

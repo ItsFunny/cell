@@ -18,9 +18,7 @@ import java.io.IOException;
  */
 public interface ICommand extends ISerializable
 {
-    ICommandExecuteResult execute();
-
-    void discard() throws IOException;
+    ICommandExecuteResult execute(IContext ctx);
 
     // 获取对等方
     ICommand couple();
@@ -30,9 +28,13 @@ public interface ICommand extends ISerializable
 
     void setHead(IHead head);
 
-    void setCtx(IContext ctx);
+//    void setCtx(IContext ctx);
+//
+//    IContext getCtx();
 
-    IContext getCtx();
+    // 用于创建业务对象
+    ISerializable getBO();
+
 
     void setCurrent(ICommand caller);
 

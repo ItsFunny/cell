@@ -2,17 +2,16 @@ package com.cell;
 
 import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
-import com.cell.command.impl.AbstractHttpCommand;
+import com.cell.command.impl.AbstractJsonHttpCommand;
+import com.cell.constants.ContextConstants;
+import com.cell.context.IHttpContext;
 import com.cell.controller.SpringBaseHttpController;
 import com.cell.dispatcher.IHttpCommandDispatcher;
-import com.cell.initializer.SpringInitializer;
 import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.impl.AbstractHttpCommandReactor;
-import com.cell.serialize.IInputArchive;
-import com.cell.serialize.IOutputArchive;
+import com.cell.serialize.ISerializable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,53 +41,33 @@ public class App
 
     }
 
-    @Command(commandId = 1, couple = MyCmdCouple.class)
+    @Command(commandId = 1)
     @HttpCmdAnno(uri = "/my/demo")
-    public static class MyCMd extends AbstractHttpCommand
+    public static class MyCMd extends AbstractJsonHttpCommand
     {
-
         @Override
-        public ICommandExecuteResult execute()
+        protected ICommandExecuteResult doExecuteDirectly(IHttpContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("exeecute");
+            ctx.response(this.createResponseWp()
+                    .status(ContextConstants.SUCCESS)
+                    .ret(123)
+                    .build());
             return null;
         }
 
         @Override
-        public void read(IInputArchive input) throws IOException
-        {
-
-        }
-
-        @Override
-        public void write(IOutputArchive output) throws IOException
-        {
-
-        }
-    }
-
-    @Command(commandId = 2, couple = MyCMd.class)
-    public static class MyCmdCouple extends AbstractHttpCommand
-    {
-
-        @Override
-        public ICommandExecuteResult execute()
+        public ISerializable getBO()
         {
             return null;
         }
-
-        @Override
-        public void read(IInputArchive input) throws IOException
-        {
-
-        }
-
-        @Override
-        public void write(IOutputArchive output) throws IOException
-        {
-
-        }
     }
+
+//    @Command(commandId = 2, couple = MyCMd.class)
+//    public static class MyCmdCouple extends AbstractJsonHttpCommand
+//    {
+//
+//    }
 
     public static void main(String[] args)
     {

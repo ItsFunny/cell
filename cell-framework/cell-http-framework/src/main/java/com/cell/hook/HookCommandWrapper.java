@@ -23,9 +23,6 @@ import java.util.List;
 public class HookCommandWrapper
 {
     private IHttpReactor reactor;
-
     private IHttpContext context;
     private HttpCommandHookResult lastResult;
-
-
 }

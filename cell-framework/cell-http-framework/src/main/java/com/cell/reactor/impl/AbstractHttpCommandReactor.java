@@ -3,16 +3,21 @@ package com.cell.reactor.impl;
 import com.cell.App;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.IHttpContext;
 import com.cell.exceptions.CommandException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.CommandContext;
+import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
+import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.reactor.IReactor;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.io.IOException;
 import java.util.*;
@@ -27,7 +32,7 @@ import static com.cell.utils.ClassUtil.*;
  * @Attention:
  * @Date 创建时间：2021-08-30 14:24
  */
-public abstract class AbstractHttpCommandReactor implements IHttpReactor
+public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReactor implements IHttpReactor
 {
     protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
 
@@ -39,36 +44,38 @@ public abstract class AbstractHttpCommandReactor implements IHttpReactor
     }
 
     @Override
-    public void execute(IContext context) throws CommandException
+    public void execute(IContext context)
     {
         DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
         String uri = ctx.getURI();
         CommandWrapper wp = this.cmds.get(uri);
         if (wp == null)
         {
-            // 目的: 所有的
-            try
-            {
-                context.discard();
-            } catch (IOException e)
-            {
-                throw new CommandException(e);
-            }
+            context.response(this.createResponseWp()
+                    .status(ContextConstants.PROGRAMA_ERROR)
+                    .msg("该commd不存在:" + uri)
+                    .build());
+            return;
         }
-        
+
+        IHttpCommand cmd = null;
         try
         {
             // FIXME optimize
-            IHttpCommand cmd = wp.getCmd().newInstance();
+            cmd = wp.getCmd().newInstance();
             ctx.setCmd(cmd);
-            cmd.setReactor(this);
-            cmd.setCtx(ctx);
-            cmd.execute();
+            ctx.setReactor(this);
+            cmd.execute(ctx);
         } catch (Exception e)
         {
-            throw new CommandException(e);
+            context.response(this.createResponseWp()
+                    .status(ContextConstants.FAIL)
+                    .cmd(cmd)
+                    .exception(e)
+                    .build());
         }
     }
+
 
     @Override
     public List<Class<? extends IHttpCommand>> getHttpCommandList()

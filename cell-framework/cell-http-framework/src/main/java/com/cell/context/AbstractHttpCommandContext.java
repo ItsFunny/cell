@@ -7,10 +7,14 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.AbstractBaseContext;
 import com.cell.protocol.CommandContext;
+import com.cell.protocol.ContextResponseWrapper;
+import com.cell.reactor.IHttpReactor;
 import com.cell.util.HttpUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.context.request.async.DeferredResult;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +34,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     // FIXME ,有更好的做法
     protected IHttpCommandHook hook;
 
+    protected IHttpReactor reactor;
+
     protected IHttpCommand cmd;
 
     public AbstractHttpCommandContext(CommandContext commandContext, IHttpCommandHook hk)
@@ -39,10 +45,16 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     }
 
     @Override
-    public void response(HttpStatus status, Object obj)
+    public DeferredResult<Object> getResult()
+    {
+        return this.commandContext.getResponseResult();
+    }
+
+    @Override
+    public void response(ContextResponseWrapper wp)
     {
         long currentTime = System.currentTimeMillis();
-        long consumeTime = currentTime - this.commandContext.getRequestTimestamp();
+        long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.commandContext.getSummary().getSequenceId();
 
         if (consumeTime > this.commandContext.getSummary().getTimeOut())
@@ -52,7 +64,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             this.hook.exceptionCaught(new HttpFramkeworkException(cmd, "", "asd"));
             return;
         }
-
     }
 
     @Override
@@ -70,11 +81,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
 //        final String sequenceId = HttpUtils.get(httpCommand);
 //    }
 
-    @Override
-    public void success(Object ret)
-    {
-        this.response(HttpStatus.OK, ret);
-    }
 
     @Override
     public String getURI()
@@ -83,8 +89,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     }
 
     @Override
-    public void fail(Object obj)
+    public HttpServletRequest getHttpRequest()
     {
-        this.response(HttpStatus.BAD_REQUEST, obj);
+        return this.commandContext.getHttpRequest();
     }
 }

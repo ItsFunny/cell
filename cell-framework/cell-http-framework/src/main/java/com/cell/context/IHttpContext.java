@@ -3,7 +3,11 @@ package com.cell.context;
 import com.cell.command.IHttpCommand;
 import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.IContext;
+import com.cell.reactor.IHttpReactor;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Charlie
@@ -15,7 +19,11 @@ import org.springframework.http.HttpStatus;
  */
 public interface IHttpContext extends IContext
 {
-    String getURI();
+    IHttpReactor getReactor();
 
-    void response(HttpStatus status, Object obj);
+    HttpServletRequest getHttpRequest();
+
+    DeferredResult<Object> getResult();
+
+    String getURI();
 }
