@@ -2,15 +2,20 @@ package com.cell.extension;
 
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
+import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.hook.CmdHookManager;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.postprocessor.ReactorCache;
 import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.reactor.IHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -50,11 +55,18 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         ((DefaultHttpCommandDispatcher) this.dispatcher).setTracker(CmdHookManager.getInstance().getHook());
         ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
-        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
-        for (IDynamicHttpReactor reactor : reactors)
+        Set<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
+        for (IHttpReactor reactor : reactors)
         {
-            this.dynamicControllerService.reigsterReactor(reactor);
+            LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);
+            this.dispatcher.addReactor(reactor);
         }
+
+        //        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
+//        for (IDynamicHttpReactor reactor : reactors)
+//        {
+//            this.dynamicControllerService.reigsterReactor(reactor);
+//        }
     }
 
     @Override

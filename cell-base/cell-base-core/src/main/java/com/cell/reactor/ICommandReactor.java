@@ -1,5 +1,6 @@
 package com.cell.reactor;
 
+import com.cell.config.IInitOnce;
 import com.cell.exceptions.CommandException;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
@@ -12,7 +13,7 @@ import com.cell.protocol.IContext;
  * @Attention:
  * @Date 创建时间：2021-08-28 22:45
  */
-public interface ICommandReactor
+public interface ICommandReactor extends IInitOnce
 {
     void execute(IContext context);
 

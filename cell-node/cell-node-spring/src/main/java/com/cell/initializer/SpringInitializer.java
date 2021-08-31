@@ -1,11 +1,14 @@
 package com.cell.initializer;
 
+import com.cell.App;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
+import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
+import com.cell.config.Config;
 import com.cell.config.ConfigConstants;
 import com.cell.constants.Constants;
 import com.cell.context.InitCTX;
@@ -25,8 +28,6 @@ import com.cell.utils.ReflectUtil;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
 import io.netty.util.internal.ConcurrentSet;
-import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -45,6 +46,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class SpringInitializer extends AbstractInitOnce implements ApplicationContextInitializer<ConfigurableApplicationContext>
 {
     private List<IBeanDefinitionRegistryPostProcessorAdapter> processors = new ArrayList<>();
+
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext)
@@ -75,6 +77,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = filter.factories;
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> dropOffFactories = new HashSet<>();
+        Set<Class<? extends IBeanPostProcessortAdapter>> toRegistryPostProcessor = new HashSet<>();
         for (Class<? extends IBeanDefinitionRegistryPostProcessorAdapter> clz : factories)
         {
             LifeCycle anno = clz.getAnnotation(LifeCycle.class);
@@ -82,6 +85,12 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             {
                 IBeanDefinitionRegistryPostProcessorAdapter adapter = (IBeanDefinitionRegistryPostProcessorAdapter) ReflectUtil.newInstance(clz);
                 adapter.choseInterestAnnotations(filter.interestAnnotationsClazzs);
+                List<Class<? extends IBeanPostProcessortAdapter>> postProcessors = adapter.getToRegistryPostProcessor();
+                if (!CollectionUtils.isEmpty(postProcessors))
+                {
+                    toRegistryPostProcessor.addAll(postProcessors);
+                }
+
                 processors.add(adapter);
                 continue;
             }
@@ -93,6 +102,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         ctx.getData().put(ConfigConstants.FACTORIES, dropOffFactories);
         ctx.getData().put(ConfigConstants.MANAGERS, filter.managers);
         ctx.getData().put(ConfigConstants.interestAnnotationsClazzs, filter.interestAnnotationsClazzs);
+        ctx.getData().put(ConfigConstants.toRegistryPostProcessor, toRegistryPostProcessor);
         SpringBeanRegistry.getInstance().initOnce(ctx);
 
         for (IBeanDefinitionRegistryPostProcessorAdapter adapter : processors)
@@ -110,8 +120,19 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
         final Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>();
 
-        final List<Class<? extends Annotation>> interestAnnotations = Arrays.asList(ReactorAnno.class);
+        final Set<Class<?>> configInterestClasses = new HashSet<>();
+        final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>(Arrays.asList(ReactorAnno.class));
+
+
         final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
+
+        public MultiFilter()
+        {
+            Set<Class<? extends Annotation>> interestAnnotations = Config.getInterestAnnotations();
+            this.interestAnnotations.addAll(interestAnnotations);
+            this.configInterestClasses.addAll(Config.getInterestClasses());
+        }
+
 
         // FIXME ,太傻了这种写法
         @Override
@@ -154,8 +175,13 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         }
 
         // 只扫描2种factory的类
+        // FIXME ,可能会出现,既有 interestClass,又有被注解所标识的类
         private void handleIsSpecial(Class<?> clazz)
         {
+            if (!this.configInterestClasses.contains(clazz))
+            {
+
+            }
             for (Class<? extends Annotation> c : this.interestAnnotations)
             {
                 if (clazz.getAnnotation(c) != null)

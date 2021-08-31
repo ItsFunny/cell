@@ -7,17 +7,19 @@ import com.cell.annotations.LifeCycle;
 import com.cell.annotations.Plugin;
 import com.cell.annotations.ReactorAnno;
 import com.cell.context.InitCTX;
+import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.reactor.IHttpReactor;
 import com.cell.utils.CollectionUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import sun.reflect.misc.ReflectUtil;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +38,8 @@ public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
     public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
         List<Class<?>> reactors = classListMap.get(ReactorAnno.class);
-        if (CollectionUtils.isEmpty(reactors)){
+        if (CollectionUtils.isEmpty(reactors))
+        {
             return;
         }
         for (Class<?> reactor : reactors)
@@ -47,31 +50,46 @@ public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
             }
             try
             {
-                if (!IDynamicHttpReactor.class.isAssignableFrom(reactor))
+                if (!IHttpReactor.class.isAssignableFrom(reactor))
                 {
                     continue;
                 }
                 Object o = ReflectUtil.newInstance(reactor);
-                ReactorCache.register(reactor, (IDynamicHttpReactor) o);
+                DefaultReactorHolder.addReactor((IHttpReactor) o);
             } catch (Exception e)
             {
                 LOG.warning(Module.CONTAINER, e, "注册失败");
             }
+//            try
+//            {
+//                if (!IDynamicHttpReactor.class.isAssignableFrom(reactor))
+//                {
+//                    continue;
+//                }
+//                Object o = ReflectUtil.newInstance(reactor);
+//                ReactorCache.register(reactor, (IDynamicHttpReactor) o);
+//            } catch (Exception e)
+//            {
+//                LOG.warning(Module.CONTAINER, e, "注册失败");
+//            }
         }
     }
 
     @Override
     public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()
     {
-        return null;
+        return Arrays.asList(ReactorPostProcessor.class);
     }
-
 
 
     @Override
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
-        System.out.println(2);
+        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
+        for (IDynamicHttpReactor reactor : reactors)
+        {
+            this.defaultRegisterBean(registry, reactor.getClass());
+        }
     }
 
     @Override

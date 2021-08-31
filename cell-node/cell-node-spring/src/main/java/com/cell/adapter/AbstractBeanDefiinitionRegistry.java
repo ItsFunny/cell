@@ -53,4 +53,12 @@ public abstract class AbstractBeanDefiinitionRegistry extends AbstractInitOnce i
     {
 
     }
+
+    protected void defaultRegisterBean(BeanDefinitionRegistry registry, Class<?> clz)
+    {
+        GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+        beanDefinition.setBeanClass(clz);
+        String beanName = clz.getName();
+        registry.registerBeanDefinition(beanName, beanDefinition);
+    }
 }

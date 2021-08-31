@@ -2,9 +2,11 @@ package com.cell;
 
 import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.impl.AbstractJsonHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpContext;
+import com.cell.context.InitCTX;
 import com.cell.controller.SpringBaseHttpController;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.protocol.ICommandExecuteResult;
@@ -27,18 +29,23 @@ public class App
     @RestController
     public static class MyController extends SpringBaseHttpController
     {
-        @Override
-        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
-        {
-            MyReactor a = new MyReactor();
-            a.registerCmd(new MyCMd());
-            dispatcher.addReactor(a);
-        }
+//        @Override
+//        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
+//        {
+//            MyReactor a = new MyReactor();
+//            a.registerCmd(new MyCMd());
+//            dispatcher.addReactor(a);
+//        }
     }
 
+    @ReactorAnno
     public static class MyReactor extends AbstractHttpCommandReactor
     {
-
+        @Override
+        protected void onInit(InitCTX ctx)
+        {
+            this.registerCmd(new MyCMd());
+        }
     }
 
     @Command(commandId = 1)

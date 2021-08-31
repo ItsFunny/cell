@@ -36,11 +36,11 @@ public class HttpExtensionTest
     public static class MyController extends SpringBaseHttpController
     {
 
-        @Override
-        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
-        {
-
-        }
+//        @Override
+//        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
+//        {
+//
+//        }
     }
 
     public static void main(String[] args)

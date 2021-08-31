@@ -3,6 +3,7 @@ package com.cell.controller;
 import cn.tass.math.raw.Mod;
 import com.cell.annotations.AutoPlugin;
 import com.cell.constant.HttpConstants;
+import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.handler.IHttpExceptionHandler;
@@ -31,23 +32,23 @@ public abstract class SpringBaseHttpController
 {
     private IHttpExceptionHandler exceptionHandler;
 
-    private IHttpCommandDispatcher dispatcher;
+//    private IHttpCommandDispatcher dispatcher;
 
-    protected abstract void initDispatcher(IHttpCommandDispatcher dispatcher);
+//    protected abstract void initDispatcher(IHttpCommandDispatcher dispatcher);
 
-    @AutoPlugin
-    public void setDispacther(IHttpCommandDispatcher dispatcher) throws Exception
-    {
-        this.dispatcher = dispatcher;
-        try
-        {
-            initDispatcher(dispatcher);
-        } catch (Throwable e)
-        {
-            LOG.error(Module.HTTP_FRAMEWORK, e, "init dispacther fail");
-            throw e;
-        }
-    }
+//    @AutoPlugin
+//    public void setDispacther(IHttpCommandDispatcher dispatcher) throws Exception
+//    {
+//        this.dispatcher = dispatcher;
+//        try
+//        {
+//            initDispatcher(dispatcher);
+//        } catch (Throwable e)
+//        {
+//            LOG.error(Module.HTTP_FRAMEWORK, e, "init dispacther fail");
+//            throw e;
+//        }
+//    }
 
 
     @RequestMapping("/{command}")
@@ -68,7 +69,7 @@ public abstract class SpringBaseHttpController
 
     private DeferredResult<Object> execute(HttpServletRequest request, HttpServletResponse response, String command) throws HttpFramkeworkException
     {
-        if (!this.dispatcher.ready())
+        if (!DefaultReactorHolder.getInstance().ready())
         {
             try
             {
@@ -81,7 +82,7 @@ public abstract class SpringBaseHttpController
         }
 
         CommandContext context = new CommandContext(request, response, this.getResultTimeout(), command);
-        this.dispatcher.dispath(context);
+        DefaultReactorHolder.getInstance().dispath(context);
         return context.getResponseResult();
     }
 

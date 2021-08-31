@@ -14,4 +14,5 @@ public interface ConfigConstants
     String FACTORIES="FACTORIES";
     String MANAGERS="MANAGERS";
     String interestAnnotationsClazzs="interestAnnotationsClazzs";
+    String toRegistryPostProcessor="toRegistryPostProcessor";
 }

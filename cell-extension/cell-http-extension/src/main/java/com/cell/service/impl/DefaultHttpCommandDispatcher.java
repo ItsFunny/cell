@@ -1,6 +1,7 @@
 package com.cell.service.impl;
 
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.DefaultHttpCommandContext;
@@ -80,6 +81,11 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     public void addReactor(IHttpReactor reactor)
     {
+        ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
+        if (annotation == null)
+        {
+            throw new ProgramaException("reactor annotation必须有 @ReactorAnno 注解 ");
+        }
         List<Class<? extends IHttpCommand>> clist = reactor.getHttpCommandList();
         for (Class<? extends IHttpCommand> cc : clist)
         {

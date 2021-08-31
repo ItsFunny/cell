@@ -139,6 +139,9 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
             LOG.info(Module.CONTAINER, "add {} beandefinition", clz);
         }
 
+        Set<Class<? extends IBeanPostProcessortAdapter>> prepareToRegistryPostProcessor = (Set<Class<? extends IBeanPostProcessortAdapter>>) ctx.getData().get(ConfigConstants.toRegistryPostProcessor);
+        this.registerPostProcessors(prepareToRegistryPostProcessor);
+
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = (Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>>) ctx.getData().get(ConfigConstants.FACTORIES);
         Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = (Map<Class<? extends Annotation>, List<Class<?>>>) ctx.getData().get(ConfigConstants.interestAnnotationsClazzs);
         for (Class<? extends IBeanDefinitionRegistryPostProcessorAdapter> clz : factories)
@@ -156,25 +159,30 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
                 {
                     continue;
                 }
-                for (Class<? extends IBeanPostProcessortAdapter> aClass : toRegistryPostProcessor)
-                {
-                    GenericBeanDefinition postBeanDef = new GenericBeanDefinition();
-                    postBeanDef.setBeanClass(aClass);
-                    String postBeanName = SpringBridge.beanPostPrefix + "_" + aClass.getName();
-                    this.postDefinition.put(postBeanName, postBeanDef);
-                }
+                this.registerPostProcessors(new HashSet<>(toRegistryPostProcessor));
             } catch (Exception e)
             {
                 throw new RuntimeException(e.getMessage(), e);
             }
         }
         LOG.info(Module.CONTAINER, "DefaultActivePluginCollector init success");
-        Map<String, AnnotaionManagerWrapper> managers= (Map<String, AnnotaionManagerWrapper>) ctx.getData().get(ConfigConstants.MANAGERS);
+        Map<String, AnnotaionManagerWrapper> managers = (Map<String, AnnotaionManagerWrapper>) ctx.getData().get(ConfigConstants.MANAGERS);
 
         SpringExtensionManager.getInstance().setBeanDefinitionMap(pluginBeanDefinitions);
         SpringExtensionManager.getInstance().setManagers(managers);
     }
 
+    private void registerPostProcessors(Set<Class<? extends IBeanPostProcessortAdapter>> prepareToRegistryPostProcessor)
+    {
+        if (CollectionUtils.isEmpty(prepareToRegistryPostProcessor)) return;
+        for (Class<? extends IBeanPostProcessortAdapter> aClass : prepareToRegistryPostProcessor)
+        {
+            GenericBeanDefinition postBeanDef = new GenericBeanDefinition();
+            postBeanDef.setBeanClass(aClass);
+            String postBeanName = SpringBridge.beanPostPrefix + "_" + aClass.getName();
+            this.postDefinition.put(postBeanName, postBeanDef);
+        }
+    }
 
 
     private void processExtension(GenericBeanDefinition beanDefinition)
