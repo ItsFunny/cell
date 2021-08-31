@@ -73,7 +73,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
 
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());
-        if (wp.getOther().containsKey(ContextConstants.HTTP_STATUS))
+        if (null != wp.getOther() && wp.getOther().containsKey(ContextConstants.HTTP_STATUS))
         {
             this.commandContext.getHttpResponse().setStatus((Integer) wp.getOther().get(ContextConstants.HTTP_STATUS));
         }
@@ -134,13 +134,11 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             // success
             if (this.success(status))
             {
-                return;
-            }
-
-            if (this.programError(status))
+            } else if (this.programError(status))
             {
                 this.commandContext.getHttpResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             }
+            this.getPromise().trySuccess();
         } finally
         {
             this.commandContext.getResponseResult().setResult(wp.getRet());

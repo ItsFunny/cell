@@ -1,11 +1,12 @@
 package com.cell.dispatcher;
 
+import com.cell.annotations.ForceOverride;
 import com.cell.command.IHttpCommand;
 import com.cell.reactor.IHttpReactor;
+import com.cell.utils.ClassUtil;
 import io.netty.util.internal.ConcurrentSet;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Charlie
@@ -20,7 +21,7 @@ public class DefaultReactorHolder
 {
     private static IHttpCommandDispatcher instance = null;
 
-    private static Set<IHttpReactor> reactors = new ConcurrentSet<>();
+    private static Map<Class<? extends IHttpReactor>, IHttpReactor> reactors = new HashMap<>();
 
 
     public static void setDispatcher(IHttpCommandDispatcher d)
@@ -36,11 +37,18 @@ public class DefaultReactorHolder
     public static void addReactor(IHttpReactor reactor)
     {
         reactor.initOnce(null);
-        reactors.add(reactor);
+        synchronized (reactors)
+        {
+            Class<? extends IHttpReactor> aClass = reactor.getClass();
+            if (!reactors.containsKey(aClass) || ClassUtil.hasAnnotation(aClass, ForceOverride.class))
+            {
+                reactors.put(aClass, reactor);
+            }
+        }
     }
 
-    public static Set<IHttpReactor> getReactors()
+    public static Collection<IHttpReactor> getReactors()
     {
-        return reactors;
+        return reactors.values();
     }
 }

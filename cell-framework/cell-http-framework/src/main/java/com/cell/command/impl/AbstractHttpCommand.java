@@ -16,6 +16,7 @@ import com.cell.utils.ClassUtil;
 import lombok.Data;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 /**
  * @author Charlie
@@ -94,7 +95,8 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {
         return ContextResponseWrapper.builder()
-                .reactor(this.reactor);
+                .reactor(this.reactor)
+                .other(new HashMap<>(1));
     }
 
     @Override

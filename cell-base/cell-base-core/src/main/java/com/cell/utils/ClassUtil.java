@@ -856,4 +856,14 @@ public class ClassUtil
         }
         return annotation;
     }
+
+    public static boolean hasAnnotation(Class<?> clz, Class<? extends Annotation> a)
+    {
+        return clz.getAnnotation(a) != null;
+    }
+
+    public static boolean hasAnnotation(Object o, Class<? extends Annotation> a)
+    {
+        return o.getClass().getAnnotation(a) != null;
+    }
 }

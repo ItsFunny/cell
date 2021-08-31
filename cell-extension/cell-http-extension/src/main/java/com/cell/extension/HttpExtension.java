@@ -55,7 +55,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         ((DefaultHttpCommandDispatcher) this.dispatcher).setTracker(CmdHookManager.getInstance().getHook());
         ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
-        Set<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
+        Collection<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
         for (IHttpReactor reactor : reactors)
         {
             LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);

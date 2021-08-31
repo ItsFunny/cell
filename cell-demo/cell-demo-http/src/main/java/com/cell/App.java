@@ -1,8 +1,6 @@
 package com.cell;
 
-import com.cell.annotations.Command;
-import com.cell.annotations.HttpCmdAnno;
-import com.cell.annotations.ReactorAnno;
+import com.cell.annotations.*;
 import com.cell.command.impl.AbstractJsonHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpContext;
@@ -39,6 +37,7 @@ public class App
     }
 
     @ReactorAnno
+    @ActivePlugin
     public static class MyReactor extends AbstractHttpCommandReactor
     {
         @Override
