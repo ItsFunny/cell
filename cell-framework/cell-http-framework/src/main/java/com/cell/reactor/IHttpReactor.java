@@ -15,4 +15,6 @@ import java.util.List;
 public interface IHttpReactor extends ICommandReactor
 {
     List<Class<? extends IHttpCommand>> getHttpCommandList();
+
+    Class<? extends  IHttpCommand>getCmd(String uri);
 }

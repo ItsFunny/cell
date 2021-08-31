@@ -1,5 +1,8 @@
 package com.cell.protocol;
 
+import com.cell.concurrent.DummyExecutor;
+import com.cell.concurrent.promise.BaseDefaultPromise;
+import com.cell.concurrent.promise.BasePromise;
 import lombok.Data;
 
 /**
@@ -15,10 +18,11 @@ public abstract class AbstractBaseContext implements IContext
 {
     protected String sequenceId;
     protected long requestTimestamp;
+    private BasePromise promise;
 
     public AbstractBaseContext()
     {
         this.requestTimestamp = System.currentTimeMillis();
+        this.promise = new BaseDefaultPromise(DummyExecutor.getInstance());
     }
-
 }

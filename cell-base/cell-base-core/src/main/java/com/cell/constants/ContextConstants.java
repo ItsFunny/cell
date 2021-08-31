@@ -14,4 +14,8 @@ public interface ContextConstants
     long FAIL = 1 << 1;
     long TIMEOUT = 1 << 2 | FAIL;
     long PROGRAMA_ERROR = 1 << 3 | FAIL;
+
+
+
+    String HTTP_STATUS="HTTP_STATUS";
 }

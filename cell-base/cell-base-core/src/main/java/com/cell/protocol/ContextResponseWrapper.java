@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import sun.tools.jconsole.inspector.IconManager;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Charlie
  * @When
@@ -25,4 +28,8 @@ public class ContextResponseWrapper
     private ICommand cmd;
     private Object ret;
 
+    // 从哪里调用了该 wp
+    private String from;
+
+    private Map<String, Object> other = new HashMap<>(1);
 }

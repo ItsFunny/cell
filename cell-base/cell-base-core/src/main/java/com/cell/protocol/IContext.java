@@ -1,5 +1,7 @@
 package com.cell.protocol;
 
+import com.cell.concurrent.promise.BasePromise;
+
 import java.io.IOException;
 
 /**
@@ -21,5 +23,8 @@ public interface IContext
     void setSequenceId(String sequenceId);
 
     String getSequenceId();
+
+
+    BasePromise getPromise();
 
 }

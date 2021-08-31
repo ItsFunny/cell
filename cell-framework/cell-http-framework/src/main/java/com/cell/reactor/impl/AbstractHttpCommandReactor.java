@@ -36,6 +36,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
 {
     protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
 
+    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
+    {
+        return ContextResponseWrapper.builder()
+                .reactor(this);
+    }
+
     @Data
     static class CommandWrapper
     {
@@ -63,7 +69,6 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         {
             // FIXME optimize
             cmd = wp.getCmd().newInstance();
-            ctx.setCmd(cmd);
             ctx.setReactor(this);
             cmd.execute(ctx);
         } catch (Exception e)
@@ -87,6 +92,16 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
             ret.add(value.cmd);
         }
         return ret;
+    }
+
+    @Override
+    public Class<? extends IHttpCommand> getCmd(String uri)
+    {
+        if (!this.cmds.containsKey(uri))
+        {
+            return null;
+        }
+        return this.cmds.get(uri).getCmd();
     }
 
     @Override

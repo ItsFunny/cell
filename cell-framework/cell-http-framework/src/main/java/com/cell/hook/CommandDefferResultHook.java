@@ -8,6 +8,8 @@ import com.cell.constants.ContextConstants;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
+import com.cell.protocol.ICommand;
+import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IReactor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.async.DeferredResult;
@@ -35,7 +37,7 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
             LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
             wrapper.getContext().response(ContextResponseWrapper.builder()
                     .status(ContextConstants.TIMEOUT)
-                    .reactor((IReactor) wrapper.getReactor())
+                    .reactor(wrapper.getReactor())
                     .build());
         });
         return wrapper.getLastResult();

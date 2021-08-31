@@ -3,8 +3,12 @@ package com.cell.postprocessors.extension;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import com.cell.annotations.ManagerNode;
 import com.cell.bridge.ISpringNodeExtension;
+import com.cell.comparators.InstanceOrderComparator;
+import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
+import com.cell.constants.Constants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
@@ -26,6 +30,7 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
+import org.apache.lucene.util.CollectionUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -251,6 +256,14 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             AnnotaionManagerWrapper wrapper = managers.get(key);
             IReflectManager manager = wrapper.getManager();
             List<Object> collect = wrapper.getManagerNodes().values().stream().map(p -> p.getNode()).collect(Collectors.toList());
+            Collections.sort(collect, (a, b) ->
+            {
+                ManagerNode n1 = a.getClass().getAnnotation(ManagerNode.class);
+                ManagerNode n2 = b.getClass().getAnnotation(ManagerNode.class);
+                int value1 = n1 == null ? Constants.DEFAULT_ORDER : n1.orderValue();
+                int value2 = n2 == null ? Constants.DEFAULT_ORDER : n2.orderValue();
+                return Integer.compare(value1, value2);
+            });
             manager.invokeInterestNodes(collect);
         }
     }

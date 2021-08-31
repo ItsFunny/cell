@@ -12,10 +12,6 @@ import com.cell.protocol.ContextResponseWrapper;
  */
 public abstract class AbstractBaseCommandReactor implements ICommandReactor
 {
-    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
-    {
-        return ContextResponseWrapper.builder()
-                .reactor(this);
-    }
+
 
 }

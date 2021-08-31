@@ -1,6 +1,5 @@
 package com.cell.hook;
 
-import com.cell.annotations.CellOrder;
 import com.cell.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
 import com.cell.exceptions.CommandException;
@@ -22,14 +21,7 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
     protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
     {
         IHttpReactor reactor = wrapper.getReactor();
-        try
-        {
-            reactor.execute(wrapper.getContext());
-        } catch (CommandException e)
-        {
-            // FIXME ?
-            throw new InternalWrapperException(e);
-        }
+        reactor.execute(wrapper.getContext());
         HttpCommandHookResult res = new HttpCommandHookResult();
         res.setContext(wrapper.getContext());
         return res;
@@ -46,5 +38,4 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
     {
 
     }
-
 }

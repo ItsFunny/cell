@@ -3,6 +3,7 @@ package com.cell.exception;
 import com.cell.command.IHttpCommand;
 import com.cell.enums.CellError;
 import com.cell.exceptions.AbstractZZException;
+import lombok.Data;
 
 /**
  * @author Charlie
@@ -12,15 +13,14 @@ import com.cell.exceptions.AbstractZZException;
  * @Attention:
  * @Date 创建时间：2021-08-27 22:59
  */
+@Data
 public class HttpFramkeworkException extends AbstractZZException
 {
     private IHttpCommand command;
-    private String errorDesc; // 业务返回的错误信息
-
-    public HttpFramkeworkException(IHttpCommand command,String errorDesc,String msg)
+    public HttpFramkeworkException(IHttpCommand command, CellError error, String msg)
     {
-        super(msg);
-        this.errorDesc=errorDesc;
+        super(error,msg);
+        this.command=command;
     }
 
     public HttpFramkeworkException(String message, String message1)

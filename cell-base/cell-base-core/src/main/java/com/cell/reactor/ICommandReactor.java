@@ -14,7 +14,7 @@ import com.cell.protocol.IContext;
  */
 public interface ICommandReactor
 {
-    void execute(IContext context) throws CommandException;
+    void execute(IContext context);
 
     void registerCmd(ICommand cmd);
 }
