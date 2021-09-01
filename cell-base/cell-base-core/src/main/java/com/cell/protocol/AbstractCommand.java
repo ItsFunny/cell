@@ -49,6 +49,13 @@ public abstract class AbstractCommand implements ICommand
     // copy
     protected abstract void onMakeCouple(ICommand couple);
 
+
+    public ContextResponseWrapper.ContextResponseWrapperBuilder baseComdResponseWrapper()
+    {
+        return ContextResponseWrapper.builder()
+                .cmd(this);
+    }
+
     @Override
     public ICommand couple()
     {

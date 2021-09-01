@@ -89,13 +89,8 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
         EnumHttpRequestType requestType = annotation.requestType();
         String uri = annotation.uri();
         Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
-        PatternsRequestCondition patternsRequestCondition = new PatternsRequestCondition(uri);
-        RequestMethodsRequestCondition requestMethodsRequestCondition = new RequestMethodsRequestCondition(getRequestMethod(requestType));
-        RequestMappingInfo mappingInfo = new RequestMappingInfo(patternsRequestCondition, requestMethodsRequestCondition, null, null, null, null, null);
+        RequestMappingInfo mappingInfo = RequestMappingInfo.paths(uri).methods(getRequestMethod(requestType)).build();
         handlerMapping.registerMapping(mappingInfo, DefaultReactorHolder.getInstance(), method); // 注册映射处理
-//        Method detectHandlerMethods = handlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
-//        method.setAccessible(true);
-//        method.invoke(requestMappingHandlerMapping,"myc");
     }
 
     public RequestMethod getRequestMethod(EnumHttpRequestType requestType)

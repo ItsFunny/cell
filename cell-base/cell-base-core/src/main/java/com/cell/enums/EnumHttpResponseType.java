@@ -15,7 +15,8 @@ public enum EnumHttpResponseType
 {
     HTTP_HTML(1),
     HTTP_JSON(2),
-    HTTP_STATIC_RESOURCE(3),
+    HTTP_XML(3),
+    HTTP_STATIC_RESOURCE(4),
 
     NULL(-1);
 

@@ -1,5 +1,7 @@
 package com.cell.context;
 
+import com.cell.adapter.HandlerMethodReturnValueHandler;
+import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.constant.HttpConstants;
@@ -18,7 +20,9 @@ import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import lombok.Data;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -99,7 +103,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         }
         if (null == this.httpCmdAnno)
         {
-            this.httpCmdAnno = (HttpCmdAnno) ClassUtil.mustGetAnnotation(this.reactor.getCmd(this.commandContext.getURI()), HttpCmdAnno.class);
+            this.httpCmdAnno = (HttpCmdAnno) ClassUtil.mustGetAnnotation(wp.getCmd().getClass(), HttpCmdAnno.class);
         }
 
         long status = wp.getStatus();
@@ -150,7 +154,15 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             this.getPromise().trySuccess();
         } finally
         {
-            this.commandContext.getResponseResult().setResult(wp.getRet());
+            Object ret = wp.getRet();
+            if (this.xmlMode())
+            {
+                HandlerMethodReturnValueHandler<Object> handler = new XMLHandlerMethodReturnValuleHandler<>();
+                ret = handler.handler(ret);
+            }
+            this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            this.commandContext.getHttpResponse().addHeader("asd", MediaType.APPLICATION_JSON_VALUE);
+            this.commandContext.getResponseResult().setResult(ret);
         }
     }
 
@@ -200,5 +212,10 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     public boolean viewMode()
     {
         return this.httpCmdAnno.responseType() == EnumHttpResponseType.HTTP_HTML;
+    }
+
+    private boolean xmlMode()
+    {
+        return this.httpCmdAnno.responseType() == EnumHttpResponseType.HTTP_XML;
     }
 }

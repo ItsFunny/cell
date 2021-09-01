@@ -16,6 +16,7 @@ import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.impl.AbstractHttpCommandReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
+import lombok.Data;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -30,18 +31,26 @@ import static org.junit.Assert.*;
 @SpringBootApplication(scanBasePackages = {"com.cell"})
 public class DynamicControllerServiceImplTest
 {
+    @Data
+    static class B
+    {
+        private String name;
+    }
+
     @Command(commandId = 1)
-    @HttpCmdAnno(uri = "/demo/dymanic")
+    @HttpCmdAnno(uri = "/my/demo")
     public static class MyAA extends AbstractJsonHttpCommand
     {
         @Override
         protected ICommandExecuteResult doExecuteDirectly(IHttpContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("execution");
-            ctx.response(ContextResponseWrapper.builder()
+            B b = new B();
+            b.name = "charlie";
+            ctx.response(this.createResponseWp()
                     .status(ContextConstants.SUCCESS)
                     .other(HttpContextResponseBody.builder().status(HttpStatus.OK).build())
-                    .ret("123")
+                    .ret(b)
                     .build());
             return null;
         }

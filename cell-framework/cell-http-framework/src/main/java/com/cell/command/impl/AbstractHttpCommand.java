@@ -94,8 +94,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
 
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {
-        return ContextResponseWrapper.builder()
-                .reactor(this.reactor);
+        return this.baseComdResponseWrapper().reactor(this.reactor);
     }
 
     @Override
