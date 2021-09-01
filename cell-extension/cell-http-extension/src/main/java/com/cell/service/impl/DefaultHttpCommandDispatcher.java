@@ -133,6 +133,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.tracker.initOnce(ctx);
         this.ready = true;
     }
 

@@ -1,5 +1,6 @@
 package com.cell.hook;
 
+import com.cell.config.IInitOnce;
 import com.cell.hooks.IDeltaChainTracker;
 
 /**
@@ -10,7 +11,7 @@ import com.cell.hooks.IDeltaChainTracker;
  * @Attention:
  * @Date 创建时间：2021-08-28 11:01
  */
-public interface IHttpCommandHook extends IDeltaChainTracker<HookCommandWrapper, HttpCommandHookResult>
+public interface IHttpCommandHook extends IDeltaChainTracker<HookCommandWrapper, HttpCommandHookResult>, IInitOnce
 {
     void registerNext(IHttpCommandHook next);
 
