@@ -13,6 +13,7 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ExtensionClassUtil;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -137,6 +138,12 @@ public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegis
         this.registriesPostProcessed.add(registryId);
 
         processConfigBeanDefinitions(registry);
+    }
+
+    @Override
+    protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
+    {
+
     }
 
     @Override

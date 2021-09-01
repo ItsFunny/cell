@@ -108,10 +108,11 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     }
 
     @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException
+    protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
     {
-        configurableListableBeanFactory.addBeanPostProcessor(SpringExtensionManager.getInstance());
+        factory.addBeanPostProcessor(SpringExtensionManager.getInstance());
     }
+
 
     @Override
     public int getOrder()

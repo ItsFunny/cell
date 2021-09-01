@@ -30,6 +30,8 @@ import com.cell.wrapper.AnnotationNodeWrapper;
 import io.netty.util.internal.ConcurrentSet;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationAttributes;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
@@ -112,11 +114,12 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     }
 
 
+    // FIXME ,重复的class 处理: 既 既有@ActivePlugin 又是interest
     class MultiFilter implements ClassUtil.ClassFilter
     {
         // config
         final Set<Class<?>> configInterestClasses = new HashSet<>();
-        final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>(Arrays.asList(ReactorAnno.class));
+        final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>();
 
         // flag
         final Set<Class<?>> set = new HashSet<>();
@@ -154,8 +157,8 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     ret = false;
                     return ret;
                 }
-                ActivePlugin anno = clazz.getAnnotation(ActivePlugin.class);
-                if (anno != null)
+                AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, ActivePlugin.class);
+                if (attributes != null && !attributes.isEmpty())
                 {
                     // FIXME ,可能同时是IManager,或者是IManagerNode
                     this.handleIsSpecial(clazz);

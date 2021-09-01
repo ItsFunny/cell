@@ -1,9 +1,10 @@
 package com.cell.utils;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
+import com.cell.exceptions.ProgramaException;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.*;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -123,6 +124,71 @@ public class ReflectUtil
         {
             throw new RuntimeException(e);
         }
+    }
+
+    private static final String ANNOTATIONS = "annotations";
+    public static final String ANNOTATION_DATA = "annotationData";
+
+    public static boolean isJDK7OrLower()
+    {
+        boolean jdk7OrLower = true;
+        try
+        {
+            Class.class.getDeclaredField(ANNOTATIONS);
+        } catch (NoSuchFieldException e)
+        {
+            //Willfully ignore all exceptions
+            jdk7OrLower = false;
+        }
+        return jdk7OrLower;
+    }
+
+    public static void overRideAnnotationOn(Class clazzToLookFor, Class<? extends Annotation> annotationToAlter, Annotation annotationValue)
+    {
+        try
+        {
+            Method method = Class.class.getDeclaredMethod(ANNOTATION_DATA, null);
+            method.setAccessible(true);
+            Object annotationData = method.invoke(clazzToLookFor);
+            Field annotations = annotationData.getClass().getDeclaredField(ANNOTATIONS);
+            annotations.setAccessible(true);
+            Map<Class<? extends Annotation>, Annotation> map =
+                    (Map<Class<? extends Annotation>, Annotation>) annotations.get(annotationData);
+            map.put(annotationToAlter, annotationValue);
+        } catch (Exception e)
+        {
+            throw new ProgramaException(e);
+        }
+//        if (isJDK7OrLower())
+//        {
+//            try
+//            {
+//                Field annotations = Class.class.getDeclaredField(ANNOTATIONS);
+//                annotations.setAccessible(true);
+//                Map<Class<? extends Annotation>, Annotation> map =
+//                        (Map<Class<? extends Annotation>, Annotation>) annotations.get(clazzToLookFor);
+//                map.put(annotationToAlter, annotationValue);
+//            } catch (Exception e)
+//            {
+//                e.printStackTrace();
+//            }
+//        } else
+//        {
+//            try
+//            {
+//                Method method = Class.class.getDeclaredMethod(ANNOTATION_DATA, null);
+//                method.setAccessible(true);
+//                Object annotationData = method.invoke(clazzToLookFor);
+//                Field annotations = annotationData.getClass().getDeclaredField(ANNOTATIONS);
+//                annotations.setAccessible(true);
+//                Map<Class<? extends Annotation>, Annotation> map =
+//                        (Map<Class<? extends Annotation>, Annotation>) annotations.get(annotationData);
+//                map.put(annotationToAlter, annotationValue);
+//            } catch (Exception e)
+//            {
+//                throw new ProgramaException(e);
+//            }
+//        }
     }
 }
 

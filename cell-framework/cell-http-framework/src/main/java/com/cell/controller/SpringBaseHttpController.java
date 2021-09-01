@@ -81,9 +81,7 @@ public abstract class SpringBaseHttpController
             }
         }
 
-        CommandContext context = new CommandContext(request, response, this.getResultTimeout(), command);
-        DefaultReactorHolder.getInstance().dispath(context);
-        return context.getResponseResult();
+        return DefaultReactorHolder.getInstance().request(request, response);
     }
 
     private void deny(HttpServletResponse response) throws IOException

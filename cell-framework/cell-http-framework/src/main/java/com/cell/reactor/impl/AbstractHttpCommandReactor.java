@@ -1,32 +1,28 @@
 package com.cell.reactor.impl;
 
-import com.cell.App;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpCommandContext;
-import com.cell.context.IHttpContext;
+import com.cell.context.HttpContextResponseBody;
 import com.cell.context.InitCTX;
-import com.cell.exceptions.CommandException;
 import com.cell.exceptions.ProgramaException;
-import com.cell.protocol.CommandContext;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.reactor.IReactor;
-import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;
 import lombok.Data;
-import org.reflections.util.ConfigurationBuilder;
 import org.springframework.http.HttpStatus;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static com.cell.utils.ClassUtil.*;
+import static com.cell.utils.ClassUtil.mustGetAnnotation;
 
 /**
  * @author Charlie
@@ -51,6 +47,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     {
     }
 
+    @Override
+    public long getResultTimeout()
+    {
+        return HttpConstants.DEFAULT_RESULT_TIME_OUT;
+    }
+
     @Data
     static class CommandWrapper
     {
@@ -68,6 +70,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         {
             context.response(this.createResponseWp()
                     .status(ContextConstants.PROGRAMA_ERROR)
+                    .other(HttpContextResponseBody.builder().status(HttpStatus.NOT_FOUND).build())
                     .msg("该commd不存在:" + uri)
                     .build());
             return;
@@ -89,6 +92,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                     .build());
         }
     }
+
 
 
 //    @Override

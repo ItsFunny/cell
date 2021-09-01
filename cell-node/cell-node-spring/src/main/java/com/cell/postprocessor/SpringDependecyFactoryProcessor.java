@@ -58,6 +58,12 @@ public class SpringDependecyFactoryProcessor extends AbstractBeanDefiinitionRegi
 
     }
 
+    @Override
+    protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
+    {
+
+    }
+
 
     @Override
     public int getOrder()

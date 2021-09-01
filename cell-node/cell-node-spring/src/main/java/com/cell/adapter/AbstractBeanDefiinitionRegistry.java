@@ -48,10 +48,12 @@ public abstract class AbstractBeanDefiinitionRegistry extends AbstractInitOnce i
 
     protected abstract void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry);
 
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory configurableListableBeanFactory) throws BeansException
-    {
+    protected abstract void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException;
 
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
+    {
+        this.onPostProcessBeanFactory(factory);
     }
 
     protected void defaultRegisterBean(BeanDefinitionRegistry registry, Class<?> clz)

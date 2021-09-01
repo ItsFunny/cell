@@ -1,7 +1,11 @@
 package com.cell.reactor;
 
 import com.cell.command.IHttpCommand;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.context.request.async.DeferredResult;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -15,6 +19,6 @@ import java.util.List;
 public interface IHttpReactor extends ICommandReactor
 {
     List<Class<? extends IHttpCommand>> getHttpCommandList();
-
-    Class<? extends  IHttpCommand>getCmd(String uri);
+    Class<? extends IHttpCommand> getCmd(String uri);
+    long getResultTimeout();
 }

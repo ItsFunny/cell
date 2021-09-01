@@ -64,12 +64,6 @@ public class App
                     .build());
             return null;
         }
-
-        @Override
-        public ISerializable getBO()
-        {
-            return null;
-        }
     }
 
 //    @Command(commandId = 2, couple = MyCMd.class)

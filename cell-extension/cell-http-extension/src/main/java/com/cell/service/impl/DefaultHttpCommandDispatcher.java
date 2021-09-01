@@ -4,6 +4,7 @@ import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
+import com.cell.constant.HttpConstants;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IHttpCommandDispatcher;
@@ -13,11 +14,20 @@ import com.cell.hook.HookCommandWrapper;
 import com.cell.hook.HttpCommandHookResult;
 import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.CommandContext;
+import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.service.IDynamicControllerService;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.request.async.DeferredResult;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
@@ -32,8 +42,9 @@ import java.util.Map;
  * @Date 创建时间：2021-08-27 23:00
  */
 @Data
-public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean
+public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean, ApplicationContextAware
 {
+
     private volatile boolean ready;
     private short port = 8080;
 
@@ -54,19 +65,38 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         this.port = port;
     }
 
+    public long getResultTimeout()
+    {
+        return HttpConstants.DEFAULT_RESULT_TIME_OUT;
+    }
+
     @Override
-    public void dispath(CommandContext ctx) throws HttpFramkeworkException
+    public DeferredResult<Object> request(HttpServletRequest request, HttpServletResponse response) throws HttpFramkeworkException
+    {
+        String command = request.getRequestURI();
+        IHttpReactor reactor = this.getReactor(command);
+        long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
+        CommandContext context = new CommandContext(request, response, timeOut, command);
+        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(context, tracker);
+        if (null == reactor)
+        {
+            try
+            {
+                commandContext.discard();
+            } catch (IOException e)
+            {
+                throw new HttpFramkeworkException(e.getMessage(), e);
+            }
+            return commandContext.getResult();
+        }
+        this.dispath(reactor, commandContext);
+        return commandContext.getResult();
+    }
+
+    public void dispath(IHttpReactor reactor, DefaultHttpCommandContext commandContext) throws HttpFramkeworkException
     {
         try
         {
-            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, tracker);
-            IHttpReactor reactor = this.getReactor(ctx.getURI());
-            if (null == reactor)
-            {
-                commandContext.discard();
-                return;
-            }
-
             HookCommandWrapper wp = new HookCommandWrapper();
             wp.setContext(commandContext);
             wp.setReactor(reactor);
@@ -140,6 +170,12 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
     @Override
     public void afterPropertiesSet() throws Exception
+    {
+
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
     {
 
     }

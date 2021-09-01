@@ -13,6 +13,7 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 
 import java.util.Collection;
 import java.util.Set;
@@ -28,7 +29,6 @@ import java.util.Set;
 public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
-
     private IHttpCommandDispatcher dispatcher;
 
     @Plugin
@@ -53,14 +53,17 @@ public class HttpExtension extends AbstractSpringNodeExtension
     @Override
     public void start(INodeContext ctx) throws Exception
     {
-        ((DefaultHttpCommandDispatcher) this.dispatcher).setTracker(CmdHookManager.getInstance().getHook());
-        ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
         Collection<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
         for (IHttpReactor reactor : reactors)
         {
             LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);
             this.dispatcher.addReactor(reactor);
         }
+        ((DefaultHttpCommandDispatcher) this.dispatcher).setTracker(CmdHookManager.getInstance().getHook());
+        ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
+
+        this.dynamicControllerService.batchRegisterReactor(reactors);
+
 
         //        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
 //        for (IDynamicHttpReactor reactor : reactors)

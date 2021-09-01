@@ -11,9 +11,10 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@ActivePlugin
 public @interface ReactorAnno
 {
     ForceOverride withForce() default @ForceOverride();
 
-    String group() default "/cell";
+    String group() default "";
 }

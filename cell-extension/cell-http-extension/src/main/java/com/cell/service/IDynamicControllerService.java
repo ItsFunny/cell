@@ -1,6 +1,10 @@
 package com.cell.service;
 
 import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.reactor.IHttpReactor;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Charlie
@@ -12,5 +16,7 @@ import com.cell.reactor.IDynamicHttpReactor;
  */
 public interface IDynamicControllerService
 {
-    void reigsterReactor(IDynamicHttpReactor reactor);
+    void registerReactor(IHttpReactor reactor);
+
+    void batchRegisterReactor(Collection<IHttpReactor> reactors);
 }

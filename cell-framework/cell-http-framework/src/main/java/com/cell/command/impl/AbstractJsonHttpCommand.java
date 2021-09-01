@@ -41,5 +41,11 @@ public abstract class AbstractJsonHttpCommand extends AbstractHttpCommand
         return this.doExecuteDirectly(ctx, bo);
     }
 
+    @Override
+    public ISerializable getBO()
+    {
+        return null;
+    }
+
     protected abstract ICommandExecuteResult doExecuteDirectly(IHttpContext ctx, ISerializable bo) throws IOException;
 }
