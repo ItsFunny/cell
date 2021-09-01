@@ -1,9 +1,6 @@
 package com.cell.annotations;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author joker
@@ -14,8 +11,9 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ForceOverride
 public @interface ReactorAnno
 {
+    ForceOverride withForce() default @ForceOverride();
+
     String group() default "/cell";
 }

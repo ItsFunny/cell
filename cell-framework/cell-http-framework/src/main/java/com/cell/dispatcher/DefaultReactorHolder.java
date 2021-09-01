@@ -1,11 +1,13 @@
 package com.cell.dispatcher;
 
 import com.cell.annotations.ForceOverride;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
 import io.netty.util.internal.ConcurrentSet;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 
 /**
@@ -40,7 +42,8 @@ public class DefaultReactorHolder
         synchronized (reactors)
         {
             Class<? extends IHttpReactor> aClass = reactor.getClass();
-            if (!reactors.containsKey(aClass) || ClassUtil.hasAnnotation(aClass, ForceOverride.class))
+            ReactorAnno anno = (ReactorAnno) ClassUtil.getAnnotation(aClass, ReactorAnno.class);
+            if (!reactors.containsKey(aClass) || anno.withForce().forceOverride())
             {
                 reactors.put(aClass, reactor);
             }

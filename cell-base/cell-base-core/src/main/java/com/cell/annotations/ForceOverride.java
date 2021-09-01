@@ -14,4 +14,5 @@ import java.lang.annotation.*;
 @Inherited
 public @interface ForceOverride
 {
+    boolean forceOverride() default true;
 }
