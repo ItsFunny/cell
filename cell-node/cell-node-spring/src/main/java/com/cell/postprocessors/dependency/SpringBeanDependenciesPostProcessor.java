@@ -74,7 +74,7 @@ public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanP
     {
         if (dependenciesMap.addDependenOn(target.getClass(), dependOn.getClass()))
         {
-            LOG.debug(Module.CONTAINER, "object %s add dependOn %s", target.getClass(), dependOn.getClass());
+            LOG.debug(Module.CONTAINER, "object {} add dependOn {}", target.getClass(), dependOn.getClass());
         }
     }
 

@@ -16,6 +16,5 @@ public interface ContextConstants
     long PROGRAMA_ERROR = 1 << 3 | FAIL;
 
 
-
-    String HTTP_STATUS="HTTP_STATUS";
+    String HTTP_STATUS = "HTTP_STATUS";
 }

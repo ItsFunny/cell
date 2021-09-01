@@ -59,16 +59,17 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     {
         try
         {
+            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, tracker);
             IHttpReactor reactor = this.getReactor(ctx.getURI());
             if (null == reactor)
             {
-                ctx.discard();
+                commandContext.discard();
                 return;
             }
+
             HookCommandWrapper wp = new HookCommandWrapper();
-            wp.setReactor(reactor);
-            DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx, tracker);
             wp.setContext(commandContext);
+            wp.setReactor(reactor);
             HttpCommandHookResult httpCommandHookResult = this.tracker.trackBegin(wp);
             this.tracker.trackEnd(httpCommandHookResult);
         } catch (Throwable e)

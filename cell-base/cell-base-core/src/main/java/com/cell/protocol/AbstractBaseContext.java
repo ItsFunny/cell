@@ -2,7 +2,10 @@ package com.cell.protocol;
 
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.promise.BaseDefaultPromise;
+import com.cell.concurrent.promise.BaseFutureListener;
 import com.cell.concurrent.promise.BasePromise;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import lombok.Data;
 
 /**
@@ -24,5 +27,13 @@ public abstract class AbstractBaseContext implements IContext
     {
         this.requestTimestamp = System.currentTimeMillis();
         this.promise = new BaseDefaultPromise(DummyExecutor.getInstance());
+        promise.addListener((BaseFutureListener) future ->
+        {
+            if (!future.isSuccess())
+            {
+                LOG.error(Module.HTTP_FRAMEWORK, future.cause(), "sequenceId = {}, send response  fail", getSequenceId());
+                discard();
+            }
+        });
     }
 }

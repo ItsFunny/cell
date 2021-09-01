@@ -80,46 +80,46 @@ public class CommandContext
     }
 
     // FIXME ,需要定制化
-    public void discard() throws IOException
-    {
-        if (!getResponseResult().isSetOrExpired())
-        {
-            Throwable cause = this.getException();
-            if (cause != null)
-            {
-                getHttpResponse().setStatus(HttpStatus.BAD_REQUEST.value());
-                if (cause instanceof IOException)
-                {
-                    if (cause.getCause() != null && cause.getCause() instanceof MessageNotDoneException)
-                    {
-                        getHttpResponse().addHeader("errorCode", String.valueOf(0));
-                        getHttpResponse().addHeader("errorDesc", cause.getMessage());
-                        getHttpResponse().sendError(HttpStatus.OK.value());
-                        return;
-                    }
-                } else if (cause instanceof CommonBusinessException)
-                {
-                    CommonBusinessException ex = (CommonBusinessException) cause;
-//                    String errorDesc = ex.getMessage();
-                    getHttpResponse().addHeader("errorCode", String.valueOf(0));
-                    getHttpResponse().addHeader("errorDesc", cause.getMessage());
-                    getHttpResponse().setStatus(HttpStatus.OK.value());
-                    getResponseResult().setResult(null);
-                    return;
-                } else
-                {
-                    getHttpResponse().sendError(HttpStatus.BAD_REQUEST.value());
-                }
-            } else
-            {
-                if (!getHttpResponse().isCommitted())
-                {
-                    getHttpResponse().sendError(HttpStatus.BAD_REQUEST.value());
-                }
-                getResponseResult().setErrorResult("Bad Request !!!");
-            }
-        }
-    }
+//    public void discard() throws IOException
+//    {
+//        if (!getResponseResult().isSetOrExpired())
+//        {
+//            Throwable cause = this.getException();
+//            if (cause != null)
+//            {
+//                getHttpResponse().setStatus(HttpStatus.BAD_REQUEST.value());
+//                if (cause instanceof IOException)
+//                {
+//                    if (cause.getCause() != null && cause.getCause() instanceof MessageNotDoneException)
+//                    {
+//                        getHttpResponse().addHeader("errorCode", String.valueOf(0));
+//                        getHttpResponse().addHeader("errorDesc", cause.getMessage());
+//                        getHttpResponse().sendError(HttpStatus.OK.value());
+//                        return;
+//                    }
+//                } else if (cause instanceof CommonBusinessException)
+//                {
+//                    CommonBusinessException ex = (CommonBusinessException) cause;
+////                    String errorDesc = ex.getMessage();
+//                    getHttpResponse().addHeader("errorCode", String.valueOf(0));
+//                    getHttpResponse().addHeader("errorDesc", cause.getMessage());
+//                    getHttpResponse().setStatus(HttpStatus.OK.value());
+//                    getResponseResult().setResult(null);
+//                    return;
+//                } else
+//                {
+//                    getHttpResponse().sendError(HttpStatus.BAD_REQUEST.value());
+//                }
+//            } else
+//            {
+//                if (!getHttpResponse().isCommitted())
+//                {
+//                    getHttpResponse().sendError(HttpStatus.BAD_REQUEST.value());
+//                }
+//                getResponseResult().setErrorResult("Bad Request !!!");
+//            }
+//        }
+//    }
 
     public String getURI()
     {

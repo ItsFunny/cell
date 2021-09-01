@@ -7,7 +7,6 @@ import com.cell.constants.ContextConstants;
 import com.cell.enums.CellError;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exception.HttpFramkeworkException;
-import com.cell.exceptions.ProgramaException;
 import com.cell.hook.IHttpCommandHook;
 import com.cell.log.LOG;
 import com.cell.models.Module;
@@ -26,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -63,6 +64,15 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         return this.commandContext.getResponseResult();
     }
 
+    protected void done(HttpStatus status, Object ret)
+    {
+        this.response(ContextResponseWrapper.builder()
+                .other(HttpContextResponseBody.builder()
+                        .status(status)
+                        .build())
+                .build());
+    }
+
     @Override
     public void response(ContextResponseWrapper wp)
     {
@@ -73,11 +83,10 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
 
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());
-        if (null != wp.getOther() && wp.getOther().containsKey(ContextConstants.HTTP_STATUS))
+        if (null != wp.getOther() && ((HttpContextResponseBody) wp.getOther()).getStatus() != null)
         {
-            this.commandContext.getHttpResponse().setStatus((Integer) wp.getOther().get(ContextConstants.HTTP_STATUS));
+            this.commandContext.getHttpResponse().setStatus(((HttpContextResponseBody) wp.getOther()).getStatus().value());
         }
-
 
         // 提前结束
         if (null != wp.getException())
@@ -168,18 +177,13 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     @Override
     public void discard() throws IOException
     {
-        this.commandContext.discard();
+        this.response(ContextResponseWrapper.builder()
+                .status(ContextConstants.FAIL)
+                .other(HttpContextResponseBody.builder().status(HttpStatus.INTERNAL_SERVER_ERROR).build())
+                .ret("BAD REQUEST")
+                .msg("BAD REQUEST")
+                .build());
     }
-
-//    @Override
-//    public void autoResponse()
-//    {
-//        long now = System.currentTimeMillis();
-//        long requestTimestamp = this.commandContext.getRequestTimestamp();
-//        long consumeTime = now - requestTimestamp;
-//        final String sequenceId = HttpUtils.get(httpCommand);
-//    }
-
 
     @Override
     public String getURI()

@@ -3,7 +3,7 @@ package com.cell.concurrent.promise;
 
 import com.cell.concurrent.base.GenericFutureListener;
 
-public interface BSFutureListener extends GenericFutureListener<BSFuture>
+public interface BaseFutureListener extends GenericFutureListener<BSFuture>
 {
 
 }
