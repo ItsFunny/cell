@@ -114,15 +114,19 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
     class MultiFilter implements ClassUtil.ClassFilter
     {
+        // config
+        final Set<Class<?>> configInterestClasses = new HashSet<>();
+        final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>(Arrays.asList(ReactorAnno.class));
+
+        // flag
+        final Set<Class<?>> set = new HashSet<>();
+
+        // data
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = new ConcurrentSet<>();
         final Map<String, AnnotaionManagerWrapper> managers = new ConcurrentHashMap<>();
 
         final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
         final Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>();
-
-        final Set<Class<?>> configInterestClasses = new HashSet<>();
-        final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>(Arrays.asList(ReactorAnno.class));
-
 
         final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
 
@@ -138,40 +142,51 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         @Override
         public boolean accept(Class<?> clazz)
         {
-            String s = clazz.getName().toLowerCase();
-            if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class)
-                    || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs")
-                    // 特殊指定该类,不对其进行特殊处理
-                    || clazz.equals(SpringBeanRegistry.class))
+            boolean ret = false;
+            try
             {
-                return false;
-            }
-            ActivePlugin anno = clazz.getAnnotation(ActivePlugin.class);
-            if (anno != null)
-            {
-                // FIXME ,可能同时是IManager,或者是IManagerNode
-                this.handleIsSpecial(clazz);
-                return true;
-            }
-            if (ISpringNodeExtension.class.isAssignableFrom(clazz))
-            {
-                Exclude exclude = clazz.getAnnotation(Exclude.class);
-                if (exclude != null)
+                String s = clazz.getName().toLowerCase();
+                if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class)
+                        || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs")
+                        // 特殊指定该类,不对其进行特殊处理
+                        || clazz.equals(SpringBeanRegistry.class))
                 {
-                    return false;
+                    ret = false;
+                    return ret;
                 }
-                return true;
+                ActivePlugin anno = clazz.getAnnotation(ActivePlugin.class);
+                if (anno != null)
+                {
+                    // FIXME ,可能同时是IManager,或者是IManagerNode
+                    this.handleIsSpecial(clazz);
+                    ret = true;
+                    return ret;
+                }
+                if (ISpringNodeExtension.class.isAssignableFrom(clazz))
+                {
+                    Exclude exclude = clazz.getAnnotation(Exclude.class);
+                    if (exclude != null)
+                    {
+                        return false;
+                    }
+                    ret = true;
+                    return ret;
+                }
+
+                if (IBeanDefinitionRegistryPostProcessorAdapter.class.isAssignableFrom(clazz) && !AbstractBeanDefiinitionRegistry.class.equals(clazz))
+                {
+                    if (clazz.getAnnotation(Exclude.class) == null)
+                    {
+                        factories.add((Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>) clazz);
+                    }
+                }
+                this.handleIsSpecial(clazz);
+                ret = false;
+                return false;
+            } finally
+            {
             }
 
-            if (IBeanDefinitionRegistryPostProcessorAdapter.class.isAssignableFrom(clazz) && !AbstractBeanDefiinitionRegistry.class.equals(clazz))
-            {
-                if (clazz.getAnnotation(Exclude.class) == null)
-                {
-                    factories.add((Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>) clazz);
-                }
-            }
-            this.handleIsSpecial(clazz);
-            return false;
         }
 
         // 只扫描2种factory的类

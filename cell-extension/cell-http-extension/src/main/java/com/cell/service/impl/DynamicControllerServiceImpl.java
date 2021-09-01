@@ -4,6 +4,7 @@ import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IDynamicHttpCommand;
 import com.cell.enums.EnumHttpRequestType;
+import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
@@ -12,9 +13,11 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.condition.ParamsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
+import org.springframework.web.servlet.mvc.method.RequestMappingInfoHandlerMethodMappingNamingStrategy;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.lang.reflect.Method;
@@ -52,28 +55,28 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
         {
 
         }
-
     }
 
-    private void registerCmd(IDynamicHttpCommand cmd) throws Exception
-    {
-        HttpCmdAnno annotation = cmd.getClass().getAnnotation(HttpCmdAnno.class);
-        if (null == annotation)
-        {
-            LOG.warn(Module.MVC, "未知的cmd,{}", cmd);
-            return;
-        }
-        EnumHttpRequestType requestType = annotation.requestType();
-        String uri = annotation.uri();
-        Method method = cmd.getClass().getMethod(executeMethod);
-        PatternsRequestCondition patternsRequestCondition = new PatternsRequestCondition(uri);
-        RequestMethodsRequestCondition requestMethodsRequestCondition = new RequestMethodsRequestCondition(getRequestMethod(requestType));
-        RequestMappingInfo mappingInfo = new RequestMappingInfo(patternsRequestCondition, requestMethodsRequestCondition, null, null, null, null, null);
-        handlerMapping.registerMapping(mappingInfo, annotation.group(), method); // 注册映射处理
-//        Method detectHandlerMethods = handlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
-//        method.setAccessible(true);
-//        method.invoke(requestMappingHandlerMapping,"myc");
-    }
+//    private void registerCmd(IDynamicHttpCommand cmd) throws Exception
+//    {
+//        HttpCmdAnno annotation = cmd.getClass().getAnnotation(HttpCmdAnno.class);
+//        if (null == annotation)
+//        {
+//            LOG.warn(Module.MVC, "未知的cmd,{}", cmd);
+//            return;
+//        }
+//        EnumHttpRequestType requestType = annotation.requestType();
+//        String uri = annotation.uri();
+//        Method method = cmd.getClass().getMethod(executeMethod);
+//        PatternsRequestCondition patternsRequestCondition = new PatternsRequestCondition(uri);
+//        RequestMethodsRequestCondition requestMethodsRequestCondition = new RequestMethodsRequestCondition(getRequestMethod(requestType));
+//
+//        RequestMappingInfo mappingInfo = new RequestMappingInfo(patternsRequestCondition, requestMethodsRequestCondition, null, null, null, null, null);
+//        handlerMapping.registerMapping(mappingInfo, annotation.group(), method); // 注册映射处理
+////        Method detectHandlerMethods = handlerMapping.getClass().getSuperclass().getSuperclass().getDeclaredMethod("detectHandlerMethods", Object.class);
+////        method.setAccessible(true);
+////        method.invoke(requestMappingHandlerMapping,"myc");
+//    }
 
     public RequestMethod getRequestMethod(EnumHttpRequestType requestType)
     {
@@ -84,7 +87,7 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
             case HTTP_POST:
                 return RequestMethod.POST;
             default:
-                throw new RuntimeException("asd");
+                throw new ProgramaException("asd");
         }
     }
 

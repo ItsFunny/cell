@@ -35,47 +35,6 @@ import java.util.Map;
 public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
 {
     @Override
-    public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
-    {
-        List<Class<?>> reactors = classListMap.get(ReactorAnno.class);
-        if (CollectionUtils.isEmpty(reactors))
-        {
-            return;
-        }
-        for (Class<?> reactor : reactors)
-        {
-            if (reactor.getAnnotation(Plugin.class) != null || reactor.getAnnotation(Exclude.class) != null)
-            {
-                continue;
-            }
-            try
-            {
-                if (!IHttpReactor.class.isAssignableFrom(reactor))
-                {
-                    continue;
-                }
-                Object o = ReflectUtil.newInstance(reactor);
-                DefaultReactorHolder.addReactor((IHttpReactor) o);
-            } catch (Exception e)
-            {
-                LOG.warning(Module.CONTAINER, e, "注册失败");
-            }
-//            try
-//            {
-//                if (!IDynamicHttpReactor.class.isAssignableFrom(reactor))
-//                {
-//                    continue;
-//                }
-//                Object o = ReflectUtil.newInstance(reactor);
-//                ReactorCache.register(reactor, (IDynamicHttpReactor) o);
-//            } catch (Exception e)
-//            {
-//                LOG.warning(Module.CONTAINER, e, "注册失败");
-//            }
-        }
-    }
-
-    @Override
     public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()
     {
         return Arrays.asList(ReactorPostProcessor.class);
@@ -85,8 +44,8 @@ public class ReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
     @Override
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
-        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
-        for (IDynamicHttpReactor reactor : reactors)
+        Collection<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
+        for (IHttpReactor reactor : reactors)
         {
             this.defaultRegisterBean(registry, reactor.getClass());
         }

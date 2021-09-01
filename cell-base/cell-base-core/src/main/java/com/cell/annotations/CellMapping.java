@@ -10,12 +10,11 @@ import java.lang.annotation.Target;
  * @When
  * @Description
  * @Detail
- * @date 创建时间：2021-08-29 07:36
+ * @date 创建时间：2021-09-01 13:17
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@ForceOverride
-public @interface ReactorAnno
+public @interface CellMapping
 {
-    String group() default "/cell";
+
 }
