@@ -14,6 +14,7 @@ import com.cell.exceptions.ProgramaException;
 import com.cell.postprocessor.ReactorCache;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.reactor.impl.AbsMapHttpDynamicCommandReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.utils.StringUtils;
 import net.bytebuddy.ByteBuddy;
@@ -94,8 +95,8 @@ public class ReactoryFactory
             {
                 cmdList.add(cmd.build().getClass());
             }
-            IMapDynamicHttpReactor ret = (IMapDynamicHttpReactor) new ByteBuddy()
-                    .subclass(AbstractHttpDymanicCommandReactor.class)
+            IMapDynamicHttpReactor ret = new ByteBuddy()
+                    .subclass(AbsMapHttpDynamicCommandReactor.class)
                     .implement(IMapDynamicHttpReactor.class)
                     .method(ElementMatchers.named("getHttpCommandList"))
                     .intercept(FixedValue.value(new ArrayList<>(cmdList)))
