@@ -65,5 +65,4 @@ public class CmdHookManager implements IReflectManager
     {
         return false;
     }
-
 }

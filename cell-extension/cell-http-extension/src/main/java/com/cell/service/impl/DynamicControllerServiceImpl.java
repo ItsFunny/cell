@@ -56,6 +56,10 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
     @Override
     public void registerReactor(IHttpReactor reactor)
     {
+        if (!IDynamicHttpReactor.class.isAssignableFrom(reactor.getClass()))
+        {
+            return;
+        }
         List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
         try
         {
