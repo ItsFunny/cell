@@ -2,7 +2,6 @@ package com.cell.service.impl;
 
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.HttpCmdAnno;
-import com.cell.command.IDynamicHttpCommand;
 import com.cell.command.IHttpCommand;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
@@ -11,8 +10,12 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
+import com.cell.utils.CollectionUtils;
+import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -36,30 +40,40 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-08-29 06:19
  */
-public class DynamicControllerServiceImpl implements IDynamicControllerService
+public class DynamicControllerServiceImpl implements IDynamicControllerService, ApplicationContextAware
 {
     @AutoPlugin
     private RequestMappingHandlerMapping handlerMapping;
 
+    private ApplicationContext context;
+
 
     private static final String requestMethod = "request";
 
-    static class A extends AbstractController
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
     {
-        @Override
-        protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception
-        {
-            return null;
-        }
+        this.context = applicationContext;
     }
+
 
     @Override
     public void registerReactor(IHttpReactor reactor)
     {
+        if (IMapDynamicHttpReactor.class.isAssignableFrom(reactor.getClass()))
+        {
+            this.fillDependency((IMapDynamicHttpReactor) reactor);
+            return;
+        }
         if (!IDynamicHttpReactor.class.isAssignableFrom(reactor.getClass()))
         {
             return;
         }
+        this.registerHandlerReactor((IDynamicHttpReactor) reactor);
+    }
+
+    private void registerHandlerReactor(IDynamicHttpReactor reactor)
+    {
         List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
         try
         {
@@ -71,6 +85,18 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService
         {
             throw new ProgramaException(e);
         }
+    }
+
+    private void fillDependency(IMapDynamicHttpReactor reactor)
+    {
+        Set<Class<?>> dependencies = reactor.getDependencyList();
+        if (CollectionUtils.isEmpty(dependencies)) return;
+        for (Class<?> dependency : dependencies)
+        {
+            Object bean = this.context.getBean(dependency);
+            reactor.registerDependency(dependency, bean);
+        }
+        this.registerHandlerReactor(reactor);
     }
 
     @Override

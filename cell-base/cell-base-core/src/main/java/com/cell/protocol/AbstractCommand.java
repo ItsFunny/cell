@@ -4,6 +4,7 @@ import com.cell.annotations.Command;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.IReactor;
+import com.cell.serialize.ISerializable;
 import com.cell.utils.CommandUtils;
 import lombok.Data;
 
@@ -76,7 +77,7 @@ public abstract class AbstractCommand implements ICommand
         }
     }
 
-//    @Override
+    //    @Override
 //    public ICommand couple()
 //    {
 //        Class<? extends ICommand> couple = commandAnnotation.couple();
@@ -94,4 +95,9 @@ public abstract class AbstractCommand implements ICommand
 //            throw new RuntimeException("easd", e);
 //        }
 //    }
+    @Override
+    public ISerializable getBO(IContext context)
+    {
+        return null;
+    }
 }

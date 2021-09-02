@@ -10,6 +10,7 @@ import com.cell.reactor.IStaticHttpReactor;
  * @Attention:
  * @Date 创建时间：2021-09-01 10:40
  */
+@Deprecated
 public abstract class AbstractHttpStaticCommandReactor extends AbstractHttpCommandReactor implements IStaticHttpReactor
 {
 

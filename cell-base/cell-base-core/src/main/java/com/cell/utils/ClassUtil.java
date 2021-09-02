@@ -1,6 +1,7 @@
 package com.cell.utils;
 
 
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellOrder;
 import com.cell.concurrent.base.DefaultThreadFactory;
 import com.cell.constants.Constants;
@@ -9,6 +10,8 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import io.netty.channel.DefaultEventLoopGroup;
 import io.netty.util.internal.StringUtil;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -17,6 +20,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
@@ -248,12 +252,38 @@ public class ClassUtil
 
     public static void invokeMethodValue(Object obj, String methodName, Object value, Class<?>... type)
     {
+        invokeMethodValue(obj, methodName, Arrays.asList(value), type);
+    }
+
+
+    public static void invokeMethodValue(Object obj, String methodName, List<Object> values, Class<?>... type)
+    {
         Class<?> clazz = obj.getClass();
         try
         {
+            Method[] methods = clazz.getDeclaredMethods();
+            for (Method method : methods)
+            {
+                System.out.println(method.getName());
+            }
             Method method = clazz.getMethod(methodName, type);
             method.setAccessible(true);
-            method.invoke(obj, value);
+            method.invoke(obj, values);
+        } catch (Exception e)
+        {
+            LOG.warning(Module.COMMON, e, "{} 反射 {} 失败， obj = {}", clazz, methodName, obj);
+        }
+    }
+
+
+    public static void mustInvokeMethodValue(Object obj, String methodName, List<Object> values, Class<?>... type)
+    {
+        Class<?> clazz = obj.getClass();
+        try
+        {
+            Method method = clazz.getDeclaredMethod(methodName, type);
+            method.setAccessible(true);
+            method.invoke(obj, values.toArray());
         } catch (Exception e)
         {
             LOG.warning(Module.COMMON, e, "{} 反射 {} 失败， obj = {}", clazz, methodName, obj);
@@ -888,5 +918,10 @@ public class ClassUtil
             throw new ProgramaException(e);
         }
         throw new ProgramaException("asd");
+    }
+
+    public static AnnotationAttributes getMergedAnnotationAttributes(AnnotatedElement element, Class<? extends Annotation> annotationType)
+    {
+        return AnnotatedElementUtils.getMergedAnnotationAttributes(element, annotationType);
     }
 }

@@ -1,10 +1,5 @@
 package com.cell.reactor;
 
-import com.cell.command.IDynamicHttpCommand;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -16,6 +11,4 @@ import java.util.List;
  */
 public interface IDynamicHttpReactor extends IHttpReactor
 {
-    //    List<IDynamicHttpCommand> getCmds();
-    void handleRequestResponse(HttpServletRequest request, HttpServletResponse response);
 }

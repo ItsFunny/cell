@@ -12,6 +12,7 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IReactor;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
+import com.cell.serialize.ISerializable;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
 
@@ -53,7 +54,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         IHttpCommand couple = (IHttpCommand) f;
     }
 
-
     @Override
     public String modelAndView()
     {
@@ -72,7 +72,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return this.httpCmdAnno.responseType();
     }
 
-    protected abstract ICommandExecuteResult onExecute(IHttpContext ctx) throws IOException;
+    protected abstract ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException;
 
     protected IHttpContext getHttpContext()
     {
@@ -102,10 +102,11 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     {
         try
         {
-            return this.onExecute((IHttpContext) ctx);
+            return this.onExecute((IHttpContext) ctx, this.getBO(ctx));
         } catch (IOException e)
         {
             throw new InternalWrapperException(e);
         }
     }
+
 }

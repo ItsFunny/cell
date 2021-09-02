@@ -15,9 +15,4 @@ import javax.servlet.http.HttpServletResponse;
  */
 public abstract class AbstractHttpDymanicCommandReactor extends AbstractHttpCommandReactor implements IDynamicHttpReactor
 {
-    @Override
-    public void handleRequestResponse(HttpServletRequest request, HttpServletResponse response)
-    {
-
-    }
 }

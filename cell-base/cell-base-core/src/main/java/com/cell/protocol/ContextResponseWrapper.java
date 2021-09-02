@@ -32,6 +32,5 @@ public class ContextResponseWrapper
     // 从哪里调用了该 wp
     private String from;
 
-
     private Object other;
 }

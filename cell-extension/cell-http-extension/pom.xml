@@ -18,6 +18,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-http-framework</artifactId>
             <version>1.0-SNAPSHOT</version>

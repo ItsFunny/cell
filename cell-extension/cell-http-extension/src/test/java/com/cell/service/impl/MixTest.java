@@ -5,7 +5,7 @@ import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
-import com.cell.command.impl.AbstractJsonHttpCommand;
+import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpContext;
@@ -44,10 +44,10 @@ public class MixTest
 
     @Command(commandId = 1)
     @HttpCmdAnno(uri = "/my/demo")
-    public static class MyAA extends AbstractJsonHttpCommand
+    public static class MyAA extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult doExecuteDirectly(IHttpContext ctx, ISerializable bo) throws IOException
+        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("execution");
             B b = new B();
@@ -80,11 +80,11 @@ public class MixTest
 
     @Command(commandId = 2)
     @HttpCmdAnno(uri = "/my/demo2")
-    public static class NonAsMappingCmd extends AbstractJsonHttpCommand
+    public static class NonAsMappingCmd extends AbstractHttpCommand
     {
 
         @Override
-        protected ICommandExecuteResult doExecuteDirectly(IHttpContext ctx, ISerializable bo) throws IOException
+        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("mydemo2");
             B b = new B();
