@@ -28,6 +28,10 @@ import com.cell.utils.ReflectUtil;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
 import io.netty.util.internal.ConcurrentSet;
+import org.reflections.Reflections;
+import org.reflections.scanners.*;
+import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -67,6 +71,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     protected void onInit(InitCTX ctx)
     {
         MultiFilter filter = new MultiFilter();
+        // FIXME ,需要重构该部分,使用reflections
         Set<Class<?>> activePlugins = ClassUtil.scanPackage(Constants.SCAN_ROOT, filter);
         try
         {

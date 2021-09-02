@@ -19,8 +19,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface IHttpContext extends IContext
 {
-    IHttpReactor getReactor();
-
+    IHttpReactor getHttpReactor();
     HttpServletRequest getHttpRequest();
 
     DeferredResult<Object> getResult();

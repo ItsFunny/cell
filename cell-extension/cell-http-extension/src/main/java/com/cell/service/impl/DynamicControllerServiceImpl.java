@@ -89,14 +89,19 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
 
     private void fillDependency(IMapDynamicHttpReactor reactor)
     {
-        Set<Class<?>> dependencies = reactor.getDependencyList();
-        if (CollectionUtils.isEmpty(dependencies)) return;
-        for (Class<?> dependency : dependencies)
+        try
         {
-            Object bean = this.context.getBean(dependency);
-            reactor.registerDependency(dependency, bean);
+            Set<Class<?>> dependencies = reactor.getDependencyList();
+            if (CollectionUtils.isEmpty(dependencies)) return;
+            for (Class<?> dependency : dependencies)
+            {
+                Object bean = this.context.getBean(dependency);
+                reactor.registerDependency(dependency, bean);
+            }
+        } finally
+        {
+            this.registerHandlerReactor(reactor);
         }
-        this.registerHandlerReactor(reactor);
     }
 
     @Override

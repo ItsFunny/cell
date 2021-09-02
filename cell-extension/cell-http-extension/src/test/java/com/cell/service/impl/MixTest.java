@@ -9,7 +9,6 @@ import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpContext;
-import com.cell.controller.SpringBaseHttpController;
 import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.reactor.impl.AbstractHttpStaticCommandReactor;
@@ -71,12 +70,12 @@ public class MixTest
         }
     }
 
-    @RestController
-    @RequestMapping("/my")
-    public static class MyController extends SpringBaseHttpController
-    {
-
-    }
+//    @RestController
+//    @RequestMapping("/my")
+//    public static class MyController extends SpringBaseHttpController
+//    {
+//
+//    }
 
     @Command(commandId = 2)
     @HttpCmdAnno(uri = "/my/demo2")

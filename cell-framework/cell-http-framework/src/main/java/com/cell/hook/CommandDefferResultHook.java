@@ -37,7 +37,6 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
             LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
             wrapper.getContext().response(ContextResponseWrapper.builder()
                     .status(ContextConstants.TIMEOUT)
-                    .reactor(wrapper.getReactor())
                     .build());
         });
         return wrapper.getLastResult();

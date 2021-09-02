@@ -1,23 +1,32 @@
 package com.cell.reactor.impl;
 
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.InitCTX;
+import com.cell.enums.EnumHttpRequestType;
+import com.cell.enums.EnumHttpResponseType;
+import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;
+import com.cell.utils.StringUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
+import java.lang.annotation.Annotation;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +47,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
 
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {
-        return ContextResponseWrapper.builder()
-                .reactor(this);
+        return ContextResponseWrapper.builder();
     }
 
 
@@ -71,6 +79,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
             context.response(this.createResponseWp()
                     .status(ContextConstants.PROGRAMA_ERROR)
                     .other(HttpContextResponseBody.builder().status(HttpStatus.NOT_FOUND).build())
+                    .exception(new HttpFramkeworkException("cmd不存在", "asd"))
                     .msg("该commd不存在:" + uri)
                     .build());
             return;
@@ -92,7 +101,6 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                     .build());
         }
     }
-
 
 
 //    @Override
@@ -138,6 +146,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.fillCmd();
         List<Class<? extends IHttpCommand>> httpCommandList = this.getHttpCommandList();
         if (CollectionUtils.isEmpty(httpCommandList))
         {
@@ -145,5 +154,76 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         }
         httpCommandList.stream().forEach(p ->
                 this.registerCmd((ICommand) ReflectUtil.newInstance(p)));
+
+    }
+
+    private void fillCmd()
+    {
+        List<Class<? extends IHttpCommand>> httpCommandList = this.getHttpCommandList();
+        ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(this.getClass(), ReactorAnno.class);
+        String group = anno.group();
+        if (StringUtils.isEmpty(group)) return;
+        httpCommandList.stream().forEach(c ->
+        {
+            HttpCmdAnno annotation = c.getAnnotation(HttpCmdAnno.class);
+            if (annotation == null)
+            {
+                throw new ProgramaException("asd");
+            }
+            // FIXME
+            final String urlStr = group + annotation.uri();
+            try
+            {
+                new URL("http:127.0.0.1:8080" + urlStr);
+            } catch (MalformedURLException e)
+            {
+                throw new ProgramaException("url不合法:" + urlStr);
+            }
+            final HttpCmdAnno newAnno = new HttpCmdAnno()
+            {
+                @Override
+                public EnumHttpRequestType requestType()
+                {
+                    return annotation.requestType();
+                }
+
+                @Override
+                public EnumHttpResponseType responseType()
+                {
+                    return annotation.responseType();
+                }
+
+                @Override
+                public String uri()
+                {
+                    return urlStr;
+                }
+
+                @Override
+                public String viewName()
+                {
+                    return annotation.viewName();
+                }
+
+                @Override
+                public String group()
+                {
+                    return annotation.group();
+                }
+
+                @Override
+                public boolean websocket()
+                {
+                    return annotation.websocket();
+                }
+
+                @Override
+                public Class<? extends Annotation> annotationType()
+                {
+                    return annotation.annotationType();
+                }
+            };
+            ReflectUtil.overRideAnnotationOn(c, HttpCmdAnno.class, newAnno);
+        });
     }
 }

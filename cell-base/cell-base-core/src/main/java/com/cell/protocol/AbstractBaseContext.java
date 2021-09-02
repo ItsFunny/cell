@@ -6,6 +6,7 @@ import com.cell.concurrent.promise.BaseFutureListener;
 import com.cell.concurrent.promise.BasePromise;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.reactor.ICommandReactor;
 import lombok.Data;
 
 /**
@@ -22,6 +23,7 @@ public abstract class AbstractBaseContext implements IContext
     protected String sequenceId;
     protected long requestTimestamp;
     private BasePromise promise;
+    protected ICommandReactor reactor;
 
     public AbstractBaseContext()
     {

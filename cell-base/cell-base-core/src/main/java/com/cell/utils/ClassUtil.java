@@ -1,7 +1,6 @@
 package com.cell.utils;
 
 
-import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellOrder;
 import com.cell.concurrent.base.DefaultThreadFactory;
 import com.cell.constants.Constants;
@@ -9,7 +8,6 @@ import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import io.netty.channel.DefaultEventLoopGroup;
-import io.netty.util.internal.StringUtil;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.io.Resource;
@@ -345,8 +343,10 @@ public class ClassUtil
         final Set<Class<?>> classes = new HashSet<>();
         try
         {
+
             final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(Thread.currentThread().getContextClassLoader());
             final String packagePath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + packageName.replace(".", "/") + "/**/*.class";
+
             final Resource[] resources = resolver.getResources(packagePath);
             final String costTimeStr = DateUtils.getBeforeTimeStr(new Date(System.currentTimeMillis() - startTime));
             LOG.minfo(Module.COMMON, "resolver.getResources complete, packageName = {}, costTime = {}", packageName, costTimeStr);
@@ -366,7 +366,6 @@ public class ClassUtil
             {
                 scanPackageGroup.execute(new Runnable()
                 {
-
                     @Override
                     public void run()
                     {

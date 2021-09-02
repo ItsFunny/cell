@@ -24,7 +24,6 @@ public class ContextResponseWrapper
 {
     private long status;
     private String msg;
-    private ICommandReactor reactor;
     private Exception exception;
     private ICommand cmd;
     private Object ret;

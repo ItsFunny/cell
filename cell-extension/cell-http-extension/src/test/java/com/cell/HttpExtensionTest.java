@@ -1,12 +1,9 @@
 package com.cell;
 
-import com.cell.controller.SpringBaseHttpController;
-import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.extension.HttpExtension;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication(scanBasePackages = {"com.cell"})
 public class HttpExtensionTest
@@ -32,16 +29,16 @@ public class HttpExtensionTest
 //        }
 //    }
 
-    @RequestMapping("/demo")
-    public static class MyController extends SpringBaseHttpController
-    {
+//    @RequestMapping("/demo")
+//    public static class MyController extends SpringBaseHttpController
+//    {
 
 //        @Override
 //        protected void initDispatcher(IHttpCommandDispatcher dispatcher)
 //        {
 //
 //        }
-    }
+//    }
 
     public static void main(String[] args)
     {

@@ -7,9 +7,11 @@ import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbsDeltaHttpCommand;
 import com.cell.command.IBuzzExecutor;
+import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
+import com.cell.postprocessor.ReactorCache;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
@@ -79,7 +81,9 @@ public class ReactoryFactory
             {
                 throw new ProgramaException("cmd必须存在");
             }
-            return this.createDynamicHttpReactor();
+            IMapDynamicHttpReactor reactor = this.createDynamicHttpReactor();
+            DefaultReactorHolder.addReactor(reactor);
+            return reactor;
         }
 
         private IMapDynamicHttpReactor createDynamicHttpReactor() throws Exception

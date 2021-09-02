@@ -50,7 +50,6 @@ public class ReactorPostProcessor implements IBeanPostProcessortAdapter
             DefaultReactorHolder.setDispatcher((IHttpCommandDispatcher) bean);
         } else if (bean instanceof IHttpReactor)
         {
-            this.fillCmd((IHttpReactor) bean);
             if (bean instanceof IDynamicHttpReactor)
             {
             }
@@ -59,74 +58,6 @@ public class ReactorPostProcessor implements IBeanPostProcessortAdapter
         return bean;
     }
 
-    private void fillCmd(IHttpReactor reactor)
-    {
-        List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
-        ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(reactor.getClass(), ReactorAnno.class);
-        String group = anno.group();
-        if (StringUtils.isEmpty(group)) return;
-        httpCommandList.stream().forEach(c ->
-        {
-            HttpCmdAnno annotation = c.getAnnotation(HttpCmdAnno.class);
-            if (annotation == null)
-            {
-                throw new ProgramaException("asd");
-            }
-            final String urlStr = group + "/" + annotation.uri();
-            try
-            {
-                new URL(urlStr);
-            } catch (MalformedURLException e)
-            {
-                throw new ProgramaException("url不合法:" + urlStr);
-            }
-            final HttpCmdAnno newAnno = new HttpCmdAnno()
-            {
-                @Override
-                public EnumHttpRequestType requestType()
-                {
-                    return annotation.requestType();
-                }
-
-                @Override
-                public EnumHttpResponseType responseType()
-                {
-                    return annotation.responseType();
-                }
-
-                @Override
-                public String uri()
-                {
-                    return urlStr;
-                }
-
-                @Override
-                public String viewName()
-                {
-                    return annotation.viewName();
-                }
-
-                @Override
-                public String group()
-                {
-                    return annotation.group();
-                }
-
-                @Override
-                public boolean websocket()
-                {
-                    return annotation.websocket();
-                }
-
-                @Override
-                public Class<? extends Annotation> annotationType()
-                {
-                    return annotation.annotationType();
-                }
-            };
-            ReflectUtil.overRideAnnotationOn(c, HttpCmdAnno.class, newAnno);
-        });
-    }
 
     // FIXME 这个或许不应该丢这?
     private Object proxyDymanicReactor(IHttpReactor reactor)

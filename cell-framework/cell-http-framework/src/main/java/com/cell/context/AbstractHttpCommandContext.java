@@ -48,18 +48,19 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     // FIXME ,有更好的做法
     protected IHttpCommandHook hook;
 
-    protected IHttpReactor reactor;
     private HttpCmdAnno httpCmdAnno;
 
-    public void setReactor(IHttpReactor reactor)
-    {
-        this.reactor = reactor;
-    }
 
     public AbstractHttpCommandContext(CommandContext commandContext, IHttpCommandHook hk)
     {
         this.commandContext = commandContext;
         this.hook = hk;
+    }
+
+    @Override
+    public IHttpReactor getHttpReactor()
+    {
+        return (IHttpReactor) this.getReactor();
     }
 
     @Override

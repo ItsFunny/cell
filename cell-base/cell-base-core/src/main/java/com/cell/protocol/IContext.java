@@ -1,6 +1,7 @@
 package com.cell.protocol;
 
 import com.cell.concurrent.promise.BasePromise;
+import com.cell.reactor.ICommandReactor;
 
 import java.io.IOException;
 
@@ -26,5 +27,8 @@ public interface IContext
 
 
     BasePromise getPromise();
+
+    void setReactor(ICommandReactor reactor);
+    ICommandReactor getReactor();
 
 }
