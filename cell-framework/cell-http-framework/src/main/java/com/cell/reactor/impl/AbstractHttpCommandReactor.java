@@ -154,7 +154,6 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         }
         httpCommandList.stream().forEach(p ->
                 this.registerCmd((ICommand) ReflectUtil.newInstance(p)));
-
     }
 
     private void fillCmd()
@@ -197,6 +196,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                 public String uri()
                 {
                     return urlStr;
+                }
+
+                @Override
+                public short httpCommandId()
+                {
+                    return annotation.httpCommandId();
                 }
 
                 @Override

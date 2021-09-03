@@ -1,32 +1,34 @@
-package com.cell.factory;
+package com.cell.application;
 
 import com.cell.annotations.Command;
 import com.cell.annotations.ForceOverride;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.command.IBuzzExecutor;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbsDeltaHttpCommand;
-import com.cell.command.IBuzzExecutor;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
-import com.cell.postprocessor.ReactorCache;
-import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbsMapHttpDynamicCommandReactor;
-import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
+import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.description.annotation.AnnotationDescription;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
 import net.bytebuddy.matcher.ElementMatchers;
-import org.springframework.scheduling.concurrent.ScheduledExecutorTask;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.core.annotation.AnnotationAttributes;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -41,21 +43,103 @@ import java.util.concurrent.atomic.AtomicLong;
  * @Attention:
  * @Date 创建时间：2021-09-02 10:31
  */
-public class ReactoryFactory
+public class CellApplication
 {
     private static final AtomicLong commandId = new AtomicLong(1);
 
-    public static ReactorBuilder builder()
+    public static ApplicationContext run(Class<?> clz, String[] args)
     {
-        return new ReactorBuilder();
+        try
+        {
+            return CellApplication.builder().build().start(clz, args);
+        } catch (Exception e)
+        {
+            throw new ProgramaException(e);
+        }
     }
+
+    public ApplicationContext start(Class<?> clz, String[] args)
+    {
+        return SpringApplication.run(clz, args);
+    }
+
+    public static CellApplicationBuilder builder()
+    {
+        return new CellApplicationBuilder();
+    }
+
+    public static class CellApplicationBuilder
+    {
+        private List<IHttpReactor> reactors = new ArrayList<>();
+        private List<ReactorBuilder> reactorBuilders = new ArrayList<>();
+
+        public CellApplicationBuilder withReactor(IHttpReactor reactor)
+        {
+            this.reactors.add(reactor);
+            return this;
+        }
+
+        public ReactorBuilder newReactor()
+        {
+            ReactorBuilder ret = new ReactorBuilder(this);
+            this.reactorBuilders.add(ret);
+            return ret;
+        }
+
+        public CellApplication build() throws Exception
+        {
+            ByteBuddyAgent.install();
+
+            for (ReactorBuilder builder : this.reactorBuilders)
+            {
+                this.reactors.add(builder.build());
+            }
+            for (IHttpReactor reactor : reactors)
+            {
+                AnnotationAttributes attributes = ClassUtil.getMergedAnnotationAttributes(reactor.getClass(), ReactorAnno.class);
+                if (attributes != null && !attributes.isEmpty())
+                {
+                    continue;
+                }
+                new ByteBuddy()
+                        .redefine(reactor.getClass())
+                        .annotateType(AnnotationDescription.Builder.ofType(ReactorAnno.class)
+                                .define("group", "")
+                                .define("withForce", new ForceOverride()
+                                {
+                                    @Override
+                                    public Class<? extends Annotation> annotationType()
+                                    {
+                                        return ForceOverride.class;
+                                    }
+
+                                    @Override
+                                    public boolean forceOverride()
+                                    {
+                                        return true;
+                                    }
+                                })
+                                .build())
+                        .make()
+                        .load(Thread.currentThread().getContextClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
+            }
+            return new CellApplication();
+        }
+    }
+
 
     public static class ReactorBuilder
     {
+        private CellApplicationBuilder cellApplicationBuilder;
         private List<HttpCommandBuilder> cmds = new ArrayList<>();
         private Set<Class<?>> dependencies = new HashSet<>();
         private String group = "";
         private boolean forceOverride = false;
+
+        public ReactorBuilder(CellApplicationBuilder builder)
+        {
+            this.cellApplicationBuilder = builder;
+        }
 
         public ReactorBuilder withGroup(String group)
         {
@@ -69,6 +153,11 @@ public class ReactoryFactory
             return this;
         }
 
+        public CellApplicationBuilder done()
+        {
+            return this.cellApplicationBuilder;
+        }
+
         public HttpCommandBuilder newCommand()
         {
             HttpCommandBuilder ret = new HttpCommandBuilder(this);
@@ -76,12 +165,13 @@ public class ReactoryFactory
             return ret;
         }
 
-        public IMapDynamicHttpReactor build() throws Exception
+        public IDynamicHttpReactor build() throws Exception
         {
             if (this.cmds.size() == 0)
             {
                 throw new ProgramaException("cmd必须存在");
             }
+            // FIXME OPTIMIZE
             IMapDynamicHttpReactor reactor = this.createDynamicHttpReactor();
             DefaultReactorHolder.addReactor(reactor);
             return reactor;
@@ -184,7 +274,7 @@ public class ReactoryFactory
             return this.reactorBuilder;
         }
 
-        public IHttpCommand build() throws Exception
+        private IHttpCommand build() throws Exception
         {
             if (StringUtils.isEmpty(this.uri))
             {
@@ -212,49 +302,18 @@ public class ReactoryFactory
                     .method(ElementMatchers.named(methodName))
                     .intercept(InvocationHandlerAdapter.of((o, proxy, args) ->
                             this.buzzExecutor))
-                    .annotateType(AnnotationDescription.Builder.ofType(Command.class).define("commandId", (short) commandId.getAndIncrement()).build())
                     .annotateType(AnnotationDescription.Builder.ofType(HttpCmdAnno.class)
                             .define("requestType", this.requestType)
                             .define("responseType", this.responseType)
                             .define("uri", this.uri)
                             .define("viewName", this.viewName)
+                            .define("httpCommandId", (short) commandId.getAndIncrement())
                             .build())
                     .make()
-                    .load(ReactoryFactory.class.getClassLoader())
+                    .load(CellApplication.class.getClassLoader())
                     .getLoaded()
                     .getDeclaredConstructor()
                     .newInstance();
         }
     }
-
-
-    static class SingleJsonInvocationHandler implements InvocationHandler
-    {
-        public SingleJsonInvocationHandler(IBuzzExecutor bundle)
-        {
-            this.bundle = bundle;
-        }
-
-        private IBuzzExecutor bundle;
-
-        @Override
-        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
-        {
-            Object ret = method.invoke(bundle, args);
-            return ret;
-        }
-    }
-
-    public static class SingleDynamicReactor extends AbstractHttpDymanicCommandReactor
-    {
-        private List<Class<? extends IHttpCommand>> cmds = new ArrayList<>(1);
-
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return this.cmds;
-        }
-    }
-
-
 }

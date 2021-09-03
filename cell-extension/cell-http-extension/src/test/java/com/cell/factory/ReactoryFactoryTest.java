@@ -3,9 +3,9 @@ package com.cell.factory;
 import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.reactor.IDynamicHttpReactor;
-import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.utils.ClassUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -49,8 +49,8 @@ public class ReactoryFactoryTest
             final String group = "/group";
             List<String> uris = Arrays.asList("/uri1", "/uri2");
             final AtomicInteger count = new AtomicInteger();
-            ReactoryFactory.ReactorBuilder builder = ReactoryFactory.builder();
-            IMapDynamicHttpReactor reactor = builder
+
+            IDynamicHttpReactor reactor = CellApplication.builder().newReactor()
                     .withGroup(group)
                     .withBean(C.class)
                     .newCommand()

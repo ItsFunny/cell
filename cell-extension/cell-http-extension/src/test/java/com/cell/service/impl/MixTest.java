@@ -1,9 +1,10 @@
 package com.cell.service.impl;
 
-import com.cell.HttpExtensionTest;
+import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
@@ -11,14 +12,9 @@ import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpContext;
 import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
-import com.cell.reactor.impl.AbstractHttpStaticCommandReactor;
 import com.cell.serialize.ISerializable;
 import lombok.Data;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,7 +28,7 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-02 05:59
  */
-@SpringBootApplication(scanBasePackages = {"com.cell"})
+@CellSpringHttpApplication
 public class MixTest
 {
     @Data
@@ -41,8 +37,7 @@ public class MixTest
         private String name;
     }
 
-    @Command(commandId = 1)
-    @HttpCmdAnno(uri = "/my/demo")
+    @HttpCmdAnno(uri = "/my/demo", httpCommandId = 1)
     public static class MyAA extends AbstractHttpCommand
     {
         @Override
@@ -77,8 +72,7 @@ public class MixTest
 //
 //    }
 
-    @Command(commandId = 2)
-    @HttpCmdAnno(uri = "/my/demo2")
+    @HttpCmdAnno(uri = "/my/demo2", httpCommandId = 2)
     public static class NonAsMappingCmd extends AbstractHttpCommand
     {
 
@@ -98,7 +92,7 @@ public class MixTest
     }
 
     @ReactorAnno
-    public static class NonAsMappingReactor extends AbstractHttpStaticCommandReactor
+    public static class NonAsMappingReactor extends AbstractHttpDymanicCommandReactor
     {
         @Override
         public List<Class<? extends IHttpCommand>> getHttpCommandList()
@@ -109,6 +103,6 @@ public class MixTest
 
     public static void main(String[] args)
     {
-        SpringApplication.run(MixTest.class, args);
+        CellApplication.run(MixTest.class, args);
     }
 }

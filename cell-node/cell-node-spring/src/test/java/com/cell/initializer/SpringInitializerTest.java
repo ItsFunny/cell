@@ -1,5 +1,6 @@
 package com.cell.initializer;
 
+import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.Plugin;
@@ -12,8 +13,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-@ComponentScan(basePackages = "com.cell")
-@SpringBootApplication
+//@ComponentScan(basePackages = "com.cell")
+//@SpringBootApplication
+@CellSpringHttpApplication(scanBasePackages = "com.cell")
 public class SpringInitializerTest
 {
     public static class B1

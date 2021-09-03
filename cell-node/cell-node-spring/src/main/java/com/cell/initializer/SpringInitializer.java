@@ -4,6 +4,7 @@ import com.cell.App;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
+import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.comparators.OrderComparator;
@@ -70,9 +71,19 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     @Override
     protected void onInit(InitCTX ctx)
     {
+        Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
+        CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+        String[] scans = mergedAnnotation.scanBasePackages();
+        String rootPath = scans[0];
+        Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
+        Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
+
+
         MultiFilter filter = new MultiFilter();
+        filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
+        filter.interestAnnotations.addAll(Arrays.asList(interestAnnotations));
         // FIXME ,需要重构该部分,使用reflections
-        Set<Class<?>> activePlugins = ClassUtil.scanPackage(Constants.SCAN_ROOT, filter);
+        Set<Class<?>> activePlugins = ClassUtil.scanPackage(rootPath, filter);
         try
         {
             this.firstAfterScan(filter);
@@ -125,6 +136,8 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         // config
         final Set<Class<?>> configInterestClasses = new HashSet<>();
         final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>();
+        final Set<Class<? extends Annotation>> excludeAnnotations = new HashSet<>(Arrays.asList(Exclude.class));
+        final Set<Class<? extends AbstractNodeExtension>> excludeNodeExtensions = new HashSet<>();
 
         // flag
         final Set<Class<?>> set = new HashSet<>();
@@ -162,6 +175,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     ret = false;
                     return ret;
                 }
+                if (excludeAnnotations.contains(clazz))
+                {
+                    LOG.info(Module.CONTAINER, "exlude Annotation,{}", clazz);
+                    return false;
+                }
                 AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, ActivePlugin.class);
                 if (attributes != null && !attributes.isEmpty())
                 {
@@ -172,9 +190,9 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                 }
                 if (ISpringNodeExtension.class.isAssignableFrom(clazz))
                 {
-                    Exclude exclude = clazz.getAnnotation(Exclude.class);
-                    if (exclude != null)
+                    if (excludeNodeExtensions.contains(clazz))
                     {
+                        LOG.info(Module.CONTAINER, "exclude nodeExtension,{}", clazz);
                         return false;
                     }
                     ret = true;

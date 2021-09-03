@@ -25,6 +25,9 @@ public abstract class AbstractBaseContext implements IContext
     private BasePromise promise;
     protected ICommandReactor reactor;
 
+    private String ip;
+
+
     public AbstractBaseContext()
     {
         this.requestTimestamp = System.currentTimeMillis();

@@ -3,15 +3,43 @@ package com.cell.utils;
 import com.cell.annotations.ForceOverride;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.agent.ByteBuddyAgent;
+import net.bytebuddy.description.annotation.AnnotationDescription;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.annotation.*;
+import java.nio.ByteBuffer;
 
 import static org.junit.Assert.*;
 
 public class ReflectUtilTest
 {
+    public static class AAA
+    {
+
+    }
+
+    @Test
+    public void testModifyAttrituteRuntime() throws Exception
+    {
+        AAA a = new AAA();
+
+        ByteBuddyAgent.install();
+        new ByteBuddy()
+                .redefine(a.getClass())
+                .annotateType(AnnotationDescription.Builder.ofType(ReactorAnno.class).define("group", "asd").build())
+                .make().load(ClassLoader.getSystemClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
+        ReactorAnno annotation = a.getClass().getAnnotation(ReactorAnno.class);
+        Assert.assertNotNull(annotation);
+        System.out.println(annotation.group());
+
+        AAA ba = new AAA();
+        System.out.println(ba.getClass().getAnnotation(ReactorAnno.class).group());
+    }
 
     @Aa(name = "asd")
     public static class A

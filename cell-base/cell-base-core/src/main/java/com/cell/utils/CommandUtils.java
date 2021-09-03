@@ -15,7 +15,7 @@ public class CommandUtils
 {
     public static Command getCommandAnno(Class<? extends ICommand> commandClz)
     {
-        Command anno = commandClz.getAnnotation(Command.class);
+        Command anno = ClassUtil.getMergedAnnotation(commandClz, Command.class);
         if (anno == null)
         {
             throw new RuntimeException(commandClz + "未添加@Command注解，无法初始化命令参数");

@@ -29,6 +29,12 @@ public interface IContext
     BasePromise getPromise();
 
     void setReactor(ICommandReactor reactor);
+
     ICommandReactor getReactor();
+
+
+    void setIp(String ip);
+
+    String getIp();
 
 }

@@ -868,7 +868,7 @@ public class ClassUtil
 
     public static Annotation mustGetAnnotation(Class<?> clz, Class<? extends Annotation> a)
     {
-        Annotation annotation = getAnnotation(clz, a);
+        Annotation annotation = getMergedAnnotation(clz, a);
         if (null == annotation)
         {
             throw new ProgramaException("as");
@@ -878,17 +878,12 @@ public class ClassUtil
 
     public static Annotation getAnnotation(Class<?> clz, Class<? extends Annotation> a)
     {
-        Annotation annotation = clz.getAnnotation(a);
-        if (null == annotation)
-        {
-            throw new RuntimeException("asd");
-        }
-        return annotation;
+        return getMergedAnnotation(clz, a);
     }
 
     public static boolean hasAnnotation(Class<?> clz, Class<? extends Annotation> a)
     {
-        return clz.getAnnotation(a) != null;
+        return getAnnotation(clz, a) != null;
     }
 
     public static boolean hasAnnotation(Object o, Class<? extends Annotation> a)
@@ -896,7 +891,7 @@ public class ClassUtil
         return o.getClass().getAnnotation(a) != null;
     }
 
-    public static Class<?> deduceMainApplicationClass()
+    public static Class<?> getMainApplicationClass()
     {
         try
         {
@@ -923,4 +918,18 @@ public class ClassUtil
     {
         return AnnotatedElementUtils.getMergedAnnotationAttributes(element, annotationType);
     }
+
+    public static <T extends Annotation> T getMergedAnnotation(Class<?> clz, Class<T> ac)
+    {
+        return AnnotatedElementUtils.getMergedAnnotation(clz, ac);
+    }
+//    public static void addAnnotationIfNotExist(Class<?> clz, Annotation annotationType)
+//    {
+//        AnnotationAttributes mergedAnnotationAttributes = getMergedAnnotationAttributes(clz, annotationType.getClass());
+//        if (mergedAnnotationAttributes != null && !mergedAnnotationAttributes.isEmpty())
+//        {
+//            return;
+//        }
+//        new ByteBuddy().redefine(clz).annotateType()
+//    }
 }

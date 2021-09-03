@@ -70,7 +70,7 @@ public class CommandContext
         httpSummary.setReceiveTimestamp(System.currentTimeMillis());
         httpSummary.setVersionInt(getHeaderData(HttpConstants.VERSION_INT));
         httpSummary.setVersion(getHeaderData(HttpConstants.VERSION));
-        httpSummary.setSequenceId(getHeaderData(HttpConstants.SEQUENCE_ID));
+        httpSummary.setSequenceId(getHeaderData(HttpConstants.SEQUENCE_ID, UUIDUtils.uuid2()));
         return httpSummary;
     }
 
@@ -79,6 +79,12 @@ public class CommandContext
         return this.httpRequest.getHeader(headerName);
     }
 
+    private String getHeaderData(String headerName, String defaultValue)
+    {
+        String ret = this.httpRequest.getHeader(headerName);
+        ret = StringUtils.isEmpty(ret) ? defaultValue : ret;
+        return ret;
+    }
     // FIXME ,需要定制化
 //    public void discard() throws IOException
 //    {

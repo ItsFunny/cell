@@ -55,6 +55,10 @@
             <version>5.3.0-RC2</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy-agent</artifactId>
+        </dependency>
 
 
     </dependencies>

@@ -14,9 +14,8 @@ import com.cell.hook.HookCommandWrapper;
 import com.cell.hook.HttpCommandHookResult;
 import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.CommandContext;
-import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.service.IDynamicControllerService;
+import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
 import org.springframework.beans.BeansException;
@@ -29,7 +28,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,6 +78,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
         CommandContext context = new CommandContext(request, response, timeOut, command);
         DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(context, tracker);
+        commandContext.setIp(HttpUtils.getIpAddress(request));
         if (null == reactor)
         {
             try

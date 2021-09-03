@@ -1,20 +1,18 @@
 package com.cell;
 
+import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpContext;
-import com.cell.factory.ReactoryFactory;
-import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommandExecuteResult;
+import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
-import com.cell.reactor.impl.AbstractHttpCommandReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
@@ -27,9 +25,32 @@ import java.util.List;
  * Hello world!
  */
 
-@SpringBootApplication(scanBasePackages = {"com.cell"})
+@CellSpringHttpApplication
 public class App
 {
+
+    @HttpCmdAnno(uri = "/demo/auto", httpCommandId = 1)
+    public static class CCCmd extends AbstractHttpCommand
+    {
+
+        @Override
+        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        {
+            System.out.println("onExecute");
+            ctx.response(this.createResponseWp().ret("ccccmd").build());
+            return null;
+        }
+    }
+
+    public static class CCReactor extends AbstractHttpDymanicCommandReactor
+    {
+        @Override
+        public List<Class<? extends IHttpCommand>> getHttpCommandList()
+        {
+            return Arrays.asList(CCCmd.class);
+        }
+    }
+
     public static class CC
     {
 
@@ -41,8 +62,7 @@ public class App
         return new CC();
     }
 
-    @Command(commandId = 4)
-    @HttpCmdAnno(uri = "/demo/demo2")
+    @HttpCmdAnno(uri = "/demo/demo2", httpCommandId = 2)
     public static class MyComd2 extends AbstractHttpCommand
     {
         @Override
@@ -66,7 +86,10 @@ public class App
 
     public static void main(String[] args) throws Exception
     {
-        ReactoryFactory.builder()
+        IHttpReactor aReactor = new CCReactor();
+        CellApplication.builder()
+                .withReactor(aReactor)
+                .newReactor()
                 .withGroup("/demo")
                 .withBean(CC.class)
                 .newCommand()
@@ -85,8 +108,6 @@ public class App
                 {
                     ctx.success("getFile");
                     return null;
-                }).make().build();
-
-        SpringApplication.run(App.class, args);
+                }).make().done().build().start(App.class, args);
     }
 }
