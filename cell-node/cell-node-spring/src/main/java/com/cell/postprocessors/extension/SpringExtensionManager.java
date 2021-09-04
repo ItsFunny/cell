@@ -1,6 +1,7 @@
 package com.cell.postprocessors.extension;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import com.cell.annotations.ManagerNode;
@@ -24,6 +25,7 @@ import com.cell.utils.CollectionUtils;
 import com.cell.utils.DateUtils;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
+import com.google.common.base.Stopwatch;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -169,10 +171,11 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         {
             if (!unimportedSet.contains(newEx.getName()))
             {
-                final long startTime = System.currentTimeMillis();
+                Stopwatch started = Stopwatch.createStarted();
                 newEx.init(ctx);
-                final long costTime = System.currentTimeMillis() - startTime;
-                LOG.info(Module.CONTAINER, "extension init success, extension = {}, costTime = {}", newEx.getName(), DateUtils.getBeforeTimeStr(new Date(costTime)));
+                started.stop();
+                long elapsed = started.elapsed(TimeUnit.SECONDS);
+                LOG.info(Module.CONTAINER, "extension init success, extension = {}, costTime = {}", newEx.getName(), elapsed);
             }
         } catch (Throwable e)
         {

@@ -7,6 +7,7 @@ import com.cell.constants.Constants;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.google.common.base.Stopwatch;
 import io.netty.channel.DefaultEventLoopGroup;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -28,6 +29,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -339,7 +341,7 @@ public class ClassUtil
      */
     public static Set<Class<?>> scanPackage(String packageName, ClassFilter classFilter)
     {
-        final long startTime = System.currentTimeMillis();
+        Stopwatch wa = Stopwatch.createStarted();
         final Set<Class<?>> classes = new HashSet<>();
         try
         {
@@ -348,8 +350,10 @@ public class ClassUtil
             final String packagePath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + packageName.replace(".", "/") + "/**/*.class";
 
             final Resource[] resources = resolver.getResources(packagePath);
-            final String costTimeStr = DateUtils.getBeforeTimeStr(new Date(System.currentTimeMillis() - startTime));
-            LOG.minfo(Module.COMMON, "resolver.getResources complete, packageName = {}, costTime = {}", packageName, costTimeStr);
+            long elapsed = wa.elapsed(TimeUnit.SECONDS);
+            wa.reset();
+            wa.start();
+            LOG.minfo(Module.COMMON, "resolver.getResources complete, packageName = {}, costTime = {}", packageName, elapsed);
             if (resources == null || resources.length == 0)
             {
                 return new HashSet<>();
@@ -397,9 +401,8 @@ public class ClassUtil
         {
             LOG.error(Module.COMMON, e, "scan packageName [{}] error", packageName);
         }
-        final long costTime = System.currentTimeMillis() - startTime;
-        final String costTimeStr = DateUtils.getBeforeTimeStr(new Date(costTime));
-        LOG.minfo(Module.COMMON, "Scan classpath complete, packageName = {}, costTime = {}", packageName, costTimeStr);
+        wa.stop();
+        LOG.minfo(Module.COMMON, "Scan classpath complete, packageName = {}, costTime = {}", packageName, wa.elapsed(TimeUnit.SECONDS));
 
 //        if (StringUtils.isNullEmpty(packageName)) throw new NullPointerException("packageName can't be blank!");
 //        packageName = getWellFormedPackageName(packageName);
