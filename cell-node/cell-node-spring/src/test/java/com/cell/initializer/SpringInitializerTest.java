@@ -13,9 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
-//@ComponentScan(basePackages = "com.cell")
-//@SpringBootApplication
-@CellSpringHttpApplication(scanBasePackages = "com.cell")
+@CellSpringHttpApplication
 public class SpringInitializerTest
 {
     public static class B1

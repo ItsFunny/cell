@@ -15,4 +15,6 @@ import java.lang.annotation.*;
 public @interface CellApplication
 {
     Class<? extends Annotation>[] interestAnnotations() default {};
+
+    Class<?>[] excludeClasses() default {};
 }

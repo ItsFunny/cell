@@ -1,5 +1,6 @@
 package com.cell.annotation;
 
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellApplication;
 import com.cell.extension.AbstractNodeExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +29,12 @@ public @interface CellSpringHttpApplication
     Class<? extends Annotation>[] scanInterestAnnotations() default {};
 
     Class<? extends AbstractNodeExtension>[] scanExcludeNodeExtensions() default {};
+
+    @AliasFor(
+            annotation = CellApplication.class,
+            attribute = "excludeClasses"
+    )
+    Class<?>[] scanExcludeClasses() default {};
 
     @AliasFor(
             annotation = SpringBootApplication.class,

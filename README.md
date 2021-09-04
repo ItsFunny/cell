@@ -1,3 +1,14 @@
+# 源码借鉴
+- ipfs/ipfs-cluster
+- Spring-beans & Spring-framework
+- distributor
+- netty
+
+---
+# 设计图(简版)
+- 总的来说基于reactor 模型
+    - ![](/Users/joker/Java/cell/imgs/logic.png)
+
 # How to Use 
 - 编写一个类,继承dynamicReactor ,然后添加cmd 即可(**注意,不能是内部类**)
 ```$xslt

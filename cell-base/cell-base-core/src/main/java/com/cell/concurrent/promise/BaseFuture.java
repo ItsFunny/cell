@@ -5,32 +5,32 @@ import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.Future;
 import com.cell.concurrent.base.GenericFutureListener;
 
-public interface BSFuture extends Future<Object>
+public interface BaseFuture extends Future<Object>
 {
 
     @Override
-    BSFuture addListener(GenericFutureListener<? extends Future<? super Object>> listener);
+    BaseFuture addListener(GenericFutureListener<? extends Future<? super Object>> listener);
 
     @Override
-    BSFuture addListeners(GenericFutureListener<? extends Future<? super Object>>... listeners);
+    BaseFuture addListeners(GenericFutureListener<? extends Future<? super Object>>... listeners);
 
     @Override
-    BSFuture removeListener(GenericFutureListener<? extends Future<? super Object>> listener);
+    BaseFuture removeListener(GenericFutureListener<? extends Future<? super Object>> listener);
 
     @Override
-    BSFuture removeListeners(GenericFutureListener<? extends Future<? super Object>>... listeners);
+    BaseFuture removeListeners(GenericFutureListener<? extends Future<? super Object>>... listeners);
 
     @Override
-    BSFuture sync() throws InterruptedException;
+    BaseFuture sync() throws InterruptedException;
 
     @Override
-    BSFuture syncUninterruptibly();
+    BaseFuture syncUninterruptibly();
 
     @Override
-    BSFuture await() throws InterruptedException;
+    BaseFuture await() throws InterruptedException;
 
     @Override
-    BSFuture awaitUninterruptibly();
+    BaseFuture awaitUninterruptibly();
     
     EventExecutor executor();
 

@@ -86,13 +86,19 @@ public class CellApplication
             return ret;
         }
 
-        public CellApplication build() throws Exception
+        public CellApplication build()
         {
             ByteBuddyAgent.install();
 
             for (ReactorBuilder builder : this.reactorBuilders)
             {
-                this.reactors.add(builder.build());
+                try
+                {
+                    this.reactors.add(builder.build());
+                } catch (Exception e)
+                {
+                    throw new ProgramaException(e);
+                }
             }
             for (IHttpReactor reactor : reactors)
             {
@@ -163,6 +169,22 @@ public class CellApplication
             HttpCommandBuilder ret = new HttpCommandBuilder(this);
             this.cmds.add(ret);
             return ret;
+        }
+
+        public HttpCommandBuilder post(String uri, IBuzzExecutor bundle)
+        {
+            return this.newCommand()
+                    .withUri(uri)
+                    .withRequestType(EnumHttpRequestType.HTTP_POST)
+                    .withBuzzHandler(bundle);
+        }
+
+        public HttpCommandBuilder get(String uri, IBuzzExecutor bundle)
+        {
+            return this.newCommand()
+                    .withUri(uri)
+                    .withRequestType(EnumHttpRequestType.HTTP_URL_GET)
+                    .withBuzzHandler(bundle);
         }
 
         public IDynamicHttpReactor build() throws Exception

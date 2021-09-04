@@ -4,6 +4,7 @@ import com.cell.adapter.HandlerMethodReturnValueHandler;
 import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.command.impl.DummyHttpCommand;
 import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.enums.CellError;
@@ -58,6 +59,12 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     }
 
     @Override
+    public Object getParameter(String key)
+    {
+        return this.commandContext.getHttpRequest().getParameter(key);
+    }
+
+    @Override
     public IHttpReactor getHttpReactor()
     {
         return (IHttpReactor) this.getReactor();
@@ -84,7 +91,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         long currentTime = System.currentTimeMillis();
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.commandContext.getSummary().getSequenceId();
-        LOG.info(Module.HTTP_FRAMEWORK, "response,ip={},sequenceId={},cost={}", this.getIp(), sequenceId, consumeTime);
+        LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.getIp(), sequenceId, consumeTime);
 
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());
@@ -104,6 +111,9 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         }
         if (null == this.httpCmdAnno)
         {
+            if (wp.getCmd()==null){
+                wp.setCmd(new DummyHttpCommand());
+            }
             this.httpCmdAnno = (HttpCmdAnno) ClassUtil.mustGetAnnotation(wp.getCmd().getClass(), HttpCmdAnno.class);
         }
 

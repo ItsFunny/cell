@@ -364,6 +364,16 @@ public class ClassUtil
             final CountDownLatch latch = new CountDownLatch(resources.length);
             for (Resource resource : resources)
             {
+//                try
+//                {
+//                    scanPackage(packageName, resource, classFilter, classes);
+//                } catch (IOException | ClassNotFoundException e)
+//                {
+//                    LOG.error(Module.COMMON, e, "scan packageName [{}] error, resource = {}", packageName, resource);
+//                } finally
+//                {
+//                    latch.countDown();
+//                }
                 scanPackageGroup.execute(new Runnable()
                 {
                     @Override
