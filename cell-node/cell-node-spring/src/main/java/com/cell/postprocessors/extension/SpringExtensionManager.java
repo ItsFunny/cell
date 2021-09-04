@@ -206,7 +206,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             if (state == 1)
             {
                 initContext((ApplicationPreparedEvent) event);
-                LOG.info(Module.CONTAINER, "\n{}", Banner.菩萨保佑);
+                LOG.info(Module.CONTAINER, "\n{}", Banner.INIT);
                 state = 2;
             } else
             {
@@ -229,7 +229,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             if (state == 3)
             {
                 onReady((ApplicationReadyEvent) event);
-                LOG.warn(Module.CONTAINER, "\n{}", Banner.READY);
+                LOG.warn(Module.CONTAINER, "\n{}", Banner.菩萨保佑);
                 LOG.info(Module.CONTAINER, "this jar arg list: {}", allOps);
                 for (INodeExtension e : extensions)
                 {

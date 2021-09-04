@@ -1,7 +1,3 @@
-org.springframework.boot.diagnostics.FailureAnalysisReporter=\
-cn.bidsun.node.container.plugin.ExceptionReporter
-org.springframework.boot.diagnostics.FailureAnalyzer=\
-cn.bidsun.node.container.plugin.UnknownFailedAnalyser
 org.springframework.context.ApplicationListener=\
 com.cell.listener.FacadedListener
 org.springframework.context.ApplicationContextInitializer=\

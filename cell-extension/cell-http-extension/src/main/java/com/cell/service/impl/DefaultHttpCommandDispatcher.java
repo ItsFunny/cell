@@ -49,7 +49,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
     private IHttpCommandHook tracker;
 
-    private Map<String, Class<? extends IHttpCommand>> cmdMap = new HashMap<>();
     private Map<String, IHttpReactor> reactorMap = new HashMap<>();
 
     @Override
@@ -122,11 +121,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         for (Class<? extends IHttpCommand> cc : clist)
         {
             HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
-            if (this.cmdMap.containsKey(anno.uri()))
-            {
-                throw new ProgramaException(String.format("duplicated command %s uri %s", cc, anno.uri()));
-            }
-            this.cmdMap.put(anno.uri(), cc);
             this.reactorMap.put(anno.uri(), reactor);
         }
     }

@@ -9,14 +9,14 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 
 
-abstract class BSSingleThreadEventLoop extends SingleThreadEventExecutor implements EventLoop
+abstract class BaseSingleThreadEventLoop extends SingleThreadEventExecutor implements EventLoop
 {
 
-    protected BSSingleThreadEventLoop(EventLoopGroup parent, ThreadFactory threadFactory, boolean addTaskWakesUp) {
+    protected BaseSingleThreadEventLoop(EventLoopGroup parent, ThreadFactory threadFactory, boolean addTaskWakesUp) {
         super(parent, threadFactory, addTaskWakesUp);
     }
 
-    protected BSSingleThreadEventLoop(EventLoopGroup parent, Executor executor, boolean addTaskWakesUp) {
+    protected BaseSingleThreadEventLoop(EventLoopGroup parent, Executor executor, boolean addTaskWakesUp) {
         super(parent, executor, addTaskWakesUp);
     }
 

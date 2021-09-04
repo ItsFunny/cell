@@ -5,6 +5,8 @@ import com.cell.config.ConfigConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpContext;
 import com.cell.protocol.ContextResponseWrapper;
+import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.serialize.ISerializable;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +26,9 @@ public class BuzzContextBO
     private ISerializable bo;
     private IHttpCommand cmd;
 
+    public IMapDynamicHttpReactor getReactor(){
+        return (IMapDynamicHttpReactor) this.context.getReactor();
+    }
     public BuzzContextBO(IHttpContext context, ISerializable bo, IHttpCommand cmd)
     {
         this.context = context;

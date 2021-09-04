@@ -7,7 +7,7 @@ import com.cell.concurrent.base.Promise;
 
 import java.util.concurrent.TimeUnit;
 
-public interface BasePromise extends BSFuture, Promise<Object>
+public interface BasePromise extends BaseFuture, Promise<Object>
 {
 
     @Override

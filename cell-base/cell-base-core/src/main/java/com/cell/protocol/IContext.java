@@ -37,4 +37,6 @@ public interface IContext
 
     String getIp();
 
+
+    Object getParameter(String key);
 }

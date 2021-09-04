@@ -8,31 +8,31 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 
 
-public class BSDefaultEventExecutor extends BSSingleThreadEventLoop {
+public class BaseDefaultEventExecutor extends BaseSingleThreadEventLoop {
 	
 	static long TASK_LOOP_TIMES = 10L * 1000L * 1000L * 1000L;
 	
-	public BSDefaultEventExecutor() {
+	public BaseDefaultEventExecutor() {
 		this((EventLoopGroup) null);
 	}
 
-	public BSDefaultEventExecutor(ThreadFactory threadFactory) {
+	public BaseDefaultEventExecutor(ThreadFactory threadFactory) {
 		this(null, threadFactory);
 	}
 
-	public BSDefaultEventExecutor(Executor executor) {
+	public BaseDefaultEventExecutor(Executor executor) {
 		this(null, executor);
 	}
 
-	public BSDefaultEventExecutor(EventLoopGroup parent) {
-		this(parent, new DefaultThreadFactory(BSDefaultEventLoop.class));
+	public BaseDefaultEventExecutor(EventLoopGroup parent) {
+		this(parent, new DefaultThreadFactory(BaseDefaultEventLoop.class));
 	}
 
-	public BSDefaultEventExecutor(EventLoopGroup parent, ThreadFactory threadFactory) {
+	public BaseDefaultEventExecutor(EventLoopGroup parent, ThreadFactory threadFactory) {
 		super(parent, threadFactory, true);
 	}
 
-	public BSDefaultEventExecutor(EventLoopGroup parent, Executor executor) {
+	public BaseDefaultEventExecutor(EventLoopGroup parent, Executor executor) {
 		super(parent, executor, true);
 	}
 

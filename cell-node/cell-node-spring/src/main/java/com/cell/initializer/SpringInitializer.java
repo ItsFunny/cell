@@ -1,17 +1,18 @@
 package com.cell.initializer;
 
-import com.cell.App;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.annotations.*;
+import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.Exclude;
+import com.cell.annotations.LifeCycle;
+import com.cell.annotations.ManagerNode;
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
 import com.cell.config.Config;
 import com.cell.config.ConfigConstants;
-import com.cell.constants.Constants;
 import com.cell.context.InitCTX;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.extension.AbstractNodeExtension;
@@ -29,10 +30,6 @@ import com.cell.utils.ReflectUtil;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
 import io.netty.util.internal.ConcurrentSet;
-import org.reflections.Reflections;
-import org.reflections.scanners.*;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -77,9 +74,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         String rootPath = scans[0];
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
         Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
+        Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();
 
 
         MultiFilter filter = new MultiFilter();
+        filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
         filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
         filter.interestAnnotations.addAll(Arrays.asList(interestAnnotations));
         // FIXME ,需要重构该部分,使用reflections
@@ -138,6 +137,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         final Set<Class<? extends Annotation>> interestAnnotations = new HashSet<>();
         final Set<Class<? extends Annotation>> excludeAnnotations = new HashSet<>(Arrays.asList(Exclude.class));
         final Set<Class<? extends AbstractNodeExtension>> excludeNodeExtensions = new HashSet<>();
+        final Set<Class<?>> excludeClasses = new HashSet<>();
 
         // flag
         final Set<Class<?>> set = new HashSet<>();
@@ -163,9 +163,20 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         @Override
         public boolean accept(Class<?> clazz)
         {
+
             boolean ret = false;
             try
             {
+                if (this.excludeClasses.contains(clazz))
+                {
+                    LOG.info(Module.CONTAINER, "exclude class,{}", clazz);
+                    return false;
+                }
+                if (excludeAnnotations.contains(clazz))
+                {
+                    LOG.info(Module.CONTAINER, "exlude Annotation,{}", clazz);
+                    return false;
+                }
                 String s = clazz.getName().toLowerCase();
                 if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class)
                         || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs")
@@ -175,11 +186,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     ret = false;
                     return ret;
                 }
-                if (excludeAnnotations.contains(clazz))
-                {
-                    LOG.info(Module.CONTAINER, "exlude Annotation,{}", clazz);
-                    return false;
-                }
+
                 AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, ActivePlugin.class);
                 if (attributes != null && !attributes.isEmpty())
                 {

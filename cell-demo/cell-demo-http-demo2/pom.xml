@@ -10,12 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-demo-dynamic-reactor</artifactId>
+    <artifactId>cell-demo-http-demo2</artifactId>
 
-    <name>cell-demo-dynamic-reactor</name>
+    <name>cell-demo-http-demo2</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
@@ -23,4 +22,5 @@
             <version>${cell.version}</version>
         </dependency>
     </dependencies>
+
 </project>

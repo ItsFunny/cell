@@ -24,15 +24,12 @@ import java.util.List;
 /**
  * Hello world!
  */
-
 @CellSpringHttpApplication
 public class App
 {
-
     @HttpCmdAnno(uri = "/demo/auto", httpCommandId = 1)
     public static class CCCmd extends AbstractHttpCommand
     {
-
         @Override
         protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
         {
