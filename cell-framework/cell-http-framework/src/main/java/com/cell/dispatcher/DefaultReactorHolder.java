@@ -18,7 +18,7 @@ import java.util.*;
  * @Attention:
  * @Date 创建时间：2021-08-31 22:47
  */
-// FIXME too stupid
+// FIXME too stupid & need clean
 public class DefaultReactorHolder
 {
     private static IHttpCommandDispatcher instance = null;

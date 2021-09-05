@@ -111,7 +111,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         }
         if (null == this.httpCmdAnno)
         {
-            if (wp.getCmd()==null){
+            if (wp.getCmd() == null)
+            {
                 wp.setCmd(new DummyHttpCommand());
             }
             this.httpCmdAnno = (HttpCmdAnno) ClassUtil.mustGetAnnotation(wp.getCmd().getClass(), HttpCmdAnno.class);
@@ -165,14 +166,17 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             this.getPromise().trySuccess();
         } finally
         {
+            // FIXME ,需要干掉@ResponseBody
             Object ret = wp.getRet();
             if (this.xmlMode())
             {
                 HandlerMethodReturnValueHandler<Object> handler = new XMLHandlerMethodReturnValuleHandler<>();
                 ret = handler.handler(ret);
+                this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE);
+            } else
+            {
+                this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             }
-            this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            this.commandContext.getHttpResponse().addHeader("asd", MediaType.APPLICATION_JSON_VALUE);
             this.commandContext.getResponseResult().setResult(ret);
         }
     }
@@ -202,7 +206,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     {
         this.response(ContextResponseWrapper.builder()
                 .status(ContextConstants.FAIL)
-                .other(HttpContextResponseBody.builder().status(HttpStatus.INTERNAL_SERVER_ERROR).build())
+                .other(HttpContextResponseBody.builder().status(HttpStatus.BAD_REQUEST).build())
                 .ret("BAD REQUEST")
                 .msg("BAD REQUEST")
                 .build());
