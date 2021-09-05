@@ -1,9 +1,8 @@
 package com.cell.internal;
 
 import com.cell.annotations.CellOrder;
+import com.cell.constants.Constants;
 import com.cell.context.INodeContext;
-import com.cell.enums.EnumLogType;
-import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogTypeEnums;
@@ -27,7 +26,7 @@ import java.util.Map;
  * @Date 创建时间：2021-09-05 07:29
  */
 // 这部分逻辑抄的 gc监控
-@CellOrder(10)
+@CellOrder(Constants.EXTESNION_MIN_NUM_ORDER - 999)
 public class GCLoggingExtension extends AbstractSpringNodeExtension
 {
     public static final String GC_FAIL = "Allocation Failure";
@@ -105,7 +104,7 @@ public class GCLoggingExtension extends AbstractSpringNodeExtension
                             MemoryUsage after = entry.getValue();
                             MemoryUsage before = membefore.get(name);
 
-                            LOG.info(Module.COMMON, "[{}] [{}]: {}/{}/{} -> {}/{}/{}", EnumLogType.GC_LOG,
+                            LOG.info(Module.COMMON, "[{}] [{}]: {}/{}/{} -> {}/{}/{}", LogTypeEnums.GC,
                                     info.getGcInfo().getId(), entry.getKey(), formatByte(before.getUsed()),
                                     formatByte(before.getCommitted()), formatByte(before.getMax()),
                                     formatByte(after.getUsed()), formatByte(after.getCommitted()),

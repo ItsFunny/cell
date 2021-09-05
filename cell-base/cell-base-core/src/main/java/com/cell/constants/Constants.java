@@ -11,4 +11,6 @@ package com.cell.constants;
 public interface Constants
 {
     int DEFAULT_ORDER = Integer.MAX_VALUE - 100;
+
+    int DEFAULT_MIN_ORDERER = Integer.MIN_VALUE + 1000;
 }

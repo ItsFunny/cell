@@ -25,6 +25,7 @@ public enum Module
     CONTAINER((short) 101, "container"),
     HTTP_FRAMEWORK((short) 102, "HTTP_FRAMEWORK"),
     MVC((short) 103, "MVC"),
+    CONFIGURATION((short) 104, "CONFIGURATION"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
