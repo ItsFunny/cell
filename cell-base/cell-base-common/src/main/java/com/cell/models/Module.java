@@ -40,6 +40,7 @@ public enum Module
     HTTP_CLIENT((short) 10006, "http client"),
     TASK_CA((short) 48, "CA task"),
     DRUID((short) 49, "druid"),
+    ALIBABA((short) 50, "alibaba"),
     MICROMETER((short) 10008, "micrometer"),
     ;
     private short moduleId;
