@@ -70,6 +70,9 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     {
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+        if (mergedAnnotation==null){
+            return;
+        }
         String[] scans = mergedAnnotation.scanBasePackages();
         String rootPath = scans[0];
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();

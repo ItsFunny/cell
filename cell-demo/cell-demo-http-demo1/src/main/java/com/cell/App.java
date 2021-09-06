@@ -17,7 +17,7 @@ public class App
 
     private static void simpleDemo(String[] args)
     {
-        CellApplication.builder()
+        CellApplication.builder(App.class)
                 .newReactor()
                 .withGroup("/demo")
                 .post("/post", (wp) ->
@@ -28,12 +28,12 @@ public class App
         {
             wp.success("get");
             return null;
-        }).make().done().build().start(App.class, args);
+        }).make().done().build().start(args);
     }
 
     private static void startNRestFulAPI(String[] args)
     {
-        CellApplication.CellApplicationBuilder builder = CellApplication.builder();
+        CellApplication.CellApplicationBuilder builder = CellApplication.builder(App.class);
         CellApplication.ReactorBuilder reactorBuilder = builder.newReactor();
         reactorBuilder.withGroup("/demo");
         for (int i = 0; i < 100; i++)
@@ -45,6 +45,6 @@ public class App
                 return null;
             });
         }
-        reactorBuilder.done().build().start(App.class, args);
+        reactorBuilder.done().build().start( args);
     }
 }

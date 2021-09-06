@@ -110,7 +110,7 @@ public class App
 
     public static void main(String[] args)
     {
-        CellApplication.builder()
+        CellApplication.builder(App.class)
                 .withReactor(new Reactor2())
                 .newReactor()
                 .withBean(CC1.class)
@@ -127,6 +127,6 @@ public class App
         {
             wp.success("get");
             return null;
-        }).make().done().build().start(App.class, args);
+        }).make().done().build().start( args);
     }
 }

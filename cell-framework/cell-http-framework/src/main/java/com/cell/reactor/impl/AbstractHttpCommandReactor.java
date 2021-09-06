@@ -12,6 +12,8 @@ import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
@@ -22,6 +24,9 @@ import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;
 import com.cell.utils.StringUtils;
 import lombok.Data;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.description.annotation.AnnotationDescription;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import org.springframework.http.HttpStatus;
 
 import java.lang.annotation.Annotation;
@@ -137,6 +142,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         {
             throw new ProgramaException("aaa");
         }
+        LOG.info(Module.HTTP_FRAMEWORK, "mapping uri:{}", anno.uri());
         CommandWrapper wp = new CommandWrapper();
         wp.setAnno(anno);
         wp.setCmd((Class<? extends IHttpCommand>) cmd.getClass());
@@ -156,6 +162,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                 this.registerCmd((ICommand) ReflectUtil.newInstance(p)));
     }
 
+    // FIXME ,这个需要删除
     private void fillCmd()
     {
         List<Class<? extends IHttpCommand>> httpCommandList = this.getHttpCommandList();
@@ -178,6 +185,19 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
             {
                 throw new ProgramaException("url不合法:" + urlStr);
             }
+//            new ByteBuddy().redefine(c)
+//                    .annotateType(AnnotationDescription.Builder.ofType(HttpCmdAnno.class)
+//                            .define("requestType", annotation.requestType())
+//                            .define("responseType", annotation.responseType())
+//                            .define("uri", urlStr)
+//                            .define("httpCommandId", annotation.httpCommandId())
+//                            .define("viewName", annotation.viewName())
+//                            .define("group", annotation.group())
+//                            .define("websocket", annotation.websocket())
+//                            .build())
+//                    .make()
+//                    .load(Thread.currentThread().getContextClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
+
             final HttpCmdAnno newAnno = new HttpCmdAnno()
             {
                 @Override
@@ -228,7 +248,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                     return annotation.annotationType();
                 }
             };
-            ReflectUtil.overRideAnnotationOn(c, HttpCmdAnno.class, newAnno);
+            ReflectUtil.modify(c, HttpCmdAnno.class, "uri", urlStr);
         });
     }
 }

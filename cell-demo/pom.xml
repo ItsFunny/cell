@@ -21,6 +21,7 @@
         <module>cell-demo-http-demo1</module>
         <module>cell-demo-http-demo2</module>
         <module>cell-demo-http-demo3</module>
+        <module>cell-demo-nacos</module>
     </modules>
 
     <dependencies>

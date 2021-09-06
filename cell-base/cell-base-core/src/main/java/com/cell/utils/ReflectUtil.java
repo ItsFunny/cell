@@ -1,6 +1,7 @@
 package com.cell.utils;
 
 import com.cell.exceptions.ProgramaException;
+import net.bytebuddy.ByteBuddy;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -155,6 +156,7 @@ public class ReflectUtil
             Map<Class<? extends Annotation>, Annotation> map =
                     (Map<Class<? extends Annotation>, Annotation>) annotations.get(annotationData);
             map.put(annotationToAlter, annotationValue);
+            System.out.println(1);
         } catch (Exception e)
         {
             throw new ProgramaException(e);
@@ -189,6 +191,26 @@ public class ReflectUtil
 //                throw new ProgramaException(e);
 //            }
 //        }
+    }
+
+    public static void modify(AnnotatedElement element,
+                              Class<? extends Annotation> annotationClass,
+                              String key, Object value)
+    {
+        try
+        {
+            Annotation annotationToBeModified = element.getAnnotation(annotationClass);
+            if (annotationToBeModified == null) return;
+
+            InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotationToBeModified);
+            Field memberValuesField = invocationHandler.getClass().getDeclaredField("memberValues");
+            memberValuesField.setAccessible(true);
+            Map<String, Object> memberValues = (Map<String, Object>) memberValuesField.get(invocationHandler);
+            memberValues.put(key, value);
+        } catch (Exception e)
+        {
+            throw new ProgramaException(e);
+        }
     }
 }
 

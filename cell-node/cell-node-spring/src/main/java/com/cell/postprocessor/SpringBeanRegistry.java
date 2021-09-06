@@ -69,6 +69,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException
     {
+        // FIXME which means ,maybe it is pure springboot
         List<BeanDefinition> defins = new ArrayList<>(factoryDefinition.values());
         for (BeanDefinition def : defins)
         {

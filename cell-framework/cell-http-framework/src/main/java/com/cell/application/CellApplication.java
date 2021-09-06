@@ -25,6 +25,7 @@ import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationAttributes;
 
@@ -46,32 +47,59 @@ import java.util.concurrent.atomic.AtomicLong;
 public class CellApplication
 {
     private static final AtomicLong commandId = new AtomicLong(1);
+    private SpringApplicationBuilder builder;
 
     public static ApplicationContext run(Class<?> clz, String[] args)
     {
         try
         {
-            return CellApplication.builder().build().start(clz, args);
+            return CellApplication.builder(clz).build().start(args);
         } catch (Exception e)
         {
             throw new ProgramaException(e);
         }
     }
 
-    public ApplicationContext start(Class<?> clz, String[] args)
+    // FIXME
+    public ApplicationContext start(String[] args)
     {
-        return SpringApplication.run(clz, args);
+        if (null == this.builder)
+        {
+            throw new ProgramaException("asd");
+        }
+        return this.builder.run(args);
     }
 
-    public static CellApplicationBuilder builder()
+
+    public static CellApplicationBuilder builder(Class<?> clz)
     {
-        return new CellApplicationBuilder();
+        CellApplicationBuilder ret = new CellApplicationBuilder(clz);
+        return ret;
     }
+
 
     public static class CellApplicationBuilder
     {
         private List<IHttpReactor> reactors = new ArrayList<>();
         private List<ReactorBuilder> reactorBuilders = new ArrayList<>();
+        private SpringApplicationBuilder applicationBuilder;
+        private Class<?> clz;
+
+        public CellApplicationBuilder(Class<?> clz)
+        {
+            this.clz = clz;
+            this.applicationBuilder=new SpringApplicationBuilder(clz);
+        }
+
+        public CellApplicationBuilder()
+        {
+        }
+
+        public CellApplicationBuilder properties(String... defaultProperties)
+        {
+            this.applicationBuilder = this.applicationBuilder.properties(defaultProperties);
+            return this;
+        }
 
         public CellApplicationBuilder withReactor(IHttpReactor reactor)
         {
@@ -129,7 +157,10 @@ public class CellApplication
                         .make()
                         .load(Thread.currentThread().getContextClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
             }
-            return new CellApplication();
+
+            CellApplication ret = new CellApplication();
+            ret.builder = this.applicationBuilder;
+            return ret;
         }
     }
 

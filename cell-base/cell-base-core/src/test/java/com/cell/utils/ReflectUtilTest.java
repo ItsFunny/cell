@@ -18,6 +18,56 @@ import static org.junit.Assert.*;
 
 public class ReflectUtilTest
 {
+    @ReactorAnno(group = "asd")
+    public static class AAAA
+    {
+
+    }
+
+    @Test
+    public void modify() throws Exception
+    {
+        AAAA aa = new AAAA();
+        ReactorAnno newAnno = new ReactorAnno()
+        {
+            @Override
+            public Class<? extends Annotation> annotationType()
+            {
+                return null;
+            }
+
+            @Override
+            public ForceOverride withForce()
+            {
+                return new ForceOverride()
+                {
+                    @Override
+                    public Class<? extends Annotation> annotationType()
+                    {
+                        return ForceOverride.class;
+                    }
+
+                    @Override
+                    public boolean forceOverride()
+                    {
+                        return false;
+                    }
+                };
+            }
+
+            @Override
+            public String group()
+            {
+                return "zzzzzzzz";
+            }
+        };
+        Class<? extends AAAA> aClass = aa.getClass();
+        ReflectUtil.modify(aClass, ReactorAnno.class, "group", "zzzzzzz");
+        Object o = ReflectUtil.newInstance(aClass);
+        ReactorAnno annotation = o.getClass().getAnnotation(ReactorAnno.class);
+        System.out.println(annotation.group());
+    }
+
     public static class AAA
     {
 

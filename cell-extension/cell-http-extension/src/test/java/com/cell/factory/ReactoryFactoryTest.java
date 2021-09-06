@@ -50,7 +50,7 @@ public class ReactoryFactoryTest
             List<String> uris = Arrays.asList("/uri1", "/uri2");
             final AtomicInteger count = new AtomicInteger();
 
-            IDynamicHttpReactor reactor = CellApplication.builder().newReactor()
+            IDynamicHttpReactor reactor = CellApplication.builder(ReactoryFactoryTest.class).newReactor()
                     .withGroup(group)
                     .withBean(C.class)
                     .newCommand()
