@@ -18,6 +18,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-base-common</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>

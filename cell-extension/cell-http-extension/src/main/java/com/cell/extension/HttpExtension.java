@@ -13,7 +13,11 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.Order;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Collection;
 import java.util.Set;
@@ -42,6 +46,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         return this.dispatcher;
     }
+
 
     @Override
     public void init(INodeContext ctx) throws Exception

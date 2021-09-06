@@ -331,7 +331,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 if (extension.isRequired())
                 {
                     LOG.error(Module.CONTAINER, e, "extension {} start fail", extension);
-                    throw new ExtensionImportException(String.format("start extension {} fail", extension), e);
+                    throw new ExtensionImportException(String.format("start extension %s fail", extension), e);
                 } else
                 {
                     addExcludeExtension(extension.getName());

@@ -1,6 +1,7 @@
 package com.cell.config;
 
 import cn.tass.math.raw.Mod;
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.log.LOG;
@@ -36,7 +37,7 @@ import java.security.cert.X509Certificate;
  * @Attention:
  * @Date 创建时间：2021-08-31 06:06
  */
-@Configuration
+@ActivePlugin
 public class SpringConfiguration implements WebServerFactoryCustomizer<ConfigurableWebServerFactory>
 {
 

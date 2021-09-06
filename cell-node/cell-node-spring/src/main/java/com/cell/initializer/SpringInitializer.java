@@ -13,6 +13,7 @@ import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
 import com.cell.config.Config;
 import com.cell.config.ConfigConstants;
+import com.cell.constants.Constants;
 import com.cell.context.InitCTX;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.extension.AbstractNodeExtension;
@@ -70,11 +71,13 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     {
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
-        if (mergedAnnotation==null){
-            return;
+        String rootPath = Constants.SCAN_ROOT;
+        if (mergedAnnotation != null)
+        {
+            String[] scans = mergedAnnotation.scanBasePackages();
+            rootPath = scans[0];
         }
-        String[] scans = mergedAnnotation.scanBasePackages();
-        String rootPath = scans[0];
+
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
         Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
         Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();

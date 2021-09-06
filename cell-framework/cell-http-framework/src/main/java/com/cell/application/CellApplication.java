@@ -25,6 +25,7 @@ import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationAttributes;
@@ -67,7 +68,9 @@ public class CellApplication
         {
             throw new ProgramaException("asd");
         }
-        return this.builder.run(args);
+        SpringApplication app = this.builder.build();
+//        app.setWebApplicationType(WebApplicationType.REACTIVE);
+        return app.run(args);
     }
 
 
@@ -88,7 +91,7 @@ public class CellApplication
         public CellApplicationBuilder(Class<?> clz)
         {
             this.clz = clz;
-            this.applicationBuilder=new SpringApplicationBuilder(clz);
+            this.applicationBuilder = new SpringApplicationBuilder(clz);
         }
 
         public CellApplicationBuilder()

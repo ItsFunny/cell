@@ -17,6 +17,12 @@
     <url>http://www.example.com</url>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-http-extension</artifactId>
             <version>${cell.version}</version>
