@@ -3,6 +3,7 @@
 - Spring-beans & Spring-MVC
 - distributor
 - netty
+- 公司部分设计(extension的理念)
 
 ---
 # 设计图(简版)

@@ -26,6 +26,7 @@ public enum Module
     HTTP_FRAMEWORK((short) 102, "HTTP_FRAMEWORK"),
     MVC((short) 103, "MVC"),
     CONFIGURATION((short) 104, "CONFIGURATION"),
+    DISCOVERY((short) 105, "DISCOVERY"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

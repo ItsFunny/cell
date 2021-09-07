@@ -10,15 +10,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-node-core</artifactId>
+    <artifactId>cell-node-discovery</artifactId>
 
-    <name>cell-node-core</name>
+    <name>cell-node-discovery</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-common</artifactId>
+            <artifactId>cell-base-core</artifactId>
             <version>${cell.version}</version>
         </dependency>
 

@@ -155,6 +155,13 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         return ready;
     }
 
+    // FIXME
+    @Override
+    public Map<String, IHttpReactor> getReactors()
+    {
+        return null;
+    }
+
     @Override
     protected void onInit(InitCTX ctx)
     {

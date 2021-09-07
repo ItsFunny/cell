@@ -8,6 +8,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -30,4 +31,6 @@ public interface IHttpCommandDispatcher
     void addReactor(IHttpReactor reactor);
 
     boolean ready();
+
+    Map<String, IHttpReactor> getReactors();
 }

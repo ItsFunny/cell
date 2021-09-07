@@ -1,5 +1,7 @@
 package com.cell.bootstrap;
 
+import com.alibaba.nacos.api.naming.pojo.Instance;
+
 /**
  * @author Charlie
  * @When

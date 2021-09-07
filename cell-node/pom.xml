@@ -16,6 +16,7 @@
         <module>cell-node-spring</module>
         <module>cell-node-core</module>
         <module>cell-node-discovery-nacos</module>
+        <module>cell-node-discovery</module>
     </modules>
 
     <dependencies>

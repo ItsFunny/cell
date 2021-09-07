@@ -34,6 +34,7 @@
         <cell.version>1.0-SNAPSHOT</cell.version>
         <spring.cloud.version>Greenwich.SR6</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
+        <nacos.client.version>2.0.2</nacos.client.version>
     </properties>
 
     <dependencies>
