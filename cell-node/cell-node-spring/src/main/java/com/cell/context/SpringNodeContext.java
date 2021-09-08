@@ -27,6 +27,8 @@ public class SpringNodeContext implements ISpringNodeContext
 
     private List<INodeExtension> extensions;
 
+    private String ip;
+
     public SpringNodeContext(SpringExtensionManager manager)
     {
         this.manager = manager;

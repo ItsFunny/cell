@@ -2,6 +2,7 @@ package com.cell.transport.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,13 @@ import java.util.List;
 @Data
 public class ServerMetaData
 {
+    public static final String PROPERTY_NAME = "cmds";
     private List<ServerMetaReactor> reactors;
+
+    public ServerMetaData()
+    {
+        this.reactors = new ArrayList<>();
+    }
 
     @Data
     public static class ServerMetaReactor
@@ -26,10 +33,8 @@ public class ServerMetaData
     @Data
     public static class ServerMetaCmd
     {
-
+        private String uri;
     }
-
-    private String reactorGroup;
 
 
 }

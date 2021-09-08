@@ -40,4 +40,6 @@ public interface INodeContext
     void setMetadata(Map<String, String> meta);
 
     Map<String, String> getMetadata();
+
+    String getIp();
 }

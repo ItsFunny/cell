@@ -15,6 +15,7 @@ import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
 import com.cell.exception.ContainerException;
 import com.cell.exception.ExtensionImportException;
+import com.cell.exceptions.ConfigException;
 import com.cell.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
@@ -23,6 +24,7 @@ import com.cell.models.Module;
 import com.cell.tool.Banner;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.DateUtils;
+import com.cell.utils.IPUtils;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import com.cell.wrapper.AnnotationNodeWrapper;
 import com.google.common.base.Stopwatch;
@@ -110,12 +112,13 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     {
         LOG.setLogLevel(LogLevel.DEBUG);
         DefaultApplicationArguments SpringCommand = new DefaultApplicationArguments(ctx.getArgs());
-        List<String> customArgs = SpringCommand.getNonOptionArgs();
+        List<String> customArgs = new ArrayList<>(SpringCommand.getNonOptionArgs());
         Set<String> springArgs = SpringCommand.getOptionNames();
         LOG.info(Module.CONTAINER, "spring args list: {}", springArgs);
-        String[] alist = customArgs.toArray(new String[customArgs.size()]);
+
         CommandLineParser parser = new DefaultParser();
         allOps = new Options();
+
         for (BeanDefinition def : BeanDefinitionMap.values())
         {
             if (def instanceof GenericBeanDefinition)
@@ -145,6 +148,19 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 }
             }
         }
+        Option ip = allOps.getOption("ip");
+        if (ip != null)
+        {
+            if (IPUtils.isIPv4(ip.getValue()))
+            {
+                throw new ConfigException("argument failure,illegal ip");
+            }
+            ctx.setIp(ip.getValue());
+        } else
+        {
+            ctx.setIp(IPUtils.getLocalAddress());
+        }
+        String[] alist = customArgs.toArray(new String[customArgs.size()]);
         SpringNodeContext dCtx = ctx;
         CommandLine commands = parser.parse(allOps, alist);
         dCtx.setCommandLine(commands);
