@@ -2,6 +2,7 @@ package com.cell.postprocessors.dependency;
 
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
+import com.cell.bridge.ISpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.beans.BeanUtils;

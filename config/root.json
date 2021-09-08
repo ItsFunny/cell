@@ -1,0 +1,18 @@
+{
+  "types": {
+    "Default": {
+      "parent": null
+    }
+  },
+  "defaultType": "Default",
+  "configs": [
+    {
+      "modules": {
+        "nacos.properties": "env/shared/discovery/nacos.json"
+      },
+      "schema": null
+    }
+  ],
+  "plugins": {
+  }
+}

@@ -8,6 +8,7 @@ package com.cell.config;
  * @Attention:
  * @Date 创建时间：2021-09-07 22:37
  */
+// FIXME change name
 public class ConfigFactory
 {
     public static final String serverAddr = "serverAddr";

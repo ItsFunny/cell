@@ -40,14 +40,18 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
     private Subscriber<InstancesChangeEvent> subscriber;
     private ConfigService configService;
 
-    public NacosNodeDiscoveryImpl(Subscriber<InstancesChangeEvent> subscriber)
+    // FIXME ,NOT GRACEFULLY
+    public NacosNodeDiscoveryImpl(boolean registerSubscriber, Subscriber<InstancesChangeEvent> subscriber)
     {
-        if (subscriber == null)
+        if (registerSubscriber)
         {
-            subscriber = new DefaultInstanceLogSubscriber();
+            if (subscriber == null)
+            {
+                subscriber = new DefaultInstanceLogSubscriber();
+            }
+            this.subscriber = subscriber;
+            NotifyCenter.registerSubscriber(this.subscriber);
         }
-        this.subscriber = subscriber;
-        NotifyCenter.registerSubscriber(this.subscriber);
     }
 
     @Override

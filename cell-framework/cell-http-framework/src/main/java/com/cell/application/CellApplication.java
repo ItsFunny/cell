@@ -4,6 +4,7 @@ import com.cell.annotations.Command;
 import com.cell.annotations.ForceOverride;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.bo.BuzzContextBO;
 import com.cell.command.IBuzzExecutor;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbsDeltaHttpCommand;
@@ -11,6 +12,7 @@ import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
+import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
@@ -30,6 +32,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationAttributes;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -370,6 +373,17 @@ public class CellApplication
                     .getLoaded()
                     .getDeclaredConstructor()
                     .newInstance();
+        }
+    }
+
+    public static class DEFAULT_DEMO_POST implements IBuzzExecutor
+    {
+
+        @Override
+        public ICommandExecuteResult execute(BuzzContextBO bo) throws IOException
+        {
+            bo.success("post done ");
+            return null;
         }
     }
 }

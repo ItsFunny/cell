@@ -69,6 +69,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     }
 
     @Override
+    // TODO ,干掉responseBody
     @ResponseBody
     public DeferredResult<Object> request(HttpServletRequest request, HttpServletResponse response) throws HttpFramkeworkException
     {
@@ -159,7 +160,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     public Map<String, IHttpReactor> getReactors()
     {
-        return null;
+        return this.reactorMap;
     }
 
     @Override

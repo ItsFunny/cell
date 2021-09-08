@@ -41,7 +41,7 @@ public class Configuration
         registerParser("json", new ConfigurationParserJson());
     }
 
-    private final String CONFIG_FILE_TAILFIX = "config.root";
+    private final String CONFIG_FILE_TAILFIX = "root.json";
 
     private static Configuration DEFAULT_INSTANCE = new Configuration();
 

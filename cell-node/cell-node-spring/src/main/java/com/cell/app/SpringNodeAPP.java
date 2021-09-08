@@ -12,11 +12,16 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @Attention:
  * @Date 创建时间：2021-08-10 21:21
  */
-public class SpringNodeAPP implements ISpringAPP
+public class SpringNodeAPP extends DefaultApp implements ISpringAPP
 {
     private SpringApplication app;
     private ConfigurableApplicationContext appContext;
     private ConfigurableEnvironment environment;
+
+    public SpringNodeAPP()
+    {
+        super();
+    }
 
     public SpringApplication getApp()
     {

@@ -6,10 +6,12 @@ import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpContext;
+import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
@@ -89,6 +91,8 @@ public class App
     @ReactorAnno(group = "/reactor1")
     public static class Reactor1 extends AbstractHttpDymanicCommandReactor
     {
+        @AutoPlugin
+        private IHttpCommandDispatcher commandDispatcher;
         @AutoPlugin
         private LogicImpl logic;
 

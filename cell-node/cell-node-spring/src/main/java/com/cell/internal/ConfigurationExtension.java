@@ -4,11 +4,17 @@ import com.cell.Configuration;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.Constants;
 import com.cell.context.INodeContext;
+import com.cell.exception.ConfigurationException;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Charlie
@@ -51,7 +57,20 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
             Configuration.getDefault().initialize(path, type);
         } catch (Throwable e)
         {
-            LOG.error(Module.CONFIGURATION, e, "初始化配置失败，path =[{}]  type=[{}]", path, type);
+            tryLocal(path, type);
+        }
+    }
+
+    private void tryLocal(String originPath, String type)
+    {
+        Path currentRelativePath = Paths.get("");
+        String path = currentRelativePath.toAbsolutePath().toString() + currentRelativePath.getFileSystem().getSeparator() + "config";
+        try
+        {
+            Configuration.getDefault().initialize(path, type);
+        } catch (ConfigurationException e)
+        {
+            LOG.error(Module.CONFIGURATION, e, "初始化配置失败，path =[{}]  type=[{}],localPath=[{}]", originPath, type, path);
         }
     }
 
