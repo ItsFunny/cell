@@ -1,5 +1,6 @@
 package com.cell.extension;
 
+import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultReactorHolder;

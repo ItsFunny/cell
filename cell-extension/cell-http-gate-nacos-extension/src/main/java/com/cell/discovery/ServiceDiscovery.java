@@ -23,6 +23,7 @@ public class ServiceDiscovery extends AbstractInitOnce
     @AutoPlugin
     private INodeDiscovery nodeDiscovery;
 
+
     private static ServiceDiscovery instance;
 
     @AutoPlugin
@@ -35,5 +36,7 @@ public class ServiceDiscovery extends AbstractInitOnce
     protected void onInit(InitCTX ctx)
     {
         nodeDiscovery.initOnce(ctx);
+        Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList();
+
     }
 }

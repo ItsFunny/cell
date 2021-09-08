@@ -8,7 +8,7 @@ package com.cell.lb;
  * @Attention:
  * @Date 创建时间：2021-09-08 05:56
  */
-public class ILoadBalancer
+public interface ILoadBalancer
 {
 
 }
