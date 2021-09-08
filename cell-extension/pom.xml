@@ -18,13 +18,8 @@
     <url>http://www.example.com</url>
     <modules>
         <module>cell-http-extension</module>
+        <module>cell-discovery-nacos-extension</module>
+        <module>cell-http-gate-nacos-extension</module>
     </modules>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-node-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>

@@ -21,7 +21,6 @@ public class Instance
     private Integer port;
     private String serviceName;
     private byte weight = 1;
-    private String appName = "cell";
     private String clusterName;
     private Map<String, String> metaData;
 }

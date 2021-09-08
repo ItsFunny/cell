@@ -1,8 +1,10 @@
 package com.cell.service;
 
+import com.cell.config.IInitOnce;
 import com.cell.model.Instance;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -12,9 +14,9 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-07 21:55
  */
-public interface INodeDiscovery
+public interface INodeDiscovery extends IInitOnce
 {
-    List<Instance> getServerInstanceList();
+    Map<String, List<Instance>> getServerInstanceList();
 
     void registerServerInstance(Instance instance);
 }

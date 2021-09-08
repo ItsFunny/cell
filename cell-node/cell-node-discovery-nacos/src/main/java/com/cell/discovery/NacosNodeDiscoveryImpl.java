@@ -1,26 +1,30 @@
 package com.cell.discovery;
 
-import com.alibaba.nacos.api.NacosFactory;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.api.exception.NacosException;
 import com.alibaba.nacos.api.naming.NamingFactory;
 import com.alibaba.nacos.api.naming.NamingService;
-import com.alibaba.nacos.api.naming.pojo.Service;
-import com.cell.annotations.AutoPlugin;
+import com.alibaba.nacos.api.naming.pojo.ListView;
+import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
+import com.alibaba.nacos.common.notify.Event;
+import com.alibaba.nacos.common.notify.NotifyCenter;
+import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.cell.config.AbstractInitOnce;
 import com.cell.config.ConfigFactory;
 import com.cell.context.InitCTX;
-import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
+import com.cell.utils.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.stream.Collectors;
 
 /**
  * @author Charlie
@@ -33,12 +37,50 @@ import java.util.Properties;
 public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDiscovery
 {
     private NamingService namingService;
+    private Subscriber<InstancesChangeEvent> subscriber;
     private ConfigService configService;
 
-    @Override
-    public List<Instance> getServerInstanceList()
+    public NacosNodeDiscoveryImpl(Subscriber<InstancesChangeEvent> subscriber)
     {
-        return null;
+        if (subscriber == null)
+        {
+            subscriber = new DefaultInstanceLogSubscriber();
+        }
+        this.subscriber = subscriber;
+        NotifyCenter.registerSubscriber(this.subscriber);
+    }
+
+    @Override
+    public Map<String, List<Instance>> getServerInstanceList()
+    {
+        Map<String, List<Instance>> ret = new HashMap<>();
+        try
+        {
+            ListView<String> servicesOfServer = this.namingService.getServicesOfServer(1, 10000);
+            List<String> data = servicesOfServer.getData();
+            for (String datum : data)
+            {
+                List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = this.namingService.getAllInstances(datum);
+                if (CollectionUtils.isEmpty(allInstances))
+                {
+                    continue;
+                }
+                List<Instance> instances = allInstances.stream().map(p ->
+                        Instance.builder()
+                                .serviceName(p.getServiceName())
+                                .port(p.getPort())
+                                .ip(p.getIp())
+                                .clusterName(p.getClusterName())
+                                .metaData(p.getMetadata())
+                                .weight((byte) p.getWeight()).build()).collect(Collectors.toList());
+                ret.put(datum, instances);
+            }
+        } catch (NacosException e)
+        {
+            throw new CellDiscoveryException(e);
+        }
+
+        return ret;
     }
 
     @Override
@@ -47,8 +89,8 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
         com.alibaba.nacos.api.naming.pojo.Instance nacosInstance = new com.alibaba.nacos.api.naming.pojo.Instance();
         nacosInstance.setIp(instance.getIp());
         nacosInstance.setPort(instance.getPort());
-        nacosInstance.setHealthy(true);
-        nacosInstance.setEnabled(true);
+        nacosInstance.setHealthy(false);
+        nacosInstance.setEnabled(false);
         nacosInstance.setMetadata(instance.getMetaData());
         nacosInstance.setServiceName(instance.getServiceName());
         nacosInstance.setClusterName(instance.getClusterName());
@@ -61,6 +103,25 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
             throw new CellDiscoveryException(e);
         }
         LOG.info(Module.DISCOVERY, "成功注册server instance:{},{}", instance.getServiceName(), instance);
+    }
+
+    private static class DefaultInstanceLogSubscriber extends Subscriber<InstancesChangeEvent>
+    {
+        @Override
+        public void onEvent(InstancesChangeEvent event)
+        {
+            LOG.info(Module.DISCOVERY, "收到event:{}", event);
+        }
+
+        @Override
+        public Class<? extends Event> subscribeType()
+        {
+            return InstancesChangeEvent.class;
+        }
+    }
+
+    public void listen()
+    {
     }
 
     @Override
