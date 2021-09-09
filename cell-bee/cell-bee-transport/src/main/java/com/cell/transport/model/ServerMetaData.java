@@ -1,9 +1,12 @@
 package com.cell.transport.model;
 
+import com.cell.utils.JSONUtil;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -22,6 +25,13 @@ public class ServerMetaData
     public ServerMetaData()
     {
         this.reactors = new ArrayList<>();
+    }
+
+    public static Map<String,String> toMetaData(ServerMetaData data){
+        Map<String,String> metadatas=new HashMap<>();
+        String meta = JSONUtil.toJsonString(data);
+        metadatas.put(ServerMetaData.PROPERTY_NAME, meta);
+        return metadatas;
     }
 
     @Data

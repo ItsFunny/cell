@@ -2,6 +2,7 @@ package com.cell.internal;
 
 import com.cell.annotations.CellOrder;
 import com.cell.constants.Constants;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
@@ -26,7 +27,7 @@ import java.util.Map;
  * @Date 创建时间：2021-09-05 07:29
  */
 // 这部分逻辑抄的 gc监控
-@CellOrder(Constants.EXTESNION_MIN_NUM_ORDER - 999)
+@CellOrder(OrderConstants.EXTESNION_MIN_NUM_ORDER - 999)
 public class GCLoggingExtension extends AbstractSpringNodeExtension
 {
     public static final String GC_FAIL = "Allocation Failure";

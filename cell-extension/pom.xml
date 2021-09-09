@@ -19,7 +19,7 @@
     <modules>
         <module>cell-http-extension</module>
         <module>cell-discovery-nacos-extension</module>
-        <module>cell-http-gate-nacos-extension</module>
+        <module>cell-extension-common</module>
     </modules>
 
 </project>

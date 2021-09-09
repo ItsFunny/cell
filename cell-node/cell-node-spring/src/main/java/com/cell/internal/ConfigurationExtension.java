@@ -3,6 +3,7 @@ package com.cell.internal;
 import com.cell.Configuration;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.Constants;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.exception.ConfigurationException;
 import com.cell.extension.AbstractSpringNodeExtension;
@@ -24,7 +25,7 @@ import java.nio.file.Paths;
  * @Attention:
  * @Date 创建时间：2021-09-05 07:44
  */
-@CellOrder(Constants.EXTESNION_MIN_NUM_ORDER - 998)
+@CellOrder(OrderConstants.EXTESNION_MIN_NUM_ORDER - 998)
 public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;

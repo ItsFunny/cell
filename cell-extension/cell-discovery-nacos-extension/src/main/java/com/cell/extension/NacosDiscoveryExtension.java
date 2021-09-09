@@ -1,11 +1,13 @@
 package com.cell.extension;
 
 import com.cell.annotations.AutoPlugin;
+import com.cell.annotations.CellOrder;
 import com.cell.annotations.DependecyExtension;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.config.ConfigFactory;
 import com.cell.config.NacosConfiguration;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
@@ -19,6 +21,7 @@ import com.cell.transport.model.ServerMetaData;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.JSONUtil;
+import com.cell.utils.StringUtils;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +41,10 @@ import java.util.stream.Collectors;
  * @Attention:
  * @Date 创建时间：2021-09-08 05:06
  */
+@CellOrder(value = OrderConstants.HTTP_EXTENSION + 1)
 public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 {
-
-    @Autowired
-    private IHttpCommandDispatcher dispatcher;
+    private static final String DEFAULT_CLUSTER = "default";
 
 
     private Options options;
@@ -62,13 +64,11 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
     @Override
     public void init(INodeContext ctx) throws Exception
     {
-
     }
 
     @Override
     public void start(INodeContext ctx) throws Exception
     {
-        this.dispatcher = DefaultReactorHolder.getInstance();
         this.register(ctx);
     }
 
@@ -85,6 +85,7 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 
     private void register(INodeContext ctx)
     {
+        IHttpCommandDispatcher dispatcher = DefaultReactorHolder.getInstance();
         NacosNodeDiscoveryImpl nodeDiscovery = new NacosNodeDiscoveryImpl(false, null);
         String serverAddr = NacosConfiguration.getInstance().getServerAddr();
         InitCTX initCTX = new InitCTX();
@@ -113,14 +114,14 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
         }).collect(Collectors.toList());
         serverMetaData.setReactors(reacotrs);
 
-        String meta = JSONUtil.toJsonString(serverMetaData);
-        Map<String, String> metadatas = new HashMap<>();
-        metadatas.put(ServerMetaData.PROPERTY_NAME, meta);
 
+        Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
+        String cluster = this.options.getOption("cluster").getValue();
+        cluster = StringUtils.isEmpty(cluster) ? DEFAULT_CLUSTER : cluster;
         Instance instance = Instance.builder()
                 .weight((byte) 1)
                 .metaData(metadatas)
-                .clusterName(this.options.getOption("cluster").getValue())
+                .clusterName(cluster)
                 .ip(ctx.getIp())
                 .port((int) dispatcher.getPort())
                 .serviceName(ctx.getApp().getApplicationName())

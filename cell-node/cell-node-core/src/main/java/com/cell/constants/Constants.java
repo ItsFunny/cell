@@ -11,8 +11,5 @@ package com.cell.constants;
 public interface Constants
 {
     String SCAN_ROOT = "com.cell";
-    int DEFAULT_ORDER = Integer.MAX_VALUE - 100;
 
-
-    int EXTESNION_MIN_NUM_ORDER = 1000;
 }

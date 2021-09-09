@@ -2,6 +2,7 @@ package com.cell.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
@@ -31,6 +32,7 @@ import java.util.Set;
  * @Attention:
  * @Date 创建时间：2021-08-29 06:48
  */
+@CellOrder(value = OrderConstants.HTTP_EXTENSION)
 public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
