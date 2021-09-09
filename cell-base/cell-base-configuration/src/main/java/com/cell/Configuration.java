@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Configuration
 {
+    static {
+    }
 
     private static final int REFRESH_CHECK_INTERVAL_SECONDS = 10;
 

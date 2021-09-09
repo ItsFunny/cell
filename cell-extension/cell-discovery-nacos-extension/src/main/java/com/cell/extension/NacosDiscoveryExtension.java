@@ -118,6 +118,8 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
                 .metaData(metadatas)
                 .clusterName(cluster)
                 .ip(ctx.getIp())
+                .healthy(true)
+                .enable(true)
                 .port((int) dispatcher.getPort())
                 .serviceName(ctx.getApp().getApplicationName())
                 .build();

@@ -18,13 +18,7 @@ public class NacosNodeDiscoveryImplTest
     @Test
     public void registerServerInstance() throws Exception
     {
-        NacosNodeDiscoveryImpl nacosNodeDiscovery = NacosNodeDiscoveryImpl.getInstance(true, null);
-        InitCTX ctx = new InitCTX();
-        Map<String, Object> data = new HashMap<>();
-        data.put(ConfigFactory.serverAddr, "127.0.0.1:8848");
-        ctx.setData(data);
-        nacosNodeDiscovery.initOnce(ctx);
-
+        NacosNodeDiscoveryImpl nacosNodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
         nacosNodeDiscovery.registerServerInstance(mockInstance());
 
         Map<String, List<Instance>> serverInstanceList = nacosNodeDiscovery.getServerInstanceList();

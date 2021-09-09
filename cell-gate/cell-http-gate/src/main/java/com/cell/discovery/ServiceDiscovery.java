@@ -13,6 +13,9 @@ import com.cell.model.ServerMetaInfo;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
+import com.cell.util.DiscoveryUtils;
+import com.sun.tools.doclint.Env;
+import lombok.Data;
 
 import java.util.*;
 
@@ -26,11 +29,14 @@ import java.util.*;
  */
 public class ServiceDiscovery extends AbstractInitOnce
 {
-    private INodeDiscovery nodeDiscovery;
+    private INacosNodeDiscovery nodeDiscovery;
 
     private static ServiceDiscovery instance;
 
     private Map<String, List<ServerMetaInfo>> serverMetas = new HashMap<>();
+
+    private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
+
 
     @AutoPlugin
     public void setInstance(ServiceDiscovery serviceDiscovery)
@@ -48,15 +54,71 @@ public class ServiceDiscovery extends AbstractInitOnce
         return instance;
     }
 
+    public List<ServerMetaInfo> getServerByUri(String uri)
+    {
+        this.transferIfNeed();
+        return this.serverMetas.get(uri);
+    }
+
+    private void transferIfNeed()
+    {
+        if (this.delta.isEmpty()) return;
+        // index:0
+        Map<String, List<List<ServerMetaInfo>>> compareChanges = new HashMap<>();
+        final List<List<ServerMetaInfo>> dels = new ArrayList<>();
+        synchronized (this.delta)
+        {
+            if (this.delta.isEmpty()) return;
+            Set<String> serviceNames = this.delta.keySet();
+            serviceNames.stream().forEach(n ->
+            {
+                List<com.alibaba.nacos.api.naming.pojo.Instance> instances = this.delta.get(n);
+                if (CollectionUtils.isEmpty(instances))
+                {
+                    dels.add(this.serverMetas.remove(n));
+                    this.delta.remove(n);
+                    return;
+                }
+                Map<String, List<ServerMetaInfo>> conv = this.conv();
+                Set<String> changes = conv.keySet();
+                changes.stream().forEach(name ->
+                {
+                    List<ServerMetaInfo> metas = conv.get(name);
+                    List<ServerMetaInfo> origin = this.serverMetas.replace(name, metas);
+                    List<List<ServerMetaInfo>> r = new ArrayList<>();
+                    r.add(origin);
+                    r.add(metas);
+                    compareChanges.put(name, r);
+                });
+            });
+            this.delta.clear();
+        }
+        LOG.info(Module.HTTP_GATEWAY, "删除的router:{},变更的信息:{}", dels, compareChanges);
+    }
+
     @Override
     protected void onInit(InitCTX ctx)
     {
-        nodeDiscovery = NacosNodeDiscoveryImpl.getInstance(true, new InstanceHooker());
+        nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
         Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList();
-        Set<String> keys = serverInstanceList.keySet();
+        this.serverMetas = convCellInstanceToGateMeta(serverInstanceList);
+        LOG.info(Module.HTTP_GATEWAY, "初始化完毕,初始加载得到的列表信息为:{}", this.serverMetas);
+        nodeDiscovery.registerListen(new InstanceHooker());
+    }
+
+    private Map<String, List<ServerMetaInfo>> conv()
+    {
+        Map<String, List<Instance>> cellInstance = DiscoveryUtils.convNacosMapInstanceToCellInstance(this.delta);
+        return convCellInstanceToGateMeta(cellInstance);
+    }
+
+    private Map<String, List<ServerMetaInfo>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
+    {
+        Set<String> keys = m.keySet();
+        Map<String, List<ServerMetaInfo>> metas = new HashMap<>();
         keys.stream().forEach(k ->
         {
-            List<Instance> instances = serverInstanceList.get(k);
+            List<Instance> instances = m.get(k);
             instances.stream().forEach(inst ->
                     {
                         final ServerMetaInfo info = new ServerMetaInfo();
@@ -74,11 +136,11 @@ public class ServiceDiscovery extends AbstractInitOnce
                             cmds.stream().forEach(c ->
                             {
                                 String uri = c.getUri();
-                                List<ServerMetaInfo> serverMetaInfos = this.serverMetas.get(uri);
+                                List<ServerMetaInfo> serverMetaInfos = metas.get(uri);
                                 if (CollectionUtils.isEmpty(serverMetaInfos))
                                 {
                                     serverMetaInfos = new ArrayList<>();
-                                    this.serverMetas.put(uri, serverMetaInfos);
+                                    metas.put(uri, serverMetaInfos);
                                 }
                                 serverMetaInfos.add(info);
                             });
@@ -86,14 +148,26 @@ public class ServiceDiscovery extends AbstractInitOnce
                     }
             );
         });
+        return metas;
     }
+
 
     private class InstanceHooker extends Subscriber<InstancesChangeEvent>
     {
         @Override
         public void onEvent(InstancesChangeEvent event)
         {
-            LOG.info(Module.HTTP_GATEWAY, "收到event:{}", event);
+//            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
+            LOG.info(Module.HTTP_GATEWAY, "收到event:{},hosts:{}", event);
+            // FIXME , 处理nacos 的cluster
+            String clusters = event.getClusters();
+
+
+            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
+            synchronized (ServiceDiscovery.this.delta)
+            {
+                ServiceDiscovery.this.delta.put(event.getServiceName(), hosts);
+            }
         }
 
         @Override
@@ -101,6 +175,15 @@ public class ServiceDiscovery extends AbstractInitOnce
         {
             return InstancesChangeEvent.class;
         }
+    }
+
+    @Data
+    class InstanceWrapper
+    {
+        private String serviceName;
+        private com.alibaba.nacos.api.naming.pojo.Instance instance;
+        // true : add ,false: remove
+        private boolean add;
     }
 
 }

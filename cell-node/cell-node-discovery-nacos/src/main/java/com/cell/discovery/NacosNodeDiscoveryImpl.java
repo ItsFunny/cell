@@ -19,12 +19,10 @@ import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
+import com.cell.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -36,7 +34,7 @@ import java.util.stream.Collectors;
  * @Date 创建时间：2021-09-07 21:56
  */
 // TODO ,FACTORY
-public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDiscovery
+public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDiscovery, INacosNodeDiscovery
 {
     private static NacosNodeDiscoveryImpl instance = null;
 
@@ -47,11 +45,6 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
 
     public static NacosNodeDiscoveryImpl getInstance()
     {
-        return getInstance(false, null);
-    }
-
-    public static NacosNodeDiscoveryImpl getInstance(boolean reg, Subscriber<InstancesChangeEvent> subscriber)
-    {
         if (null == instance)
         {
             synchronized (NacosNodeDiscoveryImpl.class)
@@ -60,7 +53,7 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
                 {
                     return instance;
                 }
-                instance = new NacosNodeDiscoveryImpl(reg, subscriber);
+                instance = new NacosNodeDiscoveryImpl();
                 String serverAddr = NacosConfiguration.getInstance().getServerAddr();
                 InitCTX initCTX = new InitCTX();
                 Map<String, Object> data = new HashMap<>();
@@ -74,54 +67,43 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
     }
 
     private NamingService namingService;
-    private Subscriber<InstancesChangeEvent> subscriber;
     private ConfigService configService;
 
-    // FIXME ,NOT GRACEFULLY
-    private NacosNodeDiscoveryImpl(boolean registerSubscriber, Subscriber<InstancesChangeEvent> subscriber)
+    public void reigsterInstanceChangeHook(Subscriber<InstancesChangeEvent> hook)
     {
-        if (registerSubscriber)
-        {
-            if (subscriber == null)
-            {
-                subscriber = new DefaultInstanceLogSubscriber();
-            }
-            this.subscriber = subscriber;
-            NotifyCenter.registerSubscriber(this.subscriber);
-        }
+
     }
+
 
     @Override
     public Map<String, List<Instance>> getServerInstanceList()
     {
-        Map<String, List<Instance>> ret = new HashMap<>();
         try
         {
             ListView<String> servicesOfServer = this.namingService.getServicesOfServer(1, 10000);
-            List<String> data = servicesOfServer.getData();
-            for (String datum : data)
-            {
-                List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = this.namingService.getAllInstances(datum);
-                if (CollectionUtils.isEmpty(allInstances))
-                {
-                    continue;
-                }
-                List<Instance> instances = allInstances.stream().map(p ->
-                        Instance.builder()
-                                .serviceName(p.getServiceName())
-                                .port(p.getPort())
-                                .ip(p.getIp())
-                                .clusterName(p.getClusterName())
-                                .metaData(p.getMetadata())
-                                .weight((byte) p.getWeight()).build()).collect(Collectors.toList());
-                ret.put(datum, instances);
-            }
+            Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> serviceMap = servicesOfServer
+                    .getData()
+                    .stream()
+                    .collect(Collectors.toMap(k -> k, n ->
+                    {
+                        try
+                        {
+                            List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = this.namingService.getAllInstances(n);
+                            if (CollectionUtils.isEmpty(allInstances))
+                            {
+                                allInstances = new ArrayList<>();
+                            }
+                            return allInstances;
+                        } catch (NacosException e)
+                        {
+                            throw new ProgramaException(e);
+                        }
+                    }));
+            return DiscoveryUtils.convNacosMapInstanceToCellInstance(serviceMap);
         } catch (NacosException e)
         {
             throw new CellDiscoveryException(e);
         }
-
-        return ret;
     }
 
     @Override
@@ -130,8 +112,8 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
         com.alibaba.nacos.api.naming.pojo.Instance nacosInstance = new com.alibaba.nacos.api.naming.pojo.Instance();
         nacosInstance.setIp(instance.getIp());
         nacosInstance.setPort(instance.getPort());
-        nacosInstance.setHealthy(false);
-        nacosInstance.setEnabled(false);
+        nacosInstance.setHealthy(instance.isHealthy());
+        nacosInstance.setEnabled(instance.isEnable());
         nacosInstance.setMetadata(instance.getMetaData());
         nacosInstance.setServiceName(instance.getServiceName());
         nacosInstance.setClusterName(instance.getClusterName());
@@ -161,8 +143,9 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
         }
     }
 
-    public void listen()
+    public void registerListen(Subscriber<InstancesChangeEvent> subscriber)
     {
+        NotifyCenter.registerSubscriber(subscriber);
     }
 
     @Override

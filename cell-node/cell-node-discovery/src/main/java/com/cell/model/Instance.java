@@ -23,4 +23,7 @@ public class Instance
     private byte weight = 1;
     private String clusterName;
     private Map<String, String> metaData;
+
+    private boolean healthy = true;
+    private boolean enable = true;
 }
