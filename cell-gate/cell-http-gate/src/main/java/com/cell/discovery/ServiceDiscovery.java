@@ -60,6 +60,11 @@ public class ServiceDiscovery extends AbstractInitOnce
         return this.serverMetas.get(uri);
     }
 
+    public synchronized Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> getCurrentDelta()
+    {
+        return new HashMap<>(this.delta);
+    }
+
     private void transferIfNeed()
     {
         if (this.delta.isEmpty()) return;
@@ -84,7 +89,8 @@ public class ServiceDiscovery extends AbstractInitOnce
                 changes.stream().forEach(name ->
                 {
                     List<ServerMetaInfo> metas = conv.get(name);
-                    List<ServerMetaInfo> origin = this.serverMetas.replace(name, metas);
+                    List<ServerMetaInfo> origin = this.serverMetas.get(name);
+                    this.serverMetas.put(name, metas);
                     List<List<ServerMetaInfo>> r = new ArrayList<>();
                     r.add(origin);
                     r.add(metas);
