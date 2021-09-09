@@ -3,29 +3,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell-extension</artifactId>
+        <artifactId>cell-runnable</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-discovery-nacos-extension</artifactId>
+    <artifactId>cell-runnable-gateway</artifactId>
 
-    <name>cell-discovery-nacos-extension</name>
+    <name>cell-runnable-gateway</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <dependencies>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-bee-transport</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-node-discovery-nacos</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-node-spring</artifactId>
@@ -33,7 +23,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-http-framework</artifactId>
+            <artifactId>cell-http-gate</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>

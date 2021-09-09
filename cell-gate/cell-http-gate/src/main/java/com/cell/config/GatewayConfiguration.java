@@ -1,0 +1,29 @@
+package com.cell.config;
+
+import org.springframework.cloud.gateway.route.RouteLocator;
+import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * @author Charlie
+ * @When
+ * @Description
+ * @Detail
+ * @Attention:
+ * @Date 创建时间：2021-09-10 04:36
+ */
+@Configuration
+public class GatewayConfiguration
+{
+    @Bean
+    public RouteLocator myRoutes(RouteLocatorBuilder builder)
+    {
+        return builder.routes()
+                .route(p -> p
+                        .path("/get")
+                        .filters(f -> f.addRequestHeader("Hello", "World"))
+                        .uri("http://www.baidu.com:80"))
+                .build();
+    }
+}

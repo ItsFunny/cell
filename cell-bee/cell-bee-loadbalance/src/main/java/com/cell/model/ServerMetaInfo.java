@@ -17,5 +17,6 @@ public class ServerMetaInfo
     private String ip;
     private short port;
 
-
+    private boolean enable;
+    private boolean healthy;
 }

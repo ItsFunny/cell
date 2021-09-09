@@ -35,7 +35,7 @@ public class GCLoggingExtension extends AbstractSpringNodeExtension
     @Override
     public void init(INodeContext ctx) throws Exception
     {
-
+        this.install();
     }
 
     @Override

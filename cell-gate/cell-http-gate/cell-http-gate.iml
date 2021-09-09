@@ -30,5 +30,9 @@
     </orderEntry>
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="module" module-name="cell-bee-loadbalance" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
+    <orderEntry type="module" module-name="cell-extension-common" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-gateway-core:2.1.5.RELEASE" level="project" />
   </component>
 </module>

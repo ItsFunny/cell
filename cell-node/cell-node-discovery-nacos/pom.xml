@@ -33,11 +33,7 @@
             <artifactId>cell-node-discovery</artifactId>
             <version>${cell.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-http-framework</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
+
 
     </dependencies>
 </project>

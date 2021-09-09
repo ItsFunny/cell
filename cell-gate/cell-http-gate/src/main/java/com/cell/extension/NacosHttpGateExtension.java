@@ -1,6 +1,10 @@
 package com.cell.extension;
 
+import com.cell.annotations.Plugin;
+import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
+import com.cell.discovery.ServiceDiscovery;
+import com.cell.utils.StringUtils;
 
 /**
  * @author Charlie
@@ -12,16 +16,27 @@ import com.cell.context.INodeContext;
  */
 public class NacosHttpGateExtension extends AbstractSpringNodeExtension
 {
+    private ServiceDiscovery serviceDiscovery;
+
+    @Plugin
+    public ServiceDiscovery serviceDiscovery()
+    {
+        return this.serviceDiscovery;
+    }
+
     @Override
     public void init(INodeContext ctx) throws Exception
     {
-
+        this.serviceDiscovery = ServiceDiscovery.getInstance();
+        String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
+        cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
+        this.serviceDiscovery.setCluster(cluster);
     }
 
     @Override
     public void start(INodeContext ctx) throws Exception
     {
-
+        this.serviceDiscovery.initOnce(null);
     }
 
     @Override

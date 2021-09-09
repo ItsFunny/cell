@@ -2,6 +2,8 @@ package com.cell.lb;
 
 import com.cell.model.ServerMetaInfo;
 
+import java.util.List;
+
 /**
  * @author Charlie
  * @When
@@ -12,5 +14,5 @@ import com.cell.model.ServerMetaInfo;
  */
 public interface ILoadBalancer
 {
-    ServerMetaInfo choseServer(String uri);
+    ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String uri);
 }

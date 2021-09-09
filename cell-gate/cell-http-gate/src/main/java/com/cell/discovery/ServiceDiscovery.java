@@ -27,16 +27,17 @@ import java.util.*;
  * @Attention:
  * @Date 创建时间：2021-09-08 05:41
  */
+@Data
 public class ServiceDiscovery extends AbstractInitOnce
 {
-    private INacosNodeDiscovery nodeDiscovery;
-
     private static ServiceDiscovery instance;
 
+    @AutoPlugin
+    private INacosNodeDiscovery nodeDiscovery;
+    private ILoadBalancer loadBalancer;
     private Map<String, List<ServerMetaInfo>> serverMetas = new HashMap<>();
-
     private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
-
+    private String cluster;
 
     @AutoPlugin
     public void setInstance(ServiceDiscovery serviceDiscovery)
@@ -44,18 +45,12 @@ public class ServiceDiscovery extends AbstractInitOnce
         ServiceDiscovery.instance = serviceDiscovery;
     }
 
-    private ILoadBalancer loadBalancer;
-
     @AutoPlugin
     private void setLoadBalancerStrategy(ILoadBalancerStrategy strategy)
     {
         this.loadBalancer = new DefaultNacosLoadBalance(strategy);
     }
 
-    private ServiceDiscovery()
-    {
-
-    }
 
     public static ServiceDiscovery getInstance()
     {
@@ -66,6 +61,11 @@ public class ServiceDiscovery extends AbstractInitOnce
     {
         this.transferIfNeed();
         return this.serverMetas.get(uri);
+    }
+
+    public ServerMetaInfo choseServer(String uri)
+    {
+        return this.loadBalancer.choseServer(this.getServerByUri(uri), uri);
     }
 
     public synchronized Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> getCurrentDelta()
@@ -202,7 +202,6 @@ public class ServiceDiscovery extends AbstractInitOnce
 
     private class DefaultNacosLoadBalance implements ILoadBalancer
     {
-
         public DefaultNacosLoadBalance(ILoadBalancerStrategy strategy)
         {
             this.strategy = strategy;
@@ -211,7 +210,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         private ILoadBalancerStrategy strategy;
 
         @Override
-        public ServerMetaInfo choseServer(String uri)
+        public ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String uri)
         {
             return this.strategy.choseServer(ServiceDiscovery.getInstance().getServerByUri(uri), uri);
         }
