@@ -86,13 +86,8 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
     private void register(INodeContext ctx)
     {
         IHttpCommandDispatcher dispatcher = DefaultReactorHolder.getInstance();
-        NacosNodeDiscoveryImpl nodeDiscovery = new NacosNodeDiscoveryImpl(false, null);
-        String serverAddr = NacosConfiguration.getInstance().getServerAddr();
-        InitCTX initCTX = new InitCTX();
-        Map<String, Object> data = new HashMap<>();
-        data.put(ConfigFactory.serverAddr, serverAddr);
-        initCTX.setData(data);
-        nodeDiscovery.initOnce(initCTX);
+
+        NacosNodeDiscoveryImpl nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
 
         Map<String, IHttpReactor> reactors = dispatcher.getReactors();
         if (reactors == null || reactors.isEmpty()) return;

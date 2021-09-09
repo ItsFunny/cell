@@ -123,7 +123,15 @@ public class ReflectUtil
             return sun.reflect.misc.ReflectUtil.newInstance(clazz);
         } catch (Exception e)
         {
-            throw new RuntimeException(e);
+            try
+            {
+                Constructor<?> declaredConstructor = clazz.getDeclaredConstructor();
+                declaredConstructor.setAccessible(true);
+                return declaredConstructor.newInstance();
+            } catch (Exception e1)
+            {
+                throw new ProgramaException(e);
+            }
         }
     }
 

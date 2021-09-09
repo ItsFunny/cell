@@ -19,6 +19,7 @@
     <modules>
         <module>cell-http-gate</module>
         <module>cell-gate-common</module>
+        <module>cell-nacos-http-gate</module>
     </modules>
 
 </project>

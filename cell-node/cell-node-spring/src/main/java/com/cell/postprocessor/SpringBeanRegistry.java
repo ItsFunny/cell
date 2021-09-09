@@ -9,6 +9,7 @@ import com.cell.bridge.ISpringNodeExtension;
 import com.cell.config.AbstractInitOnce;
 import com.cell.config.ConfigConstants;
 import com.cell.constants.Constants;
+import com.cell.constants.OrderConstants;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.enums.EnumLifeCycle;
@@ -191,7 +192,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     {
         beanDefinition.setAttribute(SpringBridge.EXTENSION_FLAG_ATTR, true);
         CellOrder annotation = beanDefinition.getBeanClass().getAnnotation(CellOrder.class);
-        int order = Constants.EXTESNION_MIN_NUM_ORDER;
+        int order = OrderConstants.EXTESNION_MIN_NUM_ORDER;
         if (null != annotation)
         {
             order = annotation.value();

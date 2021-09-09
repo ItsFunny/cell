@@ -10,6 +10,7 @@ import com.cell.comparators.InstanceOrderComparator;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
 import com.cell.constants.Constants;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
@@ -279,8 +280,8 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             {
                 ManagerNode n1 = a.getClass().getAnnotation(ManagerNode.class);
                 ManagerNode n2 = b.getClass().getAnnotation(ManagerNode.class);
-                int value1 = n1 == null ? Constants.DEFAULT_ORDER : n1.orderValue();
-                int value2 = n2 == null ? Constants.DEFAULT_ORDER : n2.orderValue();
+                int value1 = n1 == null ? OrderConstants.DEFAULT_ORDER : n1.orderValue();
+                int value2 = n2 == null ? OrderConstants.DEFAULT_ORDER : n2.orderValue();
                 return Integer.compare(value1, value2);
             });
             manager.invokeInterestNodes(collect);

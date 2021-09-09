@@ -1,6 +1,8 @@
 package com.cell.transport.model;
 
+import com.cell.exceptions.ProgramaException;
 import com.cell.utils.JSONUtil;
+import com.cell.utils.StringUtils;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -27,11 +29,23 @@ public class ServerMetaData
         this.reactors = new ArrayList<>();
     }
 
-    public static Map<String,String> toMetaData(ServerMetaData data){
-        Map<String,String> metadatas=new HashMap<>();
+    public static Map<String, String> toMetaData(ServerMetaData data)
+    {
+        Map<String, String> metadatas = new HashMap<>();
         String meta = JSONUtil.toJsonString(data);
         metadatas.put(ServerMetaData.PROPERTY_NAME, meta);
         return metadatas;
+    }
+
+    public static ServerMetaData fromMetaData(Map<String, String> data)
+    {
+        String metas = data.get(ServerMetaData.PROPERTY_NAME);
+        if (StringUtils.isEmpty(metas))
+        {
+            // FIXME ? PANIC  OR FALL THROUGH
+            throw new ProgramaException("asd");
+        }
+        return JSONUtil.json2Obj(metas, ServerMetaData.class);
     }
 
     @Data

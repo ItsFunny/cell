@@ -11,6 +11,7 @@ import com.alibaba.nacos.common.notify.NotifyCenter;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.cell.config.AbstractInitOnce;
 import com.cell.config.ConfigFactory;
+import com.cell.config.NacosConfiguration;
 import com.cell.context.InitCTX;
 import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
@@ -34,14 +35,50 @@ import java.util.stream.Collectors;
  * @Attention:
  * @Date 创建时间：2021-09-07 21:56
  */
+// TODO ,FACTORY
 public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDiscovery
 {
+    private static NacosNodeDiscoveryImpl instance = null;
+
+    private NacosNodeDiscoveryImpl()
+    {
+
+    }
+
+    public static NacosNodeDiscoveryImpl getInstance()
+    {
+        return getInstance(false, null);
+    }
+
+    public static NacosNodeDiscoveryImpl getInstance(boolean reg, Subscriber<InstancesChangeEvent> subscriber)
+    {
+        if (null == instance)
+        {
+            synchronized (NacosNodeDiscoveryImpl.class)
+            {
+                if (null != instance)
+                {
+                    return instance;
+                }
+                instance = new NacosNodeDiscoveryImpl(reg, subscriber);
+                String serverAddr = NacosConfiguration.getInstance().getServerAddr();
+                InitCTX initCTX = new InitCTX();
+                Map<String, Object> data = new HashMap<>();
+                data.put(ConfigFactory.serverAddr, serverAddr);
+                initCTX.setData(data);
+                instance.initOnce(initCTX);
+            }
+        }
+
+        return instance;
+    }
+
     private NamingService namingService;
     private Subscriber<InstancesChangeEvent> subscriber;
     private ConfigService configService;
 
     // FIXME ,NOT GRACEFULLY
-    public NacosNodeDiscoveryImpl(boolean registerSubscriber, Subscriber<InstancesChangeEvent> subscriber)
+    private NacosNodeDiscoveryImpl(boolean registerSubscriber, Subscriber<InstancesChangeEvent> subscriber)
     {
         if (registerSubscriber)
         {

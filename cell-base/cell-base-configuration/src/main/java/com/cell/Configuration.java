@@ -1,6 +1,7 @@
 package com.cell;
 
 import com.cell.exception.ConfigurationException;
+import com.cell.exceptions.ProgramaException;
 import com.cell.model.ConfigValueJson;
 import com.cell.model.IConfigValue;
 import com.cell.parser.ConfigurationParserJson;
@@ -9,12 +10,16 @@ import com.cell.refresh.ConfigRefresher;
 import com.cell.refresh.IConfigListener;
 import com.cell.refresh.ILoadConfigListener;
 import com.cell.refresh.IRefreshExceptionListener;
+import com.cell.utils.CollectionUtils;
 import com.cell.utils.FileUtils;
 import com.cell.utils.JSONUtil;
+import com.cell.utils.StringUtils;
 import io.netty.util.concurrent.DefaultEventExecutor;
 import io.netty.util.concurrent.EventExecutor;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,6 +49,37 @@ public class Configuration
     private final String CONFIG_FILE_TAILFIX = "root.json";
 
     private static Configuration DEFAULT_INSTANCE = new Configuration();
+
+    public static void autoInitialize()
+    {
+        Path currentRelativePath = Paths.get("");
+        String path = currentRelativePath.toAbsolutePath().toString() + currentRelativePath.getFileSystem().getSeparator() + "config";
+        String separator = currentRelativePath.getFileSystem().getSeparator();
+        String[] split = path.split(separator);
+        int endIndex = 0;
+        String fixPath = separator;
+        for (int i = 0; i < split.length - 1; i++)
+        {
+            fixPath += split[i] + separator;
+            if (split[i].equalsIgnoreCase("cell"))
+            {
+                endIndex = i;
+                break;
+            }
+        }
+        if (endIndex == 0)
+        {
+            throw new ProgramaException("asd");
+        }
+        fixPath += "config" + separator;
+        try
+        {
+            DEFAULT_INSTANCE.initialize(fixPath, "Default");
+        } catch (ConfigurationException e)
+        {
+            throw new ProgramaException(e);
+        }
+    }
 
     public static Configuration getDefault()
     {
