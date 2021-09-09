@@ -53,10 +53,10 @@
             <artifactId>hsmGeneralFinance</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>gdca</groupId>
-            <artifactId>cesecore-common</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>gdca</groupId>-->
+            <!--<artifactId>cesecore-common</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>commons-configuration</groupId>
             <artifactId>commons-configuration</artifactId>
@@ -76,14 +76,14 @@
             <groupId>cn.sanwei</groupId>
             <artifactId>bxcrypto</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.sjsm</groupId>
-            <artifactId>sjsm-sm2</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.sjsm</groupId>
-            <artifactId>sjsm-sm2-cert</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.sjsm</groupId>-->
+            <!--<artifactId>sjsm-sm2</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.sjsm</groupId>-->
+            <!--<artifactId>sjsm-sm2-cert</artifactId>-->
+        <!--</dependency>-->
 
 
     </dependencies>

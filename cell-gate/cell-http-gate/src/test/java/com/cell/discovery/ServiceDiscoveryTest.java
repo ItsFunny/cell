@@ -6,6 +6,7 @@ import com.cell.listener.FacadedListener;
 import com.cell.model.Instance;
 import com.cell.model.ServerMetaInfo;
 import com.cell.transport.model.ServerMetaData;
+import com.cell.utils.ClassUtil;
 import com.cell.utils.ReflectUtil;
 import org.junit.Assert;
 import org.junit.Before;
@@ -95,7 +96,7 @@ public class ServiceDiscoveryTest
     {
         ServiceDiscovery discovery = ServiceDiscovery.getInstance();
         TimeUnit.SECONDS.sleep(5);
-        List<ServerMetaInfo> asd = discovery.getServerByUri("asd");
+        List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", "asd");
         Assert.assertNull(asd);
         Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> currentDelta = discovery.getCurrentDelta();
         Assert.assertEquals(0, currentDelta.size());
@@ -106,7 +107,7 @@ public class ServiceDiscoveryTest
     {
         ServiceDiscovery discovery = ServiceDiscovery.getInstance();
         TimeUnit.SECONDS.sleep(5);
-        List<ServerMetaInfo> asd = discovery.getServerByUri(post1);
+        List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", post1);
         Assert.assertNotNull(asd);
         Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> currentDelta = discovery.getCurrentDelta();
         Assert.assertEquals(0, currentDelta.size());

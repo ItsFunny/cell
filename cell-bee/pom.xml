@@ -19,6 +19,7 @@
     <modules>
         <module>cell-bee-dao</module>
         <module>cell-bee-transport</module>
+        <module>cell-bee-loadbalance-strategy</module>
         <module>cell-bee-loadbalance</module>
     </modules>
 </project>

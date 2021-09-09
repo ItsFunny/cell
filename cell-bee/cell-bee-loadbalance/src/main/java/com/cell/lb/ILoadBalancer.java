@@ -1,5 +1,7 @@
 package com.cell.lb;
 
+import com.cell.model.ServerMetaInfo;
+
 /**
  * @author Charlie
  * @When
@@ -10,5 +12,5 @@ package com.cell.lb;
  */
 public interface ILoadBalancer
 {
-
+    ServerMetaInfo choseServer(String uri);
 }

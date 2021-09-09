@@ -1,14 +1,7 @@
 package com.cell.protocol;
 
-import com.cell.reactor.ICommandReactor;
-import com.cell.reactor.IReactor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.experimental.Tolerate;
-import sun.tools.jconsole.inspector.IconManager;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Charlie

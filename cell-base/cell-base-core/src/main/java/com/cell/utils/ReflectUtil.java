@@ -1,11 +1,15 @@
 package com.cell.utils;
 
 import com.cell.exceptions.ProgramaException;
+import io.netty.util.internal.ReflectionUtil;
 import net.bytebuddy.ByteBuddy;
+import org.springframework.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Charlie
@@ -116,16 +120,25 @@ public class ReflectUtil
     }
 
     // FIXME
-    public static Object newInstance(Class<?> clazz)
+    public static Object newInstance(Class<?> clazz, Object... args)
     {
         try
         {
-            return sun.reflect.misc.ReflectUtil.newInstance(clazz);
+            checkPackageAccess(clazz);
+            return clazz.newInstance();
         } catch (Exception e)
         {
             try
             {
-                Constructor<?> declaredConstructor = clazz.getDeclaredConstructor();
+                Constructor<?> declaredConstructor;
+                if (args != null && args.length > 0)
+                {
+                    Class[] classes = Arrays.asList(args).stream().map(p -> p.getClass()).collect(Collectors.toList()).toArray(new Class[args.length]);
+                    declaredConstructor = clazz.getDeclaredConstructor(classes);
+                } else
+                {
+                    declaredConstructor = clazz.getDeclaredConstructor();
+                }
                 declaredConstructor.setAccessible(true);
                 return declaredConstructor.newInstance();
             } catch (Exception e1)
@@ -220,5 +233,119 @@ public class ReflectUtil
             throw new ProgramaException(e);
         }
     }
+
+    public static void checkPackageAccess(Class<?> var0)
+    {
+        checkPackageAccess(var0.getName());
+        if (isNonPublicProxyClass(var0))
+        {
+            checkProxyPackageAccess(var0);
+        }
+    }
+
+    public static void checkPackageAccess(String var0)
+    {
+        SecurityManager var1 = System.getSecurityManager();
+        if (var1 != null)
+        {
+            String var2 = var0.replace('/', '.');
+            int var3;
+            if (var2.startsWith("["))
+            {
+                var3 = var2.lastIndexOf(91) + 2;
+                if (var3 > 1 && var3 < var2.length())
+                {
+                    var2 = var2.substring(var3);
+                }
+            }
+
+            var3 = var2.lastIndexOf(46);
+            if (var3 != -1)
+            {
+                var1.checkPackageAccess(var2.substring(0, var3));
+            }
+        }
+
+    }
+
+    public static boolean isNonPublicProxyClass(Class<?> var0)
+    {
+        String var1 = var0.getName();
+        int var2 = var1.lastIndexOf(46);
+        String var3 = var2 != -1 ? var1.substring(0, var2) : "";
+        return Proxy.isProxyClass(var0) && !var3.equals("com.sun.proxy");
+    }
+
+    public static void checkProxyPackageAccess(Class<?> var0)
+    {
+        SecurityManager var1 = System.getSecurityManager();
+        if (var1 != null && Proxy.isProxyClass(var0))
+        {
+            Class[] var2 = var0.getInterfaces();
+            int var3 = var2.length;
+
+            for (int var4 = 0; var4 < var3; ++var4)
+            {
+                Class var5 = var2[var4];
+                checkPackageAccess(var5);
+            }
+        }
+
+    }
+
+    public static void checkProxyPackageAccess(ClassLoader var0, Class... var1)
+    {
+        SecurityManager var2 = System.getSecurityManager();
+        if (var2 != null)
+        {
+            Class[] var3 = var1;
+            int var4 = var1.length;
+
+            for (int var5 = 0; var5 < var4; ++var5)
+            {
+                Class var6 = var3[var5];
+                ClassLoader var7 = var6.getClassLoader();
+                if (needsPackageAccessCheck(var0, var7))
+                {
+                    checkPackageAccess(var6);
+                }
+            }
+        }
+    }
+
+    public static boolean needsPackageAccessCheck(ClassLoader var0, ClassLoader var1)
+    {
+        if (var0 != null && var0 != var1)
+        {
+            if (var1 == null)
+            {
+                return true;
+            } else
+            {
+                return !isAncestor(var0, var1);
+            }
+        } else
+        {
+            return false;
+        }
+    }
+
+    private static boolean isAncestor(ClassLoader var0, ClassLoader var1)
+    {
+        ClassLoader var2 = var1;
+
+        do
+        {
+            var2 = var2.getParent();
+            if (var0 == var2)
+            {
+                return true;
+            }
+        }
+        while (var2 != null);
+
+        return false;
+    }
+
 }
 

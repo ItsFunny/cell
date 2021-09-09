@@ -29,5 +29,6 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="cell-base-common" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance" />
   </component>
 </module>

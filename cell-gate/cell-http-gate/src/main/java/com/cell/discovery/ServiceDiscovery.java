@@ -7,14 +7,14 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
+import com.cell.lb.ILoadBalancer;
+import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.model.ServerMetaInfo;
 import com.cell.models.Module;
-import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.util.DiscoveryUtils;
-import com.sun.tools.doclint.Env;
 import lombok.Data;
 
 import java.util.*;
@@ -44,6 +44,14 @@ public class ServiceDiscovery extends AbstractInitOnce
         ServiceDiscovery.instance = serviceDiscovery;
     }
 
+    private ILoadBalancer loadBalancer;
+
+    @AutoPlugin
+    private void setLoadBalancerStrategy(ILoadBalancerStrategy strategy)
+    {
+        this.loadBalancer = new DefaultNacosLoadBalance(strategy);
+    }
+
     private ServiceDiscovery()
     {
 
@@ -54,7 +62,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         return instance;
     }
 
-    public List<ServerMetaInfo> getServerByUri(String uri)
+    private List<ServerMetaInfo> getServerByUri(String uri)
     {
         this.transferIfNeed();
         return this.serverMetas.get(uri);
@@ -192,4 +200,20 @@ public class ServiceDiscovery extends AbstractInitOnce
         private boolean add;
     }
 
+    private class DefaultNacosLoadBalance implements ILoadBalancer
+    {
+
+        public DefaultNacosLoadBalance(ILoadBalancerStrategy strategy)
+        {
+            this.strategy = strategy;
+        }
+
+        private ILoadBalancerStrategy strategy;
+
+        @Override
+        public ServerMetaInfo choseServer(String uri)
+        {
+            return this.strategy.choseServer(ServiceDiscovery.getInstance().getServerByUri(uri), uri);
+        }
+    }
 }

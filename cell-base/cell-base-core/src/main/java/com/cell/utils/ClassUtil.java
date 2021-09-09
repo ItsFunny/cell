@@ -32,6 +32,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Collectors;
 
 /**
  * 类工具类
@@ -235,30 +236,33 @@ public class ClassUtil
         return result;
     }
 
-    public static void invokeFieldValue(Object obj, String fieldName, Object value, Class<?>... type)
+    public static Object invokeFieldValue(Object obj, String fieldName, Object value)
     {
         Class<?> clazz = obj.getClass();
         try
         {
             String methodName = "set" + StringUtils.firstToUpper(fieldName);
-            invokeMethodValue(obj, methodName, value, type);
+            return invokeMethodValue(obj, methodName, value);
         } catch (Exception e)
         {
             LOG.warning(Module.COMMON, e, "{}反射Field {}失败， obj = {}", clazz, fieldName, obj);
 //			String methodName = "is" + StringUtils.firstToUpper(fieldName);
 //			invokeMethodValue(obj, methodName, value);
+            return null;
         }
     }
 
-    public static void invokeMethodValue(Object obj, String methodName, Object value, Class<?>... type)
+    public static Object invokeMethodValue(Object obj, String methodName, Object value)
     {
-        invokeMethodValue(obj, methodName, Arrays.asList(value), type);
+        return invokeMethodValue(obj, methodName, Arrays.asList(value));
     }
 
 
-    public static void invokeMethodValue(Object obj, String methodName, List<Object> values, Class<?>... type)
+    public static Object invokeMethodValue(Object obj, String methodName, List<Object> values)
     {
         Class<?> clazz = obj.getClass();
+        List<? extends Class<?>> types = values.stream().map(p -> p.getClass()).collect(Collectors.toList());
+        Object[] data = values.toArray(new Object[values.size()]);
         try
         {
             Method[] methods = clazz.getDeclaredMethods();
@@ -266,12 +270,13 @@ public class ClassUtil
             {
                 System.out.println(method.getName());
             }
-            Method method = clazz.getMethod(methodName, type);
+            Method method = clazz.getDeclaredMethod(methodName, types.toArray(new Class[types.size()]));
             method.setAccessible(true);
-            method.invoke(obj, values);
+            return method.invoke(obj, data);
         } catch (Exception e)
         {
             LOG.warning(Module.COMMON, e, "{} 反射 {} 失败， obj = {}", clazz, methodName, obj);
+            return null;
         }
     }
 

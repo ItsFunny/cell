@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-bee-loadbalance</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-base-configuration</artifactId>
             <version>${cell.version}</version>
         </dependency>
@@ -29,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-node-discovery</artifactId>
+            <artifactId>cell-node-discovery-nacos</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>
