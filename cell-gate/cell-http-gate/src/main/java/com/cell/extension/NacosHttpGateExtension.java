@@ -27,7 +27,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
     @Override
     public void init(INodeContext ctx) throws Exception
     {
-        this.serviceDiscovery = ServiceDiscovery.getInstance();
+        this.serviceDiscovery = new ServiceDiscovery();
         String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
         cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
         this.serviceDiscovery.setCluster(cluster);

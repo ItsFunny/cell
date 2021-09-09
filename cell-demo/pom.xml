@@ -23,6 +23,7 @@
         <module>cell-demo-http-demo3</module>
         <module>cell-demo-nacos</module>
         <module>cell-extension-demo</module>
+        <module>cell-demo-gateway</module>
     </modules>
 
     <dependencies>
