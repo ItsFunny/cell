@@ -30,12 +30,13 @@
         <main.class></main.class>
         <!--更新为最新版本会有问题,cmd注解不会被替代-->
         <!--<spring-boot.version>2.0.4.RELEASE</spring-boot.version>-->
-        <spring-boot.version>2.2.1.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.5.RELEASE</spring-boot.version>
+        <!--<spring-boot.version>2.2.5.RELEASE</spring-boot.version>-->
         <!--<spring-boot.version>2.2.0.M4</spring-boot.version>-->
         <cell.version>1.0-SNAPSHOT</cell.version>
-        <spring.cloud.version>Greenwich.SR6</spring.cloud.version>
-        <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
-        <spring.cloud.gateway.version>2.2.0.RELEASE</spring.cloud.gateway.version>
+        <spring.cloud.version>Hoxton.SR6</spring.cloud.version>
+        <spring.cloud.alibaba.version>2.2.3.RELEASE</spring.cloud.alibaba.version>
+        <spring.cloud.gateway.version>2.2.3.RELEASE</spring.cloud.gateway.version>
         <nacos.client.version>2.0.2</nacos.client.version>
     </properties>
 
@@ -112,6 +113,14 @@
             </dependency>
 
             <!-- Spring -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
