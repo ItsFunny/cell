@@ -35,6 +35,7 @@
         <cell.version>1.0-SNAPSHOT</cell.version>
         <spring.cloud.version>Greenwich.SR6</spring.cloud.version>
         <spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
+        <spring.cloud.gateway.version>2.2.0.RELEASE</spring.cloud.gateway.version>
         <nacos.client.version>2.0.2</nacos.client.version>
     </properties>
 
@@ -200,12 +201,12 @@
             </dependency>
 
             <!--<dependency>-->
-                <!--<groupId>gdca</groupId>-->
-                <!--<artifactId>cesecore-common</artifactId>-->
-                <!--<version>6.8.0</version>-->
-                <!--<scope>system</scope>-->
-                <!--<systemPath>/Users/joker/.m2/repository/gdca/cesecore-common/6.8.0/cesecore-common-6.8.0.jar-->
-                <!--</systemPath>-->
+            <!--<groupId>gdca</groupId>-->
+            <!--<artifactId>cesecore-common</artifactId>-->
+            <!--<version>6.8.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>/Users/joker/.m2/repository/gdca/cesecore-common/6.8.0/cesecore-common-6.8.0.jar-->
+            <!--</systemPath>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>commons-configuration</groupId>
@@ -233,19 +234,19 @@
                 <systemPath>/Users/joker/.m2/repository/cn/sanwei/bxcrypto/3.0.0/bxcrypto-3.0.0.jar</systemPath>
             </dependency>
             <!--<dependency>-->
-                <!--<groupId>com.sjsm</groupId>-->
-                <!--<artifactId>sjsm-sm2</artifactId>-->
-                <!--<version>1.0.0</version>-->
-                <!--<scope>system</scope>-->
-                <!--<systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2/1.0.0/sjsm-sm2-1.0.0.jar</systemPath>-->
+            <!--<groupId>com.sjsm</groupId>-->
+            <!--<artifactId>sjsm-sm2</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2/1.0.0/sjsm-sm2-1.0.0.jar</systemPath>-->
             <!--</dependency>-->
             <!--<dependency>-->
-                <!--<groupId>com.sjsm</groupId>-->
-                <!--<artifactId>sjsm-sm2-cert</artifactId>-->
-                <!--<version>1.0.0</version>-->
-                <!--<scope>system</scope>-->
-                <!--<systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2-cert/1.0.0/sjsm-sm2-cert-1.0.0.jar-->
-                <!--</systemPath>-->
+            <!--<groupId>com.sjsm</groupId>-->
+            <!--<artifactId>sjsm-sm2-cert</artifactId>-->
+            <!--<version>1.0.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>/Users/joker/.m2/repository/com/sjsm/sjsm-sm2-cert/1.0.0/sjsm-sm2-cert-1.0.0.jar-->
+            <!--</systemPath>-->
             <!--</dependency>-->
 
             <dependency>
