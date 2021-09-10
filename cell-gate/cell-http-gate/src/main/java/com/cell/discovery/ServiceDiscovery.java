@@ -32,8 +32,8 @@ public class ServiceDiscovery extends AbstractInitOnce
 {
     private static ServiceDiscovery instance;
 
-    @AutoPlugin
     private INacosNodeDiscovery nodeDiscovery;
+
     private ILoadBalancer loadBalancer;
     private Map<String, List<ServerMetaInfo>> serverMetas = new HashMap<>();
     private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();

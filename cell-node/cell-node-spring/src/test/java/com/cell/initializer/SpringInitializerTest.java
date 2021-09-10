@@ -1,6 +1,7 @@
 package com.cell.initializer;
 
 import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.annotations.ActiveConfiguration;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.Plugin;
@@ -41,9 +42,28 @@ public class SpringInitializerTest
         @AutoPlugin
         private B2 b2;
 
+
         public B3()
         {
             System.out.println("b3");
+        }
+    }
+
+    @ActiveConfiguration
+    public static class CFG
+    {
+        @Plugin
+        public B4 b4()
+        {
+            return new B4();
+        }
+    }
+
+    public static class B4
+    {
+        public B4()
+        {
+            System.out.println("b4");
         }
     }
 
@@ -94,6 +114,7 @@ public class SpringInitializerTest
         B1 b1 = ctx.getBean(B1.class);
         B2 b2 = ctx.getBean(B2.class);
         B3 b3 = ctx.getBean(B3.class);
+        B4 b4 = ctx.getBean(B4.class);
         System.out.println(b3);
     }
 }

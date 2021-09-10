@@ -1,6 +1,6 @@
-package com.cell.impl;
+package com.cell.lb;
 
-import com.cell.lb.ILoadBalancerStrategy;
+import com.cell.annotations.ActivePlugin;
 import com.cell.model.ServerMetaInfo;
 
 import java.util.Collections;

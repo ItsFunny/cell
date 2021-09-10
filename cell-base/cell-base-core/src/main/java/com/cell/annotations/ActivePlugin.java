@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-// Configuration
+// service
 @Inherited
 public @interface ActivePlugin
 {

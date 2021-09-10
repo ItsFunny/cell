@@ -174,7 +174,8 @@ public class ExtensionClassFactoryProcessor extends AbstractBeanDefiinitionRegis
         {
             BeanDefinition beanDef = registry.getBeanDefinition(beanName);
             Object isExtension = beanDef.getAttribute(SpringBridge.EXTENSION_FLAG_ATTR);
-            if (isExtension != null)
+            Object attribute = beanDef.getAttribute(SpringBridge.ACTIVE_CFG_ATTR);
+            if (isExtension != null || attribute != null)
             {
                 configCandidates.add(new BeanDefinitionHolder(beanDef, beanName));
                 if (registry instanceof ConfigurableListableBeanFactory)

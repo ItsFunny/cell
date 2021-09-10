@@ -3,6 +3,8 @@ package com.cell.postprocessor;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
+import com.cell.annotations.ActiveConfiguration;
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.LifeCycle;
 import com.cell.bridge.ISpringNodeExtension;
@@ -20,6 +22,7 @@ import com.cell.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ExtensionClassUtil;
+import com.cell.utils.StringUtils;
 import com.cell.wrapper.AnnotaionManagerWrapper;
 import lombok.Data;
 import org.springframework.beans.BeansException;
@@ -45,9 +48,11 @@ import java.util.*;
 public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implements
         PriorityOrdered
 {
+    //    private Map<String, BeanDefinition> extensionBeanDefinitions = new HashMap<>();
     private Map<String, BeanDefinition> pluginBeanDefinitions = new HashMap<>();
     private Map<String, BeanDefinition> factoryDefinition;
     private Map<String, BeanDefinition> postDefinition;
+    private Map<String, BeanDefinition> cfgDefinition;
 
 
     // 用于
@@ -84,6 +89,16 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
             registry.registerBeanDefinition(SpringBridge.beanPostPrefix + "_" + def.getBeanClassName(), def);
             LOG.info(Module.CONTAINER, "register beanPost bean {} ", def.getBeanClassName());
         }
+
+        if (!StringUtils.isEmpty(cfgDefinition))
+        {
+            defins = new ArrayList<>(cfgDefinition.values());
+            for (BeanDefinition def : defins)
+            {
+                registry.registerBeanDefinition((String) def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
+            }
+        }
+
 
         defins = new ArrayList<>(pluginBeanDefinitions.values());
         Collections.sort(defins, new BeanDefListComparator());
@@ -132,14 +147,36 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
         {
             GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
             beanDefinition.setBeanClass(clz);
+            String group = SpringBridge.defaultExtensionGroup;
+            Map<String, BeanDefinition> definitionMap = this.pluginBeanDefinitions;
             if (ISpringNodeExtension.class.isAssignableFrom(clz))
             {
                 processExtension(beanDefinition);
+            } else
+            {
+//                group = SpringBridge.defaultPluginPrefixGroup;
+//                definitionMap = this.pluginBeanDefinitions;
             }
-            String beanName = SpringBridge.defaultPluginPrefixGroup + clz.getName();
+            String beanName = group + clz.getName();
             beanDefinition.setAttribute(SpringBridge.BEAN_NAME_ATTR, beanName);
-            pluginBeanDefinitions.put(beanName, beanDefinition);
+            definitionMap.put(beanName, beanDefinition);
+
             LOG.info(Module.CONTAINER, "add {} beandefinition", clz);
+        }
+
+        Set<Class<?>> configurationClass = (Set<Class<?>>) ctx.getData().get(ConfigConstants.configurationClasses);
+        if (!CollectionUtils.isEmpty(configurationClass))
+        {
+            this.cfgDefinition = new HashMap<>();
+            for (Class<?> aClass : configurationClass)
+            {
+                GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
+                beanDefinition.setBeanClass(aClass);
+                String beanName = SpringBridge.defaultCfgGroup + aClass.getName();
+                beanDefinition.setAttribute(SpringBridge.BEAN_NAME_ATTR, beanName);
+                beanDefinition.setAttribute(SpringBridge.ACTIVE_CFG_ATTR, true);
+                this.cfgDefinition.put(beanName, beanDefinition);
+            }
         }
 
         Set<Class<? extends IBeanPostProcessortAdapter>> prepareToRegistryPostProcessor = (Set<Class<? extends IBeanPostProcessortAdapter>>) ctx.getData().get(ConfigConstants.toRegistryPostProcessor);
@@ -198,6 +235,11 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
             order = annotation.value();
         }
         beanDefinition.setAttribute(ExtensionClassUtil.ORDER_ATTRIBUTE, order);
+    }
+
+    private void processActivePlugin(GenericBeanDefinition beanDefinition)
+    {
+
     }
 
 

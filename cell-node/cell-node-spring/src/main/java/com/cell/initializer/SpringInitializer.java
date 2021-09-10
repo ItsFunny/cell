@@ -4,10 +4,7 @@ import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.Exclude;
-import com.cell.annotations.LifeCycle;
-import com.cell.annotations.ManagerNode;
+import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
@@ -126,6 +123,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         ctx.getData().put(ConfigConstants.MANAGERS, filter.managers);
         ctx.getData().put(ConfigConstants.interestAnnotationsClazzs, filter.interestAnnotationsClazzs);
         ctx.getData().put(ConfigConstants.toRegistryPostProcessor, toRegistryPostProcessor);
+        ctx.getData().put(ConfigConstants.configurationClasses, filter.configurationClass);
         SpringBeanRegistry.getInstance().initOnce(ctx);
 
         for (IBeanDefinitionRegistryPostProcessorAdapter adapter : processors)
@@ -144,6 +142,9 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         final Set<Class<? extends Annotation>> excludeAnnotations = new HashSet<>(Arrays.asList(Exclude.class));
         final Set<Class<? extends AbstractNodeExtension>> excludeNodeExtensions = new HashSet<>();
         final Set<Class<?>> excludeClasses = new HashSet<>();
+
+        // cfg
+        final Set<Class<?>> configurationClass = new HashSet<>();
 
         // flag
         final Set<Class<?>> set = new HashSet<>();
@@ -192,7 +193,15 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     ret = false;
                     return ret;
                 }
-
+                ActiveConfiguration cfg = ClassUtil.getMergedAnnotation(clazz, ActiveConfiguration.class);
+                if (cfg != null)
+                {
+                    synchronized (this.configurationClass)
+                    {
+                        this.configurationClass.add(clazz);
+                    }
+                    return false;
+                }
                 AnnotationAttributes attributes = AnnotatedElementUtils.getMergedAnnotationAttributes(clazz, ActivePlugin.class);
                 if (attributes != null && !attributes.isEmpty())
                 {

@@ -4,6 +4,7 @@ import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.DependecyExtension;
+import com.cell.annotations.Plugin;
 import com.cell.collector.AbstractPluginCollector;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
@@ -57,7 +58,6 @@ public class SpringPluginCollectorFactoryProcessor extends AbstractPluginCollect
             this.autowiredAnnotationTypes.add(Autowired.class);
             this.autowiredAnnotationTypes.add(Value.class);
             this.autowiredAnnotationTypes.add(AutoPlugin.class);
-            this.autowiredAnnotationTypes.add(DependecyExtension.class);
             try
             {
                 this.autowiredAnnotationTypes.add((Class<? extends Annotation>)
