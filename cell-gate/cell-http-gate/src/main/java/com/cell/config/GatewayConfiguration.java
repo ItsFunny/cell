@@ -136,13 +136,8 @@ public class GatewayConfiguration
     @Plugin
     public RouteLocator myRoutes(RouteLocatorBuilder builder)
     {
-//        routes.route(p -> p
-//                .path("/get")
-//                .filters(f -> f.addRequestHeader("Hello", "World"))
-//                .uri("http://www.baidu.com:80")).build();
-//        return routes.build();
         return builder.routes()
-                .route("path_route", r -> r.path("/get/**")
+                .route("global_route", r -> r.path("/**")
                         .uri("http://httpbin.org"))
                 .build();
 //        return builder.routes()

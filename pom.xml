@@ -35,9 +35,11 @@
         <!--<spring-boot.version>2.2.0.M4</spring-boot.version>-->
         <cell.version>1.0-SNAPSHOT</cell.version>
         <spring.cloud.version>Hoxton.SR6</spring.cloud.version>
-        <spring.cloud.alibaba.version>2.2.3.RELEASE</spring.cloud.alibaba.version>
+        <spring.cloud.alibaba.version>2.2.5.RELEASE</spring.cloud.alibaba.version>
         <spring.cloud.gateway.version>2.2.3.RELEASE</spring.cloud.gateway.version>
-        <nacos.client.version>2.0.2</nacos.client.version>
+        <spring.cloud.sentinel.version>2.2.3.RELEASE</spring.cloud.sentinel.version>
+        <sentinel.version>1.8.2</sentinel.version>
+        <nacos.client.version>1.4.1</nacos.client.version>
     </properties>
 
     <dependencies>
@@ -298,9 +300,16 @@
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.1.4.RELEASE</version>
+                <version>${spring.cloud.alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!--gateway-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-gateway-core</artifactId>
+                <version>${spring.cloud.gateway.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

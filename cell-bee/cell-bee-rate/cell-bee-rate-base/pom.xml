@@ -3,25 +3,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell</artifactId>
+        <artifactId>cell-bee-rate</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-bee</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>cell-bee-rate-base</artifactId>
 
-    <name>cell-bee</name>
+    <name>cell-bee-rate-base</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-    <modules>
-        <module>cell-bee-dao</module>
-        <module>cell-bee-transport</module>
-        <module>cell-bee-loadbalance-strategy</module>
-        <module>cell-bee-loadbalance</module>
-        <module>cell-bee-statistic</module>
-        <module>cell-bee-rate</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-base-core</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+    </dependencies>
 </project>
