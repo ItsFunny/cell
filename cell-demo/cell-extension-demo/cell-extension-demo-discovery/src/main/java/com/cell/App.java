@@ -14,9 +14,10 @@ public class App
     {
         ApplicationContext start = CellApplication.builder(App.class)
                 .newReactor()
-                .post("/post", new CellApplication.DEFAULT_DEMO_POST())
-                .make()
+                .post("/post", new CellApplication.DEFAULT_DEMO_POST()).make()
+                .get("/get", new CellApplication.DEFAULT_DEMO_GET()).make()
                 .done()
+                .withPort(8081)
                 .build()
                 .start(args);
     }

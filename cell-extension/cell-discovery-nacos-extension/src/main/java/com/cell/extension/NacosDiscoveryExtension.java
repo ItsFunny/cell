@@ -1,9 +1,6 @@
 package com.cell.extension;
 
-import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.CellOrder;
-import com.cell.annotations.DependecyExtension;
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.*;
 import com.cell.command.IHttpCommand;
 import com.cell.config.ConfigFactory;
 import com.cell.config.NacosConfiguration;
@@ -14,7 +11,9 @@ import com.cell.context.SpringNodeContext;
 import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.hook.IHttpCommandHook;
 import com.cell.model.Instance;
+import com.cell.postprocessor.ReactorPostProcessor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
@@ -27,10 +26,7 @@ import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.annotation.Annotation;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -92,7 +88,23 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
         Map<String, IHttpReactor> reactors = dispatcher.getReactors();
         if (reactors == null || reactors.isEmpty()) return;
         Collection<IHttpReactor> values = reactors.values();
+        Map<Class<?>, IHttpReactor> reactorMap = new HashMap<>();
+        for (IHttpReactor value : values)
+        {
+            // only use one
+            reactorMap.put(value.getClass(), value);
+
+//            ReactorAnno rAnno = (ReactorAnno) ClassUtil.mustGetAnnotation(value.getClass(), ReactorAnno.class);
+//            List<IHttpReactor> iHttpReactors = reactorMap.get(rAnno.group());
+//            if (CollectionUtils.isEmpty(iHttpReactors))
+//            {
+//                iHttpReactors = new ArrayList<>();
+//                reactorMap.put(value.getClass(), iHttpReactors);
+//            }
+//            iHttpReactors.add(value);
+        }
         ServerMetaData serverMetaData = new ServerMetaData();
+        values = reactorMap.values();
         List<ServerMetaData.ServerMetaReactor> reacotrs = values.stream().map(value ->
         {
             ServerMetaData.ServerMetaReactor reactor = new ServerMetaData.ServerMetaReactor();
@@ -102,6 +114,7 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
                 ServerMetaData.ServerMetaCmd cmd = new ServerMetaData.ServerMetaCmd();
                 HttpCmdAnno annotation = (HttpCmdAnno) ClassUtil.mustGetAnnotation(c, HttpCmdAnno.class);
                 cmd.setUri(annotation.uri());
+                cmd.setMethod(annotation.requestType().getId());
                 return cmd;
             }).collect(Collectors.toList());
             reactor.setCmds(cmds);

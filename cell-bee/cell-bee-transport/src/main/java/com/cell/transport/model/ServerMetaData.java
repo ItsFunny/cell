@@ -57,6 +57,8 @@ public class ServerMetaData
     @Data
     public static class ServerMetaCmd
     {
+        // get/post/delete
+        private byte method;
         private String uri;
     }
 

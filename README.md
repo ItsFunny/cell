@@ -1,10 +1,12 @@
 ---
+- 可以认为是非常简化版的Spring WebFlux
 # 设计图(简版)
 
 - 相关内部概念
   - @Plugin=@Bean
   - @ActivePlugin=@Component ...
   - @AutoPlugin=@Autowired
+  - @ActiveConfiguration=@Configuration
   - extension 约等于 starter (可插拔,按需加载)
 
 - http模块总的来说基于reactor-cmd 模型

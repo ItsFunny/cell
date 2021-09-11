@@ -24,7 +24,7 @@ import java.nio.file.Paths;
  * @Attention:
  * @Date 创建时间：2021-09-05 07:44
  */
-@CellOrder(OrderConstants.EXTESNION_MIN_NUM_ORDER - 998)
+@CellOrder(OrderConstants.MIN_ORDER - 998)
 public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;

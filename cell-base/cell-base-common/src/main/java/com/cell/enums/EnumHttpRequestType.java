@@ -14,26 +14,26 @@ import java.util.Map;
  */
 public enum EnumHttpRequestType
 {
-    HTTP_URL_GET(1),
-    HTTP_POST(2),
-    UPLOAD_FILE(3),
-    DOWNLOAD_FILE(4),
-    WEBSOCKET_NOTIFY(5),
-    NULL(-1);
+    HTTP_URL_GET((byte)1),
+    HTTP_POST((byte)2),
+    UPLOAD_FILE((byte)3),
+    DOWNLOAD_FILE((byte)4),
+    WEBSOCKET_NOTIFY((byte)5),
+    NULL((byte)-1);
 
-    private int id;
+    private byte id;
 
-    EnumHttpRequestType(int id)
+    EnumHttpRequestType(byte id)
     {
         this.id = id;
     }
 
-    public int getId()
+    public byte getId()
     {
         return id;
     }
 
-    private final static Map<Integer, EnumHttpRequestType> METHOD_TYPE_MAP = new HashMap<>();
+    private final static Map<Byte, EnumHttpRequestType> METHOD_TYPE_MAP = new HashMap<>();
 
     static
     {

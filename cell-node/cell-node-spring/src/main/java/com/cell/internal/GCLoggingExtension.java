@@ -27,7 +27,7 @@ import java.util.Map;
  * @Date 创建时间：2021-09-05 07:29
  */
 // 这部分逻辑抄的 gc监控
-@CellOrder(OrderConstants.EXTESNION_MIN_NUM_ORDER - 999)
+@CellOrder(OrderConstants.MIN_ORDER- 999)
 public class GCLoggingExtension extends AbstractSpringNodeExtension
 {
     public static final String GC_FAIL = "Allocation Failure";

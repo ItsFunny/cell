@@ -15,6 +15,9 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
+import com.cell.utils.StringUtils;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -51,11 +54,31 @@ public class HttpExtension extends AbstractSpringNodeExtension
     }
 
 
+    public HttpExtension()
+    {
+
+    }
+
+    @Override
+    public Options getOptions()
+    {
+        Options options = new Options();
+        options.addOption("port", true, "端口号");
+        return options;
+    }
+
     @Override
     public void init(INodeContext ctx) throws Exception
     {
+        CommandLine cmd = ctx.getCommandLine();
         this.dynamicControllerService = new DynamicControllerServiceImpl();
         this.dispatcher = new DefaultHttpCommandDispatcher();
+        String port = cmd.getOptionValue("port");
+        if (!StringUtils.isEmpty(port))
+        {
+            this.dispatcher.setPort(Short.valueOf(port));
+        }
+
     }
 
     @Override

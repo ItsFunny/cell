@@ -34,10 +34,7 @@ import org.springframework.core.annotation.AnnotationAttributes;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -52,6 +49,7 @@ public class CellApplication
 {
     private static final AtomicLong commandId = new AtomicLong(1);
     private SpringApplicationBuilder builder;
+    private int port;
 
     public static ApplicationContext run(Class<?> clz, String[] args)
     {
@@ -71,7 +69,23 @@ public class CellApplication
         {
             throw new ProgramaException("asd");
         }
+        boolean existPort = false;
+        for (String arg : args)
+        {
+            if (arg.contains("port"))
+            {
+                existPort = true;
+            }
+        }
+        if (!existPort)
+        {
+            List<String> arrs = new ArrayList<>(Arrays.asList(args));
+            arrs.add("-port");
+            arrs.add(this.port + "");
+            args = arrs.toArray(new String[arrs.size()]);
+        }
         SpringApplication app = this.builder.build();
+
 //        app.setWebApplicationType(WebApplicationType.REACTIVE);
         return app.run(args);
     }
@@ -89,6 +103,7 @@ public class CellApplication
         private List<IHttpReactor> reactors = new ArrayList<>();
         private List<ReactorBuilder> reactorBuilders = new ArrayList<>();
         private SpringApplicationBuilder applicationBuilder;
+        private int port = 8080;
         private Class<?> clz;
 
         public CellApplicationBuilder(Class<?> clz)
@@ -110,6 +125,12 @@ public class CellApplication
         public CellApplicationBuilder withReactor(IHttpReactor reactor)
         {
             this.reactors.add(reactor);
+            return this;
+        }
+
+        public CellApplicationBuilder withPort(int port)
+        {
+            this.port = port;
             return this;
         }
 
@@ -166,6 +187,7 @@ public class CellApplication
 
             CellApplication ret = new CellApplication();
             ret.builder = this.applicationBuilder;
+            ret.port = this.port;
             return ret;
         }
     }
@@ -383,6 +405,17 @@ public class CellApplication
         public ICommandExecuteResult execute(BuzzContextBO bo) throws IOException
         {
             bo.success("post done ");
+            return null;
+        }
+    }
+
+    public static class DEFAULT_DEMO_GET implements IBuzzExecutor
+    {
+
+        @Override
+        public ICommandExecuteResult execute(BuzzContextBO bo) throws IOException
+        {
+            bo.success("get");
             return null;
         }
     }

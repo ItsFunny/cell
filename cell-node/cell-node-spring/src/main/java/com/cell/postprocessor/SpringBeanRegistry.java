@@ -229,7 +229,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     {
         beanDefinition.setAttribute(SpringBridge.EXTENSION_FLAG_ATTR, true);
         CellOrder annotation = beanDefinition.getBeanClass().getAnnotation(CellOrder.class);
-        int order = OrderConstants.EXTESNION_MIN_NUM_ORDER;
+        int order = OrderConstants.MIN_ORDER;
         if (null != annotation)
         {
             order = annotation.value();

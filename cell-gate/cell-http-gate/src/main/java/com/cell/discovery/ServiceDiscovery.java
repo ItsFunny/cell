@@ -35,8 +35,10 @@ public class ServiceDiscovery extends AbstractInitOnce
     private INacosNodeDiscovery nodeDiscovery;
 
     private ILoadBalancer loadBalancer;
+    // FIXME ,这里需要提供 get/post 等先查询
     private Map<String, List<ServerMetaInfo>> serverMetas = new HashMap<>();
     private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
+    private volatile boolean onChange = false;
     private String cluster;
 
     @AutoPlugin
@@ -75,13 +77,13 @@ public class ServiceDiscovery extends AbstractInitOnce
 
     private void transferIfNeed()
     {
-        if (this.delta.isEmpty()) return;
+        if (!this.onChange) return;
         // index:0
         Map<String, List<List<ServerMetaInfo>>> compareChanges = new HashMap<>();
         final List<List<ServerMetaInfo>> dels = new ArrayList<>();
         synchronized (this.delta)
         {
-            if (this.delta.isEmpty()) return;
+            if (!this.onChange) return;
             Set<String> serviceNames = this.delta.keySet();
             serviceNames.stream().forEach(n ->
             {
@@ -106,6 +108,7 @@ public class ServiceDiscovery extends AbstractInitOnce
                 });
             });
             this.delta.clear();
+            this.onChange = false;
         }
         LOG.info(Module.HTTP_GATEWAY, "删除的router:{},变更的信息:{}", dels, compareChanges);
     }
@@ -139,6 +142,8 @@ public class ServiceDiscovery extends AbstractInitOnce
                         info.setIp(inst.getIp());
                         info.setPort(Short.valueOf(String.valueOf(inst.getPort())));
                         info.setServiceName(k);
+                        info.setHealthy(inst.isHealthy());
+                        info.setEnable(inst.isEnable());
 
                         ServerMetaData metaData = ServerMetaData.fromMetaData(inst.getMetaData());
                         List<ServerMetaData.ServerMetaReactor> reactors = metaData.getReactors();
@@ -180,6 +185,7 @@ public class ServiceDiscovery extends AbstractInitOnce
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
             synchronized (ServiceDiscovery.this.delta)
             {
+                ServiceDiscovery.this.onChange = true;
                 ServiceDiscovery.this.delta.put(event.getServiceName(), hosts);
             }
         }

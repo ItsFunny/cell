@@ -28,6 +28,7 @@ public enum Module
     CONFIGURATION((short) 104, "CONFIGURATION"),
     DISCOVERY((short) 105, "DISCOVERY"),
     HTTP_GATEWAY((short)106,"GATEWAY"),
+    HTTP_DISPATCHER((short)107,"HTTP_DISPATCHER"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
