@@ -42,8 +42,7 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
         ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
 
-
-        ServerMetaInfo metaInfo = serviceDiscovery.choseServer(uri.getPath());
+        ServerMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
         // FIXME ,定制化信息
         if (metaInfo == null)
         {

@@ -82,25 +82,25 @@ public class SpringInitializerTest
         }
 
         @Override
-        public void init(INodeContext ctx) throws Exception
+        public void onInit(INodeContext ctx) throws Exception
         {
             LOG.info(Module.COMMON, "init");
         }
 
         @Override
-        public void start(INodeContext ctx) throws Exception
+        public void onStart(INodeContext ctx) throws Exception
         {
             LOG.info(Module.COMMON, "start");
         }
 
         @Override
-        public void ready(INodeContext ctx) throws Exception
+        public void onReady(INodeContext ctx) throws Exception
         {
             LOG.info(Module.COMMON, "ready");
         }
 
         @Override
-        public void close(INodeContext ctx) throws Exception
+        public void onClose(INodeContext ctx) throws Exception
         {
             LOG.info(Module.COMMON, "close");
         }

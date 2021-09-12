@@ -17,7 +17,11 @@
     <url>http://www.example.com</url>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-bee-keyresolver</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-bee-rate-gateway-sentinel</artifactId>

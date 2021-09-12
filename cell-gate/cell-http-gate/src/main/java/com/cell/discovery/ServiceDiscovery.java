@@ -1,5 +1,7 @@
 package com.cell.discovery;
 
+import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
+import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
 import com.alibaba.nacos.common.notify.Event;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
@@ -7,14 +9,20 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
+import com.cell.enums.EnumHttpRequestType;
 import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.model.ServerMetaInfo;
+import com.cell.models.Couple;
 import com.cell.models.Module;
+import com.cell.resolver.DefaultStringKeyResolver;
+import com.cell.resolver.IKeyResolver;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.util.DiscoveryUtils;
+import com.cell.utils.GatewayUtils;
+import com.cell.utils.MetaDataUtils;
 import lombok.Data;
 
 import java.util.*;
@@ -33,6 +41,8 @@ public class ServiceDiscovery extends AbstractInitOnce
     private static ServiceDiscovery instance;
 
     private INacosNodeDiscovery nodeDiscovery;
+
+    private IKeyResolver<DefaultStringKeyResolver.StringKeyResolver, String> resolver;
 
     private ILoadBalancer loadBalancer;
     // FIXME ,这里需要提供 get/post 等先查询
@@ -59,15 +69,16 @@ public class ServiceDiscovery extends AbstractInitOnce
         return instance;
     }
 
-    private List<ServerMetaInfo> getServerByUri(String uri)
+    private List<ServerMetaInfo> getServerByUri(String method, String uri)
     {
         this.transferIfNeed();
-        return this.serverMetas.get(uri);
+        // FIXME
+        return this.serverMetas.get(this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().method(method).uri(uri).build()));
     }
 
-    public ServerMetaInfo choseServer(String uri)
+    public ServerMetaInfo choseServer(String method, String uri)
     {
-        return this.loadBalancer.choseServer(this.getServerByUri(uri), uri);
+        return this.loadBalancer.choseServer(this.getServerByUri(method, uri), method, uri);
     }
 
     public synchronized Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> getCurrentDelta()
@@ -81,6 +92,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         // index:0
         Map<String, List<List<ServerMetaInfo>>> compareChanges = new HashMap<>();
         final List<List<ServerMetaInfo>> dels = new ArrayList<>();
+        final Set<RuleWp> ruleWps = new HashSet<>();
         synchronized (this.delta)
         {
             if (!this.onChange) return;
@@ -94,7 +106,13 @@ public class ServiceDiscovery extends AbstractInitOnce
                     this.delta.remove(n);
                     return;
                 }
-                Map<String, List<ServerMetaInfo>> conv = this.conv();
+                Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> convRet = this.conv();
+                Map<String, List<ServerMetaInfo>> conv = convRet.getV1();
+                if (!CollectionUtils.isEmpty(convRet.getV2()))
+                {
+                    ruleWps.addAll(convRet.getV2());
+                }
+
                 Set<String> changes = conv.keySet();
                 changes.stream().forEach(name ->
                 {
@@ -107,6 +125,7 @@ public class ServiceDiscovery extends AbstractInitOnce
                     compareChanges.put(name, r);
                 });
             });
+            this.refreshUriRules(ruleWps);
             this.delta.clear();
             this.onChange = false;
         }
@@ -116,36 +135,44 @@ public class ServiceDiscovery extends AbstractInitOnce
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.resolver = new DefaultStringKeyResolver();
         nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
         Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList();
-        this.serverMetas = convCellInstanceToGateMeta(serverInstanceList);
+        Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> mapSetCouple = convCellInstanceToGateMeta(serverInstanceList);
+        this.serverMetas = mapSetCouple.getV1();
+        Set<RuleWp> ruleWpSet = mapSetCouple.getV2();
+        this.refreshUriRules(ruleWpSet);
         LOG.info(Module.HTTP_GATEWAY, "初始化完毕,初始加载得到的列表信息为:{}", this.serverMetas);
         nodeDiscovery.registerListen(new InstanceHooker());
     }
 
-    private Map<String, List<ServerMetaInfo>> conv()
+    private Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> conv()
     {
         Map<String, List<Instance>> cellInstance = DiscoveryUtils.convNacosMapInstanceToCellInstance(this.delta);
         return convCellInstanceToGateMeta(cellInstance);
     }
 
-    private Map<String, List<ServerMetaInfo>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
+    class RuleWp
+    {
+        String method;
+        String uri;
+    }
+
+    private Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
     {
         Set<String> keys = m.keySet();
         Map<String, List<ServerMetaInfo>> metas = new HashMap<>();
+        Set<RuleWp> ruleWps = new HashSet<>();
+
         keys.stream().forEach(k ->
         {
             List<Instance> instances = m.get(k);
             instances.stream().forEach(inst ->
                     {
-                        final ServerMetaInfo info = new ServerMetaInfo();
-                        info.setIp(inst.getIp());
-                        info.setPort(Short.valueOf(String.valueOf(inst.getPort())));
-                        info.setServiceName(k);
-                        info.setHealthy(inst.isHealthy());
-                        info.setEnable(inst.isEnable());
+                        Couple<ServerMetaInfo, ServerMetaData> couple = MetaDataUtils.fromInstance(inst);
+                        ServerMetaInfo info = couple.getV1();
+                        ServerMetaData metaData = couple.getV2();
 
-                        ServerMetaData metaData = ServerMetaData.fromMetaData(inst.getMetaData());
                         List<ServerMetaData.ServerMetaReactor> reactors = metaData.getReactors();
                         if (CollectionUtils.isEmpty(reactors)) return;
                         reactors.stream().forEach(r ->
@@ -154,12 +181,17 @@ public class ServiceDiscovery extends AbstractInitOnce
                             if (CollectionUtils.isEmpty(cmds)) return;
                             cmds.stream().forEach(c ->
                             {
-                                String uri = c.getUri();
-                                List<ServerMetaInfo> serverMetaInfos = metas.get(uri);
+                                RuleWp wp = new RuleWp();
+                                wp.method = EnumHttpRequestType.getStrById(c.getMethod());
+                                wp.uri = c.getUri();
+                                ruleWps.add(wp);
+
+                                String key = this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().uri(c.getUri()).method(wp.method).build());
+                                List<ServerMetaInfo> serverMetaInfos = metas.get(key);
                                 if (CollectionUtils.isEmpty(serverMetaInfos))
                                 {
                                     serverMetaInfos = new ArrayList<>();
-                                    metas.put(uri, serverMetaInfos);
+                                    metas.put(key, serverMetaInfos);
                                 }
                                 serverMetaInfos.add(info);
                             });
@@ -167,7 +199,7 @@ public class ServiceDiscovery extends AbstractInitOnce
                     }
             );
         });
-        return metas;
+        return new Couple<>(metas, ruleWps);
     }
 
 
@@ -180,7 +212,6 @@ public class ServiceDiscovery extends AbstractInitOnce
             LOG.info(Module.HTTP_GATEWAY, "收到event:{},hosts:{}", event);
             // FIXME , 处理nacos 的cluster
             String clusters = event.getClusters();
-
 
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
             synchronized (ServiceDiscovery.this.delta)
@@ -216,9 +247,42 @@ public class ServiceDiscovery extends AbstractInitOnce
         private ILoadBalancerStrategy strategy;
 
         @Override
-        public ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String uri)
+        public ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String method, String uri)
         {
-            return this.strategy.choseServer(ServiceDiscovery.getInstance().getServerByUri(uri), uri);
+            return this.strategy.choseServer(ServiceDiscovery.getInstance().getServerByUri(method, uri), uri);
         }
     }
+
+//    private void customizeApiDefinitions()
+//    {
+//        Set<ApiDefinition> definitions = new HashSet<>();
+//        ApiDefinition api1 = new ApiDefinition("some_customized_api")
+//                .setPredicateItems(new HashSet<ApiPredicateItem>()
+//                {{
+//                    add(new ApiPathPredicateItem().setPattern("/ahas"));
+//                    add(new ApiPathPredicateItem().setPattern("/product/**")
+//                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
+//                }});
+//        ApiDefinition api2 = new ApiDefinition("another_customized_api")
+//                .setPredicateItems(new HashSet<ApiPredicateItem>()
+//                {{
+//                    add(new ApiPathPredicateItem().setPattern("/**")
+//                            .setMatchStrategy(SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX));
+//                }});
+//        definitions.add(api1);
+//        definitions.add(api2);
+//    }
+
+
+    private void refreshUriRules(Set<RuleWp> ruleWps)
+    {
+        Set<GatewayFlowRule> rules = new HashSet<>();
+        for (RuleWp ruleWp : ruleWps)
+        {
+            GatewayFlowRule rule = GatewayUtils.createGatewayFlowRule(ruleWp.method, ruleWp.uri);
+            rules.add(rule);
+        }
+        GatewayRuleManager.loadRules(rules);
+    }
+
 }

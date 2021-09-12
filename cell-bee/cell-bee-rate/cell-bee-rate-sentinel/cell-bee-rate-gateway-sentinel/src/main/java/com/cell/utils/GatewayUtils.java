@@ -1,5 +1,8 @@
 package com.cell.utils;
 
+import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
+import com.cell.config.GatewayConfiguration;
+import com.cell.config.RateRulePropertyNode;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,5 +31,18 @@ public class GatewayUtils
         DataBuffer dataBuffer = response.bufferFactory().allocateBuffer().write(fastResult.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(dataBuffer));
     }
+
+    public static GatewayFlowRule createGatewayFlowRule(String method, String uri)
+    {
+        RateRulePropertyNode flowRule = GatewayConfiguration.getInstance().getServerRatePropertyNode().getFlowRule(method, uri);
+        double count = flowRule.getCount();
+        return new GatewayFlowRule(uri)
+                .setCount(count) //
+                .setIntervalSec(flowRule.getIntervalSec()) //
+                .setGrade(flowRule.getGrade()) //
+                .setMaxQueueingTimeoutMs(flowRule.getMaxQueueingTimeoutMs()) //
+                .setResourceMode(flowRule.getResourceMode());
+    }
+
 
 }

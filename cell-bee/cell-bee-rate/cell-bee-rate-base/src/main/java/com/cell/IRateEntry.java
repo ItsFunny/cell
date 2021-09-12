@@ -10,4 +10,5 @@ package com.cell;
  */
 public interface IRateEntry
 {
+    void release();
 }

@@ -13,6 +13,12 @@ import org.apache.commons.cli.Options;
  */
 public interface INodeExtension
 {
+    byte zero = 1 << 0;
+    byte init = 1 << 1;
+    byte start = 1 << 2;
+    byte ready = 1 << 3;
+    byte close = 1 << 4;
+
     default String getName()
     {
         return this.getClass().getSimpleName();

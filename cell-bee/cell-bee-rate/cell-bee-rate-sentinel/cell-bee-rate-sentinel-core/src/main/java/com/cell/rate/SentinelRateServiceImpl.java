@@ -8,7 +8,9 @@ import com.cell.IRateAcquireBody;
 import com.cell.IRateEntry;
 import com.cell.IRateService;
 import com.alibaba.csp.sentinel.AsyncEntry;
+import com.cell.annotations.ActivePlugin;
 import com.cell.exception.RateBlockException;
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -19,9 +21,11 @@ import lombok.Data;
  * @Attention:
  * @Date 创建时间：2021-09-12 07:35
  */
+@ActivePlugin
 public class SentinelRateServiceImpl implements IRateService
 {
     @Data
+    @Builder
     public static class SentinelRateBody implements IRateAcquireBody
     {
         private String resourceName;

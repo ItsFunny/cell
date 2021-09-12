@@ -311,7 +311,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     }
 
 
-    public void close(INodeContext ctx)
+    public void onClose(INodeContext ctx)
     {
         close(ctx, extensions);
     }
@@ -461,7 +461,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         public void run()
         {
 //            LOG.info(Module.CONTAINER, "node shutdown by signal");
-            close(ctx);
+            onClose(ctx);
         }
     }
 

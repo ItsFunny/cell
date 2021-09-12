@@ -1,6 +1,8 @@
 package com.cell.enums;
 
 
+import com.cell.exceptions.ProgramaException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +16,12 @@ import java.util.Map;
  */
 public enum EnumHttpRequestType
 {
-    HTTP_URL_GET((byte)1),
-    HTTP_POST((byte)2),
-    UPLOAD_FILE((byte)3),
-    DOWNLOAD_FILE((byte)4),
-    WEBSOCKET_NOTIFY((byte)5),
-    NULL((byte)-1);
+    HTTP_URL_GET((byte) 1),
+    HTTP_POST((byte) 2),
+    UPLOAD_FILE((byte) 3),
+    DOWNLOAD_FILE((byte) 4),
+    WEBSOCKET_NOTIFY((byte) 5),
+    NULL((byte) -1);
 
     private byte id;
 
@@ -50,6 +52,10 @@ public enum EnumHttpRequestType
         return product;
     }
 
+    public String toMethodName()
+    {
+        return this.name().toLowerCase();
+    }
 
     public static void registerMethod(EnumHttpRequestType[] type)
     {
@@ -59,6 +65,19 @@ public enum EnumHttpRequestType
             {
                 METHOD_TYPE_MAP.put(method.getId(), method);
             }
+        }
+    }
+
+    public static String getStrById(byte id)
+    {
+        switch (id)
+        {
+            case 1:
+                return "post";
+            case 2:
+                return "get";
+            default:
+                throw new ProgramaException("asd");
         }
     }
 }

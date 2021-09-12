@@ -19,4 +19,9 @@ public class SentinelRateEntry implements IRateEntry
 {
     private AsyncEntry entry;
 
+    @Override
+    public void release()
+    {
+        this.entry.exit();
+    }
 }

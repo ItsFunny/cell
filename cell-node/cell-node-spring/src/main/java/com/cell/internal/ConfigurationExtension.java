@@ -38,7 +38,7 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     }
 
     @Override
-    public void init(INodeContext ctx) throws Exception
+    public void onInit(INodeContext ctx) throws Exception
     {
         CommandLine cmd = ctx.getCommandLine();
         String type = null;
@@ -75,19 +75,19 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     }
 
     @Override
-    public void start(INodeContext ctx) throws Exception
+    public void onStart(INodeContext ctx) throws Exception
     {
 
     }
 
     @Override
-    public void ready(INodeContext ctx) throws Exception
+    public void onReady(INodeContext ctx) throws Exception
     {
 
     }
 
     @Override
-    public void close(INodeContext ctx) throws Exception
+    public void onClose(INodeContext ctx) throws Exception
     {
 
     }

@@ -10,6 +10,7 @@ import com.alibaba.csp.sentinel.ResourceTypeConstants;
 import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants;
 import com.alibaba.csp.sentinel.adapter.gateway.common.param.GatewayParamParser;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.ServerWebExchangeItemParser;
+import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
 import com.alibaba.csp.sentinel.adapter.reactor.ContextConfig;
 import com.alibaba.csp.sentinel.adapter.reactor.EntryConfig;
@@ -17,7 +18,13 @@ import com.alibaba.csp.sentinel.adapter.reactor.SentinelReactorTransformer;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.GatewayApiMatcherManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.matcher.WebExchangeApiMatcher;
 
+import com.cell.IRateEntry;
+import com.cell.IRateService;
 import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.AutoPlugin;
+import com.cell.exception.RateBlockException;
+import com.cell.rate.SentinelRateServiceImpl;
+import com.cell.utils.GatewayUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -41,6 +48,12 @@ public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
 {
     private final int order;
 
+    @AutoPlugin
+    private IRateService rateService;
+
+    @AutoPlugin
+    private BlockRequestHandler blockRequestHandler;
+
     public GatewayPreFilter()
     {
         this(Ordered.HIGHEST_PRECEDENCE);
@@ -57,35 +70,64 @@ public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
-        Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
-
-        Mono<Void> asyncResult = chain.filter(exchange);
-        if (route != null)
+        String routerResource = exchange.getRequest().getURI().getPath();
+        // check if it is in black list ,then we should just discard
+        if (this.inBlackList(routerResource))
         {
-            String routeId = route.getId();
-            Object[] params = paramParser.parseParameterFor(routeId, exchange,
-                    r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID);
-            String origin = Optional.ofNullable(GatewayCallbackManager.getRequestOriginParser())
-                    .map(f -> f.apply(exchange))
-                    .orElse("");
-            asyncResult = asyncResult.transform(
-                    new SentinelReactorTransformer<>(new EntryConfig(routeId, ResourceTypeConstants.COMMON_API_GATEWAY,
-                            EntryType.IN, 1, params, new ContextConfig(contextName(routeId), origin)))
-            );
+            return GatewayUtils.fastFinish(exchange, "BLACK");
         }
 
-        Set<String> matchingApis = pickMatchingApiDefinitions(exchange);
-        for (String apiName : matchingApis)
+        Object[] params = paramParser.parseParameterFor(routerResource, exchange,
+                r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID);
+        IRateEntry entry = null;
+        try
         {
-            Object[] params = paramParser.parseParameterFor(apiName, exchange,
-                    r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME);
-            asyncResult = asyncResult.transform(
-                    new SentinelReactorTransformer<>(new EntryConfig(apiName, ResourceTypeConstants.COMMON_API_GATEWAY,
-                            EntryType.IN, 1, params))
-            );
+            entry = this.rateService.acquire(SentinelRateServiceImpl.SentinelRateBody
+                    .builder()
+                    .params(params).resourceName(routerResource).build());
+            return chain.filter(exchange);
+        } catch (RateBlockException e)
+        {
+            return GatewayUtils.fastFinish(exchange, "block");
+        } finally
+        {
+            entry.release();
         }
 
-        return asyncResult;
+//        Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
+//        Mono<Void> asyncResult = chain.filter(exchange);
+//        if (route != null)
+//        {
+//            String routeId = route.getId();
+//            Object[] params = paramParser.parseParameterFor(routeId, exchange,
+//                    r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID);
+//            String origin = Optional.ofNullable(GatewayCallbackManager.getRequestOriginParser())
+//                    .map(f -> f.apply(exchange))
+//                    .orElse("");
+//            asyncResult = asyncResult.transform(
+//                    new SentinelReactorTransformer<>(new EntryConfig(routeId, ResourceTypeConstants.COMMON_API_GATEWAY,
+//                            EntryType.IN, 1, params, new ContextConfig(contextName(routeId), origin)))
+//            );
+//        }
+//
+//        Set<String> matchingApis = pickMatchingApiDefinitions(exchange);
+//        for (String apiName : matchingApis)
+//        {
+//            Object[] params = paramParser.parseParameterFor(apiName, exchange,
+//                    r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME);
+//            asyncResult = asyncResult.transform(
+//                    new SentinelReactorTransformer<>(new EntryConfig(apiName, ResourceTypeConstants.COMMON_API_GATEWAY,
+//                            EntryType.IN, 1, params))
+//            );
+//        }
+//
+//        return asyncResult;
+    }
+
+
+    private boolean inBlackList(String uri)
+    {
+        return false;
     }
 
     private String contextName(String route)
