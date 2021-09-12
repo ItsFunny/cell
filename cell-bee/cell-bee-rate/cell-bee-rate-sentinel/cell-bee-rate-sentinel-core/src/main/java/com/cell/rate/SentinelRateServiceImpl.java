@@ -40,7 +40,7 @@ public class SentinelRateServiceImpl implements IRateService
         {
             AsyncEntry entry = SphU.asyncEntry(body.getResourceName(), ResourceTypeConstants.COMMON_API_GATEWAY,
                     EntryType.IN, body.getParams());
-            return new SentinelRateEntry.SentinelRateEntryBuilder().entry(entry).build();
+            return new SentinelRateEntry.SentinelRateEntryBuilder().entry(entry).params(body.getParams()).build();
         } catch (BlockException e)
         {
             throw new RateBlockException(e);

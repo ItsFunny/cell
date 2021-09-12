@@ -27,8 +27,9 @@ public enum Module
     MVC((short) 103, "MVC"),
     CONFIGURATION((short) 104, "CONFIGURATION"),
     DISCOVERY((short) 105, "DISCOVERY"),
-    HTTP_GATEWAY((short)106,"GATEWAY"),
-    HTTP_DISPATCHER((short)107,"HTTP_DISPATCHER"),
+    HTTP_GATEWAY((short) 106, "GATEWAY"),
+    HTTP_DISPATCHER((short) 107, "HTTP_DISPATCHER"),
+    HTTP_GATEWAY_SENTINEL((short) 108, "SENTINEL"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

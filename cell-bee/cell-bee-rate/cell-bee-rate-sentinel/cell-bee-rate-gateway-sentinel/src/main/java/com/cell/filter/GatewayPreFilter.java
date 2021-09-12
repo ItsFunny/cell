@@ -1,39 +1,45 @@
 package com.cell.filter;
 
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import com.alibaba.csp.sentinel.AsyncEntry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.ResourceTypeConstants;
+import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants;
 import com.alibaba.csp.sentinel.adapter.gateway.common.param.GatewayParamParser;
+import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.ServerWebExchangeItemParser;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManager;
-import com.alibaba.csp.sentinel.adapter.reactor.ContextConfig;
-import com.alibaba.csp.sentinel.adapter.reactor.EntryConfig;
-import com.alibaba.csp.sentinel.adapter.reactor.SentinelReactorTransformer;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.GatewayApiMatcherManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.matcher.WebExchangeApiMatcher;
-
+import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
+import com.alibaba.csp.sentinel.adapter.reactor.SentinelReactorConstants;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
+import com.alibaba.csp.sentinel.util.function.Predicate;
 import com.cell.IRateEntry;
 import com.cell.IRateService;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
+import com.cell.config.GatewayConfiguration;
+import com.cell.constants.SentinelConstants;
 import com.cell.exception.RateBlockException;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.rate.SentinelRateServiceImpl;
 import com.cell.utils.GatewayUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.cloud.gateway.route.Route;
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+import swxa.Q;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME;
 
 /**
  * @author Charlie
@@ -76,23 +82,36 @@ public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
         {
             return GatewayUtils.fastFinish(exchange, "BLACK");
         }
-
-        Object[] params = paramParser.parseParameterFor(routerResource, exchange,
-                r -> r.getResourceMode() == SentinelGatewayConstants.RESOURCE_MODE_ROUTE_ID);
-        IRateEntry entry = null;
+        Deque<IRateEntry> queue = new ArrayDeque<>();
+        String fallBackRoute = routerResource;
         try
         {
-            entry = this.rateService.acquire(SentinelRateServiceImpl.SentinelRateBody
-                    .builder()
-                    .params(params).resourceName(routerResource).build());
+            // modified by charlie : we have to track more ,so be it
+            Set<String> matchingApis = pickMatchingApiDefinitions(exchange);
+            for (String apiName : matchingApis)
+            {
+                // FIXME ,need fallBack
+                fallBackRoute = apiName;
+                this.enterSentinelEntryQueue(apiName, RESOURCE_MODE_CUSTOM_API_NAME, exchange, queue);
+            }
+            this.enterSentinelEntryQueue(routerResource, RESOURCE_MODE_CUSTOM_API_NAME, exchange, queue);
             return chain.filter(exchange);
         } catch (RateBlockException e)
         {
-            return GatewayUtils.fastFinish(exchange, "block");
+            LOG.info(Module.HTTP_GATEWAY_SENTINEL, "限流,router:{}", routerResource);
+            if (GatewayConfiguration.getInstance().getServerRatePropertyNode().isFastFinish())
+            {
+                return GatewayUtils.fastFinish(exchange, "block");
+            }
+            return null;
         } finally
         {
-            entry.release();
+            if (!queue.isEmpty())
+            {
+                exchange.getAttributes().put(SentinelConstants.ENTINEL_ENTRIES_KEY, queue);
+            }
         }
+
 
 //        Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
 //        Mono<Void> asyncResult = chain.filter(exchange);
@@ -124,6 +143,15 @@ public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
 //        return asyncResult;
     }
 
+    private void enterSentinelEntryQueue(String resourceName, final int resType, ServerWebExchange exchange,
+                                         Deque<IRateEntry> queue) throws RateBlockException
+    {
+        Object[] params = paramParser.parseParameterFor(resourceName, exchange,
+                r -> r.getResourceMode() == resType);
+        queue.add(this.rateService.acquire(SentinelRateServiceImpl.SentinelRateBody
+                .builder()
+                .params(params).resourceName(resourceName).build()));
+    }
 
     private boolean inBlackList(String uri)
     {

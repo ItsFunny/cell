@@ -8,7 +8,8 @@
   "configs": [
     {
       "modules": {
-        "nacos.properties": "env/shared/discovery/nacos.json"
+        "nacos.properties": "env/shared/discovery/nacos.json",
+        "gateway.properties": "env/shared/gateway/gateway.json"
       },
       "schema": null
     }

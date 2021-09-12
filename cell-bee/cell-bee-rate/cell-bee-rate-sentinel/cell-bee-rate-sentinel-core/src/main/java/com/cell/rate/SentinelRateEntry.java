@@ -18,10 +18,11 @@ import lombok.Data;
 public class SentinelRateEntry implements IRateEntry
 {
     private AsyncEntry entry;
+    private Object[] params;
 
     @Override
     public void release()
     {
-        this.entry.exit();
+        this.entry.exit(1, params);
     }
 }

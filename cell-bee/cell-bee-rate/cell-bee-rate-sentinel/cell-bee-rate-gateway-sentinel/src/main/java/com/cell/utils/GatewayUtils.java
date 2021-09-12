@@ -1,8 +1,12 @@
 package com.cell.utils;
 
+import com.alibaba.csp.sentinel.Entry;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
+import com.alibaba.csp.sentinel.context.ContextUtil;
+import com.cell.IRateEntry;
 import com.cell.config.GatewayConfiguration;
 import com.cell.config.RateRulePropertyNode;
+import com.cell.constants.SentinelConstants;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -11,6 +15,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Deque;
 
 /**
  * @author Charlie
@@ -44,5 +49,25 @@ public class GatewayUtils
                 .setResourceMode(flowRule.getResourceMode());
     }
 
+    public static void exitEntry(ServerWebExchange exchange)
+    {
+        Deque<IRateEntry> queue = exchange.getAttribute(SentinelConstants.ENTINEL_ENTRIES_KEY);
+        if (queue != null && !queue.isEmpty())
+        {
+            IRateEntry entry = null;
+            while (!queue.isEmpty())
+            {
+                entry = queue.pop();
+                exit(entry);
+            }
+            exchange.getAttributes().remove(SentinelConstants.ENTINEL_ENTRIES_KEY);
+        }
+        ContextUtil.exit();
+    }
+
+    static void exit(IRateEntry entry)
+    {
+        entry.release();
+    }
 
 }

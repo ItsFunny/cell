@@ -19,6 +19,7 @@ import java.util.Map;
 @Data
 public class ServerRatePropertyNode
 {
+    private boolean fastFinish = false;
     public static final String URI_SEPERATE = "/";
     private RateRulePropertyNode defaultFlowRule = new RateRulePropertyNode(1D, 1);
     // 相同uri的放在一起,进行返回
