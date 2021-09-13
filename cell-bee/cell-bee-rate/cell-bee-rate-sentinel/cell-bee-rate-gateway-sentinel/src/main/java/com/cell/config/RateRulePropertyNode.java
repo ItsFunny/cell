@@ -16,7 +16,7 @@ public class RateRulePropertyNode
 {
     private String method;
     private Integer resourceMode = 0; // 规则是针对 API Gateway 的 route
-    private Double count = 10D; // 触发限流的数量
+    private Double count = 1D; // 触发限流的数量
     private Integer intervalSec = 1; // 统计间隔，单位秒
     private Integer grade = RuleConstant.FLOW_GRADE_QPS; // 统计间隔，单位秒
     private Integer controlBehavior = RuleConstant.CONTROL_BEHAVIOR_DEFAULT;

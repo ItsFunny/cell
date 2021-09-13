@@ -137,7 +137,7 @@ public class ServiceDiscovery extends AbstractInitOnce
     {
         this.resolver = new DefaultStringKeyResolver();
         nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
-        Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList();
+        Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
         Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> mapSetCouple = convCellInstanceToGateMeta(serverInstanceList);
         this.serverMetas = mapSetCouple.getV1();
         Set<RuleWp> ruleWpSet = mapSetCouple.getV2();

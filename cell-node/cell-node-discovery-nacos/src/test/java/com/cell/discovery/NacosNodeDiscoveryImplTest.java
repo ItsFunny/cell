@@ -21,7 +21,7 @@ public class NacosNodeDiscoveryImplTest
         NacosNodeDiscoveryImpl nacosNodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
         nacosNodeDiscovery.registerServerInstance(mockInstance());
 
-        Map<String, List<Instance>> serverInstanceList = nacosNodeDiscovery.getServerInstanceList();
+        Map<String, List<Instance>> serverInstanceList = nacosNodeDiscovery.getServerInstanceList(null);
         for (String s : serverInstanceList.keySet())
         {
             System.out.println(s);

@@ -17,7 +17,7 @@ import java.util.Map;
 public interface INodeDiscovery extends IInitOnce
 {
     // key: serviceName
-    Map<String, List<Instance>> getServerInstanceList();
+    Map<String, List<Instance>> getServerInstanceList(String cluster);
 
     void registerServerInstance(Instance instance);
 }

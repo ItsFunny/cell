@@ -21,6 +21,7 @@ import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -76,7 +77,7 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
 
 
     @Override
-    public Map<String, List<Instance>> getServerInstanceList()
+    public Map<String, List<Instance>> getServerInstanceList(String cluster)
     {
         try
         {
@@ -93,7 +94,7 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
                             {
                                 allInstances = new ArrayList<>();
                             }
-                            return allInstances;
+                            return StringUtils.isEmpty(cluster) ? allInstances : allInstances.stream().filter(p -> p.getClusterName().equalsIgnoreCase(cluster)).collect(Collectors.toList());
                         } catch (NacosException e)
                         {
                             throw new ProgramaException(e);

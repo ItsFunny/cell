@@ -3,6 +3,7 @@ package com.cell.handler;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
+import com.cell.utils.GatewayUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;
@@ -23,7 +24,7 @@ import static org.springframework.web.reactive.function.BodyInserters.fromValue;
  * @Date 创建时间：2021-09-12 16:36
  */
 @ActivePlugin
-public class GatewayBlockHandler implements BlockRequestHandler
+public class GatewayBlockHandler implements IGatewayBlockHandler
 {
     private static final String DEFAULT_BLOCK_MSG_PREFIX = "Blocked by Sentinel: ";
 
@@ -69,6 +70,13 @@ public class GatewayBlockHandler implements BlockRequestHandler
         {
             return false;
         }
+    }
+
+    // FIXME : CUSTOMIZE
+    @Override
+    public Mono<Void> denyForReason(ServerWebExchange exchange)
+    {
+        return GatewayUtils.fastFinish(exchange, "block");
     }
 
     private static class ErrorResult
