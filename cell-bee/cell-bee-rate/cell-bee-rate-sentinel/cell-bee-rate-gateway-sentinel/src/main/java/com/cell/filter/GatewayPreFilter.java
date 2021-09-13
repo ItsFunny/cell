@@ -50,7 +50,7 @@ import static com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayCon
  * @Date 创建时间：2021-09-12 08:35
  */
 @ActivePlugin
-public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
+public class GatewayPreFilter implements GlobalFilter, Ordered
 {
     private final int order;
 
@@ -95,15 +95,16 @@ public class GatewayPreFilter implements GatewayFilter, GlobalFilter, Ordered
                 this.enterSentinelEntryQueue(apiName, RESOURCE_MODE_CUSTOM_API_NAME, exchange, queue);
             }
             this.enterSentinelEntryQueue(routerResource, RESOURCE_MODE_CUSTOM_API_NAME, exchange, queue);
-            return chain.filter(exchange);
+            return chain.filter(exchange).then(Mono.fromRunnable(() ->
+                    GatewayUtils.exitEntry(exchange)));
         } catch (RateBlockException e)
         {
             LOG.info(Module.HTTP_GATEWAY_SENTINEL, "限流,router:{}", routerResource);
-            if (GatewayConfiguration.getInstance().getServerRatePropertyNode().isFastFinish())
-            {
-                return GatewayUtils.fastFinish(exchange, "block");
-            }
-            return null;
+//            if (GatewayConfiguration.getInstance().getServerRatePropertyNode().isFastFinish())
+//            {
+            return GatewayUtils.fastFinish(exchange, "block");
+//            }
+//            return null;
         } finally
         {
             if (!queue.isEmpty())

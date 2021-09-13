@@ -5,6 +5,8 @@ import com.cell.annotations.AutoPlugin;
 import com.cell.constants.HttpConstant;
 import com.cell.constants.OrderConstants;
 import com.cell.discovery.ServiceDiscovery;
+import com.cell.exception.GatewayException;
+import com.cell.extension.SentinelGatewayExtension;
 import com.cell.log.LOG;
 import com.cell.model.ServerMetaInfo;
 import com.cell.models.Module;
@@ -46,6 +48,8 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
         // FIXME ,定制化信息
         if (metaInfo == null)
         {
+//            return chain.filter(exchange);
+//            throw new GatewayException("command not exists");
             return GatewayUtils.fastFinish(exchange, "command not exists");
         }
         URI mergedUrl = UriComponentsBuilder.fromUri(uri).host(metaInfo.getIp()).port(metaInfo.getPort())
