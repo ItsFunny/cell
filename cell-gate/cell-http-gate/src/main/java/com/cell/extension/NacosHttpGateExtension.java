@@ -1,10 +1,15 @@
 package com.cell.extension;
 
 import com.cell.annotations.Plugin;
+import com.cell.base.IScheduleCounter;
+import com.cell.config.GatePropertyNode;
+import com.cell.config.GatewayConfiguration;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
 import com.cell.discovery.ServiceDiscovery;
+import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author Charlie
@@ -17,6 +22,7 @@ import com.cell.utils.StringUtils;
 public class NacosHttpGateExtension extends AbstractSpringNodeExtension
 {
     private ServiceDiscovery serviceDiscovery;
+    private IScheduleCounter schedualCaculateErrorCount;
 
     @Plugin
     public ServiceDiscovery serviceDiscovery()
@@ -24,19 +30,31 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
         return this.serviceDiscovery;
     }
 
+    @Bean
+    public IScheduleCounter scheduleCounter()
+    {
+        return this.schedualCaculateErrorCount;
+    }
+
     @Override
     public void onInit(INodeContext ctx) throws Exception
     {
+        GatewayConfiguration.init();
+
         this.serviceDiscovery = new ServiceDiscovery();
         String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
         cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
         this.serviceDiscovery.setCluster(cluster);
+
+        GatePropertyNode gateway = GatewayConfiguration.getInstance().getGatePropertyNode();
+        this.schedualCaculateErrorCount = new SchedualCaculateErrorCount(gateway.getErrorRespLimit(), gateway.getErrorStatInterval(), gateway.getErrorRespPercentage(), gateway.getGatewayErrTemplate());
     }
 
     @Override
     public void onStart(INodeContext ctx) throws Exception
     {
         this.serviceDiscovery.initOnce(null);
+        this.schedualCaculateErrorCount.start();
     }
 
     @Override
@@ -48,7 +66,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
     @Override
     public void onClose(INodeContext ctx) throws Exception
     {
-
+        this.schedualCaculateErrorCount.stop();
     }
 
 }

@@ -7,6 +7,7 @@ import com.cell.exceptions.CommonBusinessException;
 import com.cell.exceptions.MessageNotDoneException;
 import com.cell.util.HttpUtils;
 import com.cell.utils.StringUtils;
+import com.cell.utils.UUIDUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.async.DeferredResult;

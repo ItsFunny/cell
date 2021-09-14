@@ -6,11 +6,12 @@ import com.alibaba.csp.sentinel.adapter.gateway.common.param.GatewayParamParser;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.ServerWebExchangeItemParser;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.GatewayApiMatcherManager;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.api.matcher.WebExchangeApiMatcher;
-import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.cell.IRateEntry;
 import com.cell.IRateService;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
+import com.cell.base.IScheduleCounter;
+import com.cell.constants.DebugConstants;
 import com.cell.constants.SentinelConstants;
 import com.cell.exception.RateBlockException;
 import com.cell.handler.IGatewayBlockHandler;
@@ -18,16 +19,22 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.rate.SentinelRateServiceImpl;
 import com.cell.utils.GatewayUtils;
+import com.cell.utils.RateUtils;
+import com.cell.utils.StringUtils;
+import com.cell.utils.UUIDUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
-import org.springframework.web.reactive.function.server.ServerResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
+import javax.annotation.Resource;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants.RESOURCE_MODE_CUSTOM_API_NAME;
@@ -47,6 +54,9 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
     private IRateService rateService;
 
     @AutoPlugin
+    private IScheduleCounter scheduleCounter;
+
+    @AutoPlugin
     private IGatewayBlockHandler blockRequestHandler;
     // FIXME ,NEED HANDLER FOR FALLBACK AND BLOCK_HANDLER
 
@@ -58,10 +68,18 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
         String routerResource = exchange.getRequest().getURI().getPath();
+        this.preRequest(routerResource, exchange);
         // check if it is in black list ,then we should just discard
+        long start = System.currentTimeMillis();
         if (this.inBlackList(routerResource))
         {
-            return GatewayUtils.fastFinish(exchange, "BLACK");
+            try
+            {
+                return GatewayUtils.fastFinish(exchange, "BLACK");
+            } finally
+            {
+                this.postRequest(start, routerResource, exchange);
+            }
         }
         Deque<IRateEntry> queue = new ArrayDeque<>();
         String fallBackRoute = routerResource;
@@ -77,7 +95,7 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
             }
             this.enterSentinelEntryQueue(routerResource, RESOURCE_MODE_CUSTOM_API_NAME, exchange, queue);
             return chain.filter(exchange).then(Mono.fromRunnable(() ->
-                    GatewayUtils.exitEntry(exchange)));
+                    this.postRequest(start, routerResource, exchange)));
         } catch (RateBlockException e)
         {
             LOG.info(Module.HTTP_GATEWAY_SENTINEL, "触发限流,router:{}", routerResource);
@@ -89,6 +107,29 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
                 exchange.getAttributes().put(SentinelConstants.ENTINEL_ENTRIES_KEY, queue);
             }
         }
+    }
+
+    private void postRequest(long startTime, String path, ServerWebExchange exchange)
+    {
+        long cost = System.currentTimeMillis() - startTime;
+        LOG.info(Module.HTTP_GATEWAY, "执行完毕,uri:{},sequenceId:{},耗时:{}", path, GatewayUtils.getSequenceId(exchange.getRequest()), cost);
+        RateUtils.exitEntry(exchange);
+    }
+
+    private void preRequest(String path, ServerWebExchange exchange)
+    {
+        ServerHttpRequest request = exchange.getRequest();
+        String sequenceId = request.getHeaders().getFirst(DebugConstants.SEQUENCE_ID);
+        if (StringUtils.isEmpty(sequenceId))
+        {
+            final String sid = UUIDUtils.uuid2();
+            Consumer<HttpHeaders> httpHeaders = httpHeader ->
+                    httpHeader.set(DebugConstants.SEQUENCE_ID, sid);
+            sequenceId = sid;
+            ServerHttpRequest serverHttpRequest = exchange.getRequest().mutate().headers(httpHeaders).build();
+            exchange.mutate().request(serverHttpRequest).build();
+        }
+        LOG.info(Module.HTTP_GATEWAY, "收到请求:{},sequenceId:{}", path, sequenceId);
     }
 
 
@@ -127,4 +168,6 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
     {
         return Ordered.HIGHEST_PRECEDENCE;
     }
+
+
 }

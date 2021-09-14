@@ -1,6 +1,5 @@
-package com.cell.protocol;
+package com.cell.utils;
 
-import com.cell.utils.RandomUtils;
 import org.apache.logging.log4j.core.util.UuidUtil;
 
 import java.security.SecureRandom;

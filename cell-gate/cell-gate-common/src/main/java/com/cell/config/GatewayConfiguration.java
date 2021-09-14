@@ -21,6 +21,7 @@ public class GatewayConfiguration
     private static final String GATEWAY_CONFIG_MODULE = "gateway.properties";
 
     private ServerRatePropertyNode serverRatePropertyNode=new ServerRatePropertyNode();
+    private GatePropertyNode gatePropertyNode=new GatePropertyNode();
 
     public static GatewayConfiguration getInstance()
     {
