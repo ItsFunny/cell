@@ -12,7 +12,6 @@ import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,15 +34,18 @@ public class EventCenter extends AbstractReflectManager implements IHookChain<IE
         return instance;
     }
 
-    private List<IEventHook<IEvent>> hooks;
-    private final int index;
+    private List<IEventHook> hooks;
+    private int index;
 
-    public void registerEventHook(IEventHook<IEvent> h)
+    public void registerEventHook(IEventHook h)
     {
         this.hooks.add(h);
     }
 
-    EventCenter(List<IEventHook<IEvent>> hooks)
+    private EventCenter(){
+
+    }
+    EventCenter(List<IEventHook> hooks)
     {
         this.hooks = hooks;
         this.index = 0;
@@ -61,9 +63,20 @@ public class EventCenter extends AbstractReflectManager implements IHookChain<IE
     {
         return Mono.defer(() ->
         {
+            boolean find = false;
             if (this.index < this.hooks.size())
             {
-                IEventHook<IEvent> h = this.hooks.get(this.index);
+                IEventHook h = null;
+                for (; this.index < this.hooks.size(); this.index++)
+                {
+                    h = this.hooks.get(this.index);
+                    if (h.predict(event))
+                    {
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find) return Mono.empty();
                 EventCenter hh = new EventCenter(this,
                         this.index + 1);
                 return h.hook(event, hh);
@@ -84,6 +97,7 @@ public class EventCenter extends AbstractReflectManager implements IHookChain<IE
     @Override
     protected void onInvokeInterestNodes(Collection<Object> nodes)
     {
+        JobCenter.getInstance().registerSubscriber(this);
         if (CollectionUtils.isEmpty(nodes))
         {
             return;
@@ -94,9 +108,8 @@ public class EventCenter extends AbstractReflectManager implements IHookChain<IE
             {
                 continue;
             }
-            this.hooks.add((IEventHook<IEvent>) node);
+            this.hooks.add((IEventHook) node);
         }
-        JobCenter.getInstance().registerSubscriber(this);
     }
 
     @Override

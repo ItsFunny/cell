@@ -23,9 +23,11 @@ public class JobCenter
     private static final JobCenter instance = new JobCenter();
     private final EventBus bus = new EventBus();
 
-    public static JobCenter getInstance(){
+    public static JobCenter getInstance()
+    {
         return instance;
     }
+
     public void addJob(IEvent job)
     {
         this.bus.post(job);
@@ -34,11 +36,5 @@ public class JobCenter
     public void registerSubscriber(Object o)
     {
         this.bus.register(o);
-    }
-
-    private void run()
-    {
-
-
     }
 }
