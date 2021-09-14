@@ -8,7 +8,8 @@ package com.cell.manager;
  * @Attention:
  * @Date 创建时间：2021-08-28 13:11
  */
-public abstract class AbstractReflectManager implements IManager
+public abstract class AbstractReflectManager implements IReflectManager
 {
+
 
 }

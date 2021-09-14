@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-bee-statistic-base</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-bee-keyresolver</artifactId>
             <version>${cell.version}</version>
         </dependency>

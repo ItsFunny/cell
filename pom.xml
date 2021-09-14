@@ -98,11 +98,25 @@
             <scope>test</scope>
         </dependency>
 
+        <!--reactor-->
+        <dependency>
+            <groupId>io.projectreactor</groupId>
+            <artifactId>reactor-core</artifactId>
+            <version>3.3.10.RELEASE</version>
+        </dependency>
+
     </dependencies>
     <dependencyManagement>
 
-
         <dependencies>
+
+            <!--reactor-->
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>3.3.10.RELEASE</version>
+            </dependency>
+
             <dependency>
                 <groupId>net.bytebuddy</groupId>
                 <artifactId>byte-buddy-agent</artifactId>
@@ -290,13 +304,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--<dependency>-->
-            <!--<groupId>com.alibaba.cloud</groupId>-->
-            <!--<artifactId>spring-cloud-alibaba-dependencies</artifactId>-->
-            <!--<version>${spring.cloud.alibaba.version}</version>-->
-            <!--<type>pom</type>-->
-            <!--<scope>import</scope>-->
-            <!--</dependency>-->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>

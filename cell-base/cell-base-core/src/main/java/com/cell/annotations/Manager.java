@@ -16,6 +16,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Manager
 {
-    String name() default "default";
+    String name();
+
     boolean override() default false;
+
+    Class<? extends Object>[] interestClasses();
 }
