@@ -1,11 +1,17 @@
 package com.cell.center;
 
+import com.cell.annotations.Manager;
 import com.cell.events.IEvent;
 import com.cell.hooks.IEventHook;
 import com.cell.hooks.IHookChain;
+import com.cell.manager.AbstractReflectManager;
 import com.cell.manager.IReflectManager;
+import com.cell.utils.CollectionUtils;
+import com.google.common.eventbus.Subscribe;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -13,19 +19,29 @@ import java.util.List;
 /**
  * @author Charlie
  * @When
- * @Description
+ * @Description internal使用
  * @Detail
  * @Attention:
  * @Date 创建时间：2021-09-14 15:30
  */
-public class EventCenter implements IHookChain<IEvent>, IReflectManager
+@Manager(name = EventCenter.GROUP_EVENT_CENTER)
+public class EventCenter extends AbstractReflectManager implements IHookChain<IEvent>
 {
-    private static final EventCenter instance = new EventCenter(Arrays.asList());
-    public static EventCenter getInstance(){
+    public static final String GROUP_EVENT_CENTER = "GROUP_EVENT_CENTER";
+    private static final EventCenter instance = new EventCenter(new ArrayList<>());
+
+    public static EventCenter getInstance()
+    {
         return instance;
     }
+
     private List<IEventHook<IEvent>> hooks;
     private final int index;
+
+    public void registerEventHook(IEventHook<IEvent> h)
+    {
+        this.hooks.add(h);
+    }
 
     EventCenter(List<IEventHook<IEvent>> hooks)
     {
@@ -38,6 +54,7 @@ public class EventCenter implements IHookChain<IEvent>, IReflectManager
         this.hooks = parent.hooks;
         this.index = index;
     }
+
 
     @Override
     public Mono<Void> hook(IEvent event)
@@ -57,21 +74,34 @@ public class EventCenter implements IHookChain<IEvent>, IReflectManager
         });
     }
 
-    @Override
-    public void invokeInterestNodes(Collection<Object> nodes)
+    @Subscribe
+    public void hookWithReturn(IEvent event)
     {
-
+        Disposable subscribe = this.hook(event).subscribe();
+        subscribe.dispose();
     }
 
     @Override
-    public String name()
+    protected void onInvokeInterestNodes(Collection<Object> nodes)
     {
-        return null;
+        if (CollectionUtils.isEmpty(nodes))
+        {
+            return;
+        }
+        for (Object node : nodes)
+        {
+            if (!(node instanceof IEventHook))
+            {
+                continue;
+            }
+            this.hooks.add((IEventHook<IEvent>) node);
+        }
+        JobCenter.getInstance().registerSubscriber(this);
     }
 
     @Override
-    public boolean override()
+    public IReflectManager createOrDefault()
     {
-        return false;
+        return instance;
     }
 }

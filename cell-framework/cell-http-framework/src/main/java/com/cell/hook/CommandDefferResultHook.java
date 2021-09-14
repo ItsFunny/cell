@@ -22,7 +22,7 @@ import org.springframework.web.context.request.async.DeferredResult;
  * @Attention:
  * @Date 创建时间：2021-08-31 14:56
  */
-@ManagerNode(group = HookConstants.GROUP_HOOK, name = HookConstants.COMMAND_HOOK_TIMEOUT, orderValue = 0)
+@ManagerNode(group = HookConstants.GROUP_CMD_HOOK, name = HookConstants.COMMAND_HOOK_TIMEOUT, orderValue = 0)
 public class CommandDefferResultHook extends AbstractHttpCommandHook
 {
     @Override

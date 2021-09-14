@@ -2,8 +2,6 @@ package com.cell.hook;
 
 import com.cell.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
-import com.cell.exceptions.CommandException;
-import com.cell.exceptions.InternalWrapperException;
 import com.cell.reactor.IHttpReactor;
 
 /**
@@ -14,7 +12,7 @@ import com.cell.reactor.IHttpReactor;
  * @Attention:
  * @Date 创建时间：2021-08-28 22:12
  */
-@ManagerNode(group = HookConstants.GROUP_HOOK, name = HookConstants.NAME_HOOK, orderValue = Integer.MAX_VALUE)
+@ManagerNode(group = HookConstants.GROUP_CMD_HOOK, name = HookConstants.NAME_HOOK, orderValue = Integer.MAX_VALUE)
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
     @Override

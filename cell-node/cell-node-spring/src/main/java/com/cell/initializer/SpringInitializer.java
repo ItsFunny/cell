@@ -11,14 +11,12 @@ import com.cell.config.AbstractInitOnce;
 import com.cell.config.Config;
 import com.cell.config.ConfigConstants;
 import com.cell.constants.Constants;
+import com.cell.constants.ManagerConstants;
 import com.cell.context.InitCTX;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
-import com.cell.manager.IManagerFactory;
-import com.cell.manager.IManagerNode;
-import com.cell.manager.IManagerNodeFactory;
 import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.postprocessor.SpringBeanRegistry;
@@ -153,7 +151,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = new ConcurrentSet<>();
         final Map<String, AnnotaionManagerWrapper> managers = new ConcurrentHashMap<>();
 
-        final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
+        //        final Set<Class<? extends IManagerNodeFactory>> nodeFactories = new ConcurrentSet<>();
         final Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>();
 
         final Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = new ConcurrentHashMap<>();
@@ -261,26 +259,19 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     }
                 }
             }
-
-            if (IManagerFactory.class.isAssignableFrom(clazz))
+            Manager manager = ClassUtil.getMergedAnnotation(clazz, Manager.class);
+            if (manager != null)
             {
-                IManagerFactory factory = null;
-                try
-                {
-                    factory = (IManagerFactory) clazz.newInstance();
-                } catch (Exception e)
-                {
-                    throw new RuntimeException(e);
-                }
-                IReflectManager instance = factory.createInstance();
-                String name = instance.name();
+                IReflectManager instance = (IReflectManager) ReflectUtil.newInstance(clazz);
+                String name = manager.name();
                 synchronized (this.managers)
                 {
+                    instance = instance.createOrDefault();
                     AnnotaionManagerWrapper wrapper = this.managers.get(name);
                     if (wrapper != null)
                     {
                         LOG.warn(Module.CONTAINER, "重复的managerName,{}", name);
-                        if (instance.override())
+                        if (manager.override())
                         {
                             wrapper.setManager(instance);
                         }
@@ -295,16 +286,20 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             }
 
             ManagerNode managerNode = clazz.getAnnotation(ManagerNode.class);
-            if (managerNode == null && !IManagerNodeFactory.class.isAssignableFrom(clazz))
-            {
-                return;
-            }
-
             if (managerNode == null)
             {
-                this.nodeFactories.add((Class<? extends IManagerNodeFactory>) clazz);
                 return;
             }
+//            if (managerNode == null && !IManagerNodeFactory.class.isAssignableFrom(clazz))
+//            {
+//                return;
+//            }
+
+//            if (managerNode == null)
+//            {
+//                this.nodeFactories.add((Class<? extends IManagerNodeFactory>) clazz);
+//                return;
+//            }
 
             try
             {
@@ -334,8 +329,8 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
     private void firstAfterScan(MultiFilter filter) throws Exception
     {
-        List<Class<? extends IManagerNodeFactory>> factories = new ArrayList<>(filter.nodeFactories);
-        Collections.sort(factories, new OrderComparator());
+//        List<Class<? extends IManagerNodeFactory>> factories = new ArrayList<>(filter.nodeFactories);
+//        Collections.sort(factories, new OrderComparator());
         Set<String> keys = filter.managers.keySet();
 
         Map<String, List<AnnotationNodeWrapper>> annotationNodes = new HashMap<>(filter.annotationNodes);
@@ -345,14 +340,15 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             annotationNodes.put(key, new ArrayList<>());
         }
 
-        for (Class<? extends IManagerNodeFactory> factory : factories)
-        {
-            IManagerNodeFactory nodeFactory = factory.newInstance();
-            IManagerNode node = nodeFactory.createNode();
-            List<AnnotationNodeWrapper> objects = annotationNodes.get(node.group());
-            if (CollectionUtils.isEmpty(objects)) continue;
-            objects.add(new AnnotationNodeWrapper(node, false));
-        }
+//        for (Class<? extends IManagerNodeFactory> factory : factories)
+//        {
+//            IManagerNodeFactory nodeFactory = factory.newInstance();
+//            IManagerNode node = nodeFactory.createNode();
+//            List<AnnotationNodeWrapper> objects = annotationNodes.get(node.group());
+//            if (CollectionUtils.isEmpty(objects)) continue;
+//            objects.add(new AnnotationNodeWrapper(node, false));
+//        }
+
         for (String key : annotationNodes.keySet())
         {
             List<AnnotationNodeWrapper> objects = annotationNodes.get(key);
@@ -369,17 +365,17 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             for (AnnotationNodeWrapper wp : objects)
             {
                 Object object = wp.getNode();
-                if (object instanceof IManagerNode)
-                {
-                    name = ((IManagerNode) object).name();
-                    group = ((IManagerNode) object).group();
-                    override = ((IManagerNode) object).override();
-                } else
-                {
-                    name = object.getClass().getAnnotation(ManagerNode.class).name();
-                    group = object.getClass().getAnnotation(ManagerNode.class).group();
-                    override = object.getClass().getAnnotation(ManagerNode.class).override();
-                }
+//                if (object instanceof IManagerNode)
+//                {
+//                    name = ((IManagerNode) object).name();
+//                    group = ((IManagerNode) object).group();
+//                    override = ((IManagerNode) object).override();
+//                } else
+//                {
+                name = object.getClass().getAnnotation(ManagerNode.class).name();
+                group = object.getClass().getAnnotation(ManagerNode.class).group();
+                override = object.getClass().getAnnotation(ManagerNode.class).override();
+//                }
 
                 boolean contains = annotaionManagerWrapper.getManagerNodes().containsKey(name);
                 if (contains)

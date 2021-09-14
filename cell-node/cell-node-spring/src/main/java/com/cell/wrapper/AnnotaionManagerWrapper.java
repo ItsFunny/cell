@@ -3,6 +3,7 @@ package com.cell.wrapper;
 import com.cell.manager.IReflectManager;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -19,5 +20,4 @@ public class AnnotaionManagerWrapper
 {
     IReflectManager manager;
     Map<String, AnnotationNodeWrapper> managerNodes = new ConcurrentHashMap<>();
-
 }

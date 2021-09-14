@@ -479,7 +479,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         for (String key : keys)
         {
             AnnotaionManagerWrapper annotaionManagerWrapper = this.managers.get(key);
-            Map<String, AnnotationNodeWrapper> managerNodes = annotaionManagerWrapper.getManagerNodes();
             Map<String, AnnotationNodeWrapper> nodes = annotaionManagerWrapper.getManagerNodes();
             Collection<AnnotationNodeWrapper> values = nodes.values();
             for (AnnotationNodeWrapper value : values)

@@ -1,6 +1,9 @@
 package com.cell.extension;
 
+import com.cell.annotations.LifeCycle;
+import com.cell.center.EventCenter;
 import com.cell.context.INodeContext;
+import com.cell.enums.EnumLifeCycle;
 
 /**
  * @author Charlie
@@ -10,13 +13,12 @@ import com.cell.context.INodeContext;
  * @Attention:
  * @Date 创建时间：2021-09-14 15:53
  */
-public class InternelEventExtension extends  AbstractSpringNodeExtension
+@LifeCycle(lifeCycle = EnumLifeCycle.ONCE)
+public class InternelEventExtension extends AbstractSpringNodeExtension
 {
-
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-
     }
 
     @Override

@@ -19,6 +19,4 @@ public @interface Manager
     String name();
 
     boolean override() default false;
-
-    Class<? extends Object>[] interestClasses();
 }

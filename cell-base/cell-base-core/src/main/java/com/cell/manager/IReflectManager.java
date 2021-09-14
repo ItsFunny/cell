@@ -20,8 +20,5 @@ public interface IReflectManager
 {
     void invokeInterestNodes(Collection<Object> nodes);
 
-    String name();
-
-    boolean override();
-
+    IReflectManager createOrDefault();
 }

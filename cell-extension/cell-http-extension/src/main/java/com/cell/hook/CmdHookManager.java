@@ -1,8 +1,9 @@
 package com.cell.hook;
 
+import com.cell.annotations.Manager;
 import com.cell.constant.HookConstants;
+import com.cell.manager.AbstractReflectManager;
 import com.cell.manager.IReflectManager;
-import com.cell.utils.CollectionUtils;
 import lombok.Data;
 
 import java.util.Collection;
@@ -16,13 +17,13 @@ import java.util.Collection;
  * @Date 创建时间：2021-08-28 14:56
  */
 @Data
-public class CmdHookManager implements IReflectManager
+@Manager(name = HookConstants.GROUP_CMD_HOOK)
+public class CmdHookManager extends AbstractReflectManager
 {
     private static final CmdHookManager instance = new CmdHookManager();
 
     private IHttpCommandHook hook;
 
-    private boolean setted;
 
     public static CmdHookManager getInstance()
     {
@@ -31,9 +32,8 @@ public class CmdHookManager implements IReflectManager
 
 
     @Override
-    public void invokeInterestNodes(Collection<Object> nodes)
+    protected void onInvokeInterestNodes(Collection<Object> nodes)
     {
-        if (this.setted || CollectionUtils.isEmpty(nodes)) return;
         IHttpCommandHook tmp = this.hook;
         for (Object node : nodes)
         {
@@ -51,18 +51,11 @@ public class CmdHookManager implements IReflectManager
                 tmp = (IHttpCommandHook) node;
             }
         }
-        this.setted = true;
     }
 
     @Override
-    public String name()
+    public IReflectManager createOrDefault()
     {
-        return HookConstants.GROUP_HOOK;
-    }
-
-    @Override
-    public boolean override()
-    {
-        return false;
+        return instance;
     }
 }

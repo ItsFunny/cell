@@ -1,6 +1,7 @@
 package com.cell.manager;
 
 import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.Manager;
 import com.cell.annotations.ManagerNode;
 import com.cell.initializer.SpringInitializerTest;
 import org.springframework.boot.SpringApplication;
@@ -37,21 +38,13 @@ public class ManagerTest
 
     }
 
-    public static class MyManagerFactory implements IManagerFactory
-    {
-        @Override
-        public IReflectManager createInstance()
-        {
-            return new MyM();
-        }
-    }
-
-    public static class MyM implements IReflectManager
+    @Manager(name = "mym")
+    public static class MyM extends AbstractReflectManager
     {
         private MyM() {}
 
         @Override
-        public void invokeInterestNodes(Collection<Object> nodes)
+        protected void onInvokeInterestNodes(Collection<Object> nodes)
         {
             for (Object node : nodes)
             {
@@ -60,17 +53,10 @@ public class ManagerTest
         }
 
         @Override
-        public String name()
+        public IReflectManager createOrDefault()
         {
-            return "mym";
+            return new MyM();
         }
-
-        @Override
-        public boolean override()
-        {
-            return true;
-        }
-
     }
 
     public static void main(String[] args)
