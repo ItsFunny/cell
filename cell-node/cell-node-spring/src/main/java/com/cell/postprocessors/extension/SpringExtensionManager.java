@@ -165,6 +165,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         SpringNodeContext dCtx = ctx;
         CommandLine commands = parser.parse(allOps, alist);
         dCtx.setCommandLine(commands);
+        LOG.setLogLevel(LogLevel.INFO);
     }
 
     @Override

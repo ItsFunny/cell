@@ -219,6 +219,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                 }
 
                 @Override
+                public Module module()
+                {
+                    return annotation.module();
+                }
+
+                @Override
                 public short httpCommandId()
                 {
                     return annotation.httpCommandId();

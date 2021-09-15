@@ -22,5 +22,11 @@
             <artifactId>cell-bee-transport</artifactId>
             <version>${cell.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>5.3.9</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

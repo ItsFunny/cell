@@ -12,5 +12,5 @@ import reactor.core.publisher.Mono;
  */
 public interface IHookChain<T>
 {
-    Mono<Void> hook(T str);
+    Mono<Void> hook(T t);
 }

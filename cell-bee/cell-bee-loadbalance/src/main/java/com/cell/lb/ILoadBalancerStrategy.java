@@ -1,5 +1,6 @@
 package com.cell.lb;
 
+import com.cell.model.ServerCmdMetaInfo;
 import com.cell.model.ServerMetaInfo;
 
 import java.util.List;
@@ -14,5 +15,5 @@ import java.util.List;
  */
 public interface ILoadBalancerStrategy
 {
-    ServerMetaInfo choseServer(List<ServerMetaInfo> servers,  String uri);
+    ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String uri);
 }

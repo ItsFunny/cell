@@ -114,6 +114,7 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
                 ServerMetaData.ServerMetaCmd cmd = new ServerMetaData.ServerMetaCmd();
                 HttpCmdAnno annotation = (HttpCmdAnno) ClassUtil.mustGetAnnotation(c, HttpCmdAnno.class);
                 cmd.setUri(annotation.uri());
+                cmd.setModule(annotation.module().name());
                 cmd.setMethod(annotation.requestType().getId());
                 return cmd;
             }).collect(Collectors.toList());

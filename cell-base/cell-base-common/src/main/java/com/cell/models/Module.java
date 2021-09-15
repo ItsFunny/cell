@@ -46,6 +46,7 @@ public enum Module
     DRUID((short) 49, "druid"),
     ALIBABA((short) 50, "alibaba"),
     MICROMETER((short) 10008, "micrometer"),
+    UNKNOWN((short) 65535, "UNKNOWN"),
     ;
     private short moduleId;
     private String desc;

@@ -60,6 +60,7 @@ public class ServerMetaData
         // get/post/delete
         private byte method;
         private String uri;
+        private String module;
     }
 
 

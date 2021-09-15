@@ -2,6 +2,7 @@ package com.cell.annotations;
 
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
+import com.cell.models.Module;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
@@ -26,6 +27,8 @@ public @interface HttpCmdAnno
     EnumHttpResponseType responseType() default EnumHttpResponseType.HTTP_JSON;
 
     String uri();
+
+    Module module() default Module.UNKNOWN;
 
     @AliasFor(annotation = Command.class, attribute = "commandId")
     short httpCommandId();

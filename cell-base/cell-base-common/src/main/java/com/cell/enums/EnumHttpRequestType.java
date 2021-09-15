@@ -73,9 +73,9 @@ public enum EnumHttpRequestType
         switch (id)
         {
             case 1:
-                return "post";
-            case 2:
                 return "get";
+            case 2:
+                return "post";
             default:
                 throw new ProgramaException("asd");
         }

@@ -16,6 +16,7 @@ public class ServerMetaInfo
     private String serviceName;
     private String ip;
     private short port;
+    private String module;
 
     private boolean enable;
     private boolean healthy;

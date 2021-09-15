@@ -1,6 +1,7 @@
 package com.cell.lb;
 
 import com.cell.annotations.ActivePlugin;
+import com.cell.model.ServerCmdMetaInfo;
 import com.cell.model.ServerMetaInfo;
 
 import java.util.Collections;
@@ -18,12 +19,12 @@ import java.util.List;
 public class DefaultWeightRoubineStrategy implements ILoadBalancerStrategy
 {
     @Override
-    public ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String uri)
+    public ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String uri)
     {
         if (servers == null || servers.size() == 0) return null;
 
         Collections.shuffle(servers);
-        for (ServerMetaInfo server : servers)
+        for (ServerCmdMetaInfo server : servers)
         {
             if (server.isEnable() && server.isHealthy())
             {

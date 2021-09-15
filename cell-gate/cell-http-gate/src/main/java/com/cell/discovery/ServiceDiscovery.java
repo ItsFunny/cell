@@ -14,6 +14,7 @@ import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
+import com.cell.model.ServerCmdMetaInfo;
 import com.cell.model.ServerMetaInfo;
 import com.cell.models.Couple;
 import com.cell.models.Module;
@@ -46,7 +47,7 @@ public class ServiceDiscovery extends AbstractInitOnce
 
     private ILoadBalancer loadBalancer;
     // FIXME ,这里需要提供 get/post 等先查询
-    private Map<String, List<ServerMetaInfo>> serverMetas = new HashMap<>();
+    private Map<String, List<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
     private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
     private volatile boolean onChange = false;
     private String cluster;
@@ -69,14 +70,14 @@ public class ServiceDiscovery extends AbstractInitOnce
         return instance;
     }
 
-    private List<ServerMetaInfo> getServerByUri(String method, String uri)
+    private List<ServerCmdMetaInfo> getServerByUri(String method, String uri)
     {
         this.transferIfNeed();
         // FIXME
         return this.serverMetas.get(this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().method(method).uri(uri).build()));
     }
 
-    public ServerMetaInfo choseServer(String method, String uri)
+    public ServerCmdMetaInfo choseServer(String method, String uri)
     {
         return this.loadBalancer.choseServer(this.getServerByUri(method, uri), method, uri);
     }
@@ -90,8 +91,8 @@ public class ServiceDiscovery extends AbstractInitOnce
     {
         if (!this.onChange) return;
         // index:0
-        Map<String, List<List<ServerMetaInfo>>> compareChanges = new HashMap<>();
-        final List<List<ServerMetaInfo>> dels = new ArrayList<>();
+        Map<String, List<List<ServerCmdMetaInfo>>> compareChanges = new HashMap<>();
+        final List<List<ServerCmdMetaInfo>> dels = new ArrayList<>();
         final Set<RuleWp> ruleWps = new HashSet<>();
         synchronized (this.delta)
         {
@@ -106,8 +107,8 @@ public class ServiceDiscovery extends AbstractInitOnce
                     this.delta.remove(n);
                     return;
                 }
-                Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> convRet = this.conv();
-                Map<String, List<ServerMetaInfo>> conv = convRet.getV1();
+                Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> convRet = this.conv();
+                Map<String, List<ServerCmdMetaInfo>> conv = convRet.getV1();
                 if (!CollectionUtils.isEmpty(convRet.getV2()))
                 {
                     ruleWps.addAll(convRet.getV2());
@@ -116,10 +117,10 @@ public class ServiceDiscovery extends AbstractInitOnce
                 Set<String> changes = conv.keySet();
                 changes.stream().forEach(name ->
                 {
-                    List<ServerMetaInfo> metas = conv.get(name);
-                    List<ServerMetaInfo> origin = this.serverMetas.get(name);
+                    List<ServerCmdMetaInfo> metas = conv.get(name);
+                    List<ServerCmdMetaInfo> origin = this.serverMetas.get(name);
                     this.serverMetas.put(name, metas);
-                    List<List<ServerMetaInfo>> r = new ArrayList<>();
+                    List<List<ServerCmdMetaInfo>> r = new ArrayList<>();
                     r.add(origin);
                     r.add(metas);
                     compareChanges.put(name, r);
@@ -138,7 +139,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         this.resolver = new DefaultStringKeyResolver();
         nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
         Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
-        Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> mapSetCouple = convCellInstanceToGateMeta(serverInstanceList);
+        Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> mapSetCouple = convCellInstanceToGateMeta(serverInstanceList);
         this.serverMetas = mapSetCouple.getV1();
         Set<RuleWp> ruleWpSet = mapSetCouple.getV2();
         this.refreshUriRules(ruleWpSet);
@@ -146,7 +147,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         nodeDiscovery.registerListen(new InstanceHooker());
     }
 
-    private Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> conv()
+    private Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> conv()
     {
         Map<String, List<Instance>> cellInstance = DiscoveryUtils.convNacosMapInstanceToCellInstance(this.delta);
         return convCellInstanceToGateMeta(cellInstance);
@@ -158,10 +159,10 @@ public class ServiceDiscovery extends AbstractInitOnce
         String uri;
     }
 
-    private Couple<Map<String, List<ServerMetaInfo>>, Set<RuleWp>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
+    private Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
     {
         Set<String> keys = m.keySet();
-        Map<String, List<ServerMetaInfo>> metas = new HashMap<>();
+        Map<String, List<ServerCmdMetaInfo>> metas = new HashMap<>();
         Set<RuleWp> ruleWps = new HashSet<>();
 
         keys.stream().forEach(k ->
@@ -187,13 +188,14 @@ public class ServiceDiscovery extends AbstractInitOnce
                                 ruleWps.add(wp);
 
                                 String key = this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().uri(c.getUri()).method(wp.method).build());
-                                List<ServerMetaInfo> serverMetaInfos = metas.get(key);
+                                List<ServerCmdMetaInfo> serverMetaInfos = metas.get(key);
                                 if (CollectionUtils.isEmpty(serverMetaInfos))
                                 {
                                     serverMetaInfos = new ArrayList<>();
                                     metas.put(key, serverMetaInfos);
                                 }
-                                serverMetaInfos.add(info);
+                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getModule());
+                                serverMetaInfos.add(serverCmdMetaInfo);
                             });
                         });
                     }
@@ -216,8 +218,8 @@ public class ServiceDiscovery extends AbstractInitOnce
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
             synchronized (ServiceDiscovery.this.delta)
             {
-                ServiceDiscovery.this.onChange = true;
                 ServiceDiscovery.this.delta.put(event.getServiceName(), hosts);
+                ServiceDiscovery.this.onChange = true;
             }
         }
 
@@ -247,7 +249,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         private ILoadBalancerStrategy strategy;
 
         @Override
-        public ServerMetaInfo choseServer(List<ServerMetaInfo> servers, String method, String uri)
+        public ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String method, String uri)
         {
             return this.strategy.choseServer(ServiceDiscovery.getInstance().getServerByUri(method, uri), uri);
         }
