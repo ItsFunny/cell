@@ -16,4 +16,6 @@ public interface StatConstants
     long MINUTE_SECTION = 60L;
     long HOUR_SECTION = 3600L;
     long DAY_SECTION = 86400L;
+
+    String[] COMMON_LABELS = new String[]{"nodeName", "cluster", "module"};
 }

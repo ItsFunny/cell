@@ -3,31 +3,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell</artifactId>
+        <artifactId>cell-metrics-extension</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-demo</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>cell-metrics-gateway-extension</artifactId>
 
-    <name>cell-demo</name>
+    <name>cell-metrics-gateway-extension</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-    <modules>
-        <module>cell-demo-dynamic-reactor</module>
-        <module>cell-demo-http-demo1</module>
-        <module>cell-demo-http-demo2</module>
-        <module>cell-demo-http-demo3</module>
-        <module>cell-demo-nacos</module>
-        <module>cell-extension-demo</module>
-        <module>cell-demo-gateway</module>
-        <module>cell-demo-metrics</module>
-    </modules>
-
     <dependencies>
-
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-metrics-extension-base</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
     </dependencies>
 </project>
