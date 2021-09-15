@@ -50,7 +50,7 @@ public class DummyExecutor implements EventExecutor
 
     protected void exceptionCaughtInTask(Runnable task, Throwable e)
     {
-//		LOG.warning(BSModule.COMMON, e, "exception caught in task: [%s]", task);
+//		LOG.warning(Module.COMMON, e, "exception caught in task: [%s]", task);
     }
 
     @Override

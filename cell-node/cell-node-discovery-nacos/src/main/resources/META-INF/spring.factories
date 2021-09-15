@@ -1,2 +1,2 @@
-org.springframework.cloud.bootstrap.BootstrapConfiguration=\
-  com.cell.bootstrap.CellNacosBootStrap.class
+#org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+#  com.cell.bootstrap.CellNacosBootStrap.class

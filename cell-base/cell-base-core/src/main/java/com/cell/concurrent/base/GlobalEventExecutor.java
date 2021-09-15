@@ -210,7 +210,7 @@ public final class GlobalEventExecutor extends AbstractScheduledEventExecutor {
                     try {
                         task.run();
                     } catch (Throwable t) {
-//                        LOG.warning(BSModule.COMMON, t, "Unexpected exception from the global event executor: ");
+//                        LOG.warning(Module.COMMON, t, "Unexpected exception from the global event executor: ");
                     }
 
                     if (task != quietPeriodTask) {

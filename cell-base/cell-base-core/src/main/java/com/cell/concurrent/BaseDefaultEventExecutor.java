@@ -56,6 +56,6 @@ public class BaseDefaultEventExecutor extends BaseSingleThreadEventLoop {
 	}
 	
 	protected void exceptionCaughtInTask(Runnable task, Throwable e) {
-//		LOG.warning(BSModule.COMMON, e, "exception caught in task: %s", task);
+//		LOG.warning(Module.COMMON, e, "exception caught in task: %s", task);
 	}
 }

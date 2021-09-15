@@ -105,6 +105,7 @@ public class ServiceDiscovery extends AbstractInitOnce
                 {
                     dels.add(this.serverMetas.remove(n));
                     this.delta.remove(n);
+                    this.serverMetas.remove(n);
                     return;
                 }
                 Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> convRet = this.conv();

@@ -27,6 +27,6 @@
             <artifactId>cell-extension-common</artifactId>
             <version>${cell.version}</version>
         </dependency>
-       
+
     </dependencies>
 </project>

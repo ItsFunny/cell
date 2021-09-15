@@ -19,18 +19,19 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-gate</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
             <artifactId>cell-bee-event</artifactId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-bee-statistic-base</artifactId>
+            <artifactId>cell-metrics-gateway-extension</artifactId>
             <version>${cell.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.cell</groupId>
+                    <artifactId>cell-extension-common</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
@@ -64,9 +65,14 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-extension-common</artifactId>
+            <artifactId>cell-node-spring</artifactId>
             <version>${cell.version}</version>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.cell</groupId>-->
+        <!--<artifactId>cell-http-framework</artifactId>-->
+        <!--<version>${cell.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>

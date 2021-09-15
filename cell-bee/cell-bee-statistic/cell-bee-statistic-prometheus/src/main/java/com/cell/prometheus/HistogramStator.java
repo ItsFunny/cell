@@ -139,7 +139,7 @@ public class HistogramStator extends BaseCollector<HistogramStator.Child> implem
 
         List<MetricFamilySamples> result = familySamplesList(Type.HISTOGRAM, samples);
 //		if (!StringUtil.isEmpty(result)) {
-//			LOG.info(BSModule.STATISTICS_COMMON, "name collect statistics data, data = %s, result = %s", this.fullname, result);
+//			LOG.info(Module.STATISTICS_COMMON, "name collect statistics data, data = %s, result = %s", this.fullname, result);
 //		}
         return result;
     }
@@ -265,7 +265,7 @@ public class HistogramStator extends BaseCollector<HistogramStator.Child> implem
         }
 
 //		if (!StringUtil.isEmpty(tmp)) {
-//			LOG.info(BSModule.STATISTICS_COMMON, "统计平局值： %s", tmp);
+//			LOG.info(Module.STATISTICS_COMMON, "统计平局值： %s", tmp);
 //		}
     }
 

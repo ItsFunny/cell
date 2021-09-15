@@ -133,7 +133,7 @@ class ScheduledFutureTask<V> extends PromiseTask<V> implements ScheduledFuture<V
     }
 
 	protected void exceptionCaughtInTask(Callable<V> task, Throwable e) {
-//		LOG.warning(BSModule.COMMON, e, "exception caught in task: %s", task);
+//		LOG.warning(Module.COMMON, e, "exception caught in task: %s", task);
 	}
     
     @Override

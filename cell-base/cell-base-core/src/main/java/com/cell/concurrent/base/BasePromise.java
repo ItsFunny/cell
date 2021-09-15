@@ -598,7 +598,7 @@ public class BasePromise<V> extends AbstractFuture<V> implements Promise<V>
         } catch (Throwable t)
         {
             LOG.warn("Promise notify listener An exception was thrown by {}.operationComplete()");
-//            LOG.warning(BSModule.COMMON, t, "Promise notify listener An exception was thrown by {}.operationComplete()");
+//            LOG.warning(Module.COMMON, t, "Promise notify listener An exception was thrown by {}.operationComplete()");
         }
     }
 
@@ -796,7 +796,7 @@ public class BasePromise<V> extends AbstractFuture<V> implements Promise<V>
             executor.execute(task);
         } catch (Throwable t)
         {
-//            LOG.warning(BSModule.COMMON, t, "VWPromise Failed to submit a listener notification task. Event loop shut down?");
+//            LOG.warning(Module.COMMON, t, "VWPromise Failed to submit a listener notification task. Event loop shut down?");
         }
     }
 

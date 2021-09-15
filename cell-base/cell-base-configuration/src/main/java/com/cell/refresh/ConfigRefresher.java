@@ -92,7 +92,7 @@ public class ConfigRefresher implements Runnable
 						entry.getValue().setLastEditDate(lastEdit);
 						configuration.clearCache(entry.getKey());
 						entry.getValue().getParser().clearCache(entry.getKey());
-//						LOG.debug(BSModule.CONFIGURATION, "Configuration for module [%s] is refreshed.",
+//						LOG.debug(Module.CONFIGURATION, "Configuration for module [%s] is refreshed.",
 //								entry.getKey());
 						for (IConfigListener listener : entry.getValue().getListener()) {
 							try {
@@ -101,12 +101,12 @@ public class ConfigRefresher implements Runnable
 								for (IRefreshExceptionListener exceptionListener : exceptionListeners) {
 									exceptionListener.exception(entry.getKey(), e);
 								}
-//								LOG.warning(BSModule.CONFIGURATION, e, "Exception caught in config listener.");
+//								LOG.warning(Module.CONFIGURATION, e, "Exception caught in config listener.");
 							}
 						}
 					}
 				} catch (Throwable e) {
-//					LOG.warning(BSModule.CONFIGURATION, e, "Exception caught checking last edit time of [%s].",
+//					LOG.warning(Module.CONFIGURATION, e, "Exception caught checking last edit time of [%s].",
 //							entry.getKey());
 				}
 			}

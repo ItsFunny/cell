@@ -78,7 +78,6 @@ public class HttpExtension extends AbstractSpringNodeExtension
         {
             this.dispatcher.setPort(Short.valueOf(port));
         }
-
     }
 
     @Override

@@ -15,6 +15,11 @@ import org.springframework.context.ApplicationListener;
 public class FacadedListener implements ApplicationListener<SpringApplicationEvent>
 {
 
+        static
+        {
+            System.setProperty("spring.cloud.bootstrap.enabled", "false");
+        }
+
     @Override
     public void onApplicationEvent(SpringApplicationEvent springApplicationEvent)
     {

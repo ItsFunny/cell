@@ -2,8 +2,10 @@ package com.cell;
 
 import com.cell.exception.ConfigurationException;
 import com.cell.exceptions.ProgramaException;
+import com.cell.log.LOG;
 import com.cell.model.ConfigValueJson;
 import com.cell.model.IConfigValue;
+import com.cell.models.Module;
 import com.cell.parser.ConfigurationParserJson;
 import com.cell.parser.IConfigurationParser;
 import com.cell.refresh.ConfigRefresher;
@@ -26,7 +28,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Configuration
 {
-    static {
+    static
+    {
     }
 
     private static final int REFRESH_CHECK_INTERVAL_SECONDS = 10;
@@ -450,15 +453,15 @@ public class Configuration
                     IConfigValue configValue2 = Configuration.getDefault().getConfigValue(moduleName);
                     T obj2 = configValue2.asObject(t);
                     configListener.load(obj2);
-//					LOG.info(BSModule.CONFIGURATION, "刷新配置文件成功, moduleName = %s, value = %s", moduleName, JsonUtil.toJsonString(obj2));
+                    LOG.info(Module.CONFIGURATION, "刷新配置文件成功, moduleName = {}, value = {}", moduleName, JSONUtil.toJsonString(obj2));
                 };
                 Configuration.getDefault().registerModuleListener(moduleName, listener);
             }
-//			LOG.info(BSModule.CONFIGURATION, "Configuration for module [%s] has been loaded: %s", moduleName, JsonUtil.toJsonString(obj));
+            LOG.info(Module.CONFIGURATION, "Configuration for module [{}] has been loaded: {}", moduleName, JSONUtil.toJsonString(obj));
             return obj;
         } catch (Exception e)
         {
-//			LOG.error(BSModule.COMMON, e, "读取配置文件失败， moduleName = %s", moduleName);
+//			LOG.error(Module.COMMON, e, "读取配置文件失败， moduleName = {}", moduleName);
             throw new RuntimeException(e);
         }
     }
@@ -475,15 +478,15 @@ public class Configuration
                 {
                     IConfigValue configValue2 = Configuration.getDefault().getConfigValue(moduleName);
                     configListener.load(configValue2);
-//					LOG.info(BSModule.CONFIGURATION, "刷新配置文件成功：%s", configValue2);
+                    LOG.info(Module.CONFIGURATION, "刷新配置文件成功：{}", configValue2);
                 };
                 Configuration.getDefault().registerModuleListener(moduleName, listener);
             }
-//			LOG.info(BSModule.CONFIGURATION, "Configuration for module [%s] has been loaded: %s", moduleName, configValue);
+            LOG.info(Module.CONFIGURATION, "Configuration for module [{}] has been loaded: {}", moduleName, configValue);
             return configValue;
         } catch (Exception e)
         {
-//			LOG.error(BSModule.COMMON, e, "读取配置文件失败， moduleName = %s", moduleName);
+            LOG.error(Module.COMMON, e, "读取配置文件失败， moduleName = {}", moduleName);
             throw new RuntimeException(e);
         }
     }

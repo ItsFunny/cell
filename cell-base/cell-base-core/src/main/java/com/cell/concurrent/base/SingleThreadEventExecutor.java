@@ -264,7 +264,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
             try {
                 task.run();
             } catch (Throwable t) {
-//                LOG.warning(BSModule.COMMON, "A task raised an exception.", t);
+//                LOG.warning(Module.COMMON, "A task raised an exception.", t);
             }
 
             task = pollTask();
@@ -293,7 +293,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
             try {
                 task.run();
             } catch (Throwable t) {
-//            	 LOG.warning(BSModule.COMMON, "A task raised an exception.", t);
+//            	 LOG.warning(Module.COMMON, "A task raised an exception.", t);
             }
 
             runTasks ++;
@@ -406,7 +406,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
                 try {
                     task.run();
                 } catch (Throwable t) {
-//                	 LOG.warning(BSModule.COMMON, "Shutdown hook raised an exception.", t);
+//                	 LOG.warning(Module.COMMON, "Shutdown hook raised an exception.", t);
                 } finally {
                     ran = true;
                 }
@@ -698,7 +698,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
                     SingleThreadEventExecutor.this.run();
                     success = true;
                 } catch (Throwable t) {
-//                	 LOG.warning(BSModule.COMMON, t, "Unexpected exception from an event executor: ", executor);
+//                	 LOG.warning(Module.COMMON, t, "Unexpected exception from an event executor: ", executor);
                 } finally {
                     for (;;) {
                         int oldState = STATE_UPDATER.get(SingleThreadEventExecutor.this);
@@ -729,7 +729,7 @@ public abstract class SingleThreadEventExecutor extends AbstractScheduledEventEx
                             STATE_UPDATER.set(SingleThreadEventExecutor.this, ST_TERMINATED);
                             threadLock.release();
                             if (!taskQueue.isEmpty()) {
-//                            	LOG.warning(BSModule.COMMON,
+//                            	LOG.warning(Module.COMMON,
 //                                        "An event executor terminated with " +
 //                                                "non-empty task queue (" + taskQueue.size() + ')');
                             }

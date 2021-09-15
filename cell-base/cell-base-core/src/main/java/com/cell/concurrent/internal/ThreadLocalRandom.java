@@ -85,7 +85,7 @@ public final class ThreadLocalRandom extends Random
                 seedGeneratorThread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
                     @Override
                     public void uncaughtException(Thread t, Throwable e) {
-//                        LOG.debug(BSModule.COMMON, e, "An exception has been raised by thread name [%s]", t.getName());
+//                        LOG.debug(Module.COMMON, e, "An exception has been raised by thread name [%s]", t.getName());
                     }
                 });
                 seedGeneratorThread.start();
@@ -139,13 +139,13 @@ public final class ThreadLocalRandom extends Random
                     }
                 } catch (InterruptedException e) {
                     interrupted = true;
-//                    LOG.warning(BSModule.COMMON, e, "Failed to generate a seed from SecureRandom due to an InterruptedException.");
+//                    LOG.warning(Module.COMMON, e, "Failed to generate a seed from SecureRandom due to an InterruptedException.");
                     break;
                 }
 
                 if (waitTime <= 0) {
                     seedGeneratorThread.interrupt();
-//                    LOG.warning(BSModule.COMMON,
+//                    LOG.warning(Module.COMMON,
 //                            "Failed to generate a seed from SecureRandom within [%s] seconds. " +
 //                            "Not enough entropy?", timeoutSeconds);
                     break;

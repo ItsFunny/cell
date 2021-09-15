@@ -1,0 +1,41 @@
+version: '3.2'
+
+services:
+  grafana:
+    image: grafana/grafana:7.5.5-ubuntu
+    container_name: grafana
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 3000:3000
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+      #    volumes:
+      #将刚刚准备好的defaults.ini直接映射到/usr/share/grafana/conf/defaults.ini路径
+      #      - ./config/defaults.ini:/usr/share/grafana/conf/defaults.ini
+      #data目录，如果使用了默认的sqlite3数据库，则文件会存在这边
+      #      - ./data/grafana:/var/lib/grafana
+      #log目录，后期会写入log文件
+    #      - ./log:/var/log/grafana
+    # 添加插件 *注意修改defaults.ini文件：server_url = http://renderer:8081/render
+  #  renderer:
+  #    image: grafana/grafana-image-renderer
+  #    restart: always
+  #    ports:
+  #      - 8081:8081
+  #    container_name: renderer
+  #    environment:
+  #      - GF_RENDERER_PLUGIN_TZ=Asia/Shanghai
+  #      - GF_RENDERER_PLUGIN_IGNORE_HTTPS_ERRORS=true
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    extra_hosts:
+      - "nacos.demo.com:127.224.2.2"

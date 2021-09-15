@@ -33,7 +33,7 @@ public class ConfigValueJson extends AbstractConfigValue{
 		try {
 			return parser.newJsonValue(configurationManager, moduleName, asJsonArray().get(index));
 		} catch (IOException e) {
-//			LOG.error(BSModule.CONFIGURATION, e, "Error getting array object.");
+//			LOG.error(Module.CONFIGURATION, e, "Error getting array object.");
 			return null;
 		}
 	}
@@ -52,7 +52,7 @@ public class ConfigValueJson extends AbstractConfigValue{
 				return parser.newJsonValue(configurationManager, moduleName, subObj);
 			}
 		} catch (IOException e) {
-//			LOG.error(BSModule.CONFIGURATION, e, "Error getting object.");
+//			LOG.error(Module.CONFIGURATION, e, "Error getting object.");
 			return null;
 		}
 	}
@@ -131,7 +131,7 @@ public class ConfigValueJson extends AbstractConfigValue{
 				try {
 					valueList.add(parser.newJsonValue(configurationManager, moduleName, obj));
 				} catch (IOException e) {
-//					LOG.error(BSModule.CONFIGURATION, e, "Error getting array object.");
+//					LOG.error(Module.CONFIGURATION, e, "Error getting array object.");
 				}
 			}			
 			return valueList;

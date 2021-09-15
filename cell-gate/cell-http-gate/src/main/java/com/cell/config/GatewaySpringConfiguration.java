@@ -28,110 +28,110 @@ public class GatewaySpringConfiguration
     {
         return new DefaultWeightRoubineStrategy();
     }
+//
+//    @Bean
+//    public RouteLocatorBuilder routeLocatorBuilder(ConfigurableApplicationContext context)
+//    {
+//        return new RouteLocatorBuilder(context);
+//    }
 
-    @Bean
-    public RouteLocatorBuilder routeLocatorBuilder(ConfigurableApplicationContext context)
-    {
-        return new RouteLocatorBuilder(context);
-    }
-
-    @Bean
-    public AddRequestHeaderGatewayFilterFactory addRequestHeaderGatewayFilterFactory()
-    {
-        return new AddRequestHeaderGatewayFilterFactory();
-    }
-
-
-    @Bean
-    public PathRoutePredicateFactory pathRoutePredicateFactory()
-    {
-        return new PathRoutePredicateFactory();
-    }
-
-    @Bean
-    public HostRoutePredicateFactory hostRoutePredicateFactory()
-    {
-        return new HostRoutePredicateFactory();
-    }
-
-    @Bean
-    public RewritePathGatewayFilterFactory rewritePathGatewayFilterFactory()
-    {
-        return new RewritePathGatewayFilterFactory();
-    }
-
-    @Bean
-    public RetryGatewayFilterFactory retryGatewayFilterFactory()
-    {
-        return new RetryGatewayFilterFactory();
-    }
-
-    @Bean
-    public SetPathGatewayFilterFactory setPathGatewayFilterFactory()
-    {
-        return new SetPathGatewayFilterFactory();
-    }
-
-
-    @Bean
-    public SetRequestHeaderGatewayFilterFactory setRequestHeaderGatewayFilterFactory()
-    {
-        return new SetRequestHeaderGatewayFilterFactory();
-    }
-
-    @Bean
-    public SetResponseHeaderGatewayFilterFactory setResponseHeaderGatewayFilterFactory()
-    {
-        return new SetResponseHeaderGatewayFilterFactory();
-    }
-
-    @Bean
-    public RewriteResponseHeaderGatewayFilterFactory rewriteResponseHeaderGatewayFilterFactory()
-    {
-        return new RewriteResponseHeaderGatewayFilterFactory();
-    }
-
-    @Bean
-    public RewriteLocationResponseHeaderGatewayFilterFactory rewriteLocationResponseHeaderGatewayFilterFactory()
-    {
-        return new RewriteLocationResponseHeaderGatewayFilterFactory();
-    }
-
-    @Bean
-    public SetStatusGatewayFilterFactory setStatusGatewayFilterFactory()
-    {
-        return new SetStatusGatewayFilterFactory();
-    }
-
-    @Bean
-    public SaveSessionGatewayFilterFactory saveSessionGatewayFilterFactory()
-    {
-        return new SaveSessionGatewayFilterFactory();
-    }
-
-    @Bean
-    public StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory()
-    {
-        return new StripPrefixGatewayFilterFactory();
-    }
-
-    @Bean
-    public RequestHeaderToRequestUriGatewayFilterFactory requestHeaderToRequestUriGatewayFilterFactory()
-    {
-        return new RequestHeaderToRequestUriGatewayFilterFactory();
-    }
-
-    @Bean
-    public RequestSizeGatewayFilterFactory requestSizeGatewayFilterFactory()
-    {
-        return new RequestSizeGatewayFilterFactory();
-    }
-
-    @Bean
-    public RequestHeaderSizeGatewayFilterFactory requestHeaderSizeGatewayFilterFactory()
-    {
-        return new RequestHeaderSizeGatewayFilterFactory();
-    }
+//    @Bean
+//    public AddRequestHeaderGatewayFilterFactory addRequestHeaderGatewayFilterFactory()
+//    {
+//        return new AddRequestHeaderGatewayFilterFactory();
+//    }
+//
+//
+//    @Bean
+//    public PathRoutePredicateFactory pathRoutePredicateFactory()
+//    {
+//        return new PathRoutePredicateFactory();
+//    }
+//
+//    @Bean
+//    public HostRoutePredicateFactory hostRoutePredicateFactory()
+//    {
+//        return new HostRoutePredicateFactory();
+//    }
+//
+//    @Bean
+//    public RewritePathGatewayFilterFactory rewritePathGatewayFilterFactory()
+//    {
+//        return new RewritePathGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RetryGatewayFilterFactory retryGatewayFilterFactory()
+//    {
+//        return new RetryGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public SetPathGatewayFilterFactory setPathGatewayFilterFactory()
+//    {
+//        return new SetPathGatewayFilterFactory();
+//    }
+//
+//
+//    @Bean
+//    public SetRequestHeaderGatewayFilterFactory setRequestHeaderGatewayFilterFactory()
+//    {
+//        return new SetRequestHeaderGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public SetResponseHeaderGatewayFilterFactory setResponseHeaderGatewayFilterFactory()
+//    {
+//        return new SetResponseHeaderGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RewriteResponseHeaderGatewayFilterFactory rewriteResponseHeaderGatewayFilterFactory()
+//    {
+//        return new RewriteResponseHeaderGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RewriteLocationResponseHeaderGatewayFilterFactory rewriteLocationResponseHeaderGatewayFilterFactory()
+//    {
+//        return new RewriteLocationResponseHeaderGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public SetStatusGatewayFilterFactory setStatusGatewayFilterFactory()
+//    {
+//        return new SetStatusGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public SaveSessionGatewayFilterFactory saveSessionGatewayFilterFactory()
+//    {
+//        return new SaveSessionGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory()
+//    {
+//        return new StripPrefixGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RequestHeaderToRequestUriGatewayFilterFactory requestHeaderToRequestUriGatewayFilterFactory()
+//    {
+//        return new RequestHeaderToRequestUriGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RequestSizeGatewayFilterFactory requestSizeGatewayFilterFactory()
+//    {
+//        return new RequestSizeGatewayFilterFactory();
+//    }
+//
+//    @Bean
+//    public RequestHeaderSizeGatewayFilterFactory requestHeaderSizeGatewayFilterFactory()
+//    {
+//        return new RequestHeaderSizeGatewayFilterFactory();
+//    }
 
     @Plugin
     public RouteLocator globalLocator(RouteLocatorBuilder builder)
