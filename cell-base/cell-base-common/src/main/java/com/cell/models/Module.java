@@ -30,6 +30,7 @@ public enum Module
     HTTP_GATEWAY((short) 106, "GATEWAY"),
     HTTP_DISPATCHER((short) 107, "HTTP_DISPATCHER"),
     HTTP_GATEWAY_SENTINEL((short) 108, "SENTINEL"),
+    STATISTIC((short) 109, "STATISTIC"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
