@@ -1,9 +1,11 @@
 package com.cell.filter;
 
 import com.cell.annotations.ActivePlugin;
+import com.cell.center.JobCenter;
 import com.cell.constants.OrderConstants;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.log.LOG;
+import com.cell.model.ErrorResponseEvent;
 import com.cell.model.ServerMetaInfo;
 import com.cell.models.Module;
 import com.cell.utils.GatewayUtils;
@@ -41,6 +43,7 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
         // FIXME ,定制化信息
         if (metaInfo == null)
         {
+            JobCenter.getInstance().addJob(ErrorResponseEvent.builder().test("asd").build());
 //            return chain.filter(exchange);
 //            throw new GatewayException("command not exists");
             return GatewayUtils.fastFinish(exchange, "command not exists");
