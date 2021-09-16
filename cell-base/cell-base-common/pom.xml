@@ -18,6 +18,7 @@
 
 
     <dependencies>
+
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -54,8 +55,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>gdca</groupId>-->
-            <!--<artifactId>cesecore-common</artifactId>-->
+        <!--<groupId>gdca</groupId>-->
+        <!--<artifactId>cesecore-common</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>commons-configuration</groupId>
@@ -76,13 +77,18 @@
             <groupId>cn.sanwei</groupId>
             <artifactId>bxcrypto</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-commons</artifactId>
+            <version>1.8.0-M1</version>
+        </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.sjsm</groupId>-->
-            <!--<artifactId>sjsm-sm2</artifactId>-->
+        <!--<groupId>com.sjsm</groupId>-->
+        <!--<artifactId>sjsm-sm2</artifactId>-->
         <!--</dependency>-->
         <!--<dependency>-->
-            <!--<groupId>com.sjsm</groupId>-->
-            <!--<artifactId>sjsm-sm2-cert</artifactId>-->
+        <!--<groupId>com.sjsm</groupId>-->
+        <!--<artifactId>sjsm-sm2-cert</artifactId>-->
         <!--</dependency>-->
 
 

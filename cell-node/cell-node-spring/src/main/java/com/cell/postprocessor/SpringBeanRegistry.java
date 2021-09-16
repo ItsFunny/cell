@@ -123,6 +123,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
     {
         factory.addBeanPostProcessor(SpringExtensionManager.getInstance());
+
     }
 
 
@@ -204,7 +205,6 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
         Map<String, AnnotaionManagerWrapper> managers = (Map<String, AnnotaionManagerWrapper>) ctx.getData().get(ConfigConstants.MANAGERS);
 
         SpringExtensionManager.getInstance().setBeanDefinitionMap(pluginBeanDefinitions);
-        SpringExtensionManager.getInstance().setManagers(managers);
     }
 
     private void registerPostProcessors(Set<Class<? extends IBeanPostProcessortAdapter>> prepareToRegistryPostProcessor)

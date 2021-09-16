@@ -1,9 +1,6 @@
 package com.cell.utils;
 
 import com.cell.exceptions.ProgramaException;
-import io.netty.util.internal.ReflectionUtil;
-import net.bytebuddy.ByteBuddy;
-import org.springframework.util.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -22,6 +19,12 @@ import java.util.stream.Collectors;
 
 public class ReflectUtil
 {
+    public static void getObjectFileAnnotation(final Object obj, Annotation... annotation)
+    {
+        Field[] fields = obj.getClass().getFields();
+
+    }
+
     /**
      * 直接读取对象属性值, 无视private/protected修饰符, 不经过getter函数.
      */

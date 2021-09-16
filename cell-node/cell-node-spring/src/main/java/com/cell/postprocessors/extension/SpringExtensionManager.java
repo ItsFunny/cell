@@ -22,6 +22,7 @@ import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
+import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.tool.Banner;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.DateUtils;
@@ -56,8 +57,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     private Set<String> unimportedSet = new HashSet<>();
     private SpringNodeContext ctx;
     private Map<String, BeanDefinition> BeanDefinitionMap;
-    private Set<Class<?>> nodesSet;
-    private Map<String, AnnotaionManagerWrapper> managers;
 
     private Options allOps;
     private int state = 0;
@@ -92,21 +91,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         BeanDefinitionMap = beanDefinitionMap;
     }
 
-    public void setManagers(Map<String, AnnotaionManagerWrapper> managers)
-    {
-        this.nodesSet = new HashSet<>();
-        Collection<AnnotaionManagerWrapper> values = managers.values();
-        for (AnnotaionManagerWrapper value : values)
-        {
-            Map<String, AnnotationNodeWrapper> managerNodes = value.getManagerNodes();
-            Collection<AnnotationNodeWrapper> nodes = managerNodes.values();
-            for (AnnotationNodeWrapper node : nodes)
-            {
-                this.nodesSet.add(node.getClass());
-            }
-        }
-        this.managers = managers;
-    }
 
 
     void initCommandLine() throws ContainerException, ParseException, InstantiationException, IllegalAccessException, IllegalStateException
@@ -171,7 +155,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException
     {
-        this.replace(bean, beanName);
+
         return bean;
     }
 
@@ -237,7 +221,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         {
             if (state == 2)
             {
-                this.finalHandleManager();
+                ManagerFactoryPostProcessor.getInstance().finalHandleManager();
                 onStart((ApplicationStartedEvent) event);
                 LOG.info(Module.CONTAINER, "\n{}", Banner.START);
                 state = 3;
@@ -260,7 +244,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                     }
                 }
                 state = 4;
-                this.flush();
             } else
             {
                 LOG.warn(Module.CONTAINER, "application ready twice");
@@ -269,25 +252,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     }
 
 
-    private void finalHandleManager()
-    {
-        Set<String> keys = managers.keySet();
-        for (String key : keys)
-        {
-            AnnotaionManagerWrapper wrapper = managers.get(key);
-            IReflectManager manager = wrapper.getManager();
-            List<Object> collect = wrapper.getManagerNodes().values().stream().map(p -> p.getNode()).collect(Collectors.toList());
-            Collections.sort(collect, (a, b) ->
-            {
-                ManagerNode n1 = a.getClass().getAnnotation(ManagerNode.class);
-                ManagerNode n2 = b.getClass().getAnnotation(ManagerNode.class);
-                int value1 = n1 == null ? OrderConstants.DEFAULT_ORDER : n1.orderValue();
-                int value2 = n2 == null ? OrderConstants.DEFAULT_ORDER : n2.orderValue();
-                return Integer.compare(value1, value2);
-            });
-            manager.invokeInterestNodes(collect);
-        }
-    }
 
     void addExcludeExtension(String eName)
     {
@@ -464,38 +428,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
 //            LOG.info(Module.CONTAINER, "node shutdown by signal");
             onClose(ctx);
         }
-    }
-
-    private void replace(Object bean, String beanName)
-    {
-        if (CollectionUtils.isEmpty(this.nodesSet))
-        {
-            return;
-        }
-        if (!this.nodesSet.contains(bean.getClass()))
-        {
-            return;
-        }
-        Set<String> keys = this.managers.keySet();
-        for (String key : keys)
-        {
-            AnnotaionManagerWrapper annotaionManagerWrapper = this.managers.get(key);
-            Map<String, AnnotationNodeWrapper> nodes = annotaionManagerWrapper.getManagerNodes();
-            Collection<AnnotationNodeWrapper> values = nodes.values();
-            for (AnnotationNodeWrapper value : values)
-            {
-                if (value.getNode() != null && value.getNode().getClass().equals(bean.getClass()))
-                {
-                    LOG.info(Module.CONTAINER, "bean 替换,origin:{},after:{},name:{}", value.getNode(), bean, beanName);
-                    value.setNode(bean);
-                }
-            }
-        }
-    }
-
-    private void flush()
-    {
-        this.nodesSet = null;
     }
 
 }

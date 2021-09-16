@@ -11,9 +11,12 @@ package com.cell.config;
 public interface ConfigConstants
 {
     String ACTIVE_PLUGINS = "ACTIVE_PLUGINS";
-    String FACTORIES="FACTORIES";
-    String MANAGERS="MANAGERS";
-    String interestAnnotationsClazzs="interestAnnotationsClazzs";
-    String toRegistryPostProcessor="toRegistryPostProcessor";
-    String configurationClasses="configurationClasses";
+    String FACTORIES = "FACTORIES";
+    String MANAGERS = "MANAGERS";
+    String annotationNodes="annotationNodes";
+    String interestAnnotationsClazzs = "interestAnnotationsClazzs";
+    String toRegistryPostProcessor = "toRegistryPostProcessor";
+    String configurationClasses = "configurationClasses";
+
+    String asBeanClz = "asBeanClz";
 }

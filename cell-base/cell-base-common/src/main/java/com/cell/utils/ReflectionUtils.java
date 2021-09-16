@@ -1,17 +1,29 @@
 package com.cell.utils;
 
+import com.cell.constants.BitConstants;
+import com.cell.wrapper.MonoWrapper;
+import lombok.Data;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
+import org.junit.platform.commons.util.AnnotationUtils;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.net.JarURLConnection;
 import java.net.URL;
+import java.security.cert.TrustAnchor;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -28,6 +40,47 @@ public class ReflectionUtils extends org.reflections.ReflectionUtils
     private static final String DEFAULT_PREFIX = "com.cell";
 
 
+    public static Mono<MonoWrapper<Boolean>> containAnnotaitonsInFieldOrMethod(Class<?> clz, byte bitConstants, Class<? extends Annotation>... ac)
+    {
+        if (ac.length == 1)
+        {
+            MonoWrapper<Boolean> wp = new MonoWrapper<>();
+            wp.setRet(containAnnotaitonsInFieldOrMethod(clz, ac[0]));
+            return Mono.just(wp);
+        }
+        Flux<Class<? extends Annotation>> classFlux = Flux.fromStream(Stream.of(ac));
+        MonoWrapper<Boolean> wp = new MonoWrapper<>();
+        wp.setRet(false);
+        return Mono.defer(() ->
+                classFlux.handle((anno, sink) ->
+                {
+                    if (containAnnotaitonsInFieldOrMethod(clz, anno))
+                    {
+                        if (bitConstants == BitConstants.or)
+                        {
+                            wp.setRet(true);
+                            sink.complete();
+                            return;
+                        }
+                    } else
+                    {
+                        if (bitConstants == BitConstants.and)
+                        {
+                            wp.setRet(false);
+                            sink.complete();
+                            return;
+                        }
+                    }
+                    sink.next(anno);
+                }).then().thenReturn(wp));
+    }
+
+    // FIXME ,RETURN mono instead of boolean
+    public static boolean containAnnotaitonsInFieldOrMethod(Class<?> clz, Class<? extends Annotation> ac)
+    {
+        return CollectionUtils.isNotEmpty(AnnotationUtils.findAnnotatedFields(clz, ac, (c) -> true)) || (CollectionUtils.isNotEmpty(AnnotationUtils.findAnnotatedMethods(clz, ac, org.junit.platform.commons.util.ReflectionUtils.HierarchyTraversalMode.TOP_DOWN)));
+    }
+
     /**
      * Gets all genesis class by interface.
      * 获取泛型接口的所有实现
@@ -37,7 +90,8 @@ public class ReflectionUtils extends org.reflections.ReflectionUtils
      * @param genesisClazz   the genesis clazz 还会有一个泛型类型判断
      * @return the all genesis class by interface
      */
-    public static List<Class> getAllGenesisClassByInterface(String prefix, Class interfaceClazz, Class genesisClazz, ScanTillSatisfiedClazzHandler handler)
+    public static List<Class> getAllGenesisClassByInterface(String prefix, Class interfaceClazz, Class
+            genesisClazz, ScanTillSatisfiedClazzHandler handler)
     {
         List<Class> result = new ArrayList<>();
         if (StringUtils.isNullOrEmpty(prefix))
@@ -93,9 +147,10 @@ public class ReflectionUtils extends org.reflections.ReflectionUtils
         return result;
     }
 
-    public static List<Class> getAllGenesisClassByInterface(Class interfaceClazz, Class genesisClazz, ScanTillSatisfiedClazzHandler handler)
+    public static List<Class> getAllGenesisClassByInterface(Class interfaceClazz, Class
+            genesisClazz, ScanTillSatisfiedClazzHandler handler)
     {
-        return getAllGenesisClassByInterface(DEFAULT_PREFIX, interfaceClazz, genesisClazz,handler);
+        return getAllGenesisClassByInterface(DEFAULT_PREFIX, interfaceClazz, genesisClazz, handler);
     }
 
     public static interface ScanTillSatisfiedClazzHandler

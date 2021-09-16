@@ -17,7 +17,9 @@ import java.util.Map;
  */
 public interface IBeanDefinitionRegistryPostProcessorAdapter extends BeanDefinitionRegistryPostProcessor, IInitOnce
 {
-    List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor();
+    default  List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor(){
+        return null;
+    }
 
     default void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {

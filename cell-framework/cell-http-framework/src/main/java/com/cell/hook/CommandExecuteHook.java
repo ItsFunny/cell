@@ -1,8 +1,14 @@
 package com.cell.hook;
 
+import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
+import com.cell.constants.BitConstants;
 import com.cell.reactor.IHttpReactor;
+import com.cell.utils.ReflectionUtils;
+import com.cell.wrapper.MonoWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Charlie
@@ -36,4 +42,11 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
     {
 
     }
+
+    public static void main(String[] args)
+    {
+        Mono<MonoWrapper<Boolean>> monoWrapperMono = ReflectionUtils.containAnnotaitonsInFieldOrMethod(CommandExecuteHook.class, BitConstants.or, AutoPlugin.class, Autowired.class);
+        monoWrapperMono.subscribe((v) -> System.out.println(v));
+    }
+
 }
