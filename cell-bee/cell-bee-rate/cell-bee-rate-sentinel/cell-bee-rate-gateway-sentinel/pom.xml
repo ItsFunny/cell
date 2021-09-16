@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-bee-event</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-gate-common</artifactId>
             <version>${cell.version}</version>
         </dependency>
@@ -41,6 +46,11 @@
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-bee-statistic-base</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-bee-statistic-prometheus</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>

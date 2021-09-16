@@ -11,8 +11,10 @@ import com.cell.IRateService;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.base.IScheduleCounter;
+import com.cell.center.JobCenter;
 import com.cell.constants.DebugConstants;
 import com.cell.constants.SentinelConstants;
+import com.cell.event.StasticEvent;
 import com.cell.exception.RateBlockException;
 import com.cell.handler.IGatewayBlockHandler;
 import com.cell.log.LOG;
@@ -30,7 +32,6 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import javax.annotation.Resource;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Set;
@@ -112,6 +113,14 @@ public class GatewayRateFilter implements GlobalFilter, Ordered
     private void postRequest(long startTime, String path, ServerWebExchange exchange)
     {
         long cost = System.currentTimeMillis() - startTime;
+
+        StasticEvent event = StasticEvent.builder()
+                .startTIme(startTime)
+                .method(exchange.getRequest().getMethod().name().toLowerCase())
+                .uri(exchange.getRequest().getURI().getPath())
+                .endTime(System.currentTimeMillis()).build();
+        JobCenter.getInstance().addJob(event);
+
         LOG.info(Module.HTTP_GATEWAY, "执行完毕,uri:{},sequenceId:{},耗时:{}", path, GatewayUtils.getSequenceId(exchange.getRequest()), cost);
         RateUtils.exitEntry(exchange);
     }

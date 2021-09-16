@@ -28,7 +28,7 @@ public class GatewayMetricsConfiguration
         Integer typeValue = config.getTypeValue();
         return HistogramStator.
                 build("ExceedDelayThresoldCount", "ExceedDelayThresoldCount")
-                .labelNames(StatConstants.COMMON_LABELS)
+                .labelNames(StatConstants.HTTP_GATE_LABELS)
                 .average(type, typeValue)
                 .operate(EnumStatOperateMask.MAX_VALUE, "MaxResponseDelay")
                 .operate(EnumStatOperateMask.MIN_VALUE, "MinResponseDelay")

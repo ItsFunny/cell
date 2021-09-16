@@ -13,4 +13,5 @@ public interface HookConstants
     String GROUP_CMD_HOOK = "GROUP_CMD_HOOK";
     String NAME_HOOK = "hook";
     String COMMAND_HOOK_TIMEOUT = "COMMAND_HOOK_TIMEOUT";
+
 }
