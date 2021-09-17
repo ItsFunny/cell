@@ -1,19 +1,7 @@
 package com.cell.center;
 
 import com.cell.annotations.Manager;
-import com.cell.events.IEvent;
-import com.cell.hooks.IEventHook;
-import com.cell.hooks.IHookChain;
-import com.cell.manager.AbstractReflectManager;
 import com.cell.manager.IReflectManager;
-import com.cell.utils.CollectionUtils;
-import com.google.common.eventbus.Subscribe;
-import reactor.core.Disposable;
-import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -38,5 +26,11 @@ public class EventCenter extends AbstractEventCenter
     public IReflectManager createOrDefault()
     {
         return instance;
+    }
+
+    @Override
+    protected void afterInvoke()
+    {
+        JobCenter.getInstance().registerSubscriber(this);
     }
 }

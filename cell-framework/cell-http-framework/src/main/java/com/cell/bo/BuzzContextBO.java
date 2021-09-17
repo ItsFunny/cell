@@ -1,14 +1,11 @@
 package com.cell.bo;
 
 import com.cell.command.IHttpCommand;
-import com.cell.config.ConfigConstants;
 import com.cell.constants.ContextConstants;
-import com.cell.context.IHttpContext;
+import com.cell.context.IHttpCommandContext;
 import com.cell.protocol.ContextResponseWrapper;
-import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.serialize.ISerializable;
-import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -22,14 +19,14 @@ import lombok.Data;
 @Data
 public class BuzzContextBO
 {
-    private IHttpContext context;
+    private IHttpCommandContext context;
     private ISerializable bo;
     private IHttpCommand cmd;
 
     public IMapDynamicHttpReactor getReactor(){
         return (IMapDynamicHttpReactor) this.context.getReactor();
     }
-    public BuzzContextBO(IHttpContext context, ISerializable bo, IHttpCommand cmd)
+    public BuzzContextBO(IHttpCommandContext context, ISerializable bo, IHttpCommand cmd)
     {
         this.context = context;
         this.bo = bo;

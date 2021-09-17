@@ -2,7 +2,6 @@ package com.cell.hook;
 
 import com.cell.annotations.Manager;
 import com.cell.center.AbstractEventCenter;
-import com.cell.manager.AbstractReflectManager;
 import com.cell.manager.IReflectManager;
 
 /**
@@ -24,5 +23,11 @@ public class MetricsHookManager extends AbstractEventCenter
     public IReflectManager createOrDefault()
     {
         return instance;
+    }
+
+    @Override
+    protected void afterInvoke()
+    {
+
     }
 }

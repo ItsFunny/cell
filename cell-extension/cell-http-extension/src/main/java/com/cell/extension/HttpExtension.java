@@ -2,15 +2,14 @@ package com.cell.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.channel.DefaultHttpChannel;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
-import com.cell.hook.CmdHookManager;
 import com.cell.log.LOG;
+import com.cell.manager.WebHandlerManager;
 import com.cell.models.Module;
-import com.cell.postprocessor.ReactorCache;
-import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.service.impl.DefaultHttpCommandDispatcher;
@@ -18,14 +17,8 @@ import com.cell.service.impl.DynamicControllerServiceImpl;
 import com.cell.utils.StringUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.annotation.Order;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * @author Charlie
@@ -89,17 +82,13 @@ public class HttpExtension extends AbstractSpringNodeExtension
             LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);
             this.dispatcher.addReactor(reactor);
         }
-        ((DefaultHttpCommandDispatcher) this.dispatcher).setTracker(CmdHookManager.getInstance().getHook());
+        DefaultHttpChannel instance = DefaultHttpChannel.getInstance();
+        instance.setPipeline(WebHandlerManager.getInstance().getPipeline());
+        ((DefaultHttpCommandDispatcher) this.dispatcher).setHttpChannel(instance);
+
         ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
 
         this.dynamicControllerService.batchRegisterReactor(reactors);
-
-
-        //        Collection<IDynamicHttpReactor> reactors = ReactorCache.getReactors();
-//        for (IDynamicHttpReactor reactor : reactors)
-//        {
-//            this.dynamicControllerService.reigsterReactor(reactor);
-//        }
     }
 
     @Override

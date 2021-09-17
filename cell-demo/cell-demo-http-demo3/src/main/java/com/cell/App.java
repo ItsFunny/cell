@@ -5,13 +5,11 @@ import com.cell.annotations.*;
 import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.context.IHttpContext;
+import com.cell.context.IHttpCommandContext;
 import com.cell.dispatcher.IHttpCommandDispatcher;
-import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
@@ -61,24 +59,21 @@ public class App
     public static class Reactor1Cmd1 extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             Reactor1 reactor1 = (Reactor1) ctx.getReactor();
             Assert.notNull(reactor1.logic, "asd");
             ctx.response(this.createResponseWp().ret("cmd1").build());
-            return null;
         }
     }
 
     @HttpCmdAnno(uri = "/reactor2cmd1", httpCommandId = 1)
     public static class Reactor2CMD1 extends AbstractHttpCommand
     {
-
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             ctx.response(this.createResponseWp().ret("reactor2#cmd1").build());
-            return null;
         }
     }
 
@@ -126,11 +121,9 @@ public class App
                     CC1 cc1 = (CC1) reactor.getDependency(CC1.class);
                     Assert.notNull(cc1, "bean cc1不可为空");
                     wp.success("post");
-                    return null;
                 }).make().get("/get", (wp) ->
         {
             wp.success("get");
-            return null;
-        }).make().done().build().start( args);
+        }).make().done().build().start(args);
     }
 }

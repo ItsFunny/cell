@@ -1,18 +1,18 @@
 package com.cell.hook;
 
-import com.cell.annotations.CellOrder;
 import com.cell.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
-import com.cell.constants.Constants;
 import com.cell.constants.ContextConstants;
+import com.cell.context.IHttpCommandContext;
+import com.cell.context.IHttpHandlerSuit;
+import com.cell.hooks.IChainExecutor;
+import com.cell.hooks.IChainHook;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
-import com.cell.protocol.ICommand;
-import com.cell.reactor.ICommandReactor;
-import com.cell.reactor.IReactor;
-import org.springframework.http.HttpStatus;
+import com.cell.protocol.IContext;
 import org.springframework.web.context.request.async.DeferredResult;
+import reactor.core.publisher.Mono;
 
 /**
  * @author Charlie
@@ -25,32 +25,33 @@ import org.springframework.web.context.request.async.DeferredResult;
 @ManagerNode(group = HookConstants.GROUP_CMD_HOOK, name = HookConstants.COMMAND_HOOK_TIMEOUT, orderValue = 0)
 public class CommandDefferResultHook extends AbstractHttpCommandHook
 {
+//    @Override
+//    protected Mono<Void> hook(IContext context, IChainExecutor executor)
+//    {
+//        IHttpHandlerSuit suit = (IHttpHandlerSuit) context;
+//        return super.hook(suit.getBuzContext(), executor);
+//    }
+
     @Override
-    protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
+    protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
     {
-        DeferredResult<Object> result = wrapper.getContext().getResult();
+        DeferredResult<Object> result = ctx.getResult();
         result.onTimeout(() ->
         {
             long currentTime = System.currentTimeMillis();
-            long time = wrapper.getContext().getRequestTimestamp();
-            final String sequenceId = wrapper.getContext().getSequenceId();
+            long time = ctx.getRequestTimestamp();
+            final String sequenceId = ctx.getSequenceId();
             LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
-            wrapper.getContext().response(ContextResponseWrapper.builder()
+            ctx.response(ContextResponseWrapper.builder()
                     .status(ContextConstants.TIMEOUT)
                     .build());
         });
-        return wrapper.getLastResult();
-    }
-
-    @Override
-    protected void onTrackEnd(HttpCommandHookResult res)
-    {
-
-    }
-
-    @Override
-    protected void onExceptionCaught(Exception e)
-    {
-
+        return hook.execute(ctx).doOnError((e) ->
+        {
+            this.onExceptionCaught(e);
+        }).then(Mono.fromRunnable(() ->
+        {
+            System.out.println(1);
+        }));
     }
 }

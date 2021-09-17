@@ -2,6 +2,7 @@ package com.cell.center;
 
 import com.cell.events.IEvent;
 import com.cell.hooks.IEventHook;
+import com.cell.protocol.IEventContext;
 import com.cell.utils.ReflectUtil;
 import lombok.Builder;
 import lombok.Data;
@@ -18,9 +19,20 @@ public class EventCenterTest
 {
     @Data
     @Builder
-    static class StringEvent implements IEvent
+    static class StringEvent implements IEventContext
     {
         String str;
+
+        @Override
+        public IEvent getEvent()
+        {
+            return new A();
+        }
+
+        class A implements IEvent
+        {
+
+        }
     }
 
     @Test
@@ -32,19 +44,19 @@ public class EventCenterTest
             StringEvent e = (StringEvent) str;
             e.str = "hook1_" + e.str;
             System.out.println(e);
-            return hook.hook(e);
+            return hook.execute(e);
         };
         IEventHook hook2 = (str, hook) ->
         {
             StringEvent e = (StringEvent) str;
             e.str = "hook2_" + e.str;
             System.out.println(e);
-            return hook.hook(str);
+            return hook.execute(str);
         };
         EventCenter.getInstance().registerEventHook(hook1);
         EventCenter.getInstance().registerEventHook(hook2);
-        JobCenter.getInstance().addJob(StringEvent.builder().str("123").build());
-        JobCenter.getInstance().addJob(StringEvent.builder().str("ssssssssss").build());
+//        JobCenter.getInstance().addJob(StringEvent.builder().str("123").build());
+//        JobCenter.getInstance().addJob(StringEvent.builder().str("ssssssssss").build());
 
         TimeUnit.SECONDS.sleep(10);
     }

@@ -18,7 +18,7 @@ import lombok.Data;
  * @Date 创建时间：2021-08-30 11:33
  */
 @Data
-public abstract class AbstractBaseContext implements IContext
+public abstract class AbstractBaseContext implements IBuzzContext
 {
     protected String sequenceId;
     protected long requestTimestamp;

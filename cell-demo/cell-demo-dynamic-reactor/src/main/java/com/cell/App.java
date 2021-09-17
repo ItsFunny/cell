@@ -1,19 +1,16 @@
 package com.cell;
 
 import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.annotations.Command;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.context.IHttpContext;
-import com.cell.protocol.ICommandExecuteResult;
+import com.cell.context.IHttpCommandContext;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
@@ -31,11 +28,10 @@ public class App
     public static class CCCmd extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("onExecute");
             ctx.response(this.createResponseWp().ret("ccccmd").build());
-            return null;
         }
     }
 
@@ -63,11 +59,10 @@ public class App
     public static class MyComd2 extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             ctx.response(this.createResponseWp()
                     .ret("123").build());
-            return null;
         }
     }
 
@@ -97,14 +92,12 @@ public class App
                     Object dependency = reactor.getDependency(CC.class);
                     Assert.notNull(dependency, "cc不可为空");
                     ctx.success("getUserName");
-                    return null;
                 })
                 .newCommand()
                 .withUri("/getFile")
                 .withBuzzHandler((ctx) ->
                 {
                     ctx.success("getFile");
-                    return null;
-                }).make().done().build().start( args);
+                }).make().done().build().start(args);
     }
 }

@@ -1,13 +1,12 @@
 package com.cell.hook;
 
-import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
-import com.cell.constants.BitConstants;
+import com.cell.context.IHttpCommandContext;
+import com.cell.hooks.IChainHook;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.reactor.IHttpReactor;
-import com.cell.utils.ReflectionUtils;
-import com.cell.wrapper.MonoWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import reactor.core.publisher.Mono;
 
 /**
@@ -21,32 +20,16 @@ import reactor.core.publisher.Mono;
 @ManagerNode(group = HookConstants.GROUP_CMD_HOOK, name = HookConstants.NAME_HOOK, orderValue = Integer.MAX_VALUE)
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
-    @Override
-    protected HttpCommandHookResult onDeltaHook(HookCommandWrapper wrapper)
-    {
-        IHttpReactor reactor = wrapper.getReactor();
-        reactor.execute(wrapper.getContext());
-        HttpCommandHookResult res = new HttpCommandHookResult();
-        res.setContext(wrapper.getContext());
-        return res;
-    }
+
 
     @Override
-    protected void onTrackEnd(HttpCommandHookResult res)
+    protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
     {
-
+        IHttpReactor reactor = ctx.getHttpReactor();
+        reactor.execute(ctx);
+        return hook.execute(ctx).doOnError(this::onExceptionCaught).then(Mono.fromRunnable(() ->
+        {
+            LOG.info(Module.HTTP_FRAMEWORK, "done");
+        }));
     }
-
-    @Override
-    protected void onExceptionCaught(Exception e)
-    {
-
-    }
-
-    public static void main(String[] args)
-    {
-        Mono<MonoWrapper<Boolean>> monoWrapperMono = ReflectionUtils.containAnnotaitonsInFieldOrMethod(CommandExecuteHook.class, BitConstants.or, AutoPlugin.class, Autowired.class);
-        monoWrapperMono.subscribe((v) -> System.out.println(v));
-    }
-
 }

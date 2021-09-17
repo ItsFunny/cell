@@ -199,5 +199,3 @@
 - 一些插件补全
 - benchmark测试
 - 还有一大堆.......
-# Other
-- linux 一切皆文件,在这则一切皆hook,无论是filter,interceptor,decorator等 

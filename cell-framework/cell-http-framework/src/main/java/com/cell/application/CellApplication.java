@@ -402,10 +402,9 @@ public class CellApplication
     {
 
         @Override
-        public ICommandExecuteResult execute(BuzzContextBO bo) throws IOException
+        public void execute(BuzzContextBO bo) throws IOException
         {
             bo.success("post done ");
-            return null;
         }
     }
 
@@ -413,10 +412,9 @@ public class CellApplication
     {
 
         @Override
-        public ICommandExecuteResult execute(BuzzContextBO bo) throws IOException
+        public void execute(BuzzContextBO bo) throws IOException
         {
             bo.success("get");
-            return null;
         }
     }
 }

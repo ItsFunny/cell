@@ -14,4 +14,6 @@ public interface HookConstants
     String NAME_HOOK = "hook";
     String COMMAND_HOOK_TIMEOUT = "COMMAND_HOOK_TIMEOUT";
 
+
+    String GROUP_CMD_EXCEPTION="GROUP_CMD_EXCEPTION";
 }

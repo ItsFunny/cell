@@ -1,15 +1,12 @@
 package com.cell.manager;
 
 import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.Manager;
 import com.cell.annotations.ManagerNode;
 import com.cell.initializer.SpringInitializerTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-
-import java.util.Collection;
 
 /**
  * @author Charlie
@@ -38,26 +35,6 @@ public class ManagerTest
 
     }
 
-    @Manager(name = "mym")
-    public static class MyM extends AbstractReflectManager
-    {
-        private MyM() {}
-
-        @Override
-        protected void onInvokeInterestNodes(Collection<Object> nodes)
-        {
-            for (Object node : nodes)
-            {
-                System.out.println(node);
-            }
-        }
-
-        @Override
-        public IReflectManager createOrDefault()
-        {
-            return new MyM();
-        }
-    }
 
     public static void main(String[] args)
     {

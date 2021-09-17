@@ -31,7 +31,7 @@ public abstract class AbstractCommand implements ICommand
 
     private IHead head;
 
-    private IContext ctx;
+    private IBuzzContext ctx;
 
 
     private String id;
@@ -96,7 +96,7 @@ public abstract class AbstractCommand implements ICommand
 //        }
 //    }
     @Override
-    public ISerializable getBO(IContext context)
+    public ISerializable getBO(IBuzzContext context)
     {
         return null;
     }

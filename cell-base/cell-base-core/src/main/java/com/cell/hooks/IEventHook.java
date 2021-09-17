@@ -1,6 +1,7 @@
 package com.cell.hooks;
 
 import com.cell.events.IEvent;
+import com.cell.protocol.IEventContext;
 import reactor.core.publisher.Mono;
 
 /**
@@ -12,12 +13,6 @@ import reactor.core.publisher.Mono;
  * @Date 创建时间：2021-09-14 15:33
  */
 // FIXME ,REMOVE GENSIS
-public interface IEventHook
+public interface IEventHook extends IHook
 {
-    Mono<Void> hook(IEvent t, IHookChain hook);
-
-    default boolean predict(IEvent t)
-    {
-        return true;
-    }
 }

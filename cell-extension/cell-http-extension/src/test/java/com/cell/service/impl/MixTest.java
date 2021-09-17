@@ -9,7 +9,7 @@ import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
-import com.cell.context.IHttpContext;
+import com.cell.context.IHttpCommandContext;
 import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
@@ -41,7 +41,7 @@ public class MixTest
     public static class MyAA extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("execution");
             B b = new B();
@@ -51,7 +51,6 @@ public class MixTest
                     .other(HttpContextResponseBody.builder().status(HttpStatus.OK).build())
                     .ret(b)
                     .build());
-            return null;
         }
     }
 
@@ -77,7 +76,7 @@ public class MixTest
     {
 
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             System.out.println("mydemo2");
             B b = new B();
@@ -87,7 +86,6 @@ public class MixTest
                     .other(HttpContextResponseBody.builder().status(HttpStatus.OK).build())
                     .ret(b)
                     .build());
-            return null;
         }
     }
 

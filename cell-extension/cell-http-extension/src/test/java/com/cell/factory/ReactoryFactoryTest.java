@@ -59,7 +59,6 @@ public class ReactoryFactoryTest
                     {
                         count.incrementAndGet();
                         System.out.println("uri1 execute");
-                        return null;
                     })
                     .newCommand()
                     .withUri(uris.get(1))
@@ -67,7 +66,6 @@ public class ReactoryFactoryTest
                     {
                         count.incrementAndGet();
                         System.out.println("uri2 execute");
-                        return null;
                     }).make().build();
             Assert.assertNotNull(reactor);
             System.out.println(reactor);

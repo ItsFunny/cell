@@ -3,21 +3,17 @@ package com.cell.context;
 import com.cell.adapter.HandlerMethodReturnValueHandler;
 import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotations.HttpCmdAnno;
-import com.cell.command.IHttpCommand;
 import com.cell.command.impl.DummyHttpCommand;
 import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
-import com.cell.enums.CellError;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exception.HttpFramkeworkException;
-import com.cell.hook.IHttpCommandHook;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.AbstractBaseContext;
 import com.cell.protocol.CommandContext;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.reactor.IHttpReactor;
-import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import lombok.Data;
@@ -26,13 +22,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
+import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Charlie
@@ -43,19 +35,16 @@ import java.util.Map;
  * @Date 创建时间：2021-08-30 11:34
  */
 @Data
-public abstract class AbstractHttpCommandContext extends AbstractBaseContext implements IHttpContext
+public abstract class AbstractHttpCommandContext extends AbstractBaseContext implements IHttpCommandContext
 {
     protected CommandContext commandContext;
-    // FIXME ,有更好的做法
-    protected IHttpCommandHook hook;
-
+    private IHttpHandlerSuit handlerSuit;
     private HttpCmdAnno httpCmdAnno;
 
 
-    public AbstractHttpCommandContext(CommandContext commandContext, IHttpCommandHook hk)
+    public AbstractHttpCommandContext(CommandContext commandContext)
     {
         this.commandContext = commandContext;
-        this.hook = hk;
     }
 
     @Override
@@ -104,9 +93,13 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         if (null != wp.getException())
         {
             LOG.erroring(Module.HTTP_FRAMEWORK, "调用失败,exception:{},from:{}", wp.getException(), wp.getFrom());
-            this.hook.exceptionCaught(wp.getException());
-            this.getPromise().trySuccess();
-            this.commandContext.getResponseResult().setResult(wp.getRet());
+
+            this.handlerSuit.channel().exceptionCaught(this.handlerSuit, wp.getException()).then((Mono.fromRunnable(() ->
+            {
+                this.getPromise().trySuccess();
+                this.commandContext.getResponseResult().setResult(wp.getRet());
+            }))).subscribe();
+
             return;
         }
         if (null == this.httpCmdAnno)
@@ -122,7 +115,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         if (this.timeout(status))
         {
             LOG.warn(Module.HTTP_FRAMEWORK, "触发了超时,cost={},info={}", consumeTime, wp);
-            this.hook.exceptionCaught(new HttpFramkeworkException((IHttpCommand) wp.getCmd(), CellError.PROMISE_TIMEOUT, "asd"));
+
         }
         if (this.getResult().isSetOrExpired())
         {
@@ -202,7 +195,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     }
 
     @Override
-    public void discard() throws IOException
+    public void discard()
     {
         this.response(ContextResponseWrapper.builder()
                 .status(ContextConstants.FAIL)

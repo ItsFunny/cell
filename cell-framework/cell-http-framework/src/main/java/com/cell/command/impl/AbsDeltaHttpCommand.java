@@ -2,9 +2,7 @@ package com.cell.command.impl;
 
 import com.cell.bo.BuzzContextBO;
 import com.cell.command.IBuzzExecutor;
-import com.cell.context.IHttpContext;
-import com.cell.protocol.ICommandExecuteResult;
-import com.cell.protocol.IContext;
+import com.cell.context.IHttpCommandContext;
 import com.cell.serialize.ISerializable;
 
 import java.io.IOException;
@@ -29,16 +27,16 @@ public abstract class AbsDeltaHttpCommand extends AbstractHttpCommand
 
     protected abstract IBuzzExecutor setUpBuzzExecutor();
 
-    @Override
-    public ISerializable getBO(IContext context)
-    {
-        return this.buzzExecutor.serialize((IHttpContext) context);
-    }
+//    @Override
+//    public ISerializable getBO(IContext context)
+//    {
+//        return this.buzzExecutor.serialize((IHttpContext) context);
+//    }
 
     @Override
-    protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
     {
         BuzzContextBO reqBO = new BuzzContextBO(ctx, bo, this);
-        return this.buzzExecutor.execute(reqBO);
+        this.buzzExecutor.execute(reqBO);
     }
 }

@@ -2,20 +2,17 @@ package com.cell.service.impl;
 
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.channel.IHttpChannel;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
 import com.cell.constant.HttpConstants;
-import com.cell.context.DefaultHttpCommandContext;
+import com.cell.context.DefaultHttpHandlerSuit;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
-import com.cell.hook.HookCommandWrapper;
-import com.cell.hook.HttpCommandHookResult;
-import com.cell.hook.IHttpCommandHook;
 import com.cell.protocol.CommandContext;
 import com.cell.reactor.IHttpReactor;
-import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
 import org.springframework.beans.BeansException;
@@ -27,7 +24,6 @@ import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +43,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     private volatile boolean ready;
     private short port = 8080;
 
-    private IHttpCommandHook tracker;
+    private IHttpChannel httpChannel;
 
     private Map<String, IHttpReactor> reactorMap = new HashMap<>();
 
@@ -76,39 +72,42 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         String command = request.getRequestURI();
         IHttpReactor reactor = this.getReactor(command);
         long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
+
+
         CommandContext context = new CommandContext(request, response, timeOut, command);
-        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(context, tracker);
-        commandContext.setIp(HttpUtils.getIpAddress(request));
-        if (null == reactor)
-        {
-            try
-            {
-                commandContext.discard();
-            } catch (IOException e)
-            {
-                throw new HttpFramkeworkException(e.getMessage(), e);
-            }
-            return commandContext.getResult();
-        }
-        this.dispath(reactor, commandContext);
-        return commandContext.getResult();
+
+        DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, reactor);
+
+//        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(context);
+//        commandContext.setIp(HttpUtils.getIpAddress(request));
+//        if (null == reactor)
+//        {
+//            try
+//            {
+//                ctx.discard();
+//            } catch (Exception e)
+//            {
+//                this.httpChannel.exceptionCaught(e);
+//            }
+//            return commandContext.getResult();
+//        }
+        this.httpChannel.readCommand(ctx);
+        return context.getResponseResult();
     }
 
-    public void dispath(IHttpReactor reactor, DefaultHttpCommandContext commandContext) throws HttpFramkeworkException
-    {
-        try
-        {
-            HookCommandWrapper wp = new HookCommandWrapper();
-            wp.setContext(commandContext);
-            wp.setReactor(reactor);
-            HttpCommandHookResult httpCommandHookResult = this.tracker.trackBegin(wp);
-            this.tracker.trackEnd(httpCommandHookResult);
-        } catch (Throwable e)
-        {
-            throw new HttpFramkeworkException(e.getMessage(), e);
-        }
-
-    }
+//    public void dispath(IHttpReactor reactor, DefaultHttpCommandContext commandContext) throws HttpFramkeworkException
+//    {
+//        try
+//        {
+//            HookCommandWrapper wp = new HookCommandWrapper();
+//            wp.setContext(commandContext);
+//            wp.setReactor(reactor);
+//            this.handler.handler(wp).subscribe().dispose();
+//        } catch (Throwable e)
+//        {
+//            throw new HttpFramkeworkException(e.getMessage(), e);
+//        }
+//    }
 
     @Override
     public void addReactor(IHttpReactor reactor)
@@ -166,7 +165,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     @Override
     protected void onInit(InitCTX ctx)
     {
-        this.tracker.initOnce(ctx);
         this.ready = true;
     }
 

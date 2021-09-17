@@ -12,4 +12,6 @@ public interface ManagerConstants
 {
     String defaultManagerName = "default";
     String defaultManagerNodeName = "default_node";
+
+    String MANAGER_WEB_HANDLER = "MANAGER_WEB_HANDLER";
 }

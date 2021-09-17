@@ -1,9 +1,11 @@
 package com.cell.center;
 
 import com.cell.events.IEvent;
-import com.cell.hooks.IEventHook;
-import com.cell.hooks.IHookChain;
-import com.cell.manager.AbstractReflectManager;
+import com.cell.hooks.*;
+import com.cell.protocol.IEventContext;
+import com.cell.services.ChainExecutorFactory;
+import com.cell.services.impl.BaseMutableChainExecutor;
+import com.cell.services.impl.DefaultHookMutableChainExecutor;
 import com.cell.utils.CollectionUtils;
 import com.google.common.eventbus.Subscribe;
 import reactor.core.Disposable;
@@ -21,14 +23,13 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-15 18:44
  */
-public abstract class AbstractEventCenter extends AbstractReflectManager
+public abstract class AbstractEventCenter extends AbstractReflectManager<IEventHook, IChainHook>
 {
     public static final String GROUP_EVENT_CENTER = "GROUP_EVENT_CENTER";
-    private List<IEventHook> hooks = new ArrayList<>();
 
     public void registerEventHook(IEventHook h)
     {
-        this.hooks.add(h);
+        this.pipeline.addFirst(h.getClass().getName(), h);
     }
 
     public AbstractEventCenter()
@@ -36,79 +37,64 @@ public abstract class AbstractEventCenter extends AbstractReflectManager
 
     }
 
-
-    private class DefaultEventHook implements IHookChain<IEvent>
-    {
-        DefaultEventHook(List<IEventHook> hooks)
-        {
-            this.hooks = hooks;
-            this.index = 0;
-        }
-
-        private DefaultEventHook(DefaultEventHook parent, int index)
-        {
-            this.hooks = parent.hooks;
-            this.index = index;
-        }
-
-        private List<IEventHook> hooks;
-        private int index;
-
-        @Override
-        public Mono<Void> hook(IEvent event)
-        {
-            return Mono.defer(() ->
-            {
-                boolean find = false;
-                if (this.index < this.hooks.size())
-                {
-                    IEventHook h = null;
-                    for (; this.index < this.hooks.size(); this.index++)
-                    {
-                        h = this.hooks.get(this.index);
-                        if (h.predict(event))
-                        {
-                            find = true;
-                            break;
-                        }
-                    }
-                    if (!find) return Mono.empty();
-                    DefaultEventHook hh = new DefaultEventHook(this,
-                            this.index + 1);
-                    return h.hook(event, hh);
-                } else
-                {
-                    return Mono.empty();
-                }
-            });
-        }
-    }
-
-
     @Subscribe
     public void hookWithReturn(IEvent event)
     {
-        Disposable subscribe = new DefaultEventHook(this.hooks).hook(event).subscribe();
-        subscribe.dispose();
+        Disposable dos = this.hook(event).subscribe();
+        dos.dispose();
+    }
+
+    protected abstract void afterInvoke();
+
+
+    public Mono<Void> hook(IEvent event)
+    {
+        return this.pipeline.chainExecutor().execute(new DefaultEventWrapper(event));
     }
 
     @Override
-    protected void onInvokeInterestNodes(Collection<Object> nodes)
+    protected ChainExecutorFactory<? extends IListChainExecutor> factory()
     {
-        JobCenter.getInstance().registerSubscriber(this);
-        if (CollectionUtils.isEmpty(nodes))
+        return () -> new DefaultHookMutableChainExecutor();
+    }
+//    @Override
+//    protected void onInvokeInterestNodes(Collection<Object> nodes)
+//    {
+//        if (CollectionUtils.isEmpty(nodes))
+//        {
+//            return;
+//        }
+//        for (Object node : nodes)
+//        {
+//            if (!(node instanceof IEventHook))
+//            {
+//                continue;
+//            }
+//            this.pipeline.addFirst(node.getClass().getName(), (IEventHook) node);
+//        }
+//        this.afterInvoke();
+//    }
+
+
+    class DefaultEventWrapper implements IEventContext
+    {
+        public DefaultEventWrapper(IEvent event)
         {
-            return;
+            this.event = event;
         }
-        for (Object node : nodes)
+
+        private IEvent event;
+
+        @Override
+        public IEvent getEvent()
         {
-            if (!(node instanceof IEventHook))
-            {
-                continue;
-            }
-            this.hooks.add((IEventHook) node);
+            return this.event;
+        }
+
+        @Override
+        public void discard()
+        {
+
         }
     }
-
-
 }

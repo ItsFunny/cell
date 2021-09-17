@@ -2,14 +2,12 @@ package com.cell.command.impl;
 
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
-import com.cell.context.IHttpContext;
+import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.InternalWrapperException;
 import com.cell.protocol.*;
-import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.reactor.IReactor;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.serialize.ISerializable;
@@ -17,7 +15,6 @@ import com.cell.utils.ClassUtil;
 import lombok.Data;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * @author Charlie
@@ -72,11 +69,11 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return this.httpCmdAnno.responseType();
     }
 
-    protected abstract ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException;
+    protected abstract void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException;
 
-    protected IHttpContext getHttpContext()
+    protected IHttpCommandContext getHttpContext()
     {
-        return (IHttpContext) this.getCtx();
+        return (IHttpCommandContext) this.getCtx();
     }
 
     // 解析参数
@@ -98,15 +95,14 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     }
 
     @Override
-    public ICommandExecuteResult execute(IContext ctx)
+    public void execute(IBuzzContext ctx)
     {
         try
         {
-            return this.onExecute((IHttpContext) ctx, this.getBO(ctx));
+            this.onExecute((IHttpCommandContext) ctx, this.getBO(ctx));
         } catch (IOException e)
         {
             throw new InternalWrapperException(e);
         }
     }
-
 }

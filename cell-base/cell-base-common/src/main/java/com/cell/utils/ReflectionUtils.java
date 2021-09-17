@@ -51,28 +51,27 @@ public class ReflectionUtils extends org.reflections.ReflectionUtils
         Flux<Class<? extends Annotation>> classFlux = Flux.fromStream(Stream.of(ac));
         MonoWrapper<Boolean> wp = new MonoWrapper<>();
         wp.setRet(false);
-        return Mono.defer(() ->
-                classFlux.handle((anno, sink) ->
+        return classFlux.handle((anno, sink) ->
+        {
+            if (containAnnotaitonsInFieldOrMethod(clz, anno))
+            {
+                if (bitConstants == BitConstants.or)
                 {
-                    if (containAnnotaitonsInFieldOrMethod(clz, anno))
-                    {
-                        if (bitConstants == BitConstants.or)
-                        {
-                            wp.setRet(true);
-                            sink.complete();
-                            return;
-                        }
-                    } else
-                    {
-                        if (bitConstants == BitConstants.and)
-                        {
-                            wp.setRet(false);
-                            sink.complete();
-                            return;
-                        }
-                    }
-                    sink.next(anno);
-                }).then().thenReturn(wp));
+                    wp.setRet(true);
+                    sink.complete();
+                    return;
+                }
+            } else
+            {
+                if (bitConstants == BitConstants.and)
+                {
+                    wp.setRet(false);
+                    sink.complete();
+                    return;
+                }
+            }
+            sink.next(anno);
+        }).then().thenReturn(wp);
     }
 
     // FIXME ,RETURN mono instead of boolean

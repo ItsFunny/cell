@@ -1,10 +1,7 @@
 package com.cell.context;
 
-import com.cell.command.IHttpCommand;
-import com.cell.hook.IHttpCommandHook;
-import com.cell.protocol.IContext;
+import com.cell.protocol.IBuzzContext;
 import com.cell.reactor.IHttpReactor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Attention:
  * @Date 创建时间：2021-08-30 15:31
  */
-public interface IHttpContext extends IContext
+public interface IHttpCommandContext extends IBuzzContext
 {
     IHttpReactor getHttpReactor();
     HttpServletRequest getHttpRequest();

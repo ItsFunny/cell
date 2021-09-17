@@ -1,6 +1,6 @@
 package com.cell.hook;
 
-import com.cell.context.IHttpContext;
+import com.cell.context.IHttpCommandContext;
 import lombok.Data;
 
 /**
@@ -14,6 +14,6 @@ import lombok.Data;
 @Data
 public class HttpCommandHookResult
 {
-    private IHttpContext context;
+    private IHttpCommandContext context;
 
 }

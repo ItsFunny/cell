@@ -16,9 +16,9 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-08-28 11:03
  */
-public interface ICommand extends ISerializable
+public interface ICommand extends  ISerializable
 {
-    ICommandExecuteResult execute(IContext ctx);
+    void execute(IBuzzContext ctx);
 
     // 获取对等方
     ICommand couple();
@@ -33,7 +33,7 @@ public interface ICommand extends ISerializable
 //    IContext getCtx();
 
     // 用于创建业务对象
-    ISerializable getBO(IContext context);
+    ISerializable getBO(IBuzzContext context);
 
 
     void setCurrent(ICommand caller);

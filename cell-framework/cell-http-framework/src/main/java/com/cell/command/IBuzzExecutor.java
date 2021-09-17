@@ -1,8 +1,7 @@
 package com.cell.command;
 
 import com.cell.bo.BuzzContextBO;
-import com.cell.context.IHttpContext;
-import com.cell.protocol.ICommandExecuteResult;
+import com.cell.context.IHttpCommandContext;
 import com.cell.serialize.ISerializable;
 
 import java.io.IOException;
@@ -17,11 +16,11 @@ import java.io.IOException;
  */
 public interface IBuzzExecutor
 {
-    default ISerializable serialize(IHttpContext context)
+    default ISerializable serialize(IHttpCommandContext context)
     {
         return null;
     }
 
     // FIXME 添加参数
-    ICommandExecuteResult execute(BuzzContextBO bo) throws IOException;
+    void execute(BuzzContextBO bo) throws IOException;
 }

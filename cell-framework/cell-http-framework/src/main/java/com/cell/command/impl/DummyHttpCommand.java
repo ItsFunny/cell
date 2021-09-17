@@ -1,8 +1,7 @@
 package com.cell.command.impl;
 
 import com.cell.annotations.HttpCmdAnno;
-import com.cell.context.IHttpContext;
-import com.cell.protocol.ICommandExecuteResult;
+import com.cell.context.IHttpCommandContext;
 import com.cell.serialize.ISerializable;
 
 import java.io.IOException;
@@ -19,9 +18,8 @@ import java.io.IOException;
 public class DummyHttpCommand extends AbstractHttpCommand
 {
     @Override
-    protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
     {
         ctx.discard();
-        return null;
     }
 }

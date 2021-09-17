@@ -15,6 +15,7 @@ import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
+import com.cell.protocol.IBuzzContext;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
@@ -81,7 +82,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         CommandWrapper wp = this.cmds.get(uri);
         if (wp == null)
         {
-            context.response(this.createResponseWp()
+            ctx.response(this.createResponseWp()
                     .status(ContextConstants.PROGRAMA_ERROR)
                     .other(HttpContextResponseBody.builder().status(HttpStatus.NOT_FOUND).build())
                     .exception(new HttpFramkeworkException("cmd不存在", "asd"))
@@ -99,7 +100,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
             cmd.execute(ctx);
         } catch (Exception e)
         {
-            context.response(this.createResponseWp()
+            ctx.response(this.createResponseWp()
                     .status(ContextConstants.FAIL)
                     .cmd(cmd)
                     .exception(e)

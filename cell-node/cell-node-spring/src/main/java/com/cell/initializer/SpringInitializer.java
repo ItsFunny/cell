@@ -13,6 +13,7 @@ import com.cell.constants.BitConstants;
 import com.cell.constants.Constants;
 import com.cell.context.InitCTX;
 import com.cell.enums.EnumLifeCycle;
+import com.cell.exceptions.ProgramaException;
 import com.cell.extension.AbstractNodeExtension;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
@@ -269,6 +270,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             Manager manager = ClassUtil.getMergedAnnotation(clazz, Manager.class);
             if (manager != null)
             {
+                if (ClassUtil.getAnnotation(clazz, AutoPlugin.class) != null || (ClassUtil.getAnnotation(clazz, AutoPlugin.class) != null) || (ReflectionUtils.containAnnotaitonsInFieldOrMethod(clazz, BitConstants.or, AutoPlugin.class, Autowired.class).block().getRet()))
+                {
+                    throw new ProgramaException("manager is not suggested to act like bean");
+                }
+
                 IReflectManager instance = (IReflectManager) ReflectUtil.newInstance(clazz);
                 String name = manager.name();
                 synchronized (this.managers)
