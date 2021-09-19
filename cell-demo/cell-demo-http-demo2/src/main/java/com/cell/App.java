@@ -7,9 +7,7 @@ import com.cell.annotations.ReactorAnno;
 import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.context.IHttpContext;
-import com.cell.protocol.ICommandExecuteResult;
-import com.cell.reactor.IHttpReactor;
+import com.cell.context.IHttpCommandContext;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
 import org.springframework.context.annotation.Bean;
@@ -34,10 +32,9 @@ public class App
     public static class CMD1 extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             ctx.response(this.createResponseWp().ret("cmd1").build());
-            return null;
         }
     }
 
@@ -45,12 +42,11 @@ public class App
     public static class CMD2 extends AbstractHttpCommand
     {
         @Override
-        protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
         {
             Reactor2 reactor2 = (Reactor2) ctx.getHttpReactor();
             Assert.notNull(reactor2.autoasd, "asd");
             ctx.response(this.createResponseWp().ret("cmd2").build());
-            return null;
         }
     }
 
