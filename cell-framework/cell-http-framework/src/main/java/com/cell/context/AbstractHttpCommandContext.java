@@ -93,13 +93,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         if (null != wp.getException())
         {
             LOG.erroring(Module.HTTP_FRAMEWORK, "调用失败,exception:{},from:{}", wp.getException(), wp.getFrom());
-
-            this.handlerSuit.channel().exceptionCaught(this.handlerSuit, wp.getException()).then((Mono.fromRunnable(() ->
-            {
-                this.getPromise().trySuccess();
-                this.commandContext.getResponseResult().setResult(wp.getRet());
-            }))).subscribe();
-
+            this.commandContext.getResponseResult().setResult(wp.getRet());
+            this.getPromise().trySuccess();
             return;
         }
         if (null == this.httpCmdAnno)

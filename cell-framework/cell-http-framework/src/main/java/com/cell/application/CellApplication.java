@@ -414,7 +414,8 @@ public class CellApplication
         @Override
         public void execute(BuzzContextBO bo) throws IOException
         {
-            bo.success("get");
+//            bo.success("get");
+            throw new RuntimeException("123");
         }
     }
 }

@@ -30,7 +30,6 @@ public abstract class AbstractHandlerSuit implements IHandlerSuit
     {
         return channel;
     }
-    //    private final DefaultPipeline pipeline;
 //
 //    @Override
 //    public Pipeline pipeline()

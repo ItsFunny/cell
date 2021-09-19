@@ -17,7 +17,7 @@ public class ContextResponseWrapper
 {
     private long status;
     private String msg;
-    private Exception exception;
+    private Throwable exception;
     private ICommand cmd;
     private Object ret;
 

@@ -39,7 +39,6 @@ import java.util.Map;
 @Data
 public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean, ApplicationContextAware
 {
-
     private volatile boolean ready;
     private short port = 8080;
 
@@ -72,42 +71,12 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         String command = request.getRequestURI();
         IHttpReactor reactor = this.getReactor(command);
         long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
-
-
         CommandContext context = new CommandContext(request, response, timeOut, command);
-
         DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, reactor);
-
-//        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(context);
-//        commandContext.setIp(HttpUtils.getIpAddress(request));
-//        if (null == reactor)
-//        {
-//            try
-//            {
-//                ctx.discard();
-//            } catch (Exception e)
-//            {
-//                this.httpChannel.exceptionCaught(e);
-//            }
-//            return commandContext.getResult();
-//        }
         this.httpChannel.readCommand(ctx);
         return context.getResponseResult();
     }
 
-//    public void dispath(IHttpReactor reactor, DefaultHttpCommandContext commandContext) throws HttpFramkeworkException
-//    {
-//        try
-//        {
-//            HookCommandWrapper wp = new HookCommandWrapper();
-//            wp.setContext(commandContext);
-//            wp.setReactor(reactor);
-//            this.handler.handler(wp).subscribe().dispose();
-//        } catch (Throwable e)
-//        {
-//            throw new HttpFramkeworkException(e.getMessage(), e);
-//        }
-//    }
 
     @Override
     public void addReactor(IHttpReactor reactor)
@@ -125,24 +94,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         }
     }
 
-//    private IHttpCommand getCmd(CommandContext ctx) throws IllegalAccessException, InstantiationException
-//    {
-//        Class<? extends IHttpCommand> cmd = this.cmdMap.get(ctx.getURI());
-//        if (cmd == null)
-//        {
-//            return null;
-//        }
-//        IHttpReactor reactor = this.reactorMap.get(ctx.getURI());
-//        if (null == reactor)
-//        {
-//            throw new ProgramaException("asd");
-//        }
-//        IHttpCommand ret = cmd.newInstance();
-//        ret.setReactor(reactor);
-//        DefaultHttpCommandContext commandContext = new DefaultHttpCommandContext(ctx);
-//        ret.setCtx(commandContext);
-//        return ret;
-//    }
 
     private IHttpReactor getReactor(String uri)
     {

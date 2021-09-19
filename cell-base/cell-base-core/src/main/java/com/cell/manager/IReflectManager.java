@@ -1,5 +1,8 @@
 package com.cell.manager;
 
+import com.cell.hooks.IChainExecutor;
+import com.cell.services.Pipeline;
+
 import java.util.Collection;
 
 /**
@@ -13,9 +16,11 @@ import java.util.Collection;
  * @Attention:
  * @Date 创建时间：2021-08-28 13:38
  */
-public interface IReflectManager
+public interface IReflectManager<T, CHAIN_T extends IChainExecutor>
 {
     void invokeInterestNodes(Collection<Object> nodes);
 
     IReflectManager createOrDefault();
+
+    Pipeline<T, CHAIN_T> pipeline();
 }

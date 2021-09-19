@@ -1,7 +1,9 @@
 - 可以认为是非常简化版的Spring WebFlux
 
 # 设计图(简版)
-
+- 数据流转:
+    - ![数据流转](./imgs/data-flow.png)
+    
 - 相关内部概念
   - @Plugin=@Bean
   - @ActivePlugin=@Component ...
