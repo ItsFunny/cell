@@ -17,7 +17,7 @@
 # How to Use
 
 - **注意**
-
+  - command中不支持@Autowired, Reactor中支持,可以通过getReactor 然后get class 获取
   - 不支持启动类中 ,添加 @Plugin 注解的bean,因为我不想去改Spring启动类的逻辑,并且,实际上启动类也只会只是短短的一行代码,所以也没这个必要
 
     - ```

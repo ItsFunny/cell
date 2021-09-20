@@ -8,7 +8,7 @@ package com.cell.updator;
  * @Attention:
  * @Date 创建时间：2021-09-20 10:31
  */
-public class PrometheusUpdator
+public interface IPrometheusUpdator extends IMetricsUpdator
 {
 
 }

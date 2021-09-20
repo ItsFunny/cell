@@ -18,6 +18,7 @@ public class FacadedListener implements ApplicationListener<SpringApplicationEve
     static
     {
         System.setProperty("spring.cloud.bootstrap.enabled", "false");
+        System.setProperty("management.endpoints.web.exposure.include", "*");
     }
 
     @Override

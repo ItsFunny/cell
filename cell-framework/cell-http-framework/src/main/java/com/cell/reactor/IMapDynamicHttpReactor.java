@@ -16,6 +16,8 @@ public interface IMapDynamicHttpReactor extends IDynamicHttpReactor
     // FIXME ,限定class
     Set<Class<?>> getDependencyList();
 
+    Set<String> getDependencyListByName();
+
     Object getDependency(Class<?> cls);
 
     void registerDependency(Class<?> cls, Object o);

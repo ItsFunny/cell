@@ -28,7 +28,7 @@ public class AbstractAutoSelectReflectManagerTest
 
     public static class ABC
     {
-        @ActiveMethod(id = 1, description = "test")
+        @ActiveMethod(id = "1", description = "test")
         public IReactorExecutor test()
         {
             return (ctx, ec) ->
@@ -39,16 +39,28 @@ public class AbstractAutoSelectReflectManagerTest
         }
     }
 
+    public static class ABC2
+    {
+        @ActiveMethod(id = "1", description = "test")
+        public IReactorExecutor test()
+        {
+            return (ctx, ec) ->
+            {
+                System.out.println("456");
+                return ec.execute(ctx);
+            };
+        }
+    }
+
 
     @Test
     public void testAutho()
     {
-
         AAA a = new AAA();
         ABC ab = new ABC();
-        a.invokeInterestNodes(Arrays.asList(ab));
-
-        Mono<Void> execute = a.execute(1, IContext.EMPTY_CONTEXT);
+        ABC2 a2 = new ABC2();
+        a.invokeInterestNodes(Arrays.asList(ab, a2));
+        Mono<Void> execute = a.execute("1", IContext.EMPTY_CONTEXT);
         execute.subscribe();
     }
 

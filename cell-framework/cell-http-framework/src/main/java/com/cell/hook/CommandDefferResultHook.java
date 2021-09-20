@@ -35,24 +35,23 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
     @Override
     protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
     {
-        throw new RuntimeException("asd");
-//        DeferredResult<Object> result = ctx.getResult();
-//        result.onTimeout(() ->
-//        {
-//            long currentTime = System.currentTimeMillis();
-//            long time = ctx.getRequestTimestamp();
-//            final String sequenceId = ctx.getSequenceId();
-//            LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
-//            ctx.response(ContextResponseWrapper.builder()
-//                    .status(ContextConstants.TIMEOUT)
-//                    .build());
-//        });
-//        return hook.execute(ctx).doOnError((e) ->
-//        {
-//            this.onExceptionCaught(e);
-//        }).then(Mono.fromRunnable(() ->
-//        {
-//            System.out.println(1);
-//        }));
+        DeferredResult<Object> result = ctx.getResult();
+        result.onTimeout(() ->
+        {
+            long currentTime = System.currentTimeMillis();
+            long time = ctx.getRequestTimestamp();
+            final String sequenceId = ctx.getSequenceId();
+            LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
+            ctx.response(ContextResponseWrapper.builder()
+                    .status(ContextConstants.TIMEOUT)
+                    .build());
+        });
+        return hook.execute(ctx).doOnError((e) ->
+        {
+            this.onExceptionCaught(e);
+        }).then(Mono.fromRunnable(() ->
+        {
+            System.out.println(1);
+        }));
     }
 }

@@ -1,5 +1,6 @@
 package com.cell.executor;
 
+import com.cell.hooks.IChainExecutor;
 import com.cell.hooks.IReactorExecutor;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
@@ -14,5 +15,7 @@ import com.cell.protocol.IContext;
  */
 public interface IMetricsExecutor extends IReactorExecutor
 {
-    void recordRequest(ICommand cmd);
+    String recordRequest = "recordRequest";
+
+    IReactorExecutor recordRequest();
 }

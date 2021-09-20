@@ -41,9 +41,9 @@ import java.util.stream.Stream;
 public abstract class AbstractAutoSelectReflectManager implements IReflectManager<IReactorExecutor, IChainExecutor>
 {
     private boolean setted;
-    protected Map<Integer, Pipeline<IReactorExecutor, IChainExecutor>> pipeline = new HashMap<>();
+    protected Map<String, Pipeline<IReactorExecutor, IChainExecutor>> pipeline = new HashMap<>();
 
-    public Mono<Void> execute(int method, IContext ctx)
+    public Mono<Void> execute(String method, IContext ctx)
     {
         Pipeline<IReactorExecutor, IChainExecutor> pip = this.pipeline.get(method);
         if (pip == null)

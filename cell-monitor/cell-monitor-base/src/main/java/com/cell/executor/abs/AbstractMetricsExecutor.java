@@ -16,12 +16,4 @@ import reactor.core.publisher.Mono;
  */
 public abstract class AbstractMetricsExecutor implements IMetricsExecutor
 {
-
-    @Override
-    public Mono<Void> execute(IContext context, IChainExecutor executor)
-    {
-        return this.update((IMetricsContext) context, executor);
-    }
-
-    protected abstract Mono<Void> update(IMetricsContext context, IChainExecutor executor);
 }

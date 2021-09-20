@@ -92,11 +92,24 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
         try
         {
             Set<Class<?>> dependencies = reactor.getDependencyList();
-            if (CollectionUtils.isEmpty(dependencies)) return;
-            for (Class<?> dependency : dependencies)
+            Set<String> names = reactor.getDependencyListByName();
+            if (CollectionUtils.isEmpty(dependencies) && CollectionUtils.isEmpty(names)) return;
+            if (CollectionUtils.isNotEmpty(dependencies))
             {
-                Object bean = this.context.getBean(dependency);
-                reactor.registerDependency(dependency, bean);
+                for (Class<?> dependency : dependencies)
+                {
+                    Object bean = this.context.getBean(dependency);
+                    reactor.registerDependency(dependency, bean);
+                }
+            }
+
+            if (CollectionUtils.isNotEmpty(names))
+            {
+                for (String name : names)
+                {
+                    Object bean = this.context.getBean(name);
+                    reactor.registerDependency(bean.getClass(), bean);
+                }
             }
         } finally
         {

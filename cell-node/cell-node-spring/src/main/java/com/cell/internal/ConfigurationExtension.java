@@ -29,7 +29,6 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;
     private String DEFAULT_PATH = "/Users/joker/Java/cell";
-
     public ConfigurationExtension()
     {
         options = new Options();

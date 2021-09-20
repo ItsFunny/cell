@@ -17,7 +17,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ActiveMethod
 {
-    int id();
+    String id();
 
-    String description();
+    String description() default "";
 }

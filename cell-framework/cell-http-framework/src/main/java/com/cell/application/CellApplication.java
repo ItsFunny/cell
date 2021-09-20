@@ -198,6 +198,7 @@ public class CellApplication
         private CellApplicationBuilder cellApplicationBuilder;
         private List<HttpCommandBuilder> cmds = new ArrayList<>();
         private Set<Class<?>> dependencies = new HashSet<>();
+        private Set<String> beanNames = new HashSet<>();
         private String group = "";
         private boolean forceOverride = false;
 
@@ -215,6 +216,12 @@ public class CellApplication
         public ReactorBuilder withBean(Class<?> clz)
         {
             this.dependencies.add(clz);
+            return this;
+        }
+
+        public ReactorBuilder withBeanName(String name)
+        {
+            this.beanNames.add(name);
             return this;
         }
 
@@ -273,6 +280,8 @@ public class CellApplication
                     .intercept(FixedValue.value(new ArrayList<>(cmdList)))
                     .method(ElementMatchers.named("getDependencyList"))
                     .intercept(FixedValue.value(new HashSet<>(this.dependencies)))
+                    .method(ElementMatchers.named("getDependencyListByName"))
+                    .intercept(FixedValue.value(new HashSet<>(this.beanNames)))
                     .annotateType(AnnotationDescription.Builder.ofType(ReactorAnno.class)
                             .define("group", this.group)
                             .define("withForce", new ForceOverride()

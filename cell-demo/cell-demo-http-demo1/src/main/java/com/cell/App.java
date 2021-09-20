@@ -23,11 +23,9 @@ public class App
                 .post("/post", (wp) ->
                 {
                     wp.success("post");
-                    return null;
                 }).make().get("/get", (wp) ->
         {
             wp.success("get");
-            return null;
         }).make().done().build().start(args);
     }
 
@@ -42,9 +40,8 @@ public class App
             reactorBuilder.post("/post" + i, (wp) ->
             {
                 wp.success(ret);
-                return null;
             });
         }
-        reactorBuilder.done().build().start( args);
+        reactorBuilder.done().build().start(args);
     }
 }
