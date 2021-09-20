@@ -11,4 +11,6 @@ package com.cell.app;
 public interface IApp
 {
     String getApplicationName();
+
+    void setApplicationName(String name);
 }

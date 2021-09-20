@@ -159,6 +159,7 @@ public class ManagerFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
                 int value2 = n2 == null ? OrderConstants.DEFAULT_ORDER : n2.orderValue();
                 return Integer.compare(value1, value2);
             });
+            // TODO check if duplicate
             manager.invokeInterestNodes(collect);
         }
     }

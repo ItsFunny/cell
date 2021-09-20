@@ -21,7 +21,7 @@ import java.util.Collection;
  * @Date 创建时间：2021-08-28 13:11
  */
 @Data
-public abstract class AbstractReflectManager<T, CHAIN_T extends IChainExecutor> implements IReflectManager<T, CHAIN_T>
+public abstract class AbstractReflectManager<T extends IReactorExecutor, CHAIN_T extends IChainExecutor> implements IReflectManager<T, CHAIN_T>
 {
     private boolean setted;
 

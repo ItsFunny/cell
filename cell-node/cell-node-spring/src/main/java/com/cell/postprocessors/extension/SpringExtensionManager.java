@@ -92,7 +92,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     }
 
 
-
     void initCommandLine() throws ContainerException, ParseException, InstantiationException, IllegalAccessException, IllegalStateException
     {
         LOG.setLogLevel(LogLevel.DEBUG);
@@ -133,6 +132,17 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 }
             }
         }
+        this.fillCtx();
+
+        String[] alist = customArgs.toArray(new String[customArgs.size()]);
+        SpringNodeContext dCtx = ctx;
+        CommandLine commands = parser.parse(allOps, alist);
+        dCtx.setCommandLine(commands);
+        LOG.setLogLevel(LogLevel.INFO);
+    }
+
+    private void fillCtx()
+    {
         Option ip = allOps.getOption("ip");
         if (ip != null)
         {
@@ -145,11 +155,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         {
             ctx.setIp(IPUtils.getLocalAddress());
         }
-        String[] alist = customArgs.toArray(new String[customArgs.size()]);
-        SpringNodeContext dCtx = ctx;
-        CommandLine commands = parser.parse(allOps, alist);
-        dCtx.setCommandLine(commands);
-        LOG.setLogLevel(LogLevel.INFO);
     }
 
     @Override
@@ -250,7 +255,6 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             }
         }
     }
-
 
 
     void addExcludeExtension(String eName)

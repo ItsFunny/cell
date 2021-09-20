@@ -28,7 +28,6 @@ public class App
                 .post("/post", (wp) ->
                 {
                     wp.success("123");
-                    return null;
                 }).make().done()
                 .build().start(args);
     }

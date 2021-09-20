@@ -89,14 +89,6 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         // FIXME ,需要重构该部分,使用reflections
         Set<Class<?>> activePlugins = ClassUtil.scanPackage(rootPath, filter);
 
-//        try
-//        {
-//            this.firstAfterScan(filter);
-//        } catch (Exception e)
-//        {
-//            throw new RuntimeException(e);
-//        }
-
 
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = filter.factories;
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> dropOffFactories = new HashSet<>();

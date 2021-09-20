@@ -22,19 +22,14 @@ import java.util.UUID;
 @CellOrder(OrderConstants.MIN_ORDER - 997)
 public class NodeMetaDataExtension extends AbstractSpringNodeExtension
 {
-    private Options options;
-
-    public NodeMetaDataExtension()
-    {
-        this.options = new Options();
-        options.addOption("meta", true, "-meta metadata name");
-        options.addOption("name", true, "-name node name");
-    }
 
     @Override
     public Options getOptions()
     {
-        return this.options;
+        Options options = new Options();
+        options.addOption("meta", true, "-meta metadata name");
+        options.addOption("name", true, "-name node name");
+        return options;
     }
 
     @Override
@@ -52,6 +47,7 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
             // 设置nodeName,
             nodeName = cmd.getOptionValue("name");
         }
+        ctx.getApp().setApplicationName(nodeName);
         int id = 0;
         if (cmd.hasOption("id"))
         {

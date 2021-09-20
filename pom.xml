@@ -16,6 +16,7 @@
         <module>cell-demo</module>
         <module>cell-runnable</module>
         <module>cell-gate</module>
+        <module>cell-monitor</module>
     </modules>
     <packaging>pom</packaging>
 
