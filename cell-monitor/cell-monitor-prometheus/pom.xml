@@ -23,6 +23,11 @@
             <version>${cell.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-bee-event</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
         </dependency>

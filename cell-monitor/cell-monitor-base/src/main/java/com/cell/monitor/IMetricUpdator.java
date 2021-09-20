@@ -6,9 +6,9 @@ package com.cell.monitor;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-09-20 07:47
+ * @Date 创建时间：2021-09-20 10:29
  */
-public class PrometheusMonitor implements IMonitor
+public interface IMetricUpdator
 {
 
 }

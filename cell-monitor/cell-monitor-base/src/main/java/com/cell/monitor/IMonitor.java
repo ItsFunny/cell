@@ -10,5 +10,5 @@ package com.cell.monitor;
  */
 public interface IMonitor
 {
-
+    void updateMetrics();
 }

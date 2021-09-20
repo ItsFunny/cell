@@ -1,5 +1,7 @@
 package com.cell.context;
 
+import com.cell.protocol.IContext;
+
 /**
  * @author Charlie
  * @When
@@ -8,6 +10,6 @@ package com.cell.context;
  * @Attention:
  * @Date 创建时间：2021-09-20 08:05
  */
-public interface IPrometheusContext
+public interface IMetricsContext extends IContext
 {
 }

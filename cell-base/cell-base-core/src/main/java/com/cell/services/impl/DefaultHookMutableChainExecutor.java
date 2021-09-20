@@ -16,7 +16,8 @@ import java.util.List;
  */
 public class DefaultHookMutableChainExecutor extends BaseMutableChainExecutor<IHook> implements IChainHook
 {
-public DefaultHookMutableChainExecutor(){}
+    public DefaultHookMutableChainExecutor() {}
+
     public DefaultHookMutableChainExecutor(List<IHook> executors)
     {
         super(executors);

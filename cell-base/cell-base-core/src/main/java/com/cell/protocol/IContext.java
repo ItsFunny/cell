@@ -1,5 +1,7 @@
 package com.cell.protocol;
 
+import javax.swing.*;
+
 /**
  * @author Charlie
  * @When
@@ -11,4 +13,15 @@ package com.cell.protocol;
 public interface IContext
 {
     void discard();
+
+    EmptyContext EMPTY_CONTEXT = new EmptyContext();
+
+    class EmptyContext implements IContext
+    {
+        @Override
+        public void discard()
+        {
+
+        }
+    }
 }

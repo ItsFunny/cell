@@ -28,6 +28,11 @@ public class DefaultPipeline<T, CHAIN_T extends IChainExecutor> implements Pipel
         this.factory = factory;
     }
 
+    public DefaultPipeline()
+    {
+        this.factory = () -> new DefaultCommonMutableChainExecutor();
+    }
+
     @Override
     public CHAIN_T chainExecutor()
     {
@@ -49,7 +54,11 @@ public class DefaultPipeline<T, CHAIN_T extends IChainExecutor> implements Pipel
     @Override
     public Pipeline addLast(T... handlers)
     {
-        return null;
+        for (T handler : handlers)
+        {
+            this.executors.add(handler);
+        }
+        return this;
     }
 
     @Override
