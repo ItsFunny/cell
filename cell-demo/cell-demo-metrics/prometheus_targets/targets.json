@@ -1,0 +1,20 @@
+[
+  {
+    "targets": [
+      "nacos.demo.com:8080/actuator/prometheus"
+    ],
+    "labels": {
+      "env": "localhost",
+      "job": "cadvisor"
+    }
+  },
+  {
+    "targets": [
+      "172.224.2.2:8081/actuator/prometheus"
+    ],
+    "labels": {
+      "env": "localhost",
+      "job": "cadvisor"
+    }
+  }
+]

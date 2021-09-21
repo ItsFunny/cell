@@ -37,5 +37,6 @@ services:
       - --config.file=/etc/prometheus/prometheus.yml
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus_targets:/etc/prometheus/dynamictargets
     extra_hosts:
-      - "nacos.demo.com:127.224.2.2"
+      - "nacos.demo.com:172.224.2.2"

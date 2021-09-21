@@ -1,8 +1,31 @@
+#scrape_configs:
+#  - job_name: 'prometheus'
+#    static_configs:
+#      - targets: ['localhost:9090']
+#  #  - job_name: 'nacos_metrics'
+#  #    scrape_interval: 10s
+#  #    static_configs:
+#  #      - targets: ['nacos.demo.com:8080']
+#  #    metrics_path: /actuator/prometheus
+#  - job_name: 'file_ds'
+#    file_sd_configs:
+#      - files:
+#          - prometheus_targets/*.yaml
+#    metrics_path: /actuator/prometheus
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
 scrape_configs:
-  - job_name: 'prometheus'
-    static_configs:
-      - targets: ['localhost:9090']
-  - job_name: 'nacos_metrics'
-    scrape_interval: 10s
-    static_configs:
-      - targets: ['nacos.demo.com:8080']
+  - job_name: 'file_ds'   #此处定义了自动发现的采集任务名称，可以依据自己的业务定义多个自动发现任务
+    file_sd_configs:
+      - files:
+          - /etc/prometheus/dynamictargets/*.json         #采集文件路径
+        refresh_interval: 1m #自动发现间隔时间，默认5m
+    relabel_configs:
+      - source_labels: [__address__]
+        regex:  '[^/]+(/.*)'            # capture '/...' part
+        target_label: __metrics_path__  # change metrics path
+      - source_labels: [__address__]
+        regex:  '([^/]+)/.*'            # capture host:port
+        target_label: __address__       # change target
