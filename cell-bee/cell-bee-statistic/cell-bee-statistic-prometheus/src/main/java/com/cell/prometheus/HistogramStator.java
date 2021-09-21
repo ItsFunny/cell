@@ -89,7 +89,7 @@ public class HistogramStator extends BaseCollector<HistogramStator.Child> implem
         long now = System.currentTimeMillis();
         if (!canCollect())
         {
-            LOG.info(Module.STATISTIC, "忽略此次pull操作，type = %s, interval = %d ", this.type, now - this.timestamp);
+            LOG.info(Module.STATISTIC, "忽略此次pull操作，type = {}, interval = {} ", this.type, now - this.timestamp);
             return Collections.emptyList();
         }
 

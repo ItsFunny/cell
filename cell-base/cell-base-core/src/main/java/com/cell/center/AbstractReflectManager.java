@@ -4,11 +4,13 @@ import com.cell.hooks.IChainExecutor;
 import com.cell.hooks.IListChainExecutor;
 import com.cell.hooks.IReactorExecutor;
 import com.cell.manager.IReflectManager;
+import com.cell.protocol.IContext;
 import com.cell.services.ChainExecutorFactory;
 import com.cell.services.Pipeline;
 import com.cell.services.impl.DefaultPipeline;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
+import reactor.core.publisher.Mono;
 
 import java.util.Collection;
 
@@ -60,5 +62,10 @@ public abstract class AbstractReflectManager<T extends IReactorExecutor, CHAIN_T
 
             }
         }
+    }
+
+    public Mono<Void> execute(IContext context)
+    {
+        return this.pipeline.chainExecutor().execute(context);
     }
 }

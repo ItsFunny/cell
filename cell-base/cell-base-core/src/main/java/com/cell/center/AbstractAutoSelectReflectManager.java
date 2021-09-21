@@ -53,6 +53,7 @@ public abstract class AbstractAutoSelectReflectManager implements IReflectManage
         return pip.chainExecutor().execute(ctx);
     }
 
+
     @Override
     public Pipeline<IReactorExecutor, IChainExecutor> pipeline()
     {

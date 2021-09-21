@@ -2,6 +2,7 @@ package com.cell.filter;
 
 import com.cell.annotations.ActivePlugin;
 import com.cell.center.JobCenter;
+import com.cell.constants.GatewayConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.log.LOG;
@@ -9,6 +10,7 @@ import com.cell.model.ErrorResponseEvent;
 import com.cell.model.ServerMetaInfo;
 import com.cell.models.Module;
 import com.cell.utils.GatewayUtils;
+import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
@@ -35,22 +37,13 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
-        ServiceDiscovery serviceDiscovery = ServiceDiscovery.getInstance();
-        ServerHttpRequest request = exchange.getRequest();
-        URI uri = request.getURI();
-
-        ServerMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
-        // FIXME ,定制化信息
-        if (metaInfo == null)
-        {
-//            return chain.filter(exchange);
-//            throw new GatewayException("command not exists");
-            return GatewayUtils.fastFinish(exchange, "command not exists");
-        }
+        ServerMetaInfoWrapper wrapper = exchange.getAttribute(GatewayConstants.attributeCmdInfo);
+        ServerMetaInfo metaInfo = wrapper.getMetaInfo();
+        URI uri = wrapper.getUri();
         URI mergedUrl = UriComponentsBuilder.fromUri(uri).host(metaInfo.getIp()).port(metaInfo.getPort())
                 .replacePath(uri.getPath()).build().toUri();
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, mergedUrl);
-        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{}", uri, metaInfo.getIp(), metaInfo.getPort(), metaInfo.getServiceName());
+        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{},method:{},module:{}", uri, metaInfo.getIp(), metaInfo.getPort(), metaInfo.getServiceName(), wrapper.getMethod(), metaInfo.getModule());
         return chain.filter(exchange);
     }
 

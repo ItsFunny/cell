@@ -23,6 +23,7 @@ public abstract class AbstractHookCenter extends AbstractReflectManager<IHook, I
 {
     public static final String GROUP_EVENT_CENTER = "GROUP_EVENT_CENTER";
 
+
     @Override
     protected ChainExecutorFactory<? extends IListChainExecutor> factory()
     {

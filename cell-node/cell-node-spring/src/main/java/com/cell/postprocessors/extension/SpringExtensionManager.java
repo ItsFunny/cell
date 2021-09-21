@@ -121,7 +121,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                     {
                         if (allOps.hasOption(op.getOpt()))
                         {
-                            ContainerException cex = new ContainerException(String.format("duplicated opt name [{}]", op.getOpt()));
+                            ContainerException cex = new ContainerException(String.format("duplicated opt name [%s]", op.getOpt()));
                             LOG.error(Module.CONTAINER, cex, "extension {} have duplicated arg opt {}", gbdef.getBeanClass(), op.getOpt());
                             throw cex;
                         } else

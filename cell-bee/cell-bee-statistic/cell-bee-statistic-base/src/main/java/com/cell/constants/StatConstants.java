@@ -18,6 +18,4 @@ public interface StatConstants
     long DAY_SECTION = 86400L;
 
     String[] COMMON_LABELS = new String[]{"nodeName", "cluster", "module"};
-
-    String[] HTTP_GATE_LABELS = new String[]{"nodeName", "cluster", "module", "uri", "method"};
 }

@@ -17,6 +17,8 @@ import java.io.IOException;
 @Data
 public class GatewayMetricsConfigFactory
 {
+
+
     public static final String GatewayMetricsConfigModule = "gateway.metrics.properties";
     public static final GatewayMetricsConfigFactory instance = new GatewayMetricsConfigFactory();
 

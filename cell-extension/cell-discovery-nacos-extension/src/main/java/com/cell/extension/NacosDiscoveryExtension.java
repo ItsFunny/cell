@@ -4,6 +4,7 @@ import com.cell.annotations.*;
 import com.cell.command.IHttpCommand;
 import com.cell.config.ConfigFactory;
 import com.cell.config.NacosConfiguration;
+import com.cell.constants.CommandLineConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
@@ -21,6 +22,7 @@ import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.JSONUtil;
 import com.cell.utils.StringUtils;
+import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,22 +42,13 @@ import java.util.stream.Collectors;
 @CellOrder(value = OrderConstants.HTTP_EXTENSION + 1)
 public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 {
-    private static final String DEFAULT_CLUSTER = "default";
 
 
-    private Options options;
 
     public NacosDiscoveryExtension()
     {
-        this.options = new Options();
-        options.addOption("cluster", true, "-cluster metadata name");
     }
 
-    @Override
-    public Options getOptions()
-    {
-        return this.options;
-    }
 
     @Override
     public void onInit(INodeContext ctx) throws Exception
@@ -125,12 +118,11 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 
 
         Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
-        String cluster = this.options.getOption("cluster").getValue();
-        cluster = StringUtils.isEmpty(cluster) ? DEFAULT_CLUSTER : cluster;
+
         Instance instance = Instance.builder()
                 .weight((byte) 1)
                 .metaData(metadatas)
-                .clusterName(cluster)
+                .clusterName(ctx.getCluster())
                 .ip(ctx.getIp())
                 .healthy(true)
                 .enable(true)

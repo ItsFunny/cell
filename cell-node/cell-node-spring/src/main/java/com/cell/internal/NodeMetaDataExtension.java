@@ -1,11 +1,13 @@
 package com.cell.internal;
 
 import com.cell.annotations.CellOrder;
+import com.cell.constants.CommandLineConstants;
 import com.cell.constants.Constants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.SpringNodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.utils.StringUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
@@ -29,6 +31,7 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
         Options options = new Options();
         options.addOption("meta", true, "-meta metadata name");
         options.addOption("name", true, "-name node name");
+        options.addOption(CommandLineConstants.CLUSTER,true,"cluster");
         return options;
     }
 
@@ -59,11 +62,15 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
             version = Long.valueOf(cmd.getOptionValue("version"));
         }
 
+        String cluster = cmd.getOptionValue(CommandLineConstants.CLUSTER);
+        cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
+
         SpringNodeContext springNodeContext = (SpringNodeContext) ctx;
         springNodeContext.setNodeId(id);
         springNodeContext.setNodeName(nodeName);
         springNodeContext.setMetadataName(meta);
         springNodeContext.setVersion(version);
+        springNodeContext.setCluster(cluster);
 
         // FIXME ,这里还需要进行拉取数据,从配置文件中/或者是url 中加载元数据信息
     }

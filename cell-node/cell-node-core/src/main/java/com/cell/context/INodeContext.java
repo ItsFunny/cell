@@ -21,6 +21,8 @@ public interface INodeContext
 {
     String getNodeName();
 
+    String getCluster();
+
     EventExecutor getExecutor();
 
     int getNodeId();

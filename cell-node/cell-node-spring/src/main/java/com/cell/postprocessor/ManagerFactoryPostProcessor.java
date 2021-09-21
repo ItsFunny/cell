@@ -184,7 +184,7 @@ public class ManagerFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
             {
                 if (value.getNode() != null && value.getNode().getClass().equals(bean.getClass()))
                 {
-                    LOG.info(Module.CONTAINER, "bean 替换,origin:{},after:{},name:{}", value.getNode(), bean, beanName);
+                    LOG.info(Module.CONTAINER, "bean replace,origin:{},after:{},name:{}", value.getNode(), bean, beanName);
                     value.setNode(bean);
                 }
             }

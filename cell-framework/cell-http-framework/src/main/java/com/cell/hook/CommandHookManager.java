@@ -37,11 +37,4 @@ public class CommandHookManager extends AbstractHookCenter implements IChainHook
     {
         return instance;
     }
-
-
-    @Override
-    public Mono<Void> execute(IContext context)
-    {
-        return this.pipeline.chainExecutor().execute(context);
-    }
 }

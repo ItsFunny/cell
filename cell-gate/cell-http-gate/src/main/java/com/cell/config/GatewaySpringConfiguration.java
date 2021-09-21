@@ -2,15 +2,15 @@ package com.cell.config;
 
 import com.cell.annotations.ActiveConfiguration;
 import com.cell.annotations.Plugin;
+import com.cell.constants.GatewayConstants;
+import com.cell.enums.EnumStatOperateMask;
+import com.cell.enums.EnumStatisticType;
 import com.cell.lb.DefaultWeightRoubineStrategy;
 import com.cell.lb.ILoadBalancerStrategy;
-import org.springframework.cloud.gateway.filter.factory.*;
-import org.springframework.cloud.gateway.handler.predicate.HostRoutePredicateFactory;
-import org.springframework.cloud.gateway.handler.predicate.PathRoutePredicateFactory;
+import com.cell.prometheus.HistogramStator;
+import io.prometheus.client.CollectorRegistry;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 /**
  * @author Charlie
@@ -28,110 +28,6 @@ public class GatewaySpringConfiguration
     {
         return new DefaultWeightRoubineStrategy();
     }
-//
-//    @Bean
-//    public RouteLocatorBuilder routeLocatorBuilder(ConfigurableApplicationContext context)
-//    {
-//        return new RouteLocatorBuilder(context);
-//    }
-
-//    @Bean
-//    public AddRequestHeaderGatewayFilterFactory addRequestHeaderGatewayFilterFactory()
-//    {
-//        return new AddRequestHeaderGatewayFilterFactory();
-//    }
-//
-//
-//    @Bean
-//    public PathRoutePredicateFactory pathRoutePredicateFactory()
-//    {
-//        return new PathRoutePredicateFactory();
-//    }
-//
-//    @Bean
-//    public HostRoutePredicateFactory hostRoutePredicateFactory()
-//    {
-//        return new HostRoutePredicateFactory();
-//    }
-//
-//    @Bean
-//    public RewritePathGatewayFilterFactory rewritePathGatewayFilterFactory()
-//    {
-//        return new RewritePathGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RetryGatewayFilterFactory retryGatewayFilterFactory()
-//    {
-//        return new RetryGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public SetPathGatewayFilterFactory setPathGatewayFilterFactory()
-//    {
-//        return new SetPathGatewayFilterFactory();
-//    }
-//
-//
-//    @Bean
-//    public SetRequestHeaderGatewayFilterFactory setRequestHeaderGatewayFilterFactory()
-//    {
-//        return new SetRequestHeaderGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public SetResponseHeaderGatewayFilterFactory setResponseHeaderGatewayFilterFactory()
-//    {
-//        return new SetResponseHeaderGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RewriteResponseHeaderGatewayFilterFactory rewriteResponseHeaderGatewayFilterFactory()
-//    {
-//        return new RewriteResponseHeaderGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RewriteLocationResponseHeaderGatewayFilterFactory rewriteLocationResponseHeaderGatewayFilterFactory()
-//    {
-//        return new RewriteLocationResponseHeaderGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public SetStatusGatewayFilterFactory setStatusGatewayFilterFactory()
-//    {
-//        return new SetStatusGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public SaveSessionGatewayFilterFactory saveSessionGatewayFilterFactory()
-//    {
-//        return new SaveSessionGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public StripPrefixGatewayFilterFactory stripPrefixGatewayFilterFactory()
-//    {
-//        return new StripPrefixGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RequestHeaderToRequestUriGatewayFilterFactory requestHeaderToRequestUriGatewayFilterFactory()
-//    {
-//        return new RequestHeaderToRequestUriGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RequestSizeGatewayFilterFactory requestSizeGatewayFilterFactory()
-//    {
-//        return new RequestSizeGatewayFilterFactory();
-//    }
-//
-//    @Bean
-//    public RequestHeaderSizeGatewayFilterFactory requestHeaderSizeGatewayFilterFactory()
-//    {
-//        return new RequestHeaderSizeGatewayFilterFactory();
-//    }
 
     @Plugin
     public RouteLocator globalLocator(RouteLocatorBuilder builder)
@@ -141,5 +37,26 @@ public class GatewaySpringConfiguration
                         p.path("/**")
                                 .uri("https://www.baidu.com")).build();
     }
+
+
+    // metrics
+    @Plugin
+    public HistogramStator exceedDelayThresoldCount(CollectorRegistry registry)
+    {
+        GatewayMetricsConfigFactory.GatewayMetricsConfig config = GatewayMetricsConfigFactory.getInstance().getConfig();
+        EnumStatisticType type = EnumStatisticType.fromValue(config.getType());
+        Integer typeValue = config.getTypeValue();
+        return HistogramStator.
+                build("ExceedDelayThresoldCount", "ExceedDelayThresoldCount")
+                .labelNames(GatewayConstants.HTTP_GATE_LABELS)
+                .average(type, typeValue)
+                .operate(EnumStatOperateMask.MAX_VALUE, "MaxResponseDelay")
+                .operate(EnumStatOperateMask.MIN_VALUE, "MinResponseDelay")
+                .operate(EnumStatOperateMask.STANDARD_DEVIATION, "ResponseDelayStandardDivision")
+                .operate(EnumStatOperateMask.AVERAGE, "AverageResponseDelay")
+                .buckets(config.getDelayTimes())
+                .register(registry);
+    }
+
 
 }

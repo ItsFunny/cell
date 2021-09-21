@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-metrics-gateway-extension</artifactId>
+            <artifactId>cell-metrics-extension-base</artifactId>
             <version>${cell.version}</version>
             <exclusions>
                 <exclusion>
