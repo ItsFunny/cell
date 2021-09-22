@@ -19,7 +19,6 @@
     <modules>
         <module>cell-bee-statistic-prometheus</module>
         <module>cell-bee-statistic-base</module>
-        <module>cell-bee-metrics-nacos-prometheus</module>
     </modules>
 
     <dependencies>

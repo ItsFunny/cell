@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Charlie
@@ -26,4 +27,20 @@ public class Instance
 
     private boolean healthy = true;
     private boolean enable = true;
+
+    @Override
+    public boolean equals(Object object)
+    {
+        if (this == object) return true;
+        if (!(object instanceof Instance)) return false;
+        Instance instance = (Instance) object;
+        return getIp().equals(instance.getIp()) &&
+                getPort().equals(instance.getPort());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getIp(), getPort());
+    }
 }

@@ -18,6 +18,7 @@
     <url>http://www.example.com</url>
     <modules>
         <module>cell-metrics-extension-base</module>
+        <module>cell-metrics-prometheus-sd-extension</module>
     </modules>
 
     <dependencies>
