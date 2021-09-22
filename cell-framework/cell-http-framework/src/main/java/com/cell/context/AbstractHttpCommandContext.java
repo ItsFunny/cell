@@ -151,7 +151,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             {
                 this.commandContext.getHttpResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             }
-            this.getPromise().trySuccess();
         } finally
         {
             // FIXME ,需要干掉@ResponseBody
@@ -166,6 +165,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             }
             this.commandContext.getResponseResult().setResult(ret);
+            this.getPromise().trySuccess();
         }
     }
 

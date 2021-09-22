@@ -6,6 +6,7 @@ import com.cell.config.GatePropertyNode;
 import com.cell.config.GatewayConfiguration;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
+import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;
@@ -40,6 +41,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
     public void onInit(INodeContext ctx) throws Exception
     {
         GatewayConfiguration.init();
+        NacosNodeDiscoveryImpl.setupDiscovery();
 
         this.serviceDiscovery = new ServiceDiscovery();
         String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);

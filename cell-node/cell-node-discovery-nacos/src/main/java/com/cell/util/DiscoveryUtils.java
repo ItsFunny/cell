@@ -30,20 +30,24 @@ public class DiscoveryUtils
             {
                 return;
             }
-            List<Instance> instances = allInstances.stream().map(p ->
-                    Instance.builder()
-                            .serviceName(p.getServiceName())
-                            .port(p.getPort())
-                            .ip(p.getIp())
-                            .clusterName(p.getClusterName())
-                            .enable(p.isEnabled())
-                            .healthy(p.isHealthy())
-                            .metaData(p.getMetadata())
-                            .weight((byte) p.getWeight()).build()).collect(Collectors.toList());
+            List<Instance> instances = convNaocsInstance2CellInstance(allInstances);
             ret.put(n, instances);
         });
 
         return ret;
+    }
+
+    public static List<Instance>convNaocsInstance2CellInstance(List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances){
+        return allInstances.stream().map(p ->
+                Instance.builder()
+                        .serviceName(p.getServiceName())
+                        .port(p.getPort())
+                        .ip(p.getIp())
+                        .clusterName(p.getClusterName())
+                        .enable(p.isEnabled())
+                        .healthy(p.isHealthy())
+                        .metaData(p.getMetadata())
+                        .weight((byte) p.getWeight()).build()).collect(Collectors.toList());
     }
 
 }

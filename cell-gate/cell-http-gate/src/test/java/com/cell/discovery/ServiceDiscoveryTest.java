@@ -86,7 +86,7 @@ public class ServiceDiscoveryTest
     {
         ServiceDiscovery discovery = ServiceDiscovery.getInstance();
         TimeUnit.SECONDS.sleep(5);
-        Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> currentDelta = discovery.getCurrentDelta();
+        Map<String, List<Instance>> currentDelta = discovery.getCurrentDelta();
         Assert.assertEquals(currentDelta.isEmpty(), false);
         Assert.assertEquals(currentDelta.size(), 2);
     }
@@ -98,7 +98,7 @@ public class ServiceDiscoveryTest
         TimeUnit.SECONDS.sleep(5);
         List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", "asd");
         Assert.assertNull(asd);
-        Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> currentDelta = discovery.getCurrentDelta();
+        Map<String, List<Instance>> currentDelta = discovery.getCurrentDelta();
         Assert.assertEquals(0, currentDelta.size());
     }
 
@@ -109,7 +109,7 @@ public class ServiceDiscoveryTest
         TimeUnit.SECONDS.sleep(5);
         List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", post1);
         Assert.assertNotNull(asd);
-        Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> currentDelta = discovery.getCurrentDelta();
+        Map<String, List<Instance>> currentDelta = discovery.getCurrentDelta();
         Assert.assertEquals(0, currentDelta.size());
     }
 

@@ -18,6 +18,7 @@ public interface INodeDiscovery extends IInitOnce
 {
     // key: serviceName
     Map<String, List<Instance>> getServerInstanceList(String cluster);
-
+    List<String>getAllServices();
+    List<Instance> getServiceAllInstance(String serviceName);
     void registerServerInstance(Instance instance);
 }

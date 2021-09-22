@@ -3,40 +3,28 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell-bee</artifactId>
+        <artifactId>cell-demo-nacos</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-bee-statistic</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>cell-demo-nacos-sd</artifactId>
 
-    <name>cell-bee-statistic</name>
+    <name>cell-demo-nacos-sd</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-    <modules>
-        <module>cell-bee-statistic-prometheus</module>
-        <module>cell-bee-statistic-base</module>
-        <module>cell-bee-metrics-nacos-prometheus</module>
-    </modules>
-
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-common</artifactId>
+            <artifactId>cell-bee-metrics-nacos-prometheus</artifactId>
             <version>${cell.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-core</artifactId>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-core</artifactId>
+            <artifactId>cell-discovery-nacos-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
-
     </dependencies>
 </project>

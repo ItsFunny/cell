@@ -29,7 +29,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
 {
     protected HttpCmdAnno httpCmdAnno;
     protected String mov;
-
     protected IHttpReactor reactor;
 
     public AbstractHttpCommand()

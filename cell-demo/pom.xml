@@ -26,6 +26,7 @@
         <module>cell-demo-gateway</module>
         <module>cell-demo-metrics</module>
         <module>cell-demo-mono</module>
+        <module>cell-demo-microservice</module>
     </modules>
 
     <dependencies>

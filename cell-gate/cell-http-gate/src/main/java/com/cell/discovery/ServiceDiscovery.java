@@ -25,7 +25,12 @@ import com.cell.util.DiscoveryUtils;
 import com.cell.utils.GatewayUtils;
 import com.cell.utils.MetaDataUtils;
 import lombok.Data;
+import reactor.core.Disposable;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Scheduler;
 
+import java.time.Duration;
 import java.util.*;
 
 /**
@@ -46,9 +51,8 @@ public class ServiceDiscovery extends AbstractInitOnce
     private IKeyResolver<DefaultStringKeyResolver.StringKeyResolver, String> resolver;
 
     private ILoadBalancer loadBalancer;
-    // FIXME ,这里需要提供 get/post 等先查询
     private Map<String, List<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
-    private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
+    private final Map<String, List<Instance>> delta = new HashMap<>();
     private volatile boolean onChange = false;
     private String cluster;
 
@@ -82,7 +86,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         return this.loadBalancer.choseServer(this.getServerByUri(method, uri), method, uri);
     }
 
-    public synchronized Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> getCurrentDelta()
+    public synchronized Map<String, List<Instance>> getCurrentDelta()
     {
         return new HashMap<>(this.delta);
     }
@@ -100,7 +104,7 @@ public class ServiceDiscovery extends AbstractInitOnce
             Set<String> serviceNames = this.delta.keySet();
             serviceNames.stream().forEach(n ->
             {
-                List<com.alibaba.nacos.api.naming.pojo.Instance> instances = this.delta.get(n);
+                List<Instance> instances = this.delta.get(n);
                 if (CollectionUtils.isEmpty(instances))
                 {
                     dels.add(this.serverMetas.remove(n));
@@ -146,11 +150,37 @@ public class ServiceDiscovery extends AbstractInitOnce
         this.refreshUriRules(ruleWpSet);
         LOG.info(Module.HTTP_GATEWAY, "初始化完毕,初始加载得到的列表信息为:{}", this.serverMetas);
         nodeDiscovery.registerListen(new InstanceHooker());
+
+        this.schedualRefresh();
+    }
+
+    private void schedualRefresh()
+    {
+        Flux.interval(Duration.ofMinutes(5)).map(v ->
+        {
+            Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
+            return serverInstanceList;
+        }).subscribe(serverInstanceList ->
+        {
+            if (serverInstanceList.size() == 0)
+            {
+                return;
+            }
+            synchronized (this.delta)
+            {
+                for (String s : serverInstanceList.keySet())
+                {
+                    List<Instance> instances = serverInstanceList.get(s);
+                    this.delta.put(instances.get(0).getClusterName(), instances);
+                }
+                this.onChange = true;
+            }
+        });
     }
 
     private Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> conv()
     {
-        Map<String, List<Instance>> cellInstance = DiscoveryUtils.convNacosMapInstanceToCellInstance(this.delta);
+        Map<String, List<Instance>> cellInstance = this.delta;
         return convCellInstanceToGateMeta(cellInstance);
     }
 
@@ -219,7 +249,7 @@ public class ServiceDiscovery extends AbstractInitOnce
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
             synchronized (ServiceDiscovery.this.delta)
             {
-                ServiceDiscovery.this.delta.put(event.getServiceName(), hosts);
+                ServiceDiscovery.this.delta.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));
                 ServiceDiscovery.this.onChange = true;
             }
         }

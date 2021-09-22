@@ -17,6 +17,7 @@ import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
+import com.cell.model.ServerCmdMetaInfo;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.util.DiscoveryUtils;
@@ -39,31 +40,27 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
 {
     private static NacosNodeDiscoveryImpl instance = null;
 
+    private Map<String, List<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
+    private final Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> delta = new HashMap<>();
+
+
     private NacosNodeDiscoveryImpl()
     {
+    }
 
+    public static void setupDiscovery()
+    {
+        instance = new NacosNodeDiscoveryImpl();
+        String serverAddr = NacosConfiguration.getInstance().getServerAddr();
+        InitCTX initCTX = new InitCTX();
+        Map<String, Object> data = new HashMap<>();
+        data.put(ConfigFactory.serverAddr, serverAddr);
+        initCTX.setData(data);
+        instance.initOnce(initCTX);
     }
 
     public static NacosNodeDiscoveryImpl getInstance()
     {
-        if (null == instance)
-        {
-            synchronized (NacosNodeDiscoveryImpl.class)
-            {
-                if (null != instance)
-                {
-                    return instance;
-                }
-                instance = new NacosNodeDiscoveryImpl();
-                String serverAddr = NacosConfiguration.getInstance().getServerAddr();
-                InitCTX initCTX = new InitCTX();
-                Map<String, Object> data = new HashMap<>();
-                data.put(ConfigFactory.serverAddr, serverAddr);
-                initCTX.setData(data);
-                instance.initOnce(initCTX);
-            }
-        }
-
         return instance;
     }
 
@@ -101,6 +98,30 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
                         }
                     }));
             return DiscoveryUtils.convNacosMapInstanceToCellInstance(serviceMap);
+        } catch (NacosException e)
+        {
+            throw new CellDiscoveryException(e);
+        }
+    }
+
+    public List<Instance> getServiceAllInstance(String serviceName)
+    {
+        try
+        {
+            List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = this.namingService.getAllInstances(serviceName);
+            return DiscoveryUtils.convNaocsInstance2CellInstance(allInstances);
+        } catch (NacosException e)
+        {
+            throw new CellDiscoveryException(e);
+        }
+    }
+
+    public List<String> getAllServices()
+    {
+        try
+        {
+            ListView<String> servicesOfServer = this.namingService.getServicesOfServer(1, 10000);
+            return servicesOfServer.getData();
         } catch (NacosException e)
         {
             throw new CellDiscoveryException(e);
@@ -172,4 +193,5 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
             throw new ProgramaException(e);
         }
     }
+
 }

@@ -71,6 +71,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         String command = request.getRequestURI();
         IHttpReactor reactor = this.getReactor(command);
         long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
+        // FIXME REACTOR=NULL
         CommandContext context = new CommandContext(request, response, timeOut, command);
         DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, reactor);
         this.httpChannel.readCommand(ctx);

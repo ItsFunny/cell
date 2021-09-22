@@ -31,7 +31,8 @@ public enum Module
     HTTP_DISPATCHER((short) 107, "HTTP_DISPATCHER"),
     HTTP_GATEWAY_SENTINEL((short) 108, "SENTINEL"),
     STATISTIC((short) 109, "STATISTIC"),
-    MANAGER((short)110,"MANAGER"),
+    MANAGER((short) 110, "MANAGER"),
+    SD_PROMETHEUS((short) 111, "SD_PROMETHEIUS"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

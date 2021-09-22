@@ -223,18 +223,21 @@ public class AppTest
 
 
     @Test
-    public void testInternal() throws Exception
+    public void testInterval() throws Exception
     {
         Flux<Long> interval = Flux.interval(Duration.ofSeconds(2));
-        Flux<Long> asd = interval.map(v ->
+        Flux<String> asd = interval.map(v ->
         {
-            if (v <= 3)
-            {
-                return v;
-            }
-            throw new RuntimeException("asd");
-        }).onErrorReturn(000l);
+            v++;
+            return v + "";
+//            if (v <= 3)
+//            {
+//                return v;
+//            }
+//            throw new RuntimeException("asd");
+        }).onErrorReturn("0");
         asd.subscribe(System.out::println);
+        System.out.println(1);
         TimeUnit.SECONDS.sleep(200);
     }
 }
