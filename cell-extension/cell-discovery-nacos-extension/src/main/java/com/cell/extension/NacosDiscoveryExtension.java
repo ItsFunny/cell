@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
  * @Attention:
  * @Date 创建时间：2021-09-08 05:06
  */
-@CellOrder(value = OrderConstants.HTTP_EXTENSION + 1)
+@CellOrder(value = OrderConstants.HTTP_NACOS_DISCOVERY_EXTENSION)
 public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 {
 
@@ -53,6 +53,7 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
     @Override
     public void onInit(INodeContext ctx) throws Exception
     {
+        NacosNodeDiscoveryImpl.setupDiscovery();
     }
 
     @Override
@@ -75,12 +76,10 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
     private void register(INodeContext ctx)
     {
         IHttpCommandDispatcher dispatcher = DefaultReactorHolder.getInstance();
-        NacosNodeDiscoveryImpl.setupDiscovery();
         NacosNodeDiscoveryImpl nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
 
-        Map<String, IHttpReactor> reactors = dispatcher.getReactors();
-        if (reactors == null || reactors.isEmpty()) return;
-        Collection<IHttpReactor> values = reactors.values();
+        Collection<IHttpReactor> values = dispatcher.getReactors();
+        if (values == null || values.isEmpty()) return;
         Map<Class<?>, IHttpReactor> reactorMap = new HashMap<>();
         for (IHttpReactor value : values)
         {

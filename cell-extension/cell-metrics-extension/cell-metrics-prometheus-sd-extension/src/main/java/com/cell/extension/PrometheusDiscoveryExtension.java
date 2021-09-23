@@ -1,8 +1,9 @@
 package com.cell.extension;
 
+import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
-import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.sd.RegistrationService;
 
 /**
@@ -13,7 +14,8 @@ import com.cell.sd.RegistrationService;
  * @Attention:
  * @Date 创建时间：2021-09-23 05:56
  */
-public class PrometheusExtension extends AbstractSpringNodeExtension
+@CellOrder(value = OrderConstants.HTTP_NACOS_DISCOVERY_EXTENSION + 1)
+public class PrometheusDiscoveryExtension extends AbstractSpringNodeExtension
 {
 
     private RegistrationService registrationService;

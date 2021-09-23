@@ -19,5 +19,6 @@
     <modules>
         <module>cell-runnable-eureka</module>
         <module>cell-runnable-gateway</module>
+        <module>cell-runnable-nacos-prometheus-sd</module>
     </modules>
 </project>

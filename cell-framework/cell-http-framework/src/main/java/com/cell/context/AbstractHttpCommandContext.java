@@ -3,6 +3,7 @@ package com.cell.context;
 import com.cell.adapter.HandlerMethodReturnValueHandler;
 import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.command.IHttpCommand;
 import com.cell.command.impl.DummyHttpCommand;
 import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
@@ -38,8 +39,8 @@ import javax.servlet.http.HttpServletRequest;
 public abstract class AbstractHttpCommandContext extends AbstractBaseContext implements IHttpCommandContext
 {
     protected CommandContext commandContext;
-    private IHttpHandlerSuit handlerSuit;
     private HttpCmdAnno httpCmdAnno;
+    private Class<? extends IHttpCommand> cmd;
 
 
     public AbstractHttpCommandContext(CommandContext commandContext)

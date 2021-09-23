@@ -32,7 +32,7 @@ import java.util.regex.Pattern;
  * @Attention:
  * @Date 创建时间：2021-09-22 21:30
  */
-@HttpCmdAnno(uri = "services", httpCommandId = 1, group = ServiceReactor.prometheusServiceReactor, requestType = EnumHttpRequestType.HTTP_URL_GET)
+@HttpCmdAnno(uri = "/category/services", httpCommandId = 1, group = ServiceReactor.prometheusServiceReactor, requestType = EnumHttpRequestType.HTTP_URL_GET)
 public class AllServiceCommand extends AbstractHttpCommand
 {
     private static final Pattern WAIT_PATTERN = Pattern.compile("(\\d*)(m|s|ms|h)");

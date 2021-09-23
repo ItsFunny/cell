@@ -8,6 +8,7 @@ import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.log.LOG;
+import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.WebHandlerManager;
 import com.cell.models.Module;
 import com.cell.reactor.IHttpReactor;
@@ -65,7 +66,7 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         CommandLine cmd = ctx.getCommandLine();
         this.dynamicControllerService = new DynamicControllerServiceImpl();
-        this.dispatcher = new DefaultHttpCommandDispatcher();
+        this.dispatcher = new DefaultHttpCommandDispatcher(ReactorSelectorManager.getInstance());
         String port = cmd.getOptionValue("port");
         if (!StringUtils.isEmpty(port))
         {

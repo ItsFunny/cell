@@ -6,27 +6,39 @@ import com.cell.channel.IHttpChannel;
 import com.cell.command.IHttpCommand;
 import com.cell.config.AbstractInitOnce;
 import com.cell.constant.HttpConstants;
+import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpHandlerSuit;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
+import com.cell.hooks.IChainExecutor;
+import com.cell.hooks.IReactorExecutor;
+import com.cell.log.LOG;
+import com.cell.manager.IReflectManager;
+import com.cell.manager.ReactorSelectorManager;
+import com.cell.manager.context.OnAddReactorContext;
+import com.cell.manager.context.SelectByUriContext;
+import com.cell.model.CommandWrapper;
+import com.cell.models.Module;
 import com.cell.protocol.CommandContext;
+import com.cell.protocol.ICommand;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
+import com.cell.utils.CollectionUtils;
 import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Charlie
@@ -39,12 +51,27 @@ import java.util.Map;
 @Data
 public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean, ApplicationContextAware
 {
+    public DefaultHttpCommandDispatcher(IReflectManager<IReactorExecutor, IChainExecutor> selectorStrategy)
+    {
+        this.selectorStrategy = selectorStrategy;
+    }
+
+
+
     private volatile boolean ready;
     private short port = 8080;
 
     private IHttpChannel httpChannel;
 
-    private Map<String, IHttpReactor> reactorMap = new HashMap<>();
+
+    private Map<String, CommandWrapper> commands = new HashMap<>();
+
+    private AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+
+    // strategy
+    private IReflectManager<IReactorExecutor, IChainExecutor> selectorStrategy;
+
 
     @Override
     public short getPort()
@@ -69,13 +96,37 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     public DeferredResult<Object> request(HttpServletRequest request, HttpServletResponse response) throws HttpFramkeworkException
     {
         String command = request.getRequestURI();
-        IHttpReactor reactor = this.getReactor(command);
-        long timeOut = reactor == null ? this.getResultTimeout() : reactor.getResultTimeout();
-        // FIXME REACTOR=NULL
+        CommandWrapper wp = this.commands.get(command);
+        if (wp == null)
+        {
+            SelectByUriContext ret = SelectByUriContext.builder().uri(command).build();
+            this.selectorStrategy.execute(ReactorSelectorManager.selectByUri, ret).subscribe();
+            if (ret.getRet() == null)
+            {
+                // should be internal server error
+                LOG.info(Module.HTTP_FRAMEWORK, "should not happen ,uri:{}", command);
+                return this.fastFail(response);
+            }
+            wp.setCmd(ret.getRet().getV1());
+            wp.setReactor(ret.getRet().getV2());
+        }
+
+
+        long timeOut = wp.getReactor().getResultTimeout();
         CommandContext context = new CommandContext(request, response, timeOut, command);
-        DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, reactor);
+        DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, wp.getReactor(), wp.getCmd());
         this.httpChannel.readCommand(ctx);
         return context.getResponseResult();
+    }
+
+    private DeferredResult<Object> fastFail(HttpServletResponse response)
+    {
+        response.addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(ContextConstants.FAIL));
+        response.addHeader(HttpConstants.HTTP_HEADER_MSG, "internal server error");
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        DeferredResult<Object> ret = new DeferredResult<>();
+        ret.setResult("error");
+        return ret;
     }
 
 
@@ -91,15 +142,19 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         for (Class<? extends IHttpCommand> cc : clist)
         {
             HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
-            this.reactorMap.put(anno.uri(), reactor);
+
+            CommandWrapper wrapper = new CommandWrapper();
+            wrapper.setReactor(reactor);
+            wrapper.setCmd(cc);
+            this.commands.put(anno.uri(), wrapper);
+
+            this.selectorStrategy.execute(ReactorSelectorManager.onAddReactor, OnAddReactorContext.builder()
+                    .anno(anno)
+                    .cmd(cc)
+                    .reactor(reactor).build()).subscribe();
         }
     }
 
-
-    private IHttpReactor getReactor(String uri)
-    {
-        return this.reactorMap.get(uri);
-    }
 
     @Override
     public boolean ready()
@@ -109,9 +164,14 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
     // FIXME
     @Override
-    public Map<String, IHttpReactor> getReactors()
+    public Collection<IHttpReactor> getReactors()
     {
-        return this.reactorMap;
+        Set<IHttpReactor> set = new HashSet<>();
+        for (String s : commands.keySet())
+        {
+            set.add(commands.get(s).getReactor());
+        }
+        return new ArrayList<>(set);
     }
 
     @Override

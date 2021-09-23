@@ -23,9 +23,11 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
     protected List<T> executors;
     protected int index;
 
-    public BaseMutableChainExecutor(){
+    public BaseMutableChainExecutor()
+    {
 
     }
+
     public BaseMutableChainExecutor(List<T> executors)
     {
         this.executors = executors;
@@ -50,6 +52,7 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
     {
         return Mono.defer(() ->
         {
+            if (ctx.done()) return Mono.empty();
             boolean find = false;
             if (this.index < this.executors.size())
             {

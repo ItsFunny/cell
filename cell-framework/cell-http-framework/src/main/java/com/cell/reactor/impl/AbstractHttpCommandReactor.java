@@ -49,7 +49,7 @@ import static com.cell.utils.ClassUtil.mustGetAnnotation;
  */
 public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReactor implements IHttpReactor
 {
-    protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
+//    protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
 
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {
@@ -78,24 +78,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     public void execute(IContext context)
     {
         DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
-        String uri = ctx.getURI();
-        CommandWrapper wp = this.cmds.get(uri);
-        if (wp == null)
-        {
-            ctx.response(this.createResponseWp()
-                    .status(ContextConstants.PROGRAMA_ERROR)
-                    .other(HttpContextResponseBody.builder().status(HttpStatus.NOT_FOUND).build())
-                    .exception(new HttpFramkeworkException("cmd不存在", "asd"))
-                    .msg("该commd不存在:" + uri)
-                    .build());
-            return;
-        }
-
-        IHttpCommand cmd = null;
+        Class<? extends IHttpCommand> cmdClz = ctx.getCmd();
+        IHttpCommand cmd=null;
         try
         {
             // FIXME optimize
-            cmd = wp.getCmd().newInstance();
+            cmd = cmdClz.newInstance();
             ctx.setReactor(this);
             cmd.execute(ctx);
         } catch (Exception e)
@@ -121,33 +109,10 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
 //        return ret;
 //    }
 
-    @Override
-    public Class<? extends IHttpCommand> getCmd(String uri)
-    {
-        if (!this.cmds.containsKey(uri))
-        {
-            return null;
-        }
-        return this.cmds.get(uri).getCmd();
-    }
 
     @Override
     public void registerCmd(ICommand cmd)
     {
-        if (!(cmd instanceof IHttpCommand))
-        {
-            throw new ProgramaException("zz");
-        }
-        HttpCmdAnno anno = (HttpCmdAnno) mustGetAnnotation(cmd.getClass(), HttpCmdAnno.class);
-        if (this.cmds.containsKey(anno.uri()))
-        {
-            throw new ProgramaException("aaa");
-        }
-        LOG.info(Module.HTTP_FRAMEWORK, "mapping uri:{}", anno.uri());
-        CommandWrapper wp = new CommandWrapper();
-        wp.setAnno(anno);
-        wp.setCmd((Class<? extends IHttpCommand>) cmd.getClass());
-        this.cmds.put(anno.uri(), wp);
     }
 
     @Override

@@ -138,6 +138,7 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
         String uri = annotation.uri();
         Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
         RequestMappingInfo mappingInfo = RequestMappingInfo.paths(uri).methods(getRequestMethod(requestType)).build();
+        LOG.info(Module.HTTP_FRAMEWORK, "注册uri:{},method:{}", uri, method.getName());
         handlerMapping.registerMapping(mappingInfo, DefaultReactorHolder.getInstance(), method); // 注册映射处理
     }
 

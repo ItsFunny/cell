@@ -3,6 +3,7 @@ package com.cell.reactor;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.reactor.commands.AgentSelfCmd;
 import com.cell.reactor.commands.AllServiceCommand;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.sd.RegistrationService;
@@ -19,7 +20,7 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-22 21:27
  */
-@ReactorAnno(group = "/v1/catalog/")
+@ReactorAnno(group = "/v1")
 @Data
 public class ServiceReactor extends AbstractHttpDymanicCommandReactor
 {
@@ -31,7 +32,7 @@ public class ServiceReactor extends AbstractHttpDymanicCommandReactor
     @Override
     public List<Class<? extends IHttpCommand>> getHttpCommandList()
     {
-        return Arrays.asList(AllServiceCommand.class);
+        return Arrays.asList(AllServiceCommand.class, AgentSelfCmd.class);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.cell.context;
 
 import com.cell.channel.IChannel;
+import com.cell.command.IHttpCommand;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
 import com.cell.protocol.CommandContext;
@@ -22,12 +23,14 @@ public class DefaultHttpHandlerSuit extends AbstractHandlerSuit implements IHttp
 {
     private CommandContext commandContext;
     private IHttpReactor reactor;
+    private Class<? extends IHttpCommand> cmd;
 
-    public DefaultHttpHandlerSuit(IChannel<IHandler, IChainHandler> channel, CommandContext commandContext,IHttpReactor reactor)
+    public DefaultHttpHandlerSuit(IChannel<IHandler, IChainHandler> channel, CommandContext commandContext, IHttpReactor reactor,Class<? extends  IHttpCommand>cmd)
     {
         super(channel);
         this.commandContext = commandContext;
-        this.reactor=reactor;
+        this.reactor = reactor;
+        this.cmd=cmd;
     }
 
     @Override
@@ -41,7 +44,7 @@ public class DefaultHttpHandlerSuit extends AbstractHandlerSuit implements IHttp
     {
         DefaultHttpCommandContext ret = new DefaultHttpCommandContext(this.commandContext);
         ret.setReactor(this.reactor);
-        ret.setHandlerSuit(this);
+        ret.setCommand(cmd);
         return ret;
     }
 }
