@@ -32,7 +32,7 @@ public class App
     public static class CMD1 extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             ctx.response(this.createResponseWp().ret("cmd1").build());
         }
@@ -42,7 +42,7 @@ public class App
     public static class CMD2 extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             Reactor2 reactor2 = (Reactor2) ctx.getHttpReactor();
             Assert.notNull(reactor2.autoasd, "asd");

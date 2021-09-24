@@ -22,5 +22,5 @@ public interface IBuzzExecutor
     }
 
     // FIXME 添加参数
-    void execute(BuzzContextBO bo) throws IOException;
+    void execute(BuzzContextBO bo);
 }

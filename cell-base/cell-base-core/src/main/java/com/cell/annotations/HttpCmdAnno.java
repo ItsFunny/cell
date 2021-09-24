@@ -3,6 +3,7 @@ package com.cell.annotations;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.models.Module;
+import lombok.AllArgsConstructor;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
@@ -29,6 +30,10 @@ public @interface HttpCmdAnno
     String uri();
 
     Module module() default Module.UNKNOWN;
+
+
+    @AliasFor(annotation = Command.class, attribute = "buzzClz")
+    Class<?> buzzClz() default Void.class;
 
     @AliasFor(annotation = Command.class, attribute = "commandId")
     short httpCommandId();

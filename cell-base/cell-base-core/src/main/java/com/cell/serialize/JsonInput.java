@@ -1,9 +1,11 @@
 package com.cell.serialize;
 
+import com.cell.exceptions.CellIllegalArgumentException;
 import com.cell.json.IJsonArray;
 import com.cell.json.IJsonObject;
 import com.cell.json.PacketJSON;
 import com.cell.utils.NetworkUtil;
+import com.cell.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -271,7 +273,12 @@ public class JsonInput implements IInputArchive
     @Override
     public String readString(String tag) throws IOException
     {
-        return in.getString(tag);
+        String ret = in.getString(tag);
+        if (StringUtils.isEmpty(ret))
+        {
+            throw new IllegalArgumentException("参数:" + tag + ",不可为空");
+        }
+        return ret;
     }
 
     @Override

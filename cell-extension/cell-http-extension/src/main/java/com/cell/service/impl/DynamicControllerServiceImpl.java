@@ -2,6 +2,7 @@ package com.cell.service.impl;
 
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
@@ -13,6 +14,8 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.UriUtils;
+import org.bouncycastle.asn1.eac.EACObjectIdentifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -74,12 +77,13 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
 
     private void registerHandlerReactor(IDynamicHttpReactor reactor)
     {
+        ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
         List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
         try
         {
             for (Class<? extends IHttpCommand> aClass : httpCommandList)
             {
-                this.registerCmd(aClass);
+                this.registerCmd(annotation.group(), aClass);
             }
         } catch (Exception e)
         {
@@ -126,7 +130,7 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
         }
     }
 
-    private void registerCmd(Class<? extends IHttpCommand> clz) throws Exception
+    private void registerCmd(String group, Class<? extends IHttpCommand> clz) throws Exception
     {
         HttpCmdAnno annotation = clz.getAnnotation(HttpCmdAnno.class);
         if (null == annotation)
@@ -136,9 +140,11 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
         }
         EnumHttpRequestType requestType = annotation.requestType();
         String uri = annotation.uri();
+        // FIXME
+        uri = UriUtils.mergeUri(group, uri);
         Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
         RequestMappingInfo mappingInfo = RequestMappingInfo.paths(uri).methods(getRequestMethod(requestType)).build();
-        LOG.info(Module.HTTP_FRAMEWORK, "注册uri:{},method:{}", uri, method.getName());
+        LOG.info(Module.HTTP_FRAMEWORK, "注册uri:{},method:{}", uri, annotation.requestType().name());
         handlerMapping.registerMapping(mappingInfo, DefaultReactorHolder.getInstance(), method); // 注册映射处理
     }
 

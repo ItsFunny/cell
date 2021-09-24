@@ -57,15 +57,9 @@ public class AllServiceCommand extends AbstractHttpCommand
         }
     }
 
-    @Override
-    public ISerializable getBO(IBuzzContext context)
-    {
-//        return
-        return null;
-    }
 
     @Override
-    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
     {
         ServiceReactor reactor = (ServiceReactor) ctx.getHttpReactor();
         RegistrationService registrationService = reactor.getRegistrationService();

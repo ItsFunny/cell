@@ -22,7 +22,7 @@ import java.io.IOException;
 public class AgentSelfCmd extends AbstractHttpCommand
 {
     @Override
-    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
     {
         JSONObject configJo = new JSONObject();
         configJo.put("Datacenter", "default");

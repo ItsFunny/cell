@@ -1,7 +1,5 @@
 package com.cell.annotations;
 
-import com.cell.protocol.ICommand;
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,15 +10,10 @@ import java.lang.annotation.Target;
  * @When
  * @Description
  * @Detail
- * @date 创建时间：2021-08-30 10:26
+ * @date 创建时间：2021-09-24 19:30
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Command
+public @interface Optional
 {
-    short commandId();
-
-    Class<?> buzzClz() default Void.class;
-
-    Class<? extends ICommand> couple() default ICommand.class;
 }

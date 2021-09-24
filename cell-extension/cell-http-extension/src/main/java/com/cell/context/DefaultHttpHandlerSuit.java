@@ -25,12 +25,12 @@ public class DefaultHttpHandlerSuit extends AbstractHandlerSuit implements IHttp
     private IHttpReactor reactor;
     private Class<? extends IHttpCommand> cmd;
 
-    public DefaultHttpHandlerSuit(IChannel<IHandler, IChainHandler> channel, CommandContext commandContext, IHttpReactor reactor,Class<? extends  IHttpCommand>cmd)
+    public DefaultHttpHandlerSuit(IChannel<IHandler, IChainHandler> channel, CommandContext commandContext, IHttpReactor reactor, Class<? extends IHttpCommand> cmd)
     {
         super(channel);
         this.commandContext = commandContext;
         this.reactor = reactor;
-        this.cmd=cmd;
+        this.cmd = cmd;
     }
 
     @Override

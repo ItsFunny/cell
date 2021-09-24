@@ -1,6 +1,7 @@
 package com.cell.command.impl;
 
 import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotations.Optional;
 import com.cell.command.IHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
@@ -11,10 +12,17 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.serialize.ISerializable;
+import com.cell.serialize.JsonInput;
+import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -68,7 +76,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return this.httpCmdAnno.responseType();
     }
 
-    protected abstract void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException;
+    protected abstract void onExecute(IHttpCommandContext ctx, Object bo) throws IOException;
 
     protected IHttpCommandContext getHttpContext()
     {
@@ -98,10 +106,67 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     {
         try
         {
-            this.onExecute((IHttpCommandContext) ctx, this.getBO(ctx));
-        } catch (IOException e)
+            Class<?> bzClz = this.httpCmdAnno.buzzClz();
+            Object bo = null;
+            if (bzClz != Void.class)
+            {
+                bo = this.newInstance((IHttpCommandContext) ctx, bzClz);
+            }
+            this.onExecute((IHttpCommandContext) ctx, bo);
+        } catch (Exception e)
         {
+            e.printStackTrace();
             throw new InternalWrapperException(e);
         }
+    }
+
+    private Object newInstance(IHttpCommandContext commandContext, Class<?> bzClz) throws Exception
+    {
+        Object instance = null;
+        IInputArchive inputArchive = this.getInputArchive(commandContext);
+        if (ISerializable.class.isAssignableFrom(bzClz))
+        {
+            instance = bzClz.newInstance();
+            ((ISerializable) instance).read(inputArchive);
+        } else
+        {
+            instance = this.reflectFill(bzClz, inputArchive);
+        }
+        return instance;
+    }
+
+    private Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
+    {
+        Field[] fields = clz.getDeclaredFields();
+        BeanWrapper beanWrapper = new BeanWrapperImpl(clz);
+        for (Field field : fields)
+        {
+            String name = field.getName();
+            if (name.startsWith("abs")) continue;
+            Optional annotation = field.getAnnotation(Optional.class);
+            if (annotation == null)
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
+            } else
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
+            }
+        }
+        return beanWrapper.getWrappedInstance();
+    }
+
+    private IInputArchive getInputArchive(IHttpCommandContext commandContext) throws IOException
+    {
+        EnumHttpRequestType requestType = this.httpCmdAnno.requestType();
+        HttpServletRequest httpRequest = commandContext.getHttpRequest();
+        String jsonStr = null;
+        if (requestType.equals(EnumHttpRequestType.HTTP_POST))
+        {
+            jsonStr = HttpUtils.readStringFromPostRequest(httpRequest);
+        } else
+        {
+            jsonStr = HttpUtils.fromHttpRequest(httpRequest);
+        }
+        return JsonInput.createArchive(jsonStr);
     }
 }

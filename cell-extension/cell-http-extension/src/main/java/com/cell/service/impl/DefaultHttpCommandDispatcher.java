@@ -26,6 +26,7 @@ import com.cell.protocol.ICommand;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.UriUtils;
 import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -55,7 +56,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
     {
         this.selectorStrategy = selectorStrategy;
     }
-
 
 
     private volatile boolean ready;
@@ -139,6 +139,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             throw new ProgramaException("reactor annotation必须有 @ReactorAnno 注解 ");
         }
         List<Class<? extends IHttpCommand>> clist = reactor.getHttpCommandList();
+        String group = annotation.group();
         for (Class<? extends IHttpCommand> cc : clist)
         {
             HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
@@ -146,12 +147,15 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             CommandWrapper wrapper = new CommandWrapper();
             wrapper.setReactor(reactor);
             wrapper.setCmd(cc);
-            this.commands.put(anno.uri(), wrapper);
-
-            this.selectorStrategy.execute(ReactorSelectorManager.onAddReactor, OnAddReactorContext.builder()
+            OnAddReactorContext ctx = OnAddReactorContext.builder()
                     .anno(anno)
                     .cmd(cc)
-                    .reactor(reactor).build()).subscribe();
+                    .reactor(reactor).build();
+            this.selectorStrategy.execute(ReactorSelectorManager.onAddReactor, ctx).subscribe();
+            if (!ctx.isSatisfy())
+            {
+                this.commands.put(UriUtils.mergeUri(group, anno.uri()), wrapper);
+            }
         }
     }
 

@@ -20,13 +20,13 @@ import lombok.Data;
 public class BuzzContextBO
 {
     private IHttpCommandContext context;
-    private ISerializable bo;
+    private Object bo;
     private IHttpCommand cmd;
 
     public IMapDynamicHttpReactor getReactor(){
         return (IMapDynamicHttpReactor) this.context.getReactor();
     }
-    public BuzzContextBO(IHttpCommandContext context, ISerializable bo, IHttpCommand cmd)
+    public BuzzContextBO(IHttpCommandContext context, Object bo, IHttpCommand cmd)
     {
         this.context = context;
         this.bo = bo;

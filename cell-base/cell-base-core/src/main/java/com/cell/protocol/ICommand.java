@@ -33,7 +33,6 @@ public interface ICommand extends  ISerializable
 //    IContext getCtx();
 
     // 用于创建业务对象
-    ISerializable getBO(IBuzzContext context);
 
 
     void setCurrent(ICommand caller);

@@ -41,7 +41,7 @@ public class MixTest
     public static class MyAA extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             System.out.println("execution");
             B b = new B();
@@ -76,7 +76,7 @@ public class MixTest
     {
 
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             System.out.println("mydemo2");
             B b = new B();

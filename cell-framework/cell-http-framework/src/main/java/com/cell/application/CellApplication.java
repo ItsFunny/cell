@@ -318,6 +318,7 @@ public class CellApplication
         private EnumHttpResponseType responseType = EnumHttpResponseType.HTTP_JSON;
         private IBuzzExecutor buzzExecutor;
         private String viewName = "";
+        private Class<?> buzzClz = Void.class;
 
         public HttpCommandBuilder(ReactorBuilder reactorBuilder)
         {
@@ -333,6 +334,12 @@ public class CellApplication
         public HttpCommandBuilder withBuzzHandler(IBuzzExecutor bundle)
         {
             this.buzzExecutor = bundle;
+            return this;
+        }
+
+        public HttpCommandBuilder withBuzzClz(Class<?> clz)
+        {
+            this.buzzClz = clz;
             return this;
         }
 
@@ -398,6 +405,7 @@ public class CellApplication
                             .define("uri", this.uri)
                             .define("viewName", this.viewName)
                             .define("httpCommandId", (short) commandId.getAndIncrement())
+                            .define("buzzClz", this.buzzClz)
                             .build())
                     .make()
                     .load(CellApplication.class.getClassLoader())
@@ -411,7 +419,7 @@ public class CellApplication
     {
 
         @Override
-        public void execute(BuzzContextBO bo) throws IOException
+        public void execute(BuzzContextBO bo)
         {
             bo.success("post done ");
         }
@@ -421,7 +429,7 @@ public class CellApplication
     {
 
         @Override
-        public void execute(BuzzContextBO bo) throws IOException
+        public void execute(BuzzContextBO bo)
         {
             bo.success("get");
         }

@@ -95,9 +95,4 @@ public abstract class AbstractCommand implements ICommand
 //            throw new RuntimeException("easd", e);
 //        }
 //    }
-    @Override
-    public ISerializable getBO(IBuzzContext context)
-    {
-        return null;
-    }
 }

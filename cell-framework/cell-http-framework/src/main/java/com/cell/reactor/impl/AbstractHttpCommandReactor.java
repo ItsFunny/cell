@@ -78,8 +78,8 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     public void execute(IContext context)
     {
         DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
-        Class<? extends IHttpCommand> cmdClz = ctx.getCmd();
-        IHttpCommand cmd=null;
+        Class<? extends IHttpCommand> cmdClz = ctx.getCommand();
+        IHttpCommand cmd = null;
         try
         {
             // FIXME optimize
@@ -135,6 +135,8 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(this.getClass(), ReactorAnno.class);
         String group = anno.group();
         if (StringUtils.isEmpty(group)) return;
+        if (CollectionUtils.isNotEmpty(httpCommandList)) return;
+
         httpCommandList.stream().forEach(c ->
         {
             HttpCmdAnno annotation = c.getAnnotation(HttpCmdAnno.class);
@@ -188,6 +190,12 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                 public Module module()
                 {
                     return annotation.module();
+                }
+
+                @Override
+                public Class<?> buzzClz()
+                {
+                    return annotation.buzzClz();
                 }
 
                 @Override

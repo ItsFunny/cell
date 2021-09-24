@@ -1,8 +1,11 @@
 package com.cell.util;
 
+import com.alibaba.fastjson.JSON;
 import com.cell.command.IHttpCommand;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.utils.JSONUtil;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StreamUtils;
 import org.springframework.util.StringUtils;
 
@@ -10,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -46,10 +52,12 @@ public class HttpUtils
         }
         return ip.trim();
     }
-    public static String readStringFromRequest(HttpServletRequest request) throws IOException
+
+    public static String readStringFromPostRequest(HttpServletRequest request) throws IOException
     {
         int length = request.getContentLength();
-        if (length <= 0) {
+        if (length <= 0)
+        {
             LOG.debug(Module.HTTP_FRAMEWORK, "empty content received, len: [{}]", request.getContentLength());
             return null;
         }
@@ -60,5 +68,26 @@ public class HttpUtils
         String message = new String(bytes, StandardCharsets.UTF_8);
         return message;
     }
+
+    public static String fromHttpRequest(HttpServletRequest request) throws IOException
+    {
+        Map<String, Object> parameterMap = new HashMap<>();
+        Enumeration<String> parameterNames = request.getParameterNames();
+        while (parameterNames.hasMoreElements())
+        {
+            String name = parameterNames.nextElement();
+            String value = request.getParameter(name);
+            parameterMap.put(name, value);
+        }
+        return JSONUtil.toJsonString(parameterMap);
+    }
+
+    private static final AntPathMatcher MATCHER = new AntPathMatcher();
+
+    public static Map<String, String> getRegexValues(String patten, String uri)
+    {
+        return MATCHER.extractUriTemplateVariables(patten, uri);
+    }
+
 
 }

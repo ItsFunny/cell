@@ -7,9 +7,11 @@ import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.serialize.ISerializable;
+import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
@@ -59,7 +61,7 @@ public class App
     public static class Reactor1Cmd1 extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             Reactor1 reactor1 = (Reactor1) ctx.getReactor();
             Assert.notNull(reactor1.logic, "asd");
@@ -71,7 +73,7 @@ public class App
     public static class Reactor2CMD1 extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
             ctx.response(this.createResponseWp().ret("reactor2#cmd1").build());
         }
@@ -104,6 +106,35 @@ public class App
         public List<Class<? extends IHttpCommand>> getHttpCommandList()
         {
             return Arrays.asList(Reactor2CMD1.class);
+        }
+    }
+
+    @ReactorAnno(group = "/reactor3")
+    public static class Reactor3 extends AbstractHttpDymanicCommandReactor
+    {
+
+        @Override
+        public List<Class<? extends IHttpCommand>> getHttpCommandList()
+        {
+            return Arrays.asList(cm3.class);
+        }
+    }
+
+    @Data
+    public static class Cmd3Buz
+    {
+        private String name;
+        @Optional
+        private Integer age;
+    }
+
+    @HttpCmdAnno(uri = "/cmd3", httpCommandId = 1, buzzClz = Cmd3Buz.class, requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class cm3 extends AbstractHttpCommand
+    {
+        @Override
+        protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
+        {
+            System.out.println(bo);
         }
     }
 

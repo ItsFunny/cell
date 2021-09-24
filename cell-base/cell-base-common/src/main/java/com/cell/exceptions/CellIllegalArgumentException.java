@@ -1,6 +1,7 @@
 package com.cell.exceptions;
 
 import com.cell.enums.ExceptionEnums;
+import lombok.Data;
 
 /**
  * @author Charlie
@@ -10,8 +11,16 @@ import com.cell.enums.ExceptionEnums;
  * @Attention:
  * @Date 创建时间：2021-01-12 05:39
  */
-public class CellIllegalArgumentException extends  AbstractRuntimeException
+public class CellIllegalArgumentException extends AbstractRuntimeException
 {
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public CellIllegalArgumentException()
+    {
+    }
 
     /**
      * Constructs a new runtime exception with the specified detail message.
@@ -77,39 +86,8 @@ public class CellIllegalArgumentException extends  AbstractRuntimeException
      *                           be writable
      * @since 1.7
      */
-    protected CellIllegalArgumentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+    public CellIllegalArgumentException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
     {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    /**
-     * Constructs a new runtime exception with the specified detail message and
-     * cause.  <p>Note that the detail message associated with
-     * {@code cause} is <i>not</i> automatically incorporated in
-     * this runtime exception's detail message.
-     *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
-     * @param cause    the cause (which is saved for later retrieval by the
-     *                 {@link #getCause()} method).  (A <tt>null</tt> value is
-     *                 permitted, and indicates that the cause is nonexistent or
-     *                 unknown.)
-     * @param code
-     * @param logicMsg
-     * @since 1.4
-     */
-    public CellIllegalArgumentException(String message, Throwable cause, Long code, String logicMsg)
-    {
-        super(message, cause, code, logicMsg);
-    }
-
-    public CellIllegalArgumentException(String message, Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(message, cause, exceptionEnums);
-    }
-
-    public CellIllegalArgumentException(Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(cause, exceptionEnums);
     }
 }

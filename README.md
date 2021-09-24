@@ -140,7 +140,7 @@
         public static class CMD1 extends AbstractHttpCommand
         {
             @Override
-            protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+            protected ICommandExecuteResult onExecute(IHttpContext ctx, Object bo) throws IOException
             {
                 ctx.response(this.createResponseWp().ret("cmd1").build());
                 return null;
@@ -151,7 +151,7 @@
         public static class CMD2 extends AbstractHttpCommand
         {
             @Override
-            protected ICommandExecuteResult onExecute(IHttpContext ctx, ISerializable bo) throws IOException
+            protected ICommandExecuteResult onExecute(IHttpContext ctx, Object bo) throws IOException
             {
                 Reactor2 reactor2 = (Reactor2) ctx.getHttpReactor();
                 Assert.notNull(reactor2.autoasd, "asd");

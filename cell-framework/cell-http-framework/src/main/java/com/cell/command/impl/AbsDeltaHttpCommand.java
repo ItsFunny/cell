@@ -27,14 +27,9 @@ public abstract class AbsDeltaHttpCommand extends AbstractHttpCommand
 
     protected abstract IBuzzExecutor setUpBuzzExecutor();
 
-//    @Override
-//    public ISerializable getBO(IContext context)
-//    {
-//        return this.buzzExecutor.serialize((IHttpContext) context);
-//    }
 
     @Override
-    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, Object bo)
     {
         BuzzContextBO reqBO = new BuzzContextBO(ctx, bo, this);
         this.buzzExecutor.execute(reqBO);

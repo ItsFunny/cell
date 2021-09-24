@@ -1,18 +1,18 @@
 package com.cell.exceptions;
 
-import com.cell.enums.ExceptionEnums;
 import lombok.Data;
 
 @Data
 public abstract class AbstractRuntimeException extends RuntimeException
 {
-
-    private Long code;
-    private String logicMsg;
     /**
-     *
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
      */
-    private static final long serialVersionUID = 1L;
+    public AbstractRuntimeException()
+    {
+    }
 
     /**
      * Constructs a new runtime exception with the specified detail message.
@@ -78,41 +78,8 @@ public abstract class AbstractRuntimeException extends RuntimeException
      *                           be writable
      * @since 1.7
      */
-    protected AbstractRuntimeException(String message, Throwable cause,
-                                       boolean enableSuppression,
-                                       boolean writableStackTrace)
+    public AbstractRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
     {
         super(message, cause, enableSuppression, writableStackTrace);
     }
-
-    /**
-     * Constructs a new runtime exception with the specified detail message and
-     * cause.  <p>Note that the detail message associated with
-     * {@code cause} is <i>not</i> automatically incorporated in
-     * this runtime exception's detail message.
-     *
-     * @param message the detail message (which is saved for later retrieval
-     *                by the {@link #getMessage()} method).
-     * @param cause   the cause (which is saved for later retrieval by the
-     *                {@link #getCause()} method).  (A <tt>null</tt> value is
-     *                permitted, and indicates that the cause is nonexistent or
-     *                unknown.)
-     * @since 1.4
-     */
-    public AbstractRuntimeException(String message, Throwable cause, Long code, String logicMsg)
-    {
-        super(message, cause);
-        this.code = code;
-        this.logicMsg = logicMsg;
-    }
-
-    public AbstractRuntimeException(String message, Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(message, cause);
-    }
-    public AbstractRuntimeException(Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(exceptionEnums.getLogicMsg(), cause);
-    }
-
 }

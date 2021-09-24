@@ -15,6 +15,7 @@ import com.cell.protocol.AbstractBaseContext;
 import com.cell.protocol.CommandContext;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.reactor.IHttpReactor;
+import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import lombok.Data;
@@ -23,9 +24,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
-import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -40,12 +41,18 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
 {
     protected CommandContext commandContext;
     private HttpCmdAnno httpCmdAnno;
-    private Class<? extends IHttpCommand> cmd;
+    private Class<? extends IHttpCommand> command;
 
 
     public AbstractHttpCommandContext(CommandContext commandContext)
     {
         this.commandContext = commandContext;
+    }
+
+    public void setCommand(Class<? extends IHttpCommand> cmd)
+    {
+        this.httpCmdAnno = cmd.getAnnotation(HttpCmdAnno.class);
+        this.command = cmd;
     }
 
     @Override
@@ -64,6 +71,13 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     public DeferredResult<Object> getResult()
     {
         return this.commandContext.getResponseResult();
+    }
+
+    public Map<String, String> getUriRegexValue()
+    {
+        String uri = this.getURI();
+        String patten = this.httpCmdAnno.uri();
+        return HttpUtils.getRegexValues(patten, uri);
     }
 
     protected void done(HttpStatus status, Object ret)

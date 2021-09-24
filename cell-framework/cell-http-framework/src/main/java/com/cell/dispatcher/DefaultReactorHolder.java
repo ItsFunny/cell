@@ -36,6 +36,7 @@ public class DefaultReactorHolder
         return instance;
     }
 
+    // FIXME ,FLUSH
     public static void addReactor(IHttpReactor reactor)
     {
         reactor.initOnce(null);

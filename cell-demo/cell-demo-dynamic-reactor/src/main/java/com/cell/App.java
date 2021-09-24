@@ -28,7 +28,7 @@ public class App
     public static class CCCmd extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo)
         {
             System.out.println("onExecute");
             ctx.response(this.createResponseWp().ret("ccccmd").build());
@@ -59,7 +59,7 @@ public class App
     public static class MyComd2 extends AbstractHttpCommand
     {
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo) 
         {
             ctx.response(this.createResponseWp()
                     .ret("123").build());

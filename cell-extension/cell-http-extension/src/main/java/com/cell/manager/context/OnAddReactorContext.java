@@ -21,6 +21,7 @@ import lombok.Data;
 public class OnAddReactorContext extends IContext.EmptyContext
 {
     private HttpCmdAnno anno;
-    private Class<? extends IHttpCommand>cmd;
+    private Class<? extends IHttpCommand> cmd;
     private IHttpReactor reactor;
+    private boolean satisfy;
 }

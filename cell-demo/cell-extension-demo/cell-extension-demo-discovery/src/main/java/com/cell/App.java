@@ -66,7 +66,7 @@ public class App
 
 
         @Override
-        protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+        protected void onExecute(IHttpCommandContext ctx, Object bo)
         {
             AReactor reactor = (AReactor) ctx.getHttpReactor();
             reactor.exceedDelayThresoldCount.labels(new String[]{"1", "2"}).observe(1.0);

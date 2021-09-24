@@ -24,7 +24,6 @@ public abstract class AbstractBaseContext implements IBuzzContext
     protected long requestTimestamp;
     private BasePromise promise;
     protected ICommandReactor reactor;
-    protected Class<? extends  ICommand> command;
 
     private String ip;
 

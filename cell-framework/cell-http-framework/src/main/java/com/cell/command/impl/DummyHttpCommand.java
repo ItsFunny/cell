@@ -18,7 +18,7 @@ import java.io.IOException;
 public class DummyHttpCommand extends AbstractHttpCommand
 {
     @Override
-    protected void onExecute(IHttpCommandContext ctx, ISerializable bo) throws IOException
+    protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
     {
         ctx.discard();
     }

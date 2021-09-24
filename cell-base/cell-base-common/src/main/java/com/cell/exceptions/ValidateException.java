@@ -14,6 +14,15 @@ import com.cell.enums.ExceptionEnums;
 public class ValidateException extends AbstractRuntimeException
 {
     /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public ValidateException()
+    {
+    }
+
+    /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
@@ -80,37 +89,6 @@ public class ValidateException extends AbstractRuntimeException
     public ValidateException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
     {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-    /**
-     * Constructs a new runtime exception with the specified detail message and
-     * cause.  <p>Note that the detail message associated with
-     * {@code cause} is <i>not</i> automatically incorporated in
-     * this runtime exception's detail message.
-     *
-     * @param message  the detail message (which is saved for later retrieval
-     *                 by the {@link #getMessage()} method).
-     * @param cause    the cause (which is saved for later retrieval by the
-     *                 {@link #getCause()} method).  (A <tt>null</tt> value is
-     *                 permitted, and indicates that the cause is nonexistent or
-     *                 unknown.)
-     * @param code
-     * @param logicMsg
-     * @since 1.4
-     */
-    public ValidateException(String message, Throwable cause, Long code, String logicMsg)
-    {
-        super(message, cause, code, logicMsg);
-    }
-
-    public ValidateException(String message, Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(message, cause, exceptionEnums);
-    }
-
-    public ValidateException(Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(cause, exceptionEnums);
     }
 }
 
