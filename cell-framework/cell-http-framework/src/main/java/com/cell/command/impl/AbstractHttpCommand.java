@@ -115,7 +115,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
             this.onExecute((IHttpCommandContext) ctx, bo);
         } catch (Exception e)
         {
-            e.printStackTrace();
             throw new InternalWrapperException(e);
         }
     }
@@ -149,7 +148,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
                 beanWrapper.setPropertyValue(name, inputArchive.readString(name));
             } else
             {
-                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
+                beanWrapper.setPropertyValue(name, inputArchive.readStringNullable(name));
             }
         }
         return beanWrapper.getWrappedInstance();

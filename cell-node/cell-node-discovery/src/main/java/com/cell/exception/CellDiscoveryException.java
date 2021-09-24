@@ -13,6 +13,14 @@ import com.cell.exceptions.AbstractRuntimeException;
  */
 public class CellDiscoveryException extends AbstractRuntimeException
 {
+    /**
+     * Constructs a new runtime exception with {@code null} as its
+     * detail message.  The cause is not initialized, and may subsequently be
+     * initialized by a call to {@link #initCause}.
+     */
+    public CellDiscoveryException()
+    {
+    }
 
     /**
      * Constructs a new runtime exception with the specified detail message.
@@ -78,19 +86,8 @@ public class CellDiscoveryException extends AbstractRuntimeException
      *                           be writable
      * @since 1.7
      */
-    protected CellDiscoveryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
+    public CellDiscoveryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace)
     {
         super(message, cause, enableSuppression, writableStackTrace);
-    }
-
-
-    public CellDiscoveryException(String message, Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(message, cause, exceptionEnums);
-    }
-
-    public CellDiscoveryException(Throwable cause, ExceptionEnums exceptionEnums)
-    {
-        super(cause, exceptionEnums);
     }
 }
