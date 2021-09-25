@@ -53,7 +53,6 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
             this.onExceptionCaught(e);
         }).then(Mono.fromRunnable(() ->
         {
-            System.out.println(1);
         }));
     }
 }

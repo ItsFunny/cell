@@ -313,7 +313,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     }
                     AnnotationNodeWrapper wp = new AnnotationNodeWrapper(node, asBean);
                     objects.add(wp);
-                    LOG.info(Module.CONTAINER, "nodeManger添加 被注解所包裹的node,group:{},node:{}", group, name);
+                    LOG.info(Module.CONTAINER, "add node ,group:{},node:{}", group, name);
                 }
             } catch (Exception e)
             {

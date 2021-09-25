@@ -18,7 +18,7 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-09-23 18:32
  */
-@HttpCmdAnno(uri = "/agent/self/{name}", httpCommandId = 1, group = ServiceReactor.prometheusServiceReactor, requestType = EnumHttpRequestType.HTTP_URL_GET)
+@HttpCmdAnno(uri = "/agent/self", httpCommandId = 1, group = ServiceReactor.prometheusServiceReactor, requestType = EnumHttpRequestType.HTTP_URL_GET)
 public class AgentSelfCmd extends AbstractHttpCommand
 {
     @Override

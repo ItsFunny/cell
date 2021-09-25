@@ -26,7 +26,10 @@ import org.springframework.web.context.request.async.DeferredResult;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author Charlie
@@ -96,6 +99,16 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.commandContext.getSummary().getSequenceId();
         LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},method={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.commandContext.getHttpRequest().getMethod(), this.getIp(), sequenceId, consumeTime);
+
+        HttpServletResponse response = this.commandContext.getHttpResponse();
+        if (wp.getHeaders() != null)
+        {
+            Map<String, String> headers = wp.getHeaders();
+            for (String s : headers.keySet())
+            {
+                response.addHeader(s, headers.get(s));
+            }
+        }
 
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());

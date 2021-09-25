@@ -7,10 +7,10 @@ import com.cell.application.CellApplication;
  * Hello world!
  */
 @CellSpringHttpApplication
-public class App
+public class PrometheusDiscoveryRunnable
 {
     public static void main(String[] args)
     {
-        CellApplication.run(App.class, args);
+        CellApplication.run(PrometheusDiscoveryRunnable.class, args);
     }
 }

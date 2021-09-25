@@ -180,7 +180,6 @@ public class ReflectUtil
             Map<Class<? extends Annotation>, Annotation> map =
                     (Map<Class<? extends Annotation>, Annotation>) annotations.get(annotationData);
             map.put(annotationToAlter, annotationValue);
-            System.out.println(1);
         } catch (Exception e)
         {
             throw new ProgramaException(e);

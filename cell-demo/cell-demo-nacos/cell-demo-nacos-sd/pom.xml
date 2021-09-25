@@ -18,11 +18,6 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-bee-metrics-nacos-prometheus</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
             <artifactId>cell-discovery-nacos-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>

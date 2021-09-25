@@ -12,6 +12,7 @@ import com.cell.model.Instance;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.util.DiscoveryUtils;
+import com.cell.utils.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -51,16 +52,20 @@ public class RegistrationService extends AbstractInitOnce
                     {
                         List<Instance> instances = this.delta.get(service);
                         List<Instance> origin = this.instances.get(service);
-                        List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
-
-                        this.down.addAll(down);
+                        if (CollectionUtils.isNotEmpty(origin))
+                        {
+                            List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
+                            this.down.addAll(down);
+                        }
                         this.instances.put(service, instances);
                     }
+                    this.onChange = false;
                 }
             }
-            Set<String> set = new HashSet<String>();
+            Set<String> set = new HashSet<>();
             for (String service : this.instances.keySet())
             {
+                if (CollectionUtils.isEmpty(this.instances.get(service))) continue;
                 set.add(service);
             }
             Map<String, String[]> result = new HashMap<String, String[]>();

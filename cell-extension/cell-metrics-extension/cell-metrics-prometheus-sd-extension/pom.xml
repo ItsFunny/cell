@@ -27,5 +27,10 @@
             <artifactId>cell-discovery-nacos-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
     </dependencies>
 </project>

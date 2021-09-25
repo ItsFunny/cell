@@ -29,7 +29,6 @@ public class CommandExecuteHook extends AbstractHttpCommandHook
         reactor.execute(ctx);
         return hook.execute(ctx).doOnError(this::onExceptionCaught).then(Mono.fromRunnable(() ->
         {
-            LOG.info(Module.HTTP_FRAMEWORK, "done");
         }));
     }
 }
