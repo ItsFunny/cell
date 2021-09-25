@@ -107,6 +107,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
                 LOG.info(Module.HTTP_FRAMEWORK, "should not happen ,uri:{}", command);
                 return this.fastFail(response);
             }
+            wp=new CommandWrapper();
             wp.setCmd(ret.getRet().getV1());
             wp.setReactor(ret.getRet().getV2());
         }
@@ -154,7 +155,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             this.selectorStrategy.execute(ReactorSelectorManager.onAddReactor, ctx).subscribe();
             if (!ctx.isSatisfy())
             {
-                this.commands.put(UriUtils.mergeUri(group, anno.uri()), wrapper);
+                this.commands.put(anno.uri(), wrapper);
             }
         }
     }

@@ -18,10 +18,7 @@ import com.cell.postprocessor.ReactorPostProcessor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.utils.ClassUtil;
-import com.cell.utils.CollectionUtils;
-import com.cell.utils.JSONUtil;
-import com.cell.utils.StringUtils;
+import com.cell.utils.*;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.commons.lang.ObjectUtils;
@@ -42,7 +39,6 @@ import java.util.stream.Collectors;
 @CellOrder(value = OrderConstants.HTTP_NACOS_DISCOVERY_EXTENSION)
 public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 {
-
 
 
     public NacosDiscoveryExtension()
@@ -101,11 +97,12 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
         {
             ServerMetaData.ServerMetaReactor reactor = new ServerMetaData.ServerMetaReactor();
             List<Class<? extends IHttpCommand>> commands = value.getHttpCommandList();
+            ReactorAnno reactorAnno = value.getClass().getAnnotation(ReactorAnno.class);
             List<ServerMetaData.ServerMetaCmd> cmds = commands.stream().map(c ->
             {
                 ServerMetaData.ServerMetaCmd cmd = new ServerMetaData.ServerMetaCmd();
                 HttpCmdAnno annotation = (HttpCmdAnno) ClassUtil.mustGetAnnotation(c, HttpCmdAnno.class);
-                cmd.setUri(annotation.uri());
+                cmd.setUri( annotation.uri());
                 cmd.setModule(annotation.module().name());
                 cmd.setMethod(annotation.requestType().getId());
                 return cmd;

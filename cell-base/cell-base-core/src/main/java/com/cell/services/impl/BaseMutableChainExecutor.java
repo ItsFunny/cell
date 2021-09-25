@@ -52,7 +52,6 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
     {
         return Mono.defer(() ->
         {
-            if (ctx.done()) return Mono.empty();
             boolean find = false;
             if (this.index < this.executors.size())
             {

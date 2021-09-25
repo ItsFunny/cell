@@ -3,6 +3,8 @@ package com.cell.protocol;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Properties;
+
 /**
  * @author Charlie
  * @When
@@ -20,6 +22,7 @@ public class ContextResponseWrapper
     private Throwable exception;
     private ICommand cmd;
     private Object ret;
+    private Properties headers;
 
     // 从哪里调用了该 wp
     private String from;

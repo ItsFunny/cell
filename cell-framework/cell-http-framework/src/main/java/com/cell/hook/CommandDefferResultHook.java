@@ -11,6 +11,7 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.IContext;
+import com.cell.util.HttpUtils;
 import org.springframework.web.context.request.async.DeferredResult;
 import reactor.core.publisher.Mono;
 
@@ -35,13 +36,14 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
     @Override
     protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
     {
+        ctx.setIp(HttpUtils.getIpAddress(ctx.getHttpRequest()));
         DeferredResult<Object> result = ctx.getResult();
         result.onTimeout(() ->
         {
             long currentTime = System.currentTimeMillis();
             long time = ctx.getRequestTimestamp();
             final String sequenceId = ctx.getSequenceId();
-            LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time [{}]ms", sequenceId, currentTime - time, time);
+            LOG.warn(Module.HTTP_FRAMEWORK, "sequenceId = {}, handle command {} timeout[{}] receive time {}ms", sequenceId, ctx.getURI(), currentTime - time, time);
             ctx.response(ContextResponseWrapper.builder()
                     .status(ContextConstants.TIMEOUT)
                     .build());

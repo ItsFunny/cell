@@ -40,6 +40,7 @@ public @interface HttpCmdAnno
 
     String viewName() default "";
 
+    // TODO : 替换成clz?
     String group() default "group";
 
     boolean websocket() default false;

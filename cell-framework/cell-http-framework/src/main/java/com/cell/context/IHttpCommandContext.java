@@ -24,4 +24,5 @@ public interface IHttpCommandContext extends IBuzzContext
     DeferredResult<Object> getResult();
 
     String getURI();
+    Map<String, String> getPathUri();
 }

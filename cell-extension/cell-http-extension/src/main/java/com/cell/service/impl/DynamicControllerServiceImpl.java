@@ -3,6 +3,7 @@ package com.cell.service.impl;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
@@ -13,8 +14,15 @@ import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.service.IDynamicControllerService;
+import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.ReflectionUtils;
 import com.cell.utils.UriUtils;
+import net.bytebuddy.ByteBuddy;
+import net.bytebuddy.agent.ByteBuddyAgent;
+import net.bytebuddy.description.annotation.AnnotationDescription;
+import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
+import net.bytebuddy.matcher.ElementMatchers;
 import org.bouncycastle.asn1.eac.EACObjectIdentifiers;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -78,6 +86,7 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
     private void registerHandlerReactor(IDynamicHttpReactor reactor)
     {
         ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
+//        this.overrideReactor(reactor);
         List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
         try
         {
@@ -138,10 +147,9 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
             LOG.warn(Module.MVC, "未知的cmd,{}", clz);
             return;
         }
+
         EnumHttpRequestType requestType = annotation.requestType();
         String uri = annotation.uri();
-        // FIXME
-        uri = UriUtils.mergeUri(group, uri);
         Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
         RequestMappingInfo mappingInfo = RequestMappingInfo.paths(uri).methods(getRequestMethod(requestType)).build();
         LOG.info(Module.HTTP_FRAMEWORK, "注册uri:{},method:{}", uri, annotation.requestType().name());

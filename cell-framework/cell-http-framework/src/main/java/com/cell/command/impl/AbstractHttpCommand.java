@@ -76,7 +76,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return this.httpCmdAnno.responseType();
     }
 
-    protected abstract void onExecute(IHttpCommandContext ctx, Object bo) throws IOException;
+    protected abstract void onExecute(IHttpCommandContext ctx, Object o) throws IOException;
 
     protected IHttpCommandContext getHttpContext()
     {

@@ -3,6 +3,7 @@ package com.cell.manager;
 import com.cell.annotations.ActiveMethod;
 import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ManagerNode;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.hooks.IReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
@@ -10,7 +11,9 @@ import com.cell.manager.context.SelectByUriContext;
 import com.cell.model.CommandWrapper;
 import com.cell.models.Couple;
 import com.cell.reactor.IHttpReactor;
+import com.cell.utils.UriUtils;
 import org.springframework.util.AntPathMatcher;
+import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +29,7 @@ import java.util.Map;
 @ManagerNode(group = ReactorSelectorManager.reacotrSelector, name = "placeHolder")
 public class AntPathSelector
 {
-    private Map<String, CommandWrapper> wrapperMap=new HashMap<>(1);
+    private Map<String, CommandWrapper> wrapperMap = new HashMap<>(1);
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @ActiveMethod(id = ReactorSelectorManager.onAddReactor)
@@ -43,7 +46,7 @@ public class AntPathSelector
             CommandWrapper wrapper = new CommandWrapper();
             wrapper.setCmd(cc.getCmd());
             wrapper.setReactor(cc.getReactor());
-            this.wrapperMap.put(uri, wrapper);
+            this.wrapperMap.put( uri, wrapper);
             cc.setSatisfy(true);
             return c.execute(ctx);
         };
@@ -67,7 +70,7 @@ public class AntPathSelector
                 ret.setV1(wrapper.getCmd());
                 ret.setV2(wrapper.getReactor());
                 c.setRet(ret);
-                break;
+                return Mono.empty();
             }
             return ch.execute(ctx);
         };

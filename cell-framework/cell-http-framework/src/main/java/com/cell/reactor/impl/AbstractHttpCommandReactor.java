@@ -20,10 +20,7 @@ import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.utils.ClassUtil;
-import com.cell.utils.CollectionUtils;
-import com.cell.utils.ReflectUtil;
-import com.cell.utils.StringUtils;
+import com.cell.utils.*;
 import lombok.Data;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.annotation.AnnotationDescription;
@@ -135,7 +132,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(this.getClass(), ReactorAnno.class);
         String group = anno.group();
         if (StringUtils.isEmpty(group)) return;
-        if (CollectionUtils.isNotEmpty(httpCommandList)) return;
+        if (CollectionUtils.isEmpty(httpCommandList)) return;
 
         httpCommandList.stream().forEach(c ->
         {
@@ -145,7 +142,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
                 throw new ProgramaException("asd");
             }
             // FIXME
-            final String urlStr = group + annotation.uri();
+            final String urlStr = UriUtils.mergeUri(group, annotation.uri());
             try
             {
                 new URL("http:127.0.0.1:8080" + urlStr);

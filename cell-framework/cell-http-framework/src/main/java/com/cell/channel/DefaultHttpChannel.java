@@ -51,9 +51,7 @@ public class DefaultHttpChannel implements IHttpChannel
     @Override
     public void readCommand(ICommandSuit cmdCtx)
     {
-        IChainExecutor executor = this.pipeline.chainExecutor();
-        executor.execute(cmdCtx).onErrorResume((e) ->
+        this.pipeline.chainExecutor().execute(cmdCtx).onErrorResume((e) ->
                 this.exceptionCaught(cmdCtx, e)).subscribe();
-
     }
 }

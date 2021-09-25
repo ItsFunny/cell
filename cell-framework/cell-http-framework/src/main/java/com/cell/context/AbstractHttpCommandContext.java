@@ -95,7 +95,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         long currentTime = System.currentTimeMillis();
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.commandContext.getSummary().getSequenceId();
-        LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.getIp(), sequenceId, consumeTime);
+        LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},method={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.commandContext.getHttpRequest().getMethod(), this.getIp(), sequenceId, consumeTime);
 
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
         this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());
@@ -219,6 +219,11 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     public String getURI()
     {
         return this.commandContext.getURI();
+    }
+
+    public Map<String, String> getPathUri()
+    {
+        return HttpUtils.getRegexValues(this.httpCmdAnno.uri(), this.getURI());
     }
 
     @Override
