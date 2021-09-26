@@ -9,6 +9,7 @@ import com.cell.enums.EnumHttpRequestType;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.protocol.ICommand;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -72,12 +74,13 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
     {
         ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
 //        this.overrideReactor(reactor);
-        List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
+
+        List<Class<? extends ICommand>> httpCommandList = Arrays.asList(annotation.cmds());
         try
         {
-            for (Class<? extends IHttpCommand> aClass : httpCommandList)
+            for (Class<? extends ICommand> aClass : httpCommandList)
             {
-                this.registerCmd(annotation.group(), aClass);
+                this.registerCmd(annotation.group(), (Class<? extends IHttpCommand>) aClass);
             }
         } catch (Exception e)
         {

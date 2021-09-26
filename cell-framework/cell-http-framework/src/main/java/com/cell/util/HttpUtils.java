@@ -1,21 +1,22 @@
 package com.cell.util;
 
-import com.alibaba.fastjson.JSON;
+import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.protocol.ICommand;
+import com.cell.reactor.IHttpReactor;
 import com.cell.utils.JSONUtil;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StreamUtils;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -89,5 +90,11 @@ public class HttpUtils
         return MATCHER.extractUriTemplateVariables(patten, uri);
     }
 
-
+    public static Optional<List<Class<? extends IHttpCommand>>> getReactorCommands(IHttpReactor reactor)
+    {
+        ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
+        Class<? extends ICommand>[] cmds = annotation.cmds();
+        if (cmds.length == 0) return Optional.empty();
+        return Optional.of(Stream.of(cmds).map(c -> (Class<? extends IHttpCommand>) c).collect(Collectors.toList()));
+    }
 }

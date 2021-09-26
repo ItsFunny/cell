@@ -2,20 +2,15 @@ package com.cell.service.impl;
 
 import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotation.HttpCmdAnno;
-import com.cell.annotations.ReactorAnno;
 import com.cell.application.CellApplication;
-import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpCommandContext;
-import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -51,16 +46,6 @@ public class MixTest
         }
     }
 
-    @ReactorAnno
-    public static class DymanicReactor extends AbstractHttpDymanicCommandReactor
-    {
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(MyAA.class);
-        }
-    }
-
 //    @RestController
 //    @RequestMapping("/my")
 //    public static class MyController extends SpringBaseHttpController
@@ -86,15 +71,6 @@ public class MixTest
         }
     }
 
-    @ReactorAnno
-    public static class NonAsMappingReactor extends AbstractHttpDymanicCommandReactor
-    {
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(NonAsMappingCmd.class);
-        }
-    }
 
     public static void main(String[] args)
     {

@@ -1,14 +1,10 @@
 package com.cell.annotation;
 
-import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellApplication;
 import com.cell.extension.AbstractNodeExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.AliasFor;
 
-import javax.swing.*;
 import java.lang.annotation.*;
 
 /**

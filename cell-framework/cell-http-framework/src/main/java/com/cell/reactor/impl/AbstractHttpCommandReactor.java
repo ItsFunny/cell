@@ -7,10 +7,7 @@ import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.InitCTX;
-import com.cell.enums.EnumHttpRequestType;
-import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
-import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
@@ -20,10 +17,13 @@ import com.cell.utils.*;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.lang.annotation.Annotation;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -104,8 +104,10 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     @Override
     protected void onInit(InitCTX ctx)
     {
-        this.fillCmd();
-        List<Class<? extends IHttpCommand>> httpCommandList = this.getHttpCommandList();
+        this.fillCmd(ctx);
+        Class<? extends ICommand>[] cmds = this.getClass().getAnnotation(ReactorAnno.class).cmds();
+        List<? extends Class<? extends IHttpCommand>> httpCommandList = Stream.of(cmds).map(c ->
+                (Class<? extends IHttpCommand>) c).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(httpCommandList))
         {
             return;
@@ -115,12 +117,11 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     }
 
     // FIXME ,这个需要删除
-    private void fillCmd()
+    private void fillCmd(InitCTX ctx)
     {
-        List<Class<? extends IHttpCommand>> httpCommandList = this.getHttpCommandList();
+        Set<Class<? extends IHttpCommand>> httpCommandList = (Set<Class<? extends IHttpCommand>>) ctx.getData().get(HttpConstants.INIT_CTX_CMDS);
         ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(this.getClass(), ReactorAnno.class);
         String group = anno.group();
-        if (StringUtils.isEmpty(group)) return;
         if (CollectionUtils.isEmpty(httpCommandList)) return;
 
         httpCommandList.stream().forEach(c ->
@@ -139,82 +140,9 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
             {
                 throw new ProgramaException("url不合法:" + urlStr);
             }
-//            new ByteBuddy().redefine(c)
-//                    .annotateType(AnnotationDescription.Builder.ofType(HttpCmdAnno.class)
-//                            .define("requestType", annotation.requestType())
-//                            .define("responseType", annotation.responseType())
-//                            .define("uri", urlStr)
-//                            .define("httpCommandId", annotation.httpCommandId())
-//                            .define("viewName", annotation.viewName())
-//                            .define("group", annotation.group())
-//                            .define("websocket", annotation.websocket())
-//                            .build())
-//                    .make()
-//                    .load(Thread.currentThread().getContextClassLoader(), ClassReloadingStrategy.fromInstalledAgent());
-
-            final HttpCmdAnno newAnno = new HttpCmdAnno()
-            {
-                @Override
-                public EnumHttpRequestType requestType()
-                {
-                    return annotation.requestType();
-                }
-
-                @Override
-                public EnumHttpResponseType responseType()
-                {
-                    return annotation.responseType();
-                }
-
-                @Override
-                public String uri()
-                {
-                    return urlStr;
-                }
-
-                @Override
-                public Module module()
-                {
-                    return annotation.module();
-                }
-
-                @Override
-                public Class<?> buzzClz()
-                {
-                    return annotation.buzzClz();
-                }
-
-                @Override
-                public short httpCommandId()
-                {
-                    return annotation.httpCommandId();
-                }
-
-                @Override
-                public String viewName()
-                {
-                    return annotation.viewName();
-                }
-
-                @Override
-                public String group()
-                {
-                    return annotation.group();
-                }
-
-                @Override
-                public boolean websocket()
-                {
-                    return annotation.websocket();
-                }
-
-                @Override
-                public Class<? extends Annotation> annotationType()
-                {
-                    return annotation.annotationType();
-                }
-            };
             ReflectUtil.modify(c, HttpCmdAnno.class, "uri", urlStr);
         });
+        List<Class<? extends IHttpCommand>> cmds = new ArrayList<>(httpCommandList);
+        ReflectUtil.modify(this.getClass(), ReactorAnno.class, "cmds", cmds.toArray(new Class<?>[cmds.size()]));
     }
 }

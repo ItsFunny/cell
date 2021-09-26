@@ -4,6 +4,8 @@ import com.cell.annotations.Command;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.models.Module;
+import com.cell.reactor.IHttpReactor;
+import com.cell.reactor.impl.DefaultHttpReactor;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
@@ -20,7 +22,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Command(commandId = 1)
+@Command(commandId = 1, reactor = DefaultHttpReactor.class)
 public @interface HttpCmdAnno
 {
     EnumHttpRequestType requestType() default EnumHttpRequestType.HTTP_POST;
@@ -38,10 +40,10 @@ public @interface HttpCmdAnno
     @AliasFor(annotation = Command.class, attribute = "commandId")
     short httpCommandId();
 
-    String viewName() default "";
+    @AliasFor(annotation = Command.class, attribute = "reactor")
+    Class<? extends IHttpReactor> reactor() default DefaultHttpReactor.class;
 
-    // TODO : 替换成clz?
-    String group() default "group";
+    String viewName() default "";
 
     boolean websocket() default false;
 }

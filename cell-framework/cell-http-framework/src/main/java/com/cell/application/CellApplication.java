@@ -1,5 +1,6 @@
 package com.cell.application;
 
+import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.ForceOverride;
 import com.cell.annotations.ReactorAnno;
@@ -16,6 +17,7 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbsMapHttpDynamicCommandReactor;
 import com.cell.utils.ClassUtil;
+import com.cell.utils.ReflectUtil;
 import com.cell.utils.StringUtils;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
@@ -32,6 +34,8 @@ import org.springframework.core.annotation.AnnotationAttributes;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -81,6 +85,13 @@ public class CellApplication
             args = arrs.toArray(new String[arrs.size()]);
         }
         SpringApplication app = this.builder.build();
+
+        Class<?> mainClz = ClassUtil.getMainApplicationClass();
+        CellSpringHttpApplication annotation = mainClz.getAnnotation(CellSpringHttpApplication.class);
+        Class<? extends Annotation>[] classes = annotation.scanInterestAnnotations();
+        List<Class<? extends Annotation>> collect = Stream.of(classes).collect(Collectors.toList());
+        collect.add(HttpCmdAnno.class);
+        ReflectUtil.modify(mainClz, CellSpringHttpApplication.class, "scanInterestAnnotations", collect.toArray(new Class<?>[collect.size()]));
 
 //        app.setWebApplicationType(WebApplicationType.REACTIVE);
         return app.run(args);
@@ -269,11 +280,10 @@ public class CellApplication
             {
                 cmdList.add(cmd.build().getClass());
             }
+            Class<?>[] classes = cmdList.toArray(new Class<?>[cmdList.size()]);
             IMapDynamicHttpReactor ret = new ByteBuddy()
                     .subclass(AbsMapHttpDynamicCommandReactor.class)
                     .implement(IMapDynamicHttpReactor.class)
-                    .method(ElementMatchers.named("getHttpCommandList"))
-                    .intercept(FixedValue.value(new ArrayList<>(cmdList)))
                     .method(ElementMatchers.named("getDependencyList"))
                     .intercept(FixedValue.value(new HashSet<>(this.dependencies)))
                     .method(ElementMatchers.named("getDependencyListByName"))
@@ -294,13 +304,17 @@ public class CellApplication
                                     return forceOverride;
                                 }
                             })
+                            .defineTypeArray("cmds", classes)
                             .build())
                     .make()
                     .load(this.getClass().getClassLoader())
                     .getLoaded()
                     .getDeclaredConstructor()
                     .newInstance();
-
+            for (Class<?> aClass : classes)
+            {
+                ReflectUtil.modify(aClass, HttpCmdAnno.class, "reactor", ret.getClass());
+            }
             return ret;
         }
     }

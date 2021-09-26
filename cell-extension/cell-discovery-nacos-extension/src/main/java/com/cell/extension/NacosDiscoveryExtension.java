@@ -1,31 +1,23 @@
 package com.cell.extension;
 
-import com.cell.annotations.*;
+import com.cell.annotation.HttpCmdAnno;
+import com.cell.annotations.CellOrder;
 import com.cell.command.IHttpCommand;
-import com.cell.config.ConfigFactory;
-import com.cell.config.NacosConfiguration;
-import com.cell.constants.CommandLineConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
-import com.cell.context.InitCTX;
-import com.cell.context.SpringNodeContext;
 import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.dispatcher.IHttpCommandDispatcher;
-import com.cell.hook.IHttpCommandHook;
 import com.cell.model.Instance;
-import com.cell.postprocessor.ReactorPostProcessor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.utils.*;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
-import org.apache.commons.lang.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.cell.util.HttpUtils;
+import com.cell.utils.ClassUtil;
 
-import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -96,13 +88,13 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
         List<ServerMetaData.ServerMetaReactor> reacotrs = values.stream().map(value ->
         {
             ServerMetaData.ServerMetaReactor reactor = new ServerMetaData.ServerMetaReactor();
-            List<Class<? extends IHttpCommand>> commands = value.getHttpCommandList();
-            ReactorAnno reactorAnno = value.getClass().getAnnotation(ReactorAnno.class);
+
+            List<Class<? extends IHttpCommand>> commands = HttpUtils.getReactorCommands(value).get();
             List<ServerMetaData.ServerMetaCmd> cmds = commands.stream().map(c ->
             {
                 ServerMetaData.ServerMetaCmd cmd = new ServerMetaData.ServerMetaCmd();
                 HttpCmdAnno annotation = (HttpCmdAnno) ClassUtil.mustGetAnnotation(c, HttpCmdAnno.class);
-                cmd.setUri( annotation.uri());
+                cmd.setUri(annotation.uri());
                 cmd.setModule(annotation.module().name());
                 cmd.setMethod(annotation.requestType().getId());
                 return cmd;

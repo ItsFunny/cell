@@ -1,20 +1,16 @@
 package com.cell.utils;
 
 import com.cell.annotations.ForceOverride;
-import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
+import com.cell.protocol.ICommand;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.description.annotation.AnnotationDescription;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.lang.annotation.*;
-import java.nio.ByteBuffer;
-
-import static org.junit.Assert.*;
 
 public class ReflectUtilTest
 {
@@ -53,6 +49,12 @@ public class ReflectUtilTest
                         return false;
                     }
                 };
+            }
+
+            @Override
+            public Class<? extends ICommand>[] cmds()
+            {
+                return new Class[0];
             }
 
             @Override

@@ -1,6 +1,11 @@
 package com.cell.annotations;
 
-import java.lang.annotation.*;
+import com.cell.protocol.ICommand;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * @author joker
@@ -15,6 +20,8 @@ import java.lang.annotation.*;
 public @interface ReactorAnno
 {
     ForceOverride withForce() default @ForceOverride();
+
+    Class<? extends ICommand>[] cmds() default {};
 
     String group() default "";
 }

@@ -1,14 +1,16 @@
 package com.cell.dispatcher;
 
-import com.cell.annotations.ForceOverride;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
+import com.cell.constant.HttpConstants;
+import com.cell.context.InitCTX;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
-import io.netty.util.internal.ConcurrentSet;
 
-import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -25,6 +27,8 @@ public class DefaultReactorHolder
 
     private static Map<Class<? extends IHttpReactor>, IHttpReactor> reactors = new HashMap<>();
 
+    private static Map<Class<? extends IHttpReactor>, Set<Class<? extends IHttpCommand>>> commands;
+
 
     public static void setDispatcher(IHttpCommandDispatcher d)
     {
@@ -36,10 +40,24 @@ public class DefaultReactorHolder
         return instance;
     }
 
+    public static void setCommands(Map<Class<? extends IHttpReactor>, Set<Class<? extends IHttpCommand>>> cmds)
+    {
+        commands = cmds;
+    }
+
     // FIXME ,FLUSH
     public static void addReactor(IHttpReactor reactor)
     {
-        reactor.initOnce(null);
+        String name = reactor.getClass().getName();
+        InitCTX ctx = new InitCTX();
+        if (!name.contains("ByteBuddy"))
+        {
+            Map<String, Object> data = new HashMap<>();
+            Set<Class<? extends IHttpCommand>> cmdList = commands.get(reactor.getClass());
+            data.put(HttpConstants.INIT_CTX_CMDS, cmdList);
+            ctx.setData(data);
+        }
+        reactor.initOnce(ctx);
         synchronized (reactors)
         {
             Class<? extends IHttpReactor> aClass = reactor.getClass();

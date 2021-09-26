@@ -1,23 +1,20 @@
 package com.cell;
 
 import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.*;
 import com.cell.application.CellApplication;
-import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
-import com.cell.serialize.ISerializable;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -57,7 +54,7 @@ public class App
     }
 
 
-    @HttpCmdAnno(uri = "/cmd1", httpCommandId = 1)
+    @HttpCmdAnno(uri = "/cmd1", httpCommandId = 1, reactor = Reactor1.class)
     public static class Reactor1Cmd1 extends AbstractHttpCommand
     {
         @Override
@@ -69,7 +66,7 @@ public class App
         }
     }
 
-    @HttpCmdAnno(uri = "/reactor2cmd1", httpCommandId = 1)
+    @HttpCmdAnno(uri = "/reactor2cmd1", httpCommandId = 1, reactor = Reactor2.class)
     public static class Reactor2CMD1 extends AbstractHttpCommand
     {
         @Override
@@ -92,32 +89,15 @@ public class App
         private IHttpCommandDispatcher commandDispatcher;
         @AutoPlugin
         private LogicImpl logic;
-
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(Reactor1Cmd1.class);
-        }
     }
 
     public static class Reactor2 extends AbstractHttpDymanicCommandReactor
     {
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(Reactor2CMD1.class);
-        }
     }
 
     @ReactorAnno(group = "/reactor3")
     public static class Reactor3 extends AbstractHttpDymanicCommandReactor
     {
-
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(cm3.class);
-        }
     }
 
     @Data
@@ -128,7 +108,9 @@ public class App
         private Integer age;
     }
 
-    @HttpCmdAnno(uri = "/cmd3", httpCommandId = 1, buzzClz = Cmd3Buz.class, requestType = EnumHttpRequestType.HTTP_URL_GET)
+    @HttpCmdAnno(uri = "/cmd3", httpCommandId = 1,
+            buzzClz = Cmd3Buz.class,
+            requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = Reactor3.class)
     public static class cm3 extends AbstractHttpCommand
     {
         @Override

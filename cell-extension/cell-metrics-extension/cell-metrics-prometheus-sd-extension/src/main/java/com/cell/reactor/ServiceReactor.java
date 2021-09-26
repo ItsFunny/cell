@@ -2,16 +2,9 @@ package com.cell.reactor;
 
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ReactorAnno;
-import com.cell.command.IHttpCommand;
-import com.cell.reactor.commands.AgentSelfCmd;
-import com.cell.reactor.commands.AllServiceCommand;
-import com.cell.reactor.commands.DetailServiceCommand;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.sd.RegistrationService;
 import lombok.Data;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -26,14 +19,6 @@ import java.util.List;
 public class ServiceReactor extends AbstractHttpDymanicCommandReactor
 {
     public static final String prometheusServiceReactor = "prometheus_sd";
-
     @AutoPlugin
     private RegistrationService registrationService;
-
-    @Override
-    public List<Class<? extends IHttpCommand>> getHttpCommandList()
-    {
-        return Arrays.asList(AllServiceCommand.class, AgentSelfCmd.class, DetailServiceCommand.class);
-    }
-
 }

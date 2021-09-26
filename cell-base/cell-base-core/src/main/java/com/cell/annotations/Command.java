@@ -1,6 +1,7 @@
 package com.cell.annotations;
 
 import com.cell.protocol.ICommand;
+import com.cell.reactor.ICommandReactor;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -21,6 +22,8 @@ public @interface Command
     short commandId();
 
     Class<?> buzzClz() default Void.class;
+
+    Class<? extends ICommandReactor> reactor();
 
     Class<? extends ICommand> couple() default ICommand.class;
 }

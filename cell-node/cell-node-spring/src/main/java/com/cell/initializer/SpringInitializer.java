@@ -85,6 +85,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
         filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
         filter.interestAnnotations.addAll(Arrays.asList(interestAnnotations));
+
         // FIXME ,需要重构该部分,使用reflections
         Set<Class<?>> activePlugins = ClassUtil.scanPackage(rootPath, filter);
 
@@ -244,7 +245,8 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
             for (Class<? extends Annotation> c : this.interestAnnotations)
             {
-                if (clazz.getAnnotation(c) != null)
+                Annotation mergedAnnotation = ClassUtil.getMergedAnnotation(clazz, c);
+                if (mergedAnnotation != null)
                 {
                     synchronized (this.interestAnnotationsClazzs)
                     {

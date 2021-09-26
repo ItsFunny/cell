@@ -22,6 +22,7 @@ import com.cell.manager.context.SelectByUriContext;
 import com.cell.model.CommandWrapper;
 import com.cell.models.Module;
 import com.cell.protocol.CommandContext;
+import com.cell.protocol.ICommand;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
@@ -104,7 +105,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
                 LOG.info(Module.HTTP_FRAMEWORK, "should not happen ,uri:{}", command);
                 return this.fastFail(response);
             }
-            wp=new CommandWrapper();
+            wp = new CommandWrapper();
             wp.setCmd(ret.getRet().getV1());
             wp.setReactor(ret.getRet().getV2());
         }
@@ -136,18 +137,19 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
         {
             throw new ProgramaException("reactor annotation必须有 @ReactorAnno 注解 ");
         }
-        List<Class<? extends IHttpCommand>> clist = reactor.getHttpCommandList();
+
+        List<Class<? extends ICommand>> clist = Arrays.asList(annotation.cmds());
         String group = annotation.group();
-        for (Class<? extends IHttpCommand> cc : clist)
+        for (Class<? extends ICommand> cc : clist)
         {
             HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
 
             CommandWrapper wrapper = new CommandWrapper();
             wrapper.setReactor(reactor);
-            wrapper.setCmd(cc);
+            wrapper.setCmd((Class<? extends IHttpCommand>) cc);
             OnAddReactorContext ctx = OnAddReactorContext.builder()
                     .anno(anno)
-                    .cmd(cc)
+                    .cmd((Class<? extends IHttpCommand>) cc)
                     .reactor(reactor).build();
             this.selectorStrategy.execute(ReactorSelectorManager.onAddReactor, ctx).subscribe();
             if (!ctx.isSatisfy())

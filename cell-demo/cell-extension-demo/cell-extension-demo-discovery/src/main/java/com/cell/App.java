@@ -1,30 +1,21 @@
 package com.cell;
 
 import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.HttpCmdAnno;
-import com.cell.annotations.Plugin;
 import com.cell.annotations.ReactorAnno;
 import com.cell.application.CellApplication;
-import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.constants.StatConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumStatOperateMask;
 import com.cell.enums.EnumStatisticType;
 import com.cell.executor.MetricsManager;
 import com.cell.prometheus.HistogramStator;
-import com.cell.reactor.impl.AbstractHttpCommandReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
-import com.cell.serialize.ISerializable;
 import io.prometheus.client.CollectorRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Hello world!
@@ -52,19 +43,11 @@ public class App
     {
         @AutoPlugin
         private HistogramStator exceedDelayThresoldCount;
-
-        @Override
-        public List<Class<? extends IHttpCommand>> getHttpCommandList()
-        {
-            return Arrays.asList(ACommand.class);
-        }
     }
 
     @HttpCmdAnno(uri = "/prometheusDemo", httpCommandId = 1, requestType = EnumHttpRequestType.HTTP_URL_GET)
     public static class ACommand extends AbstractHttpCommand
     {
-
-
         @Override
         protected void onExecute(IHttpCommandContext ctx, Object bo)
         {

@@ -6,6 +6,7 @@ import com.cell.annotations.ReactorAnno;
 import com.cell.application.CellApplication;
 import com.cell.command.IHttpCommand;
 import com.cell.reactor.IDynamicHttpReactor;
+import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import org.junit.Assert;
 import org.junit.Test;
@@ -76,7 +77,7 @@ public class ReactoryFactoryTest
             Assert.assertTrue(!reactorAnno.isEmpty());
             Assert.assertEquals(group, reactorAnno.get("group"));
 
-            List<Class<? extends IHttpCommand>> httpCommandList = reactor.getHttpCommandList();
+            List<Class<? extends IHttpCommand>> httpCommandList = HttpUtils.getReactorCommands(reactor).get();
             Assert.assertNotNull(httpCommandList);
             for (int i = 0; i < httpCommandList.size(); i++)
             {

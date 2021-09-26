@@ -1,12 +1,11 @@
 package com.cell.reactor.commands;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.ServiceReactor;
-import com.cell.serialize.ISerializable;
 
 import java.io.IOException;
 
@@ -18,7 +17,7 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-09-23 18:32
  */
-@HttpCmdAnno(uri = "/agent/self", httpCommandId = 1, group = ServiceReactor.prometheusServiceReactor, requestType = EnumHttpRequestType.HTTP_URL_GET)
+@HttpCmdAnno(uri = "/agent/self", httpCommandId = 1, reactor = ServiceReactor.class, requestType = EnumHttpRequestType.HTTP_URL_GET)
 public class AgentSelfCmd extends AbstractHttpCommand
 {
     @Override

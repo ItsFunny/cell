@@ -1,6 +1,5 @@
 package com.cell.context;
 
-import com.cell.annotations.HttpCmdAnno;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.http.HttpStatus;

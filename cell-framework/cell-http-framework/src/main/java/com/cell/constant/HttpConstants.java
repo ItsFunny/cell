@@ -10,6 +10,7 @@ package com.cell.constant;
  */
 public interface HttpConstants
 {
+    String INIT_CTX_CMDS = "INIT_CTX_CMDS";
     String VERSION_INT = "X-VersionInt";
     String VERSION = "X-Version";
     String SEQUENCE_ID = "sequenceId";

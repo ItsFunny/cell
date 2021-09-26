@@ -17,9 +17,6 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <modules>
-        <module>cell-demo-dynamic-reactor</module>
-        <module>cell-demo-http-demo1</module>
-        <module>cell-demo-http-demo2</module>
         <module>cell-demo-http-demo3</module>
         <module>cell-demo-nacos</module>
         <module>cell-extension-demo</module>

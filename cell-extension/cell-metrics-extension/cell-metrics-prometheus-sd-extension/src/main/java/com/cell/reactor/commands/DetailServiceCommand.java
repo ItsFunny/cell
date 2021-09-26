@@ -1,12 +1,11 @@
 package com.cell.reactor.commands;
 
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.Optional;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.model.ChangeItem;
-import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.ServiceReactor;
 import com.cell.sd.RegistrationService;
 import com.cell.utils.SDUtils;
@@ -20,7 +19,6 @@ import reactor.core.publisher.Mono;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Charlie
@@ -32,7 +30,7 @@ import java.util.Properties;
  */
 @HttpCmdAnno(uri = "/catalog/service/{service}",
         httpCommandId = 1,
-        group = ServiceReactor.prometheusServiceReactor,
+        reactor = ServiceReactor.class,
         requestType = EnumHttpRequestType.HTTP_URL_GET,
         buzzClz = DetailServiceCommand.ServiceBo.class)
 public class DetailServiceCommand extends AbstractHttpCommand

@@ -1,17 +1,15 @@
 package com.cell.reactor.commands;
 
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.model.ChangeItem;
-import com.cell.protocol.IBuzzContext;
 import com.cell.reactor.ServiceReactor;
 import com.cell.sd.RegistrationService;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.serialize.ISerializable;
-import com.cell.utils.RandomUtils;
 import com.cell.utils.SDUtils;
 import com.cell.utils.StringUtils;
 import lombok.Data;
@@ -21,9 +19,6 @@ import reactor.core.publisher.Mono;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Charlie
@@ -34,7 +29,7 @@ import java.util.regex.Pattern;
  * @Date 创建时间：2021-09-22 21:30
  */
 @HttpCmdAnno(uri = "/catalog/services", httpCommandId = 1,
-        group = ServiceReactor.prometheusServiceReactor,
+        reactor = ServiceReactor.class,
         requestType = EnumHttpRequestType.HTTP_URL_GET,
         buzzClz = AllServiceCommand.AllServiceCommandBO.class)
 public class AllServiceCommand extends AbstractHttpCommand
