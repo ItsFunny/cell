@@ -2,7 +2,7 @@ package com.cell.context;
 
 import com.cell.adapter.HandlerMethodReturnValueHandler;
 import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.DummyHttpCommand;
 import com.cell.constant.HttpConstants;
@@ -27,9 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Enumeration;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Charlie

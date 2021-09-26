@@ -1,7 +1,6 @@
 package com.cell.manager.context;
 
-import com.cell.annotations.HttpCmdAnno;
-import com.cell.channel.IHttpChannel;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.IHttpReactor;

@@ -33,7 +33,6 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
-import reactor.core.publisher.Mono;
 
 import java.lang.annotation.Annotation;
 import java.util.*;

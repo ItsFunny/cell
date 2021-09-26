@@ -1,6 +1,6 @@
 package com.cell.service.impl;
 
-import com.cell.annotations.HttpCmdAnno;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.channel.IHttpChannel;
 import com.cell.command.IHttpCommand;
@@ -22,11 +22,8 @@ import com.cell.manager.context.SelectByUriContext;
 import com.cell.model.CommandWrapper;
 import com.cell.models.Module;
 import com.cell.protocol.CommandContext;
-import com.cell.protocol.ICommand;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
-import com.cell.utils.CollectionUtils;
-import com.cell.utils.UriUtils;
 import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;

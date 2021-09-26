@@ -1,8 +1,7 @@
 package com.cell.application;
 
-import com.cell.annotations.Command;
+import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.ForceOverride;
-import com.cell.annotations.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.bo.BuzzContextBO;
 import com.cell.command.IBuzzExecutor;
@@ -12,7 +11,6 @@ import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
-import com.cell.protocol.ICommandExecuteResult;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
@@ -27,12 +25,10 @@ import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
 import net.bytebuddy.matcher.ElementMatchers;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.annotation.AnnotationAttributes;
 
-import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;

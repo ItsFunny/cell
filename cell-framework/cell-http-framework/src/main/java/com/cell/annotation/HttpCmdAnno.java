@@ -1,9 +1,9 @@
-package com.cell.annotations;
+package com.cell.annotation;
 
+import com.cell.annotations.Command;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.models.Module;
-import lombok.AllArgsConstructor;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
