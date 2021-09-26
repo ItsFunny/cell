@@ -15,7 +15,7 @@
     - ![imgs](../imgs/logic.png)
 
 # How to Use
-
+- 便携式 pipeline : 只需要 @Manager和@ManagerNode 两个注解,即可组合n个pipeline(内部逻辑采用的是reactor-core)
 - **注意**
   - command中不支持@Autowired, Reactor中支持,可以通过getReactor 然后get class 获取
   - 不支持启动类中 ,添加 @Plugin 注解的bean,因为我不想去改Spring启动类的逻辑,并且,实际上启动类也只会只是短短的一行代码,所以也没这个必要
@@ -58,10 +58,11 @@
     - 启动类上加上 @CellSpringHttpApplication 注解
 
     - cmd和reactor 都不可以为私有内部类
+    
+- [demo](https://github.com/ItsFunny/cell/tree/dev/cell-demo/cell-demo-http-demo3/src/main/java/com/cell)
 
 - 第一种方式
 
-  - [demo](https://github.com/ItsFunny/cell/tree/dev/cell-demo/cell-demo-http-demo1/src/main/java/com/cell)
 
   - ```
     CellApplication.builder()
@@ -70,11 +71,9 @@
                     .post("/post", (wp) ->
                     {
                         wp.success("post");
-                        return null;
                     }).make().get("/get", (wp) ->
             {
                 wp.success("get");
-                return null;
             }).make().done().build().start(App.class, args); 				
     ```
 
@@ -95,7 +94,6 @@
                   reactorBuilder.post("/post" + i, (wp) ->
                   {
                       wp.success(ret);
-                      return null;
                   });
               }
               reactorBuilder.done().build().start(App.class, args);
@@ -117,46 +115,40 @@
                             CC1 cc1 = (CC1) reactor.getDependency(CC1.class);
                             Assert.notNull(cc1, "bean cc1不可为空");
                             wp.success("post");
-                            return null;
                         }).make().get("/get", (wp) ->
                 {
                     wp.success("get");
-                    return null;
                 }).make().done().build().start(App.class, args);
              实际的 command 就可以 reactor.getDependency(CC1.class); ,获取得到bean
         ```
-
       - 
 
 - 第二种方式
   - reactor 通过继承 AbstractHttpDymanicCommandReactor+ReactorAnno注解,cmd 通过继承 AbstractHttpCommand+HttpCmdAnno注解 实现, 
-  - [demo](https://github.com/ItsFunny/cell/tree/dev/cell-demo/cell-demo-http-demo2/src/main/java/com/cell)
 
   - ```
     @CellSpringHttpApplication
     public class App
     {
-        @HttpCmdAnno(uri = "/cmd1", httpCommandId = 1)
+        @HttpCmdAnno(uri = "/cmd1", httpCommandId = 1,reactor=ReactorAnno.class)
         public static class CMD1 extends AbstractHttpCommand
         {
             @Override
-            protected ICommandExecuteResult onExecute(IHttpContext ctx, Object bo) throws IOException
+            protected void onExecute(IHttpContext ctx, Object bo) throws IOException
             {
                 ctx.response(this.createResponseWp().ret("cmd1").build());
-                return null;
             }
         }
     
-        @HttpCmdAnno(uri = "/cmd2", httpCommandId = 1)
+        @HttpCmdAnno(uri = "/cmd2", httpCommandId = 1,reactor=ReactorAnno.class)
         public static class CMD2 extends AbstractHttpCommand
         {
             @Override
-            protected ICommandExecuteResult onExecute(IHttpContext ctx, Object bo) throws IOException
+            protected void onExecute(IHttpContext ctx, Object bo) throws IOException
             {
                 Reactor2 reactor2 = (Reactor2) ctx.getHttpReactor();
                 Assert.notNull(reactor2.autoasd, "asd");
                 ctx.response(this.createResponseWp().ret("cmd2").build());
-                return null;
             }
         }
     
@@ -175,12 +167,6 @@
         {
             @AutoPlugin
             private Autoasd autoasd;
-    
-            @Override
-            public List<Class<? extends IHttpCommand>> getHttpCommandList()
-            {
-                return Arrays.asList(CMD1.class, CMD2.class);
-            }
         }
     
         public static void main(String[] args)
