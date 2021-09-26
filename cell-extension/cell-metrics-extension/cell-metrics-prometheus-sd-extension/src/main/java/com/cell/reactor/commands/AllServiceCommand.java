@@ -69,7 +69,7 @@ public class AllServiceCommand extends AbstractHttpCommand
         Mono<ChangeItem<Map<String, String[]>>> serviceNames = registrationService.getServiceNames(SDUtils.getWaitMillis(query_param_wait), Long.valueOf(index));
         ChangeItem<Map<String, String[]>> ret = serviceNames.block();
         ctx.response(this.createResponseWp()
-                .status(HttpStatus.OK.value()).ret(ret.getItem()).build());
+                .status(HttpStatus.OK.value()).ret(ServiceReactor.createResponseEntity(ret)).build());
     }
 
 

@@ -9,6 +9,7 @@ import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.log.LOG;
 import com.cell.model.ChangeItem;
 import com.cell.model.Instance;
+import com.cell.model.ServiceInstanceHealth;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.util.DiscoveryUtils;
@@ -111,6 +112,37 @@ public class RegistrationService extends AbstractInitOnce
             }
         });
     }
+
+    public Mono<ChangeItem<List<ServiceInstanceHealth>>> getServiceHealth(String serviceName, long waitMillis, Long index)
+    {
+        return returnDeferred(waitMillis, index, () ->
+        {
+            List<Instance> instances = this.instances.get(serviceName);
+            List<ServiceInstanceHealth> ret = new ArrayList<>();
+
+            if (instances == null)
+            {
+                return Collections.emptyList();
+            }
+
+            Set<Instance> instSet = new HashSet<>(instances);
+            return instSet.stream().map(instance ->
+            {
+                ServiceInstanceHealth.Node node = ServiceInstanceHealth.Node.builder()
+                        .address(instance.getIp())
+                        .id(instance.getServiceName())
+                        .dataCenter("ad")
+                        .build();
+                ServiceInstanceHealth.Service service = ServiceInstanceHealth.Service.builder()
+                        .service(instance.getServiceName())
+                        .id(instance.getServiceName() + "_" + instance.getPort())
+                        .port(instance.getPort())
+                        .build();
+                return ServiceInstanceHealth.builder().node(node).service(service).build();
+            }).collect(Collectors.toList());
+        });
+    }
+
 
     private <T> Mono<ChangeItem<T>> returnDeferred(long waitMillis, Long index, Supplier<T> fn)
     {

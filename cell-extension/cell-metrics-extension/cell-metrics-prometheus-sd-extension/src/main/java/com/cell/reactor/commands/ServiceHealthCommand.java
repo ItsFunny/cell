@@ -3,9 +3,11 @@ package com.cell.reactor.commands;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.Optional;
 import com.cell.command.impl.AbstractHttpCommand;
+import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.model.ChangeItem;
+import com.cell.model.ServiceInstanceHealth;
 import com.cell.reactor.ServiceReactor;
 import com.cell.sd.RegistrationService;
 import com.cell.utils.SDUtils;
@@ -22,39 +24,39 @@ import java.util.Map;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-09-25 08:48
+ * @Date 创建时间：2021-09-26 21:46
  */
-@HttpCmdAnno(uri = "/catalog/service/{service}",
+@HttpCmdAnno(
+        uri = "/health/service/{appName}",
         httpCommandId = 1,
-        reactor = ServiceReactor.class,
         requestType = EnumHttpRequestType.HTTP_URL_GET,
-        buzzClz = DetailServiceCommand.ServiceBo.class)
-public class DetailServiceCommand extends AbstractHttpCommand
+        buzzClz = ServiceHealthCommand.ServiceHealthCommandBO.class,
+        reactor = ServiceReactor.class)
+public class ServiceHealthCommand extends AbstractHttpCommand
 {
-    private static final String CONSUL_IDX_HEADER = "X-Consul-Index";
-
     @Data
-    public static class ServiceBo
+    public static class ServiceHealthCommandBO
     {
         @Optional
-        private String QUERY_PARAM_WAIT;
+        private String wait;
         @Optional
-        private Long QUERY_PARAM_INDEX;
+        private Long index;
     }
 
     @Override
     protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
     {
         Map<String, String> pathUri = ctx.getPathUri();
-        String serviceName = pathUri.get("service");
+        String appName = pathUri.get("appName");
         ServiceReactor reactor = (ServiceReactor) ctx.getHttpReactor();
         RegistrationService registrationService = reactor.getRegistrationService();
-        ServiceBo bo = (ServiceBo) o;
-        Mono<ChangeItem<List<Map<String, Object>>>> service = registrationService.getService(serviceName, SDUtils.getWaitMillis(bo.getQUERY_PARAM_WAIT()), bo.getQUERY_PARAM_INDEX());
-        ChangeItem<List<Map<String, Object>>> items = service.block();
+        ServiceHealthCommandBO bo = (ServiceHealthCommandBO) o;
+        Mono<ChangeItem<List<ServiceInstanceHealth>>> mono = registrationService.getServiceHealth(appName, SDUtils.getWaitMillis(bo.getWait()), bo.getIndex());
+        ChangeItem<List<ServiceInstanceHealth>> block = mono.block();
         ctx.response(this.createResponseWp()
-                .ret(ServiceReactor.createResponseEntity(items))
-                .build());
+                .status(ContextConstants.SUCCESS)
+                .ret(ServiceReactor.createResponseEntity(block)).build());
     }
+
 
 }
