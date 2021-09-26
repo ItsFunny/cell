@@ -12,6 +12,7 @@ import com.cell.model.Instance;
 import com.cell.model.ServiceInstanceHealth;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
+import com.cell.transport.model.ServerMetaData;
 import com.cell.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
 import reactor.core.publisher.Flux;
@@ -45,24 +46,8 @@ public class RegistrationService extends AbstractInitOnce
     {
         return returnDeferred(waitMillis, index, () ->
         {
-            if (this.onChange)
-            {
-                synchronized (this.delta)
-                {
-                    for (String service : delta.keySet())
-                    {
-                        List<Instance> instances = this.delta.get(service);
-                        List<Instance> origin = this.instances.get(service);
-                        if (CollectionUtils.isNotEmpty(origin))
-                        {
-                            List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
-                            this.down.addAll(down);
-                        }
-                        this.instances.put(service, instances);
-                    }
-                    this.onChange = false;
-                }
-            }
+            this.transferIfNeed();
+
             Set<String> set = new HashSet<>();
             for (String service : this.instances.keySet())
             {
@@ -78,10 +63,34 @@ public class RegistrationService extends AbstractInitOnce
         });
     }
 
+    private void transferIfNeed()
+    {
+        if (this.onChange)
+        {
+            synchronized (this.delta)
+            {
+                for (String service : delta.keySet())
+                {
+                    List<Instance> instances = this.delta.get(service);
+                    List<Instance> origin = this.instances.get(service);
+                    if (CollectionUtils.isNotEmpty(origin))
+                    {
+                        List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
+                        this.down.addAll(down);
+                    }
+                    this.instances.put(service, instances);
+                }
+                this.onChange = false;
+            }
+        }
+    }
+
     public Mono<ChangeItem<List<Map<String, Object>>>> getService(String serviceName, long waitMillis, Long index)
     {
         return returnDeferred(waitMillis, index, () ->
         {
+            this.transferIfNeed();
+
             List<Instance> instances = this.instances.get(serviceName);
             List<Map<String, Object>> list = new ArrayList<>();
 
@@ -117,8 +126,9 @@ public class RegistrationService extends AbstractInitOnce
     {
         return returnDeferred(waitMillis, index, () ->
         {
+            this.transferIfNeed();
+
             List<Instance> instances = this.instances.get(serviceName);
-            List<ServiceInstanceHealth> ret = new ArrayList<>();
 
             if (instances == null)
             {
@@ -128,8 +138,10 @@ public class RegistrationService extends AbstractInitOnce
             Set<Instance> instSet = new HashSet<>(instances);
             return instSet.stream().map(instance ->
             {
+                ServerMetaData serverMetaData = ServerMetaData.fromMetaData(instance.getMetaData());
+
                 ServiceInstanceHealth.Node node = ServiceInstanceHealth.Node.builder()
-                        .address(instance.getIp())
+                        .address(serverMetaData.getExtraInfo().getDomain())
                         .id(instance.getServiceName())
                         .dataCenter("ad")
                         .build();
@@ -167,7 +179,7 @@ public class RegistrationService extends AbstractInitOnce
 
     private void schedualFlush()
     {
-        Flux.interval(Duration.ofMinutes(5)).map(v ->
+        Flux.interval(Duration.ofSeconds(10)).map(v ->
         {
             List<String> allServices = nodeDiscovery.getAllServices();
             return allServices;
@@ -182,7 +194,10 @@ public class RegistrationService extends AbstractInitOnce
                 for (String s : allServices)
                 {
                     List<Instance> instances = this.nodeDiscovery.getServiceAllInstance(s);
-                    this.delta.put(instances.get(0).getClusterName(), instances);
+                    if (CollectionUtils.isNotEmpty(instances))
+                    {
+                        this.delta.put(instances.get(0).getClusterName(), instances);
+                    }
                 }
                 this.onChange = true;
             }

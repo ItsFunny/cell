@@ -13,6 +13,7 @@ import com.cell.reactor.IHttpReactor;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
+import org.apache.commons.cli.Options;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -32,11 +33,17 @@ import java.util.stream.Collectors;
 public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 {
 
-
     public NacosDiscoveryExtension()
     {
     }
 
+    @Override
+    public Options getOptions()
+    {
+        Options options = new Options();
+        options.addOption("domain", true, "域名,外网域名");
+        return options;
+    }
 
     @Override
     public void onInit(INodeContext ctx) throws Exception
@@ -63,6 +70,8 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
 
     private void register(INodeContext ctx)
     {
+        String domain = ctx.getCommandLine().getOptionValue("domain", "demo.com");
+
         IHttpCommandDispatcher dispatcher = DefaultReactorHolder.getInstance();
         NacosNodeDiscoveryImpl nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
 
@@ -73,15 +82,6 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
         {
             // only use one
             reactorMap.put(value.getClass(), value);
-
-//            ReactorAnno rAnno = (ReactorAnno) ClassUtil.mustGetAnnotation(value.getClass(), ReactorAnno.class);
-//            List<IHttpReactor> iHttpReactors = reactorMap.get(rAnno.group());
-//            if (CollectionUtils.isEmpty(iHttpReactors))
-//            {
-//                iHttpReactors = new ArrayList<>();
-//                reactorMap.put(value.getClass(), iHttpReactors);
-//            }
-//            iHttpReactors.add(value);
         }
         ServerMetaData serverMetaData = new ServerMetaData();
         values = reactorMap.values();
@@ -103,6 +103,9 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
             return reactor;
         }).collect(Collectors.toList());
         serverMetaData.setReactors(reacotrs);
+        ServerMetaData.ServerExtraInfo extraInfo = new ServerMetaData.ServerExtraInfo();
+        extraInfo.setDomain(domain);
+        serverMetaData.setExtraInfo(extraInfo);
 
 
         Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);

@@ -24,6 +24,14 @@ public class ServerMetaData
     public static final String PROPERTY_NAME = "cmds";
     private List<ServerMetaReactor> reactors;
 
+    private ServerExtraInfo extraInfo;
+
+    @Data
+    public static class ServerExtraInfo
+    {
+        private String domain;
+    }
+
     public ServerMetaData()
     {
         this.reactors = new ArrayList<>();
