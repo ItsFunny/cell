@@ -1,8 +1,6 @@
 package com.cell.postprocessors.dependency;
 
-import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.bridge.ISpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.beans.BeanUtils;
@@ -23,7 +21,6 @@ import org.springframework.core.PriorityOrdered;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.lang.Nullable;
-import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
@@ -247,7 +244,6 @@ public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanP
             targetClass = targetClass.getSuperclass();
         }
         while (targetClass != null && targetClass != Object.class);
-
         return new InjectionMetadata(clazz, elements);
     }
 

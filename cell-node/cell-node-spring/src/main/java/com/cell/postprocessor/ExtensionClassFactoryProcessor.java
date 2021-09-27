@@ -6,7 +6,6 @@ import com.cell.bridge.ExtensionClass;
 import com.cell.bridge.ExtensionClassBeanDefinitionReader;
 import com.cell.bridge.ExtensionClassParser;
 import com.cell.config.AbstractInitOnce;
-import com.cell.config.IInitOnce;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;

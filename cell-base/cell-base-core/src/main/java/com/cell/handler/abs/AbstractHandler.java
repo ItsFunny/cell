@@ -5,7 +5,6 @@ import com.cell.handler.IHandler;
 import com.cell.hooks.IChainExecutor;
 import com.cell.protocol.IContext;
 import com.cell.services.IHandlerSuit;
-import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
 
 /**
@@ -40,8 +39,8 @@ public abstract class AbstractHandler implements IHandler
     @Override
     public Mono<Void> execute(IContext context, IChainExecutor executor)
     {
-        return this.handle(context);
+        return this.handle(context,executor);
     }
 
-    protected abstract Mono<Void> handle(IContext ctx);
+    protected abstract Mono<Void> handle(IContext ctx,IChainExecutor executor);
 }

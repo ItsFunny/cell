@@ -3,9 +3,9 @@ package com.cell.postprocessor;
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
+import com.cell.comparators.InstanceOrderComparator;
 import com.cell.config.ConfigConstants;
 import com.cell.constants.BitConstants;
-import com.cell.constants.OrderConstants;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.manager.IReflectManager;
@@ -129,10 +129,10 @@ public class ManagerFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
         for (AnnotaionManagerWrapper value : values)
         {
             Map<String, AnnotationNodeWrapper> managerNodes = value.getManagerNodes();
-            Collection<AnnotationNodeWrapper> nodes = managerNodes.values();
-            for (AnnotationNodeWrapper node : nodes)
+            List<Object> nodes = managerNodes.values().stream().map(p -> p.getNode()).collect(Collectors.toList());
+            for (Object node : nodes)
             {
-                this.nodesSet.add(node.getNode().getClass());
+                this.nodesSet.add(node.getClass());
             }
         }
     }
@@ -151,14 +151,7 @@ public class ManagerFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
             AnnotaionManagerWrapper wrapper = managers.get(key);
             IReflectManager manager = wrapper.getManager();
             List<Object> collect = wrapper.getManagerNodes().values().stream().map(p -> p.getNode()).collect(Collectors.toList());
-            Collections.sort(collect, (a, b) ->
-            {
-                ManagerNode n1 = a.getClass().getAnnotation(ManagerNode.class);
-                ManagerNode n2 = b.getClass().getAnnotation(ManagerNode.class);
-                int value1 = n1 == null ? OrderConstants.DEFAULT_ORDER : n1.orderValue();
-                int value2 = n2 == null ? OrderConstants.DEFAULT_ORDER : n2.orderValue();
-                return Integer.compare(value1, value2);
-            });
+            collect.sort(new InstanceOrderComparator(false));
             // TODO check if duplicate
             manager.invokeInterestNodes(collect);
         }

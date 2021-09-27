@@ -1,16 +1,7 @@
 package com.cell.postprocessors.extension;
 
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-
-import com.cell.annotations.ManagerNode;
 import com.cell.bridge.ISpringNodeExtension;
-import com.cell.comparators.InstanceOrderComparator;
-import com.cell.comparators.OrderComparator;
 import com.cell.config.AbstractInitOnce;
-import com.cell.constants.Constants;
-import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
@@ -20,35 +11,23 @@ import com.cell.exceptions.ConfigException;
 import com.cell.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
-import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.tool.Banner;
-import com.cell.utils.CollectionUtils;
-import com.cell.utils.DateUtils;
 import com.cell.utils.IPUtils;
-import com.cell.wrapper.AnnotaionManagerWrapper;
-import com.cell.wrapper.AnnotationNodeWrapper;
 import com.google.common.base.Stopwatch;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.DefaultParser;
-import org.apache.commons.cli.Option;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-import org.apache.lucene.util.CollectionUtil;
+import org.apache.commons.cli.*;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.DefaultApplicationArguments;
-import org.springframework.boot.context.event.ApplicationEnvironmentPreparedEvent;
-import org.springframework.boot.context.event.ApplicationPreparedEvent;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.boot.context.event.ApplicationStartedEvent;
-import org.springframework.boot.context.event.SpringApplicationEvent;
+import org.springframework.boot.context.event.*;
 import org.springframework.context.ApplicationListener;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 
 public class SpringExtensionManager extends AbstractInitOnce implements ApplicationListener<SpringApplicationEvent>, BeanPostProcessor

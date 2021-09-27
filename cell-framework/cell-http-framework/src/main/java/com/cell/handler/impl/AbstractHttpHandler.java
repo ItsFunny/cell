@@ -2,6 +2,7 @@ package com.cell.handler.impl;
 
 import com.cell.handler.IHttpCmdHandler;
 import com.cell.handler.abs.AbstractHandler;
+import com.cell.hooks.IChainExecutor;
 import com.cell.protocol.IContext;
 import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
@@ -17,10 +18,10 @@ import reactor.core.publisher.Mono;
 public abstract class AbstractHttpHandler extends AbstractHandler implements IHttpCmdHandler
 {
     @Override
-    protected Mono<Void> handle(IContext ctx)
+    protected Mono<Void> handle(IContext ctx, IChainExecutor executor)
     {
-        return this.onHandle((IHandlerSuit) ctx);
+        return this.onHandle((IHandlerSuit) ctx,executor);
     }
 
-    protected abstract Mono<Void> onHandle(IHandlerSuit context);
+    protected abstract Mono<Void> onHandle(IHandlerSuit context,IChainExecutor executor);
 }

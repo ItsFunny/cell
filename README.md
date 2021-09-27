@@ -180,6 +180,8 @@
 ---
 
 # TODO
+- 同种类型的bean,不支持,注册多个(既@Autowired/@AutoPlugin的时候,会报发现多个bean)
+    - 解决方法: 推荐注册的时候,还是使用@Bean 来注入
 - 返回值还需要定制化,以及modelAndView模式未测试
 - LOG模块有问题,第三方的日志没打印出来
 - 网关模块,dao模块和discovery模块都会在后续添加

@@ -1,9 +1,6 @@
 package com.cell;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
-import org.reactivestreams.Publisher;
 import org.reactivestreams.Subscription;
 import reactor.core.Disposable;
 import reactor.core.publisher.BaseSubscriber;
@@ -239,6 +236,102 @@ public class AppTest
         asd.subscribe(System.out::println);
         System.out.println(1);
         TimeUnit.SECONDS.sleep(200);
+    }
+
+
+    @Test
+    public void testMonoasd()
+    {
+        Mono.fromRunnable(() -> System.out.println(0)).then(asd()).then(Mono.fromRunnable(() ->
+                System.out.println("done"))).block();
+    }
+
+    private Mono<Void> asd()
+    {
+        System.out.println("123");
+        return Mono.fromRunnable(() ->
+        {
+            System.out.println("456");
+        }).then(Mono.fromRunnable(() -> System.out.println("9999")));
+    }
+
+    @Test
+    public void onErrorResume()
+    {
+        Object block = Mono.fromRunnable(() ->
+        {
+            System.out.println(1);
+        }).then(Mono.fromRunnable(() ->
+        {
+            throw new RuntimeException("123");
+        })).onErrorResume(e ->
+        {
+            System.out.println("catch exception" + e);
+            return Mono.empty();
+        }).block();
+    }
+
+    @Test
+    public void testASDD()
+    {
+        Mono<Void> objectMono = Mono.fromRunnable(() ->
+        {
+            System.out.println("1");
+        });
+        testErr(objectMono).then(Mono.fromRunnable(() ->
+        {
+            System.out.println("2");
+        })).then(Mono.fromRunnable(() ->
+        {
+            throw new RuntimeException("123");
+        })).onErrorResume(e ->
+        {
+            System.out.println("out:" + e.getMessage());
+            return Mono.empty();
+        }).block();
+    }
+
+    private Mono<Void> testErr(Mono<Void> m)
+    {
+        System.out.println("testErr");
+        return m.then(Mono.fromRunnable(() ->
+        {
+            System.out.println("testErr_1");
+        })).onErrorResume(e ->
+        {
+            System.out.println("testErr收到err:" + e);
+            return Mono.empty();
+        }).then();
+    }
+
+    @Test
+    public void testMonoOnErrorReturn()
+    {
+        Mono<Void> m = Mono.just(123).then(Mono.fromRunnable(() ->
+        {
+            System.out.println(123);
+        })).then(
+                Mono.fromRunnable(() ->
+                {
+                    throw new RuntimeException("4");
+                }));
+        errorMono(m).onErrorResume(e ->
+        {
+            System.out.println("zuiwaiceng:" + e);
+            return Mono.empty();
+        }).block();
+    }
+
+    private Mono<Void> errorMono(Mono<Void> mono)
+    {
+        return mono.then(Mono.fromRunnable(() ->
+        {
+            System.out.println("sssss");
+        })).onErrorResume(e ->
+        {
+            System.out.println("catch err" + e);
+            return Mono.error(e);
+        }).then();
     }
 }
 
