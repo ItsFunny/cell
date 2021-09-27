@@ -10,6 +10,8 @@ import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;
+import org.springframework.boot.web.server.ConfigurableWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
 
 /**
@@ -20,10 +22,12 @@ import org.springframework.context.annotation.Bean;
  * @Attention:
  * @Date 创建时间：2021-09-08 05:36
  */
-public class NacosHttpGateExtension extends AbstractSpringNodeExtension
+public class NacosHttpGateExtension extends AbstractSpringNodeExtension implements WebServerFactoryCustomizer<ConfigurableWebServerFactory>
 {
     private ServiceDiscovery serviceDiscovery;
     private IScheduleCounter schedualCaculateErrorCount;
+
+    private int port = 9999;
 
     @Plugin
     public ServiceDiscovery serviceDiscovery()
@@ -37,9 +41,13 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
         return this.schedualCaculateErrorCount;
     }
 
+
     @Override
     public void onInit(INodeContext ctx) throws Exception
     {
+        Integer port = Integer.parseInt(ctx.getCommandLine().getOptionValue("port", "9999"));
+        this.port = port;
+
         GatewayConfiguration.init();
         NacosNodeDiscoveryImpl.setupDiscovery();
 
@@ -71,4 +79,9 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension
         this.schedualCaculateErrorCount.stop();
     }
 
+    @Override
+    public void customize(ConfigurableWebServerFactory factory)
+    {
+        factory.setPort(port);
+    }
 }

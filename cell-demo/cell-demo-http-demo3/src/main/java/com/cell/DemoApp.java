@@ -10,11 +10,13 @@ import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
+import com.cell.utils.RandomUtils;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Charlie
@@ -25,7 +27,7 @@ import java.io.IOException;
  * @Date 创建时间：2021-09-04 06:09
  */
 @CellSpringHttpApplication
-public class App
+public class DemoApp
 {
     public static class CC1
     {
@@ -120,9 +122,27 @@ public class App
         }
     }
 
+    @HttpCmdAnno(uri = "/long", httpCommandId = 1, requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class LongCmd extends AbstractHttpCommand
+    {
+
+        @Override
+        protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
+        {
+            try
+            {
+                TimeUnit.SECONDS.sleep(RandomUtils.randomInt(1, 10));
+                ctx.response(this.createResponseWp().ret("done").build());
+            } catch (Exception e)
+            {
+
+            }
+        }
+    }
+
     public static void main(String[] args)
     {
-        CellApplication.builder(App.class)
+        CellApplication.builder(DemoApp.class)
                 .withReactor(new Reactor2())
                 .newReactor()
                 .withBean(CC1.class)

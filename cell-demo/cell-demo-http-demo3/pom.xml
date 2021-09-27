@@ -23,14 +23,14 @@
             <version>${cell.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-webflux</artifactId>
-            <version>${spring-boot.version}</version>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>${cell.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-http-extension</artifactId>
+            <artifactId>cell-discovery-nacos-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>

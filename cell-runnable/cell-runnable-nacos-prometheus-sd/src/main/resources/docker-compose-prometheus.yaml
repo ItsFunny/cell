@@ -40,3 +40,4 @@ services:
       - ./prometheus_targets:/etc/prometheus/dynamictargets
     extra_hosts:
       - "nacos.discovery.com:172.224.2.2"
+      - "demo.com:172.224.2.2"

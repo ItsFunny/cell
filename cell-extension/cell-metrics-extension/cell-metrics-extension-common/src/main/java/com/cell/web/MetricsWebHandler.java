@@ -14,6 +14,7 @@ import com.cell.prometheus.HistogramStator;
 import com.cell.services.IHandlerSuit;
 import com.cell.services.IStatContextService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Mono;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,31 +46,38 @@ public class MetricsWebHandler extends AbstractHttpHandler
     @AutoPlugin
     private CellGaugeStator totalCounter;
 
-    private static final String httpRequestStartTime = "httpRequestStartTime";
-
 
     @Override
     protected Mono<Void> onHandle(IHandlerSuit context, IChainExecutor executor)
     {
         IHttpHandlerSuit suit = (IHttpHandlerSuit) context;
         IHttpCommandContext buzContext = suit.getBuzContext();
-        buzContext.getHttpRequest().setAttribute(httpRequestStartTime, System.currentTimeMillis());
-        totalCounter.inc(1);
+        HttpServletRequest request = buzContext.getHttpRequest();
+        totalCounter.labels(statContextService.getNodeName(), statContextService.getClusterName(), request.getMethod()).inc(1);
         return executor.execute(context).onErrorResume(e ->
         {
-            this.failCounter.inc();
+            this.failCounter.labels(getLabels(request)).inc();
             return Mono.error(e);
         }).then(Mono.fromRunnable(() ->
         {
-            HttpServletRequest httpRequest = buzContext.getHttpRequest();
             long endTime = System.currentTimeMillis();
-            Long startTime = (Long) httpRequest.getAttribute(httpRequestStartTime);
+            Long startTime = buzContext.getRequestTimestamp();
             long cost = endTime - startTime;
-            String nodeName = statContextService.getNodeName();
-            exceedDelayThresoldCount.labels(nodeName,
-                    statContextService.getClusterName(),
-                    "DEFAULT",
-                    httpRequest.getRequestURI(), httpRequest.getMethod()).observe(cost);
+            int status = buzContext.getHttpResponse().getStatus();
+            String[] labels = getLabels(request);
+            if (status != HttpStatus.OK.value())
+            {
+                this.failCounter.labels(labels).inc();
+            } else
+            {
+                this.successCounter.labels(labels).inc();
+            }
+            exceedDelayThresoldCount.labels(getLabels(request)).observe(cost);
         }));
+    }
+
+    private String[] getLabels(HttpServletRequest request)
+    {
+        return new String[]{statContextService.getNodeName(), statContextService.getClusterName(), "DEFAULT", request.getRequestURI(), request.getMethod()};
     }
 }

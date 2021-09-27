@@ -28,7 +28,7 @@ public class MetricsConfiguration
     {
         return CellGaugeStator.build("totalCounter", "总共请求数")
                 .labelNames("nodeName", "cluster", "method")
-                .average(EnumStatisticType.SECOND, 1)
+//                .average(EnumStatisticType.SECOND, 1)
                 .register(registry);
     }
 
@@ -56,7 +56,7 @@ public class MetricsConfiguration
     {
         return CellGaugeStator.build("failCounter", "failCounter")
                 .labelNames(COMMON_LABELS)
-                .average(EnumStatisticType.SECOND, 1)
+//                .average(EnumStatisticType.SECOND, 1)
                 .register(registry);
     }
 
@@ -70,7 +70,7 @@ public class MetricsConfiguration
     {
         return CellGaugeStator.build("successCounter", "successCounter")
                 .labelNames(COMMON_LABELS)
-                .average(EnumStatisticType.SECOND, 1)
+//                .average(EnumStatisticType.SECOND, 1)
                 .register(registry);
     }
 }

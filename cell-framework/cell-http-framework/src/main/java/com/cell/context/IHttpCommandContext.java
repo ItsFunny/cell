@@ -5,6 +5,7 @@ import com.cell.reactor.IHttpReactor;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -19,6 +20,7 @@ public interface IHttpCommandContext extends IBuzzContext
 {
     IHttpReactor getHttpReactor();
     HttpServletRequest getHttpRequest();
+    HttpServletResponse getHttpResponse();
     Map<String, String> getUriRegexValue();
 
     DeferredResult<Object> getResult();

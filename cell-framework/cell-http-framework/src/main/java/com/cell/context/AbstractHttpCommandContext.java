@@ -44,6 +44,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     private HttpCmdAnno httpCmdAnno;
     private Class<? extends IHttpCommand> command;
 
+    private boolean success;
 
     public AbstractHttpCommandContext(CommandContext commandContext)
     {
@@ -90,6 +91,9 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 .build());
     }
 
+    public boolean success(){
+        return this.success;
+    }
     @Override
     public void response(ContextResponseWrapper wp)
     {
@@ -173,6 +177,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             // success
             if (this.success(status))
             {
+                this.success=true;
             } else if (this.programError(status))
             {
                 this.commandContext.getHttpResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -241,6 +246,10 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     public HttpServletRequest getHttpRequest()
     {
         return this.commandContext.getHttpRequest();
+    }
+
+    public HttpServletResponse getHttpResponse(){
+        return this.commandContext.getHttpResponse();
     }
 
     public boolean viewMode()

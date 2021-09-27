@@ -2,16 +2,14 @@ package com.cell.internal;
 
 import com.cell.annotations.CellOrder;
 import com.cell.constants.CommandLineConstants;
-import com.cell.constants.Constants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.SpringNodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
-
-import java.util.UUID;
 
 /**
  * @author Charlie
@@ -31,7 +29,7 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
         Options options = new Options();
         options.addOption("meta", true, "-meta metadata name");
         options.addOption("name", true, "-name node name");
-        options.addOption(CommandLineConstants.CLUSTER,true,"cluster");
+        options.addOption(CommandLineConstants.CLUSTER, true, "cluster");
         return options;
     }
 
@@ -44,7 +42,7 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
         {
             meta = cmd.getOptionValue("meta");
         }
-        String nodeName = meta + "_" + UUID.randomUUID().toString();
+        String nodeName = meta + "_" + ClassUtil.getMainApplicationClass().getName();
         if (cmd.hasOption("name"))
         {
             // 设置nodeName,

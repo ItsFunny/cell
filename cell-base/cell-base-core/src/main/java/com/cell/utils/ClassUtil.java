@@ -877,8 +877,8 @@ public class ClassUtil
 
     public static int ordererCompare(Class<?> clz1, Class<?> clz2)
     {
-        CellOrder anno1 = clz1.getAnnotation(CellOrder.class);
-        CellOrder anno2 = clz2.getAnnotation(CellOrder.class);
+        CellOrder anno1 = getMergedAnnotation(clz1, CellOrder.class);
+        CellOrder anno2 = getMergedAnnotation(clz2, CellOrder.class);
         int value1 = anno1 != null ? anno1.value() : Constants.DEFAULT_ORDER;
         int value2 = anno2 != null ? anno2.value() : Constants.DEFAULT_ORDER;
         return Integer.compare(value1, value2);

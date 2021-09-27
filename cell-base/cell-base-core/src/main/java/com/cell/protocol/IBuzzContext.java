@@ -3,8 +3,6 @@ package com.cell.protocol;
 import com.cell.concurrent.promise.BasePromise;
 import com.cell.reactor.ICommandReactor;
 
-import java.io.IOException;
-
 /**
  * @author Charlie
  * @When
@@ -16,6 +14,7 @@ import java.io.IOException;
 public interface IBuzzContext extends IContext
 {
     void response(ContextResponseWrapper wp);
+//    boolean success();
 
     long getRequestTimestamp();
 
