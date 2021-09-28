@@ -9,16 +9,11 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.gson.*;
 
-import java.io.FileNotFoundException;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author joker
@@ -109,7 +104,8 @@ public class JSONUtil
      * @param obj 要转json的对象
      * @return
      */
-    public static String toFormattedJson(Object obj) {
+    public static String toFormattedJson(Object obj)
+    {
         return JSON.toJSONString(obj, SerializerFeature.WriteNonStringKeyAsString, SerializerFeature.SkipTransientField,
                 SerializerFeature.PrettyFormat);
     }
@@ -120,14 +116,18 @@ public class JSONUtil
      * @param obj 要转json的对象
      * @return true if success.
      */
-    public static boolean toFile(Object obj, String fileName) {
+    public static boolean toFile(Object obj, String fileName)
+    {
         String jsonString = toFormattedJson(obj);
-        try {
+        try
+        {
             FileUtils.setFileText(fileName, jsonString);
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e)
+        {
             e.printStackTrace();
             return false;
-        } catch (UnsupportedEncodingException e) {
+        } catch (UnsupportedEncodingException e)
+        {
             e.printStackTrace();
             return false;
         }
@@ -141,21 +141,27 @@ public class JSONUtil
      * @param obj 要转json的对象
      * @return true if success.
      */
-    public static boolean jsonObjectToFile(JSONObject obj, String fileName) {
+    public static boolean jsonObjectToFile(JSONObject obj, String fileName)
+    {
         SerializeWriter out = new SerializeWriter(new SerializerFeature[]{SerializerFeature.PrettyFormat, SerializerFeature.QuoteFieldNames});
-        try {
+        try
+        {
             new JSONSerializer(out).write(obj);
             String jsonString = out.toString();
-            try {
+            try
+            {
                 FileUtils.setFileText(fileName, jsonString);
-            } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e)
+            {
                 e.printStackTrace();
                 return false;
-            } catch (UnsupportedEncodingException e) {
+            } catch (UnsupportedEncodingException e)
+            {
                 e.printStackTrace();
                 return false;
             }
-        } finally {
+        } finally
+        {
             out.close();
         }
         return true;
@@ -170,17 +176,22 @@ public class JSONUtil
      * @Date 2017年3月24日 下午1:47:57
      */
     @SuppressWarnings("unchecked")
-    public static <T> List<T> jsonToListObject(String jsonData, Class<T> t) {
-        if (jsonData == null || jsonData.isEmpty()) {
+    public static <T> List<T> jsonToListObject(String jsonData, Class<T> t)
+    {
+        if (jsonData == null || jsonData.isEmpty())
+        {
             return new ArrayList<>();
         }
         List<T> objList = new ArrayList<>();
         JSONArray jsonArray = JSONArray.parseArray(jsonData);
         int size = jsonArray.size();
-        for (int i = 0; i < size; i++) {
-            if (t == String.class) {
+        for (int i = 0; i < size; i++)
+        {
+            if (t == String.class)
+            {
                 objList.add((T) jsonArray.get(i));
-            } else {
+            } else
+            {
                 JSONObject jsonobj = (JSONObject) jsonArray.get(i);
                 T obj = jsonobj.toJavaObject(t);
                 objList.add(obj);
@@ -197,12 +208,16 @@ public class JSONUtil
      * @param t    对象的class类型
      * @return
      */
-    public static <T> T json2Obj(String json, Class<T> t) {
+    public static <T> T json2Obj(String json, Class<T> t)
+    {
         return JSON.parseObject(json, t);
     }
-    public static <T> T json2Object(String json, Class<T> t) {
+
+    public static <T> T json2Object(String json, Class<T> t)
+    {
         return JSON.parseObject(json, t);
     }
+
     /**
      * 将json串转化为相应的对象
      *
@@ -215,7 +230,8 @@ public class JSONUtil
         return (JSONObject) JSON.parse(FileUtils.getFileText(jsonFile));
     }
 
-    public static String toJsonString(Map<String, Object> map){
+    public static String toJsonString(Map<String, Object> map)
+    {
         return JSON.toJSONString(map,
                 SerializerFeature.MapSortField,
                 SerializerFeature.WriteMapNullValue
@@ -223,8 +239,11 @@ public class JSONUtil
 //                SerializerFeature.WriteNullListAsEmpty
         );
     }
-    public static String toJsonString(Object obj){
-        if (obj != null && obj instanceof String) {
+
+    public static String toJsonString(Object obj)
+    {
+        if (obj != null && obj instanceof String)
+        {
             return (String) obj;
         }
         return JSON.toJSONString(obj, SerializerFeature.DisableCircularReferenceDetect);
@@ -240,10 +259,32 @@ public class JSONUtil
      * @throws UnsupportedEncodingException
      */
     public static <T> T jsonFileToObj(String jsonFile, Class<T> t)
-            throws FileNotFoundException, UnsupportedEncodingException {
+            throws FileNotFoundException, UnsupportedEncodingException
+    {
 
         return JSON.parseObject(FileUtils.getFileText(jsonFile), t);
     }
 
+    public static HashMap<String, Object> byte2HashMap(byte[] blob)
+    {
+        return (HashMap<String, Object>) byte2Object(blob);
+    }
+
+    public static Object byte2Object(byte[] blob)
+    {
+        Object obj = new Object();
+
+        ObjectInputStream bin;
+        try
+        {
+            bin = new ObjectInputStream(new ByteArrayInputStream(blob));
+            obj = bin.readObject();
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        return obj;
+    }
 
 }

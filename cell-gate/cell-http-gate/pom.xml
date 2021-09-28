@@ -68,11 +68,6 @@
             <artifactId>cell-node-spring</artifactId>
             <version>${cell.version}</version>
         </dependency>
-        <!--<dependency>-->
-        <!--<groupId>com.cell</groupId>-->
-        <!--<artifactId>cell-http-framework</artifactId>-->
-        <!--<version>${cell.version}</version>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>

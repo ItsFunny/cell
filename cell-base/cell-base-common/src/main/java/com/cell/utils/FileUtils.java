@@ -355,4 +355,61 @@ public class FileUtils
         }
     }
 
+    public static final void writeString2File(String str, String fileName, String encode) throws Exception
+    {
+        File file = new File(fileName);
+        if (!file.getParentFile().exists())
+        {
+            file.getParentFile().mkdirs();
+        }
+
+        Writer out = new OutputStreamWriter(new FileOutputStream(fileName), encode);
+        Throwable var5 = null;
+
+        try
+        {
+            out.write(str);
+            out.flush();
+        } catch (Throwable var14)
+        {
+            var5 = var14;
+            throw var14;
+        } finally
+        {
+            if (out != null)
+            {
+                if (var5 != null)
+                {
+                    try
+                    {
+                        out.close();
+                    } catch (Throwable var13)
+                    {
+                        var5.addSuppressed(var13);
+                    }
+                } else
+                {
+                    out.close();
+                }
+            }
+
+        }
+
+    }
+    public static String joinFilePath(String... path) {
+        return joinFilePathSep(File.separator, path);
+    }
+
+    public static String joinFilePathSep(String separator, String... path) {
+        StringBuilder sb = new StringBuilder();
+        String[] var3 = path;
+        int var4 = path.length;
+
+        for(int var5 = 0; var5 < var4; ++var5) {
+            String string = var3[var5];
+            sb.append(string).append(separator);
+        }
+
+        return sb.substring(0, sb.length() - separator.length());
+    }
 }

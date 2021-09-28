@@ -18,6 +18,7 @@
         <module>cell-gate</module>
         <module>cell-monitor</module>
         <module>cell-plugin</module>
+        <module>cell-tools</module>
     </modules>
     <packaging>pom</packaging>
 

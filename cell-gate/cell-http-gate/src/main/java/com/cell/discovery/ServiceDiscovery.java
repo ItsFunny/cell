@@ -25,10 +25,7 @@ import com.cell.util.DiscoveryUtils;
 import com.cell.utils.GatewayUtils;
 import com.cell.utils.MetaDataUtils;
 import lombok.Data;
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Scheduler;
 
 import java.time.Duration;
 import java.util.*;
@@ -143,6 +140,9 @@ public class ServiceDiscovery extends AbstractInitOnce
     {
         this.resolver = new DefaultStringKeyResolver();
         nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
+
+        this.registerSelf(ctx);
+
         Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
         Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> mapSetCouple = convCellInstanceToGateMeta(serverInstanceList);
         this.serverMetas = mapSetCouple.getV1();
@@ -152,6 +152,32 @@ public class ServiceDiscovery extends AbstractInitOnce
         nodeDiscovery.registerListen(new InstanceHooker());
 
         this.schedualRefresh();
+    }
+
+    // 注册自身,网关为硬编码注册
+    private void registerSelf(InitCTX ctx)
+    {
+        String domain = (String) ctx.getData().get("domain");
+        String cluster = (String) ctx.getData().get("cluster");
+        String ip = (String) ctx.getData().get("ip");
+        Integer port = (Integer) ctx.getData().get("port");
+        String serviceName = (String) ctx.getData().get("serviceName");
+        ServerMetaData serverMetaData = new ServerMetaData();
+        ServerMetaData.ServerExtraInfo extraInfo = new ServerMetaData.ServerExtraInfo();
+        extraInfo.setDomain(domain);
+        serverMetaData.setExtraInfo(extraInfo);
+        Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
+        Instance instance = Instance.builder()
+                .weight((byte) 1)
+                .metaData(metadatas)
+                .clusterName(cluster)
+                .ip(ip)
+                .healthy(true)
+                .enable(true)
+                .port(port)
+                .serviceName(serviceName)
+                .build();
+        nodeDiscovery.registerServerInstance(instance);
     }
 
     private void schedualRefresh()

@@ -6,6 +6,7 @@ import com.cell.config.GatePropertyNode;
 import com.cell.config.GatewayConfiguration;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
+import com.cell.context.InitCTX;
 import com.cell.discovery.NacosNodeDiscoveryImpl;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
@@ -13,6 +14,9 @@ import com.cell.utils.StringUtils;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -60,10 +64,20 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
         this.schedualCaculateErrorCount = new SchedualCaculateErrorCount(gateway.getErrorRespLimit(), gateway.getErrorStatInterval(), gateway.getErrorRespPercentage(), gateway.getGatewayErrTemplate());
     }
 
+
     @Override
     public void onStart(INodeContext ctx) throws Exception
     {
-        this.serviceDiscovery.initOnce(null);
+        String domain = ctx.getCommandLine().getOptionValue("domain", "demo.com");
+        InitCTX initCTX = new InitCTX();
+        Map<String, Object> data = new HashMap<>();
+        data.put("domain", domain);
+        data.put("cluster",ctx.getCluster());
+        data.put("ip",ctx.getIp());
+        data.put("port",this.port);
+        data.put("serviceName",ctx.getApp().getApplicationName());
+        initCTX.setData(data);
+        this.serviceDiscovery.initOnce(initCTX);
         this.schedualCaculateErrorCount.start();
     }
 
@@ -84,4 +98,5 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
     {
         factory.setPort(port);
     }
+
 }
