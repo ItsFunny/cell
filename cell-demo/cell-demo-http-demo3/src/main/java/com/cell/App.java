@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 创建时间：2021-09-04 06:09
  */
 @CellSpringHttpApplication
-public class DemoApp
+public class App
 {
     public static class CC1
     {
@@ -142,7 +142,7 @@ public class DemoApp
 
     public static void main(String[] args)
     {
-        CellApplication.builder(DemoApp.class)
+        CellApplication.builder(App.class)
                 .withReactor(new Reactor2())
                 .newReactor()
                 .withBean(CC1.class)

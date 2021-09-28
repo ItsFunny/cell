@@ -1,0 +1,2 @@
+- run 
+    - docker run -p 8081:8080 -it --name demo1 -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -v /Users/joker/Java/cell/config:/Users/joker/Java/config cell/demo:0.0.1

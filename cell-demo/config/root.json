@@ -1,0 +1,20 @@
+{
+  "types": {
+    "Default": {
+      "parent": null
+    }
+  },
+  "defaultType": "Default",
+  "configs": [
+    {
+      "modules": {
+        "nacos.properties": "env/shared/discovery/nacos.json",
+        "gateway.properties": "env/shared/gateway/gateway.json",
+        "gateway.metrics.properties": "env/shared/gateway/metrics/metrics.json"
+      },
+      "schema": null
+    }
+  ],
+  "plugins": {
+  }
+}
