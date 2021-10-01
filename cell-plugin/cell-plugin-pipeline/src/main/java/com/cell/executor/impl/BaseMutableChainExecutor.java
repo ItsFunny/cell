@@ -1,11 +1,8 @@
-package com.cell.services.impl;
+package com.cell.executor.impl;
 
-import com.cell.handler.IChainHandler;
-import com.cell.handler.IHandler;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IListChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.protocol.IContext;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IListChainExecutor;
+import com.cell.executor.IReactorExecutor;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
@@ -18,9 +15,9 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-19 15:45
  */
-public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> implements IListChainExecutor<T>
+public abstract class BaseMutableChainExecutor<V> implements IListChainExecutor<V>
 {
-    protected List<T> executors;
+    protected List<? extends IReactorExecutor<V>> executors;
     protected int index;
 
     public BaseMutableChainExecutor()
@@ -28,38 +25,39 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
 
     }
 
-    public BaseMutableChainExecutor(List<T> executors)
+    public BaseMutableChainExecutor(List<? extends IReactorExecutor<V>> executors)
     {
         this.executors = executors;
         this.index = 0;
     }
 
-    public BaseMutableChainExecutor(List<T> executors, int index)
+    public BaseMutableChainExecutor(List<? extends IReactorExecutor<V>> executors, int index)
     {
         this.executors = executors;
         this.index = index;
     }
 
     @Override
-    public void setExecutors(List<T> ts)
+    public void setExecutors(List<? extends IReactorExecutor<V>> ts)
     {
         this.executors = ts;
     }
 
 
     @Override
-    public Mono<Void> execute(IContext ctx)
+    public Mono<Void> execute(V v)
     {
         return Mono.defer(() ->
         {
             boolean find = false;
             if (this.index < this.executors.size())
             {
-                T h = null;
+                IReactorExecutor<V> h = null;
                 for (; this.index < this.executors.size(); this.index++)
                 {
+
                     h = this.executors.get(this.index);
-                    if (h.predict(ctx))
+                    if (h.predict(v))
                     {
                         find = true;
                         break;
@@ -67,7 +65,7 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
                 }
                 if (!find) return Mono.empty();
                 IChainExecutor hh = this.childNewExecutor(this.executors, this.index + 1);
-                return h.execute(ctx, hh);
+                return h.execute(v, hh);
             } else
             {
                 return Mono.empty();
@@ -75,5 +73,6 @@ public abstract class BaseMutableChainExecutor<T extends IReactorExecutor> imple
         });
     }
 
-    protected abstract IChainExecutor childNewExecutor(List<T> executors, int index);
+
+    protected abstract IChainExecutor childNewExecutor(List<? extends IReactorExecutor<V>> executors, int index);
 }

@@ -1,8 +1,9 @@
 package com.cell.channel;
 
-import com.cell.hooks.IChainExecutor;
+import com.cell.executor.IChainExecutor;
+import com.cell.pipeline.Pipeline;
 import com.cell.protocol.ICommandSuit;
-import com.cell.services.Pipeline;
+import com.cell.protocol.IContext;
 import reactor.core.publisher.Mono;
 
 /**
@@ -13,7 +14,7 @@ import reactor.core.publisher.Mono;
  * @Attention:
  * @Date 创建时间：2021-09-19 13:56
  */
-public interface IChannel<T, E extends IChainExecutor>
+public interface IChannel<T, E extends IChainExecutor<IContext>>
 {
     Pipeline<T, E> pipeline();
 

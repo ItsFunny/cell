@@ -1,13 +1,12 @@
 package com.cell.metrics;
 
-import com.cell.annotations.ActiveMethod;
+import com.cell.annotation.ActiveMethod;
 import com.cell.annotations.ManagerNode;
-import com.cell.context.IMetricsContext;
+import com.cell.executor.IChainExecutor;
 import com.cell.executor.IMetricsExecutor;
+import com.cell.executor.IReactorExecutor;
 import com.cell.executor.MetricsManager;
 import com.cell.executor.abs.AbstractMetricsExecutor;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
 import com.cell.protocol.IContext;
 import reactor.core.publisher.Mono;
 
@@ -24,7 +23,7 @@ public class HttpPrometheusMetricsExecutor extends AbstractMetricsExecutor
 {
     @ActiveMethod(id = IMetricsExecutor.recordRequest)
     @Override
-    public IReactorExecutor recordRequest()
+    public IReactorExecutor<IContext> recordRequest()
     {
         return (ctx, c) ->
         {
@@ -33,7 +32,7 @@ public class HttpPrometheusMetricsExecutor extends AbstractMetricsExecutor
     }
 
     @Override
-    public Mono<Void> execute(IContext context, IChainExecutor executor)
+    public Mono<Void> execute(IContext context, IChainExecutor<IContext> executor)
     {
         return executor.execute(context);
     }

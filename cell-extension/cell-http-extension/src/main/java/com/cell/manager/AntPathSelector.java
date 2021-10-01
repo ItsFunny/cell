@@ -1,10 +1,10 @@
 package com.cell.manager;
 
+import com.cell.annotation.ActiveMethod;
 import com.cell.annotation.HttpCmdAnno;
-import com.cell.annotations.ActiveMethod;
 import com.cell.annotations.ManagerNode;
 import com.cell.command.IHttpCommand;
-import com.cell.hooks.IReactorExecutor;
+import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;
 import com.cell.model.CommandWrapper;
@@ -31,7 +31,7 @@ public class AntPathSelector
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @ActiveMethod(id = ReactorSelectorManager.onAddReactor)
-    public IReactorExecutor onAddReactor()
+    public IBaseReactorExecutor onAddReactor()
     {
         return (ctx, c) ->
         {
@@ -51,7 +51,7 @@ public class AntPathSelector
     }
 
     @ActiveMethod(id = ReactorSelectorManager.selectByUri)
-    public IReactorExecutor selectByUri()
+    public IBaseReactorExecutor selectByUri()
     {
         return (ctx, ch) ->
         {

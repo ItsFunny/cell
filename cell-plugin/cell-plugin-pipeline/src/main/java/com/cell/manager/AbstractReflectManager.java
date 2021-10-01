@@ -1,13 +1,11 @@
-package com.cell.center;
+package com.cell.manager;
 
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IListChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.manager.IReflectManager;
-import com.cell.protocol.IContext;
-import com.cell.services.ChainExecutorFactory;
-import com.cell.services.Pipeline;
-import com.cell.services.impl.DefaultPipeline;
+import com.cell.executor.ChainExecutorFactory;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IListChainExecutor;
+import com.cell.executor.IReactorExecutor;
+import com.cell.pipeline.DefaultPipeline;
+import com.cell.pipeline.Pipeline;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
 import reactor.core.publisher.Mono;
@@ -23,7 +21,7 @@ import java.util.Collection;
  * @Date 创建时间：2021-08-28 13:11
  */
 @Data
-public abstract class AbstractReflectManager<T extends IReactorExecutor, CHAIN_T extends IChainExecutor> implements IReflectManager<T, CHAIN_T>
+public abstract class AbstractReflectManager<T extends IReactorExecutor<V>, CHAIN_T extends IChainExecutor<V>, V> implements IReflectManager<T, CHAIN_T, V>
 {
     private boolean setted;
 
@@ -31,7 +29,7 @@ public abstract class AbstractReflectManager<T extends IReactorExecutor, CHAIN_T
 
     public AbstractReflectManager()
     {
-        this.pipeline = new DefaultPipeline<>(this.factory());
+        this.pipeline = new DefaultPipeline<T, CHAIN_T, V>(this.factory());
     }
 
     @Override
@@ -64,8 +62,8 @@ public abstract class AbstractReflectManager<T extends IReactorExecutor, CHAIN_T
         }
     }
 
-    public Mono<Void> execute(IContext context)
+    public Mono<Void> execute(V v)
     {
-        return this.pipeline.chainExecutor().execute(context);
+        return this.pipeline.chainExecutor().execute(v);
     }
 }

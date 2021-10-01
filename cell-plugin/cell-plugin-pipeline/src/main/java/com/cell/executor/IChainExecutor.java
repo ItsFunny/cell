@@ -1,6 +1,5 @@
-package com.cell.hooks;
+package com.cell.executor;
 
-import com.cell.protocol.IContext;
 import reactor.core.publisher.Mono;
 
 /**
@@ -11,7 +10,7 @@ import reactor.core.publisher.Mono;
  * @Attention:
  * @Date 创建时间：2021-09-19 11:08
  */
-public interface IChainExecutor
+public interface IChainExecutor<T>
 {
-    Mono<Void> execute(IContext context);
+    Mono<Void> execute(T t);
 }

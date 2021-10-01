@@ -1,8 +1,8 @@
 package com.cell.manager;
 
-import com.cell.annotations.ActiveMethod;
+import com.cell.annotation.ActiveMethod;
 import com.cell.annotations.ManagerNode;
-import com.cell.hooks.IReactorExecutor;
+import com.cell.executor.IBaseReactorExecutor;
 
 /**
  * @author Charlie
@@ -16,14 +16,14 @@ import com.cell.hooks.IReactorExecutor;
 public class DefaultPureUriSelector
 {
     @ActiveMethod(id = ReactorSelectorManager.selectByUri)
-    public IReactorExecutor selectByUri()
+    public IBaseReactorExecutor selectByUri()
     {
         return (ctx, ch) ->
                 ch.execute(ctx);
     }
 
     @ActiveMethod(id = ReactorSelectorManager.onAddReactor)
-    public IReactorExecutor onAddReactor()
+    public IBaseReactorExecutor onAddReactor()
     {
         return (ctx, ch) -> ch.execute(ctx);
     }

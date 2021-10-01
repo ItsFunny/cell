@@ -1,12 +1,10 @@
 package com.cell.manager;
 
 import com.cell.annotations.Manager;
-import com.cell.center.AbstractReflectManager;
 import com.cell.constants.ManagerConstants;
-import com.cell.hooks.IListChainExecutor;
-import com.cell.services.ChainExecutorFactory;
+import com.cell.executor.ChainExecutorFactory;
+import com.cell.executor.IListChainExecutor;
 import com.cell.services.impl.DefaultHandlerMutableChainExecutor;
-import lombok.Data;
 
 /**
  * @author Charlie
@@ -26,16 +24,16 @@ public class WebHandlerManager extends AbstractReflectManager
         return instance;
     }
 
-    @Override
-    protected ChainExecutorFactory<? extends IListChainExecutor> factory()
-    {
-        return DefaultHandlerMutableChainExecutor::new;
-    }
-
 
     @Override
     public IReflectManager createOrDefault()
     {
         return instance;
+    }
+
+    @Override
+    protected ChainExecutorFactory<? extends IListChainExecutor> factory()
+    {
+        return DefaultHandlerMutableChainExecutor::new;
     }
 }

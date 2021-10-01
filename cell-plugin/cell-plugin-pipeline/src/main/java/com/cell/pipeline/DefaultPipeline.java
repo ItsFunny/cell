@@ -1,9 +1,9 @@
-package com.cell.services.impl;
+package com.cell.pipeline;
 
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IListChainExecutor;
-import com.cell.services.ChainExecutorFactory;
-import com.cell.services.Pipeline;
+import com.cell.executor.ChainExecutorFactory;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IListChainExecutor;
+import com.cell.executor.impl.DefaultCommonMutableChainExecutor;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.List;
  * @Date 创建时间：2021-09-19 05:06
  */
 @Data
-public class DefaultPipeline<T, CHAIN_T extends IChainExecutor> implements Pipeline<T, CHAIN_T>
+public class DefaultPipeline<T, CHAIN_T extends IChainExecutor<V>, V> implements Pipeline<T, CHAIN_T>
 {
     private List<T> executors = new ArrayList<>();
     private ChainExecutorFactory<? extends IListChainExecutor> factory;
@@ -30,7 +30,7 @@ public class DefaultPipeline<T, CHAIN_T extends IChainExecutor> implements Pipel
 
     public DefaultPipeline()
     {
-        this.factory = () -> new DefaultCommonMutableChainExecutor();
+        this.factory = DefaultCommonMutableChainExecutor::new;
     }
 
     @Override

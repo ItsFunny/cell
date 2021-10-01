@@ -1,8 +1,6 @@
 package com.cell.handler;
 
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.protocol.IContext;
+import com.cell.executor.IBaseReactorExecutor;
 import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
 
@@ -14,7 +12,7 @@ import reactor.core.publisher.Mono;
  * @Attention:
  * @Date 创建时间：2021-01-10 22:18
  */
-public interface IHandler extends IReactorExecutor
+public interface IHandler extends IBaseReactorExecutor
 {
     // 初始化自身
     void init(IHandlerSuit ctx);

@@ -12,8 +12,8 @@ import com.cell.context.InitCTX;
 import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.ProgramaException;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IReactorExecutor;
 import com.cell.log.LOG;
 import com.cell.manager.IReflectManager;
 import com.cell.manager.ReactorSelectorManager;
@@ -23,6 +23,7 @@ import com.cell.model.CommandWrapper;
 import com.cell.models.Module;
 import com.cell.protocol.CommandContext;
 import com.cell.protocol.ICommand;
+import com.cell.protocol.IContext;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
@@ -50,7 +51,7 @@ import java.util.*;
 @Data
 public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IHttpCommandDispatcher, InitializingBean, ApplicationContextAware
 {
-    public DefaultHttpCommandDispatcher(IReflectManager<IReactorExecutor, IChainExecutor> selectorStrategy)
+    public DefaultHttpCommandDispatcher(IReflectManager<IReactorExecutor<IContext>, IChainExecutor<IContext>, IContext> selectorStrategy)
     {
         this.selectorStrategy = selectorStrategy;
     }
@@ -68,7 +69,7 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
 
 
     // strategy
-    private IReflectManager<IReactorExecutor, IChainExecutor> selectorStrategy;
+    private IReflectManager<IReactorExecutor<IContext>, IChainExecutor<IContext>, IContext> selectorStrategy;
 
 
     @Override

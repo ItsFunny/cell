@@ -8,8 +8,8 @@ import com.cell.protocol.IContext;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-09-20 11:32
+ * @Date 创建时间：2021-10-02 07:45
  */
-public interface IChainMetricsExecutor extends IChainExecutor<IContext>
+public interface IBaseReactorExecutor extends IReactorExecutor<IContext>
 {
 }

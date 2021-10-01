@@ -2,12 +2,10 @@ package com.cell.channel;
 
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
-import com.cell.hooks.IChainExecutor;
-import com.cell.manager.WebHandlerManager;
+import com.cell.pipeline.DefaultPipeline;
+import com.cell.pipeline.Pipeline;
 import com.cell.protocol.ICommandSuit;
-import com.cell.services.Pipeline;
 import com.cell.services.impl.DefaultHookMutableChainExecutor;
-import com.cell.services.impl.DefaultPipeline;
 import lombok.Data;
 import reactor.core.publisher.Mono;
 

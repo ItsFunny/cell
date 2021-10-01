@@ -22,15 +22,16 @@ public class EventCenter extends AbstractEventCenter
         return instance;
     }
 
-    @Override
-    public IReflectManager createOrDefault()
-    {
-        return instance;
-    }
 
     @Override
     protected void afterInvoke()
     {
         JobCenter.getInstance().registerSubscriber(this);
+    }
+
+    @Override
+    public IReflectManager createOrDefault()
+    {
+        return instance;
     }
 }

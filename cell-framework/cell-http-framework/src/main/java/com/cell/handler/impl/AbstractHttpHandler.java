@@ -1,8 +1,9 @@
 package com.cell.handler.impl;
 
+import com.cell.executor.IBaseChainExecutor;
+import com.cell.executor.IChainExecutor;
 import com.cell.handler.IHttpCmdHandler;
 import com.cell.handler.abs.AbstractHandler;
-import com.cell.hooks.IChainExecutor;
 import com.cell.protocol.IContext;
 import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
@@ -20,8 +21,8 @@ public abstract class AbstractHttpHandler extends AbstractHandler implements IHt
     @Override
     protected Mono<Void> handle(IContext ctx, IChainExecutor executor)
     {
-        return this.onHandle((IHandlerSuit) ctx,executor);
+        return this.onHandle((IHandlerSuit) ctx, (IBaseChainExecutor) executor);
     }
 
-    protected abstract Mono<Void> onHandle(IHandlerSuit context,IChainExecutor executor);
+    protected abstract Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor);
 }

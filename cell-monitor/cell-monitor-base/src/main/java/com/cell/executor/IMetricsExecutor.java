@@ -1,8 +1,6 @@
 package com.cell.executor;
 
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.protocol.ICommand;
+
 import com.cell.protocol.IContext;
 
 /**
@@ -13,9 +11,9 @@ import com.cell.protocol.IContext;
  * @Attention:
  * @Date 创建时间：2021-09-20 08:02
  */
-public interface IMetricsExecutor extends IReactorExecutor
+public interface IMetricsExecutor extends IReactorExecutor<IContext>
 {
     String recordRequest = "recordRequest";
 
-    IReactorExecutor recordRequest();
+    IReactorExecutor<IContext> recordRequest();
 }

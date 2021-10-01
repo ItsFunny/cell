@@ -8,10 +8,10 @@ import com.cell.constants.OrderConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IHttpHandlerSuit;
 import com.cell.exceptions.IHttpExceptionResolver;
+import com.cell.executor.IBaseChainExecutor;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.impl.AbstractHttpHandler;
 import com.cell.hook.CommandHookManager;
-import com.cell.hooks.IChainExecutor;
 import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
 
@@ -31,7 +31,7 @@ public class DefaultHttpWebHandler extends AbstractHttpHandler
     private IHttpExceptionResolver exceptionResolver;
 
     @Override
-    protected Mono<Void> onHandle(IHandlerSuit context, IChainExecutor executor)
+    protected Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor)
     {
         IHttpHandlerSuit suit = (IHttpHandlerSuit) context;
         return CommandHookManager.getInstance().

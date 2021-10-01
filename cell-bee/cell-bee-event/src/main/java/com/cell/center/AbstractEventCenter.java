@@ -1,19 +1,17 @@
 package com.cell.center;
 
 import com.cell.events.IEvent;
-import com.cell.hooks.*;
+import com.cell.executor.ChainExecutorFactory;
+import com.cell.executor.IListChainExecutor;
+import com.cell.hooks.IChainHook;
+import com.cell.hooks.IEventHook;
+import com.cell.manager.AbstractReflectManager;
+import com.cell.protocol.IContext;
 import com.cell.protocol.IEventContext;
-import com.cell.services.ChainExecutorFactory;
-import com.cell.services.impl.BaseMutableChainExecutor;
 import com.cell.services.impl.DefaultHookMutableChainExecutor;
-import com.cell.utils.CollectionUtils;
 import com.google.common.eventbus.Subscribe;
 import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Charlie
@@ -23,7 +21,7 @@ import java.util.List;
  * @Attention:
  * @Date 创建时间：2021-09-15 18:44
  */
-public abstract class AbstractEventCenter extends AbstractReflectManager<IEventHook, IChainHook>
+public abstract class AbstractEventCenter extends AbstractReflectManager<IEventHook, IChainHook, IContext>
 {
     public static final String GROUP_EVENT_CENTER = "GROUP_EVENT_CENTER";
 
@@ -52,29 +50,12 @@ public abstract class AbstractEventCenter extends AbstractReflectManager<IEventH
         return this.pipeline.chainExecutor().execute(new DefaultEventWrapper(event));
     }
 
+
     @Override
     protected ChainExecutorFactory<? extends IListChainExecutor> factory()
     {
         return () -> new DefaultHookMutableChainExecutor();
     }
-//    @Override
-//    protected void onInvokeInterestNodes(Collection<Object> nodes)
-//    {
-//        if (CollectionUtils.isEmpty(nodes))
-//        {
-//            return;
-//        }
-//        for (Object node : nodes)
-//        {
-//            if (!(node instanceof IEventHook))
-//            {
-//                continue;
-//            }
-//            this.pipeline.addFirst(node.getClass().getName(), (IEventHook) node);
-//        }
-//        this.afterInvoke();
-//    }
-
 
     class DefaultEventWrapper implements IEventContext
     {

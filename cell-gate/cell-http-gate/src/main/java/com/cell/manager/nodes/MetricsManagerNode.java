@@ -1,24 +1,18 @@
 package com.cell.manager.nodes;
 
-import com.cell.annotations.ActiveMethod;
+import com.cell.annotation.ActiveMethod;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
-import com.cell.center.AbstractHookCenter;
 import com.cell.constants.GatewayConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.MetricsContext;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.hooks.abs.AbstractHook;
+import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.MetricsManager;
 import com.cell.prometheus.HistogramStator;
-import com.cell.protocol.IContext;
 import com.cell.services.IStatContextService;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
-
-import java.util.Arrays;
 
 /**
  * @author Charlie
@@ -38,7 +32,7 @@ public class MetricsManagerNode
     private IStatContextService statContextService;
 
     @ActiveMethod(id = MetricsManager.postFilterHook, description = "")
-    public IReactorExecutor recordRequest()
+    public IBaseReactorExecutor recordRequest()
     {
         return (context, executor) ->
         {

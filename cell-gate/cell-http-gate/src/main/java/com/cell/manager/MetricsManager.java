@@ -1,9 +1,7 @@
 package com.cell.manager;
 
 import com.cell.annotations.Manager;
-import com.cell.center.AbstractAutoSelectReflectManager;
-import com.cell.center.AbstractHookCenter;
-import reactor.util.Metrics;
+import com.cell.executor.BaseAutoSelectReflectManager;
 
 /**
  * @author Charlie
@@ -14,7 +12,7 @@ import reactor.util.Metrics;
  * @Date 创建时间：2021-09-21 14:29
  */
 @Manager(name = MetricsManager.gatewayMetricsManager)
-public class MetricsManager extends AbstractAutoSelectReflectManager
+public class MetricsManager extends BaseAutoSelectReflectManager
 {
     public static final String gatewayMetricsManager = "";
     private static final MetricsManager instance = new MetricsManager();

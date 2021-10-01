@@ -1,7 +1,7 @@
 package com.cell.hooks.abs;
 
 import com.cell.events.IEvent;
-import com.cell.hooks.IChainExecutor;
+import com.cell.executor.IChainExecutor;
 import com.cell.hooks.IChainHook;
 import com.cell.hooks.IEventHook;
 import com.cell.protocol.IContext;

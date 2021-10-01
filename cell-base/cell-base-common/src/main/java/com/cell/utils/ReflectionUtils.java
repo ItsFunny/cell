@@ -2,24 +2,20 @@ package com.cell.utils;
 
 import com.cell.constants.BitConstants;
 import com.cell.wrapper.MonoWrapper;
-import lombok.Data;
+import org.junit.platform.commons.util.AnnotationUtils;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
-import org.junit.platform.commons.util.AnnotationUtils;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.JarURLConnection;
 import java.net.URL;
-import java.security.cert.TrustAnchor;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -331,4 +327,159 @@ public class ReflectionUtils extends org.reflections.ReflectionUtils
     }
 
 
+    /**
+     * 获取接口上的泛型T
+     *
+     * @param o     接口
+     * @param index 泛型索引
+     */
+    public static Class<?> getInterfaceT(Object o, int index)
+    {
+        Type[] types = o.getClass().getGenericInterfaces();
+        ParameterizedType parameterizedType = (ParameterizedType) types[index];
+        Type type = parameterizedType.getActualTypeArguments()[index];
+        return checkType(type, index);
+
+    }
+
+
+    /**
+     * 获取类上的泛型T
+     *
+     * @param o     接口
+     * @param index 泛型索引
+     */
+    public static Class<?> getClassT(Object o, int index)
+    {
+        Type type = o.getClass().getGenericSuperclass();
+        return getaClass(index, type);
+    }
+
+    private static Class<?> getaClass(int index, Type type)
+    {
+        if (type instanceof ParameterizedType)
+        {
+            ParameterizedType parameterizedType = (ParameterizedType) type;
+            Type actType = parameterizedType.getActualTypeArguments()[index];
+            return checkType(actType, index);
+        } else
+        {
+            String className = type == null ? "null" : type.getClass().getName();
+            throw new IllegalArgumentException("Expected a Class, ParameterizedType"
+                    + ", but <" + type + "> is of type " + className);
+        }
+    }
+
+    private static Class<?> checkType(Type type, int index)
+    {
+        if (type instanceof Class<?>)
+        {
+            return (Class<?>) type;
+        } else
+        {
+            return getaClass(index, type);
+        }
+    }
+
+    public class MyTypeToken<T>
+    {
+        private Type type;
+        private Type parameterizedType;
+
+        public MyTypeToken()
+        {
+            getClassT(this, 0);
+        }
+
+        /**
+         * 获取类上的泛型T
+         *
+         * @param o     接口
+         * @param index 泛型索引
+         */
+        public Class<?> getClassT(Object o, int index)
+        {
+            Type type = o.getClass().getGenericSuperclass();
+            if (type instanceof ParameterizedType)
+            {
+                ParameterizedType parameterizedType = (ParameterizedType) type;
+                Type actType = parameterizedType.getActualTypeArguments()[index];
+                return checkType(actType, index);
+            } else
+            {
+                String className = type == null ? "null" : type.getClass().getName();
+                throw new IllegalArgumentException("Expected a Class, ParameterizedType"
+                        + ", but <" + type + "> is of type " + className);
+            }
+        }
+
+        private Class<?> checkType(Type type, int index)
+        {
+            if (type instanceof Class<?>)
+            {
+                this.type = type;
+                return (Class<?>) type;
+            } else if (type instanceof ParameterizedType)
+            {
+                ParameterizedType pt = (ParameterizedType) type;
+                Type t = pt.getActualTypeArguments()[index];
+                parameterizedType = pt;
+                return checkType(t, index);
+            } else
+            {
+                String className = type == null ? "null" : type.getClass().getName();
+                throw new IllegalArgumentException("Expected a Class, ParameterizedType"
+                        + ", but <" + type + "> is of type " + className);
+            }
+        }
+
+        public Type getType()
+        {
+            return type;
+        }
+
+        public Type getParameterizedType()
+        {
+            return parameterizedType;
+        }
+    }
+
+    public static boolean matchClazAllGenesic(Class<?> clz, Type match)
+    {
+        if (clz.equals(Object.class))
+        {
+            return false;
+        }
+        Type genericSuperclass = clz.getGenericSuperclass();
+        if (!(genericSuperclass instanceof ParameterizedType))
+        {
+            clz = clz.getSuperclass();
+            return matchClazAllGenesic(clz, match);
+        }
+        ParameterizedType pType = (ParameterizedType) genericSuperclass;
+        boolean ret = Arrays.asList(pType.getActualTypeArguments()).contains(match);
+        if (!ret)
+        {
+            clz = clz.getSuperclass();
+            return matchClazAllGenesic(clz, match);
+        }
+        return true;
+    }
+
+    // 获取某个class 上的接口是否有某个targetClz的接口泛型
+    public static Type getClzGenesicInterfaceTill(Class<?> clz, Class<?> targetClz)
+    {
+        if (clz.equals(Object.class))
+        {
+            throw new RuntimeException("asd");
+        }
+        if (clz.equals(targetClz))
+        {
+            // FIXME ,ERROR
+            return clz;
+        }
+        Type[] genericInterfaces = clz.getGenericInterfaces();
+        Optional<Type> first = Stream.of(genericInterfaces).filter(p -> !p.getClass().equals(targetClz) || !(p instanceof ParameterizedType)).findFirst();
+        return first.orElseGet(() -> getClzGenesicInterfaceTill(clz.getSuperclass(), targetClz));
+    }
 }

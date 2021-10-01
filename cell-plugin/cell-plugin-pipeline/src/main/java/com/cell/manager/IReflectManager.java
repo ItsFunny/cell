@@ -1,9 +1,9 @@
 package com.cell.manager;
 
-import com.cell.hooks.IAutoReactorExecutor;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.services.Pipeline;
+import com.cell.executor.IAutoReactorExecutor;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IReactorExecutor;
+import com.cell.pipeline.Pipeline;
 
 import java.util.Collection;
 
@@ -18,7 +18,7 @@ import java.util.Collection;
  * @Attention:
  * @Date 创建时间：2021-08-28 13:38
  */
-public interface IReflectManager<T extends IReactorExecutor, CHAIN_T extends IChainExecutor> extends IAutoReactorExecutor
+public interface IReflectManager<T extends IReactorExecutor<V>, CHAIN_T extends IChainExecutor<V>, V> extends IAutoReactorExecutor<V>
 {
     void invokeInterestNodes(Collection<Object> nodes);
 

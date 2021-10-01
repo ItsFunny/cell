@@ -7,8 +7,8 @@ import com.cell.constants.ManagerConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IHttpHandlerSuit;
+import com.cell.executor.IBaseChainExecutor;
 import com.cell.handler.impl.AbstractHttpHandler;
-import com.cell.hooks.IChainExecutor;
 import com.cell.prometheus.CellGaugeStator;
 import com.cell.prometheus.HistogramStator;
 import com.cell.services.IHandlerSuit;
@@ -48,7 +48,7 @@ public class MetricsWebHandler extends AbstractHttpHandler
 
 
     @Override
-    protected Mono<Void> onHandle(IHandlerSuit context, IChainExecutor executor)
+    protected Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor)
     {
         IHttpHandlerSuit suit = (IHttpHandlerSuit) context;
         IHttpCommandContext buzContext = suit.getBuzContext();

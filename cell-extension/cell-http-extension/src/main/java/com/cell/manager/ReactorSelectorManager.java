@@ -1,7 +1,7 @@
 package com.cell.manager;
 
 import com.cell.annotations.Manager;
-import com.cell.center.AbstractAutoSelectReflectManager;
+import com.cell.executor.BaseAutoSelectReflectManager;
 
 /**
  * @author Charlie
@@ -12,7 +12,7 @@ import com.cell.center.AbstractAutoSelectReflectManager;
  * @Date 创建时间：2021-09-24 04:55
  */
 @Manager(name = ReactorSelectorManager.reacotrSelector)
-public class ReactorSelectorManager extends AbstractAutoSelectReflectManager
+public class ReactorSelectorManager extends BaseAutoSelectReflectManager
 {
     public static final String reacotrSelector = "reacotrSelector";
     public static final String selectByUri="selectByUri";

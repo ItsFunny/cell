@@ -1,33 +1,24 @@
-package com.cell.center;
+package com.cell.manager;
 
-import com.cell.annotations.ActiveMethod;
-import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.LifeCycle;
-import com.cell.annotations.Plugin;
+import com.cell.annotation.ActiveMethod;
+import com.cell.exception.ManagerException;
 import com.cell.exceptions.ProgramaException;
-import com.cell.hooks.IChainExecutor;
-import com.cell.hooks.IReactorExecutor;
-import com.cell.log.LOG;
-import com.cell.log.impl.DefaultLogEventWrapper;
-import com.cell.manager.IReflectManager;
-import com.cell.models.Module;
-import com.cell.protocol.IContext;
-import com.cell.services.Pipeline;
-import com.cell.services.impl.DefaultPipeline;
+import com.cell.executor.IChainExecutor;
+import com.cell.executor.IReactorExecutor;
+import com.cell.pipeline.DefaultPipeline;
+import com.cell.pipeline.Pipeline;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.ReflectionUtils;
 import lombok.Data;
 import reactor.core.CoreSubscriber;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.MonoOperator;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Delayed;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -38,24 +29,24 @@ import java.util.stream.Stream;
  * @Attention:
  * @Date 创建时间：2021-09-20 12:32
  */
-public abstract class AbstractAutoSelectReflectManager implements IReflectManager<IReactorExecutor, IChainExecutor>
+public abstract class AbstractAutoSelectReflectManager<V> implements IReflectManager<IReactorExecutor<V>, IChainExecutor<V>, V>
 {
     private boolean setted;
-    protected Map<String, Pipeline<IReactorExecutor, IChainExecutor>> pipeline = new HashMap<>();
+    protected Map<String, Pipeline<IReactorExecutor<V>, IChainExecutor<V>>> pipeline = new HashMap<>();
 
-    public Mono<Void> execute(String method, IContext ctx)
+    public Mono<Void> execute(String method, V v)
     {
-        Pipeline<IReactorExecutor, IChainExecutor> pip = this.pipeline.get(method);
+        Pipeline<IReactorExecutor<V>, IChainExecutor<V>> pip = this.pipeline.get(method);
         if (pip == null)
         {
-            throw new ProgramaException("asd");
+            throw new ManagerException("asd");
         }
-        return pip.chainExecutor().execute(ctx);
+        return pip.chainExecutor().execute(v);
     }
 
 
     @Override
-    public Pipeline<IReactorExecutor, IChainExecutor> pipeline()
+    public Pipeline<IReactorExecutor<V>, IChainExecutor<V>> pipeline()
     {
         throw new RuntimeException("not supported");
     }
@@ -66,6 +57,15 @@ public abstract class AbstractAutoSelectReflectManager implements IReflectManage
         if (this.setted || CollectionUtils.isEmpty(nodes)) return;
         this.batchCollect(nodes);
         this.setted = true;
+    }
+
+    static abstract class SuperClass<T>
+    {
+        public Class<T> getGenericClass()
+        {
+            ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
+            return (Class<T>) parameterizedType.getActualTypeArguments()[0];
+        }
     }
 
     class AAA extends MonoOperator<Integer, String>
@@ -99,6 +99,7 @@ public abstract class AbstractAutoSelectReflectManager implements IReflectManage
             Flux<Method> methodFlux = Flux.fromStream(Stream.of(declaredMethods));
             List<ExecutorWrapper> executors = methodFlux.flatMap(declaredMethod ->
             {
+
                 ActiveMethod annotation = declaredMethod.getAnnotation(ActiveMethod.class);
                 if (annotation == null)
                 {
@@ -106,24 +107,41 @@ public abstract class AbstractAutoSelectReflectManager implements IReflectManage
                 }
                 if (!IReactorExecutor.class.isAssignableFrom(declaredMethod.getReturnType()))
                 {
+                    System.out.println(declaredMethod.getReturnType());
                     return Mono.empty();
                 }
                 try
                 {
-                    IReactorExecutor ret = (IReactorExecutor) declaredMethod.invoke(o);
+                    Type genericReturnType = declaredMethod.getGenericReturnType();
+                    if (!(genericReturnType instanceof ParameterizedType))
+                    {
+                        genericReturnType = ReflectionUtils.getClzGenesicInterfaceTill(declaredMethod.getReturnType(), IReactorExecutor.class);
+                        if (genericReturnType == null)
+                        {
+                            throw new ProgramaException("asd");
+                        }
+                    }
+                    ParameterizedType parameterizedType = (ParameterizedType) genericReturnType;
+                    Type[] types = parameterizedType.getActualTypeArguments();
+                    if (!ReflectionUtils.matchClazAllGenesic(this.getClass(), types[0]))
+                    {
+                        throw new ProgramaException("node 错误,node 必须为相同的泛型");
+                    }
+                    IReactorExecutor<V> ret = (IReactorExecutor<V>) declaredMethod.invoke(o);
+
                     ExecutorWrapper wp = new ExecutorWrapper();
                     wp.setExecutor(ret);
                     wp.setMethod(annotation);
                     return Mono.just(wp);
                 } catch (Exception e)
                 {
-                    LOG.warn(Module.MANAGER, "获取executor失败:{}", e.getMessage());
                     return Mono.empty();
                 }
             }).collectList().block();
+            if (CollectionUtils.isEmpty(executors)) return;
             for (ExecutorWrapper executor : executors)
             {
-                Pipeline<IReactorExecutor, IChainExecutor> pip = this.pipeline.get(executor.method.id());
+                Pipeline<IReactorExecutor<V>, IChainExecutor<V>> pip = this.pipeline.get(executor.method.id());
                 if (pip == null)
                 {
                     pip = new DefaultPipeline<>();
@@ -134,7 +152,7 @@ public abstract class AbstractAutoSelectReflectManager implements IReflectManage
         }).doOnError(e ->
         {
             // FIXME NOT RIGHT
-            throw new RuntimeException(e);
+//            throw new ManagerException(e);
         }).subscribe();
     }
 }

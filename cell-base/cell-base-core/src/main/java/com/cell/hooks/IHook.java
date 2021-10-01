@@ -1,6 +1,6 @@
 package com.cell.hooks;
 
-import com.cell.events.IEvent;
+import com.cell.executor.IBaseReactorExecutor;
 
 /**
  * @author Charlie
@@ -10,7 +10,7 @@ import com.cell.events.IEvent;
  * @Attention:
  * @Date 创建时间：2021-01-25 21:32
  */
-public interface IHook extends IReactorExecutor
+public interface IHook extends IBaseReactorExecutor
 {
 //    R hook(T t, IHookChain<T, R> hook);
 //
