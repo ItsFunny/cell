@@ -55,7 +55,7 @@
         <repository>
             <id>local-repo-release</id>
             <name>GitHub Release</name>
-            <url>file://${project.basedir}/maven-repo</url>
+            <url>file:///Users/joker/Java/maven_repository/maven-repo</url>
         </repository>
     </distributionManagement>
 
