@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,8 +33,8 @@ public class RPCInilizer extends AbstractInitOnce implements ApplicationContextI
         Class<? extends Annotation>[] classes = mergedAnnotation.scanInterestAnnotations();
         Set<Class<? extends Annotation>> ans = new HashSet<>(Arrays.asList(classes));
         ans.addAll(Arrays.asList(RPCCommand.class, RPCReactor.class, RPCServer.class, RPCServerCmdAnno.class));
-        Class<? extends Annotation>[] classes1 = ans.toArray(new Class<? extends Annotation>[ans.size()]);
-        ReflectUtil.modify(mainApplicationClass,CellSpringHttpApplication.class,"scanInterestAnnotations",);
+        Class<? extends Annotation>[] classes1 = (Class<? extends Annotation>[]) Array.newInstance(Annotation.class, ans.size());
+        ReflectUtil.modify(mainApplicationClass, CellSpringHttpApplication.class, "scanInterestAnnotations", classes1);
     }
 
     @Override

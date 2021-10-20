@@ -1,19 +1,15 @@
 package com.cell.initializer;
 
 import com.cell.annotations.AutoPlugin;
-import com.cell.constants.BitConstants;
-import com.cell.utils.ReflectUtil;
 import com.cell.utils.ReflectionUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.platform.commons.util.AnnotationUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -80,6 +76,21 @@ public class AnnotationTest
     @Test
     public void testMono()
     {
+    }
+
+    @Test
+    public void testCount()
+    {
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        try
+        {
+            countDownLatch.await(1, TimeUnit.SECONDS);
+            long count = countDownLatch.getCount();
+            System.out.println(count);
+        } catch (InterruptedException e)
+        {
+            System.out.println(e);
+        }
     }
 
     public static void main(String[] args)

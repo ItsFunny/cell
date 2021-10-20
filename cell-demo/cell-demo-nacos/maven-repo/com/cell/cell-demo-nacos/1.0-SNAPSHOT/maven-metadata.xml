@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.cell</groupId>
+  <artifactId>cell-demo-nacos</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20211020.073916</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20211020073916</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>1.0-20211020.073916-1</value>
+        <updated>20211020073916</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

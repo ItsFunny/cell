@@ -24,7 +24,15 @@
         <module>cell-demo-metrics</module>
         <module>cell-demo-mono</module>
         <module>cell-demo-microservice</module>
+        <module>cell-demo-dubbo-nacos</module>
+        <module>cell-demo-grpc</module>
     </modules>
+
+    <properties>
+        <maven.install.skip>${disable.install}</maven.install.skip>
+        <maven.deploy.skip>${disable.deploy}</maven.deploy.skip>
+        <deployAtEnd>${enable.deployAtEnd}</deployAtEnd>
+    </properties>
 
     <dependencies>
 
