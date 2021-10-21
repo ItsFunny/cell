@@ -11,12 +11,21 @@
 
     <groupId>com.cell</groupId>
     <artifactId>cell-rpc-base-framework</artifactId>
+    <packaging>pom</packaging>
 
     <name>cell-rpc-base-framework</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <modules>
+        <module>cell-rpc-server-base-framework</module>
+    </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-base-core</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-node-spring</artifactId>

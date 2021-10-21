@@ -1,7 +1,6 @@
 package com.cell.command.impl;
 
 import com.cell.annotation.HttpCmdAnno;
-import com.cell.annotations.Optional;
 import com.cell.command.IHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
@@ -16,12 +15,9 @@ import com.cell.serialize.JsonInput;
 import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.lang.reflect.Field;
 
 /**
  * @author Charlie
@@ -133,25 +129,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return instance;
     }
 
-    private Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
-    {
-        Field[] fields = clz.getDeclaredFields();
-        BeanWrapper beanWrapper = new BeanWrapperImpl(clz);
-        for (Field field : fields)
-        {
-            String name = field.getName();
-            if (name.startsWith("abs")) continue;
-            Optional annotation = field.getAnnotation(Optional.class);
-            if (annotation == null)
-            {
-                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
-            } else
-            {
-                beanWrapper.setPropertyValue(name, inputArchive.readStringNullable(name));
-            }
-        }
-        return beanWrapper.getWrappedInstance();
-    }
+
 
     private IInputArchive getInputArchive(IHttpCommandContext commandContext) throws IOException
     {

@@ -5,8 +5,8 @@ import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.DummyHttpCommand;
-import com.cell.constant.HttpConstants;
 import com.cell.constants.ContextConstants;
+import com.cell.constants.ProtocolConstants;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.log.LOG;
@@ -112,8 +112,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             }
         }
 
-        this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_CODE, String.valueOf(wp.getStatus()));
-        this.commandContext.getHttpResponse().addHeader(HttpConstants.HTTP_HEADER_MSG, wp.getMsg());
+        this.commandContext.getHttpResponse().addHeader(ProtocolConstants.RESPONSE_HEADER_CODE, String.valueOf(wp.getStatus()));
+        this.commandContext.getHttpResponse().addHeader(ProtocolConstants.RESPONSE_HEADER_MSG, wp.getMsg());
         if (null != wp.getOther() && ((HttpContextResponseBody) wp.getOther()).getStatus() != null)
         {
             this.commandContext.getHttpResponse().setStatus(((HttpContextResponseBody) wp.getOther()).getStatus().value());
@@ -210,15 +210,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         return (status & ContextConstants.SUCCESS) >= ContextConstants.SUCCESS;
     }
 
-    private boolean timeout(long status)
-    {
-        return (status & ContextConstants.TIMEOUT) >= ContextConstants.TIMEOUT;
-    }
-
-    private boolean programError(long status)
-    {
-        return (status & ContextConstants.PROGRAMA_ERROR) >= ContextConstants.PROGRAMA_ERROR;
-    }
 
     @Override
     public void discard()

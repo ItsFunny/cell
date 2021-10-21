@@ -8,12 +8,14 @@ import com.cell.constants.ContextConstants;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
-import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
-import com.cell.utils.*;
+import com.cell.utils.ClassUtil;
+import com.cell.utils.CollectionUtils;
+import com.cell.utils.ReflectUtil;
+import com.cell.utils.UriUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
@@ -37,10 +39,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
 {
 //    protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
 
-    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
-    {
-        return ContextResponseWrapper.builder();
-    }
+
 
 
     protected void done(HttpStatus status, Object ret)

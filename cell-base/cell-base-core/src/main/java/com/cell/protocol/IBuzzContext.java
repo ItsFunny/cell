@@ -33,7 +33,4 @@ public interface IBuzzContext extends IContext
     void setIp(String ip);
 
     String getIp();
-
-
-    Object getParameter(String key);
 }

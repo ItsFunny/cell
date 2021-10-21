@@ -1,13 +1,17 @@
 package com.cell.protocol;
 
 import com.cell.annotations.Command;
+import com.cell.annotations.Optional;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import com.cell.reactor.IReactor;
-import com.cell.serialize.ISerializable;
+import com.cell.serialize.IInputArchive;
 import com.cell.utils.CommandUtils;
 import lombok.Data;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,4 +99,23 @@ public abstract class AbstractCommand implements ICommand
 //            throw new RuntimeException("easd", e);
 //        }
 //    }
+    protected Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
+    {
+        Field[] fields = clz.getDeclaredFields();
+        BeanWrapper beanWrapper = new BeanWrapperImpl(clz);
+        for (Field field : fields)
+        {
+            String name = field.getName();
+            if (name.startsWith("abs")) continue;
+            Optional annotation = field.getAnnotation(Optional.class);
+            if (annotation == null)
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
+            } else
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readStringNullable(name));
+            }
+        }
+        return beanWrapper.getWrappedInstance();
+    }
 }

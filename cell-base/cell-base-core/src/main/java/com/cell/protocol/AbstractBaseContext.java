@@ -4,6 +4,7 @@ import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.promise.BaseDefaultPromise;
 import com.cell.concurrent.promise.BaseFutureListener;
 import com.cell.concurrent.promise.BasePromise;
+import com.cell.constants.ContextConstants;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.reactor.ICommandReactor;
@@ -41,4 +42,14 @@ public abstract class AbstractBaseContext implements IBuzzContext
             }
         });
     }
+    protected boolean timeout(long status)
+    {
+        return (status & ContextConstants.TIMEOUT) >= ContextConstants.TIMEOUT;
+    }
+
+    protected boolean programError(long status)
+    {
+        return (status & ContextConstants.PROGRAMA_ERROR) >= ContextConstants.PROGRAMA_ERROR;
+    }
+
 }

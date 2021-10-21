@@ -27,4 +27,6 @@ public interface IHttpCommandContext extends IBuzzContext
 
     String getURI();
     Map<String, String> getPathUri();
+
+    Object getParameter(String key);
 }

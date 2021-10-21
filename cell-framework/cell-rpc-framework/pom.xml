@@ -19,5 +19,7 @@
     <modules>
         <module>cell-rpc-base-framework</module>
         <module>cell-rpc-dubbo-framework</module>
+        <module>cell-rpc-grpc-framework</module>
+        <module>cell-rpc-common</module>
     </modules>
 </project>
