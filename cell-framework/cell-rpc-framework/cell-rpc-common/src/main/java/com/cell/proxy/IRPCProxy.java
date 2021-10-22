@@ -8,6 +8,7 @@ package com.cell.proxy;
  * @Attention:
  * @Date 创建时间：2021-10-22 18:36
  */
-public interface IRPCProxy extends IProxy
+public interface IRPCProxy extends IFrameworkProxy
 {
+
 }

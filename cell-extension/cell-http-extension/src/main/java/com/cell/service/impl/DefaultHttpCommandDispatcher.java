@@ -111,7 +111,6 @@ public class DefaultHttpCommandDispatcher extends AbstractInitOnce implements IH
             wp.setReactor(ret.getRet().getV2());
         }
 
-
         long timeOut = wp.getReactor().getResultTimeout();
         CommandContext context = new CommandContext(request, response, timeOut, command);
         DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(this.httpChannel, context, wp.getReactor(), wp.getCmd());

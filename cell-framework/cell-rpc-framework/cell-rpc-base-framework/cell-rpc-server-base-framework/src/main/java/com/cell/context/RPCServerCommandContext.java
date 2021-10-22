@@ -25,4 +25,10 @@ public class RPCServerCommandContext
     private CommandProtocolID protocolID;
 
     private Future<Object>result;
+
+    public RPCServerCommandContext(IServerRequest request, IServerResponse response)
+    {
+        this.request = request;
+        this.response = response;
+    }
 }

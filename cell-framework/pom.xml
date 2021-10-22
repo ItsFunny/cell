@@ -24,6 +24,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-sdk-eventdriven</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-base-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

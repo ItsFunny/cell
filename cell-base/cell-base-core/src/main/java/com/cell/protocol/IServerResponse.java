@@ -1,5 +1,7 @@
 package com.cell.protocol;
 
+import com.cell.concurrent.base.Promise;
+
 /**
  * @author Charlie
  * @When
@@ -10,6 +12,7 @@ package com.cell.protocol;
  */
 public interface IServerResponse
 {
+    void setPromise(Promise<Object>promise);
     void setHeader(String name, String value);
     void setStatus(long sc);
     void addHeader(String name, String value);

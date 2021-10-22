@@ -1,10 +1,10 @@
 package com.cell.response;
 
+import com.cell.concurrent.base.Promise;
 import com.cell.protocol.IServerResponse;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Future;
 
 /**
  * @author Charlie
@@ -16,10 +16,10 @@ import java.util.concurrent.Future;
  */
 public class RPCServerResponse implements IServerResponse
 {
-    private Future<Object> ret;
     private Map<String, String> header;
     private long status;
     private volatile boolean expired;
+    private Promise<Object> promise;
 
     private void checkHeader()
     {
@@ -27,6 +27,12 @@ public class RPCServerResponse implements IServerResponse
         {
             this.header = new HashMap<>();
         }
+    }
+
+    @Override
+    public void setPromise(Promise<Object> promise)
+    {
+        this.promise = promise;
     }
 
     @Override
@@ -51,12 +57,12 @@ public class RPCServerResponse implements IServerResponse
     @Override
     public void fireResult(Object o)
     {
-
+        promise.trySuccess(o);
     }
 
     @Override
     public boolean isSetOrExpired()
     {
-        return ret.isDone() || !ret.isCancelled();
+        return promise.isDone() || !promise.isCancelled();
     }
 }

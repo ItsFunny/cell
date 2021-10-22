@@ -1,5 +1,9 @@
 package com.cell.dispatcher;
 
+import com.cell.protocol.IServerRequest;
+import com.cell.protocol.IServerResponse;
+import com.cell.reactor.ICommandReactor;
+
 /**
  * @author Charlie
  * @When
@@ -10,4 +14,7 @@ package com.cell.dispatcher;
  */
 public interface IDispatcher
 {
+    void dispatch(IServerRequest request, IServerResponse response);
+
+    void addReactor(ICommandReactor reactor);
 }

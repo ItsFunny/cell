@@ -13,6 +13,5 @@ import com.cell.proxy.IProxy;
  */
 public abstract class AbstractBaseProxy implements IProxy
 {
-    private IDispatcher dispatcher;
 
 }
