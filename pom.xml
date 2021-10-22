@@ -19,6 +19,7 @@
         <module>cell-monitor</module>
         <module>cell-plugin</module>
         <module>cell-tools</module>
+        <module>cell-sdk</module>
     </modules>
     <packaging>pom</packaging>
 

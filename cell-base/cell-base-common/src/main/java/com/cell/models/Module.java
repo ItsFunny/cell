@@ -34,7 +34,7 @@ public enum Module
     MANAGER((short) 110, "MANAGER"),
     SD_PROMETHEUS((short) 111, "SD_PROMETHEIUS"),
     SHELL((short) 112, "SHELL"),
-    RPC_FRAMEWORK((short)113,"RPC_FRAMEWORK"),
+    RPC_FRAMEWORK((short) 113, "RPC_FRAMEWORK"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
@@ -56,7 +56,7 @@ public enum Module
     private short moduleId;
     private String desc;
 
-    private Module(short moduleId, String desc)
+    Module(short moduleId, String desc)
     {
         this.moduleId = moduleId;
         this.desc = desc;
