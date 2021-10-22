@@ -118,4 +118,8 @@ public abstract class AbstractCommand implements ICommand
         }
         return beanWrapper.getWrappedInstance();
     }
+    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
+    {
+        return this.baseComdResponseWrapper();
+    }
 }

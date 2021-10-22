@@ -14,5 +14,6 @@ import java.io.InputStream;
 public interface IServerRequest
 {
     int getContentLength();
+    CommandProtocolID getProtocolId();
     InputStream getInputStream() throws IOException;
 }

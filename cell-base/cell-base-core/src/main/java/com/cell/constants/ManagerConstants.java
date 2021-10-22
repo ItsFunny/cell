@@ -14,4 +14,5 @@ public interface ManagerConstants
     String defaultManagerNodeName = "default_node";
 
     String MANAGER_WEB_HANDLER = "MANAGER_WEB_HANDLER";
+    String MANAGER_RPC_HANDLER = "MANAGER_RPC_HANDLER";
 }

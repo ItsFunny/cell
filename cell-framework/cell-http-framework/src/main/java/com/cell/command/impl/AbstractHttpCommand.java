@@ -91,10 +91,7 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
 
     }
 
-    protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
-    {
-        return this.baseComdResponseWrapper();
-    }
+
 
     @Override
     public void execute(IBuzzContext ctx)

@@ -21,7 +21,7 @@ public abstract class AbsHandlerChannel implements IChannel<IHandler, IChainHand
 {
     private Pipeline<IHandler, IChainHandler> pipeline;
 
-    private AbsHandlerChannel()
+    public AbsHandlerChannel()
     {
         this.pipeline = new DefaultPipeline<>(DefaultHookMutableChainExecutor::new);
     }

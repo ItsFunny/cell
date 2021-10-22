@@ -1,5 +1,6 @@
 package com.cell.context;
 
+import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.IServerRequest;
 
 /**
@@ -13,4 +14,5 @@ import com.cell.protocol.IServerRequest;
 public interface IRPCServerCommandContext extends  IRPCContext
 {
     IServerRequest getRequest();
+    void response(ContextResponseWrapper wp);
 }

@@ -1,7 +1,8 @@
 package com.cell.annotation;
 
-import com.cell.annotations.ReactorAnno;
-import org.springframework.core.annotation.AliasFor;
+import com.cell.annotations.ActivePlugin;
+import com.cell.annotations.ForceOverride;
+import com.cell.cmd.IRPCServerCommand;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -18,9 +19,12 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ReactorAnno
+@ActivePlugin
 public @interface RPCServerReactorAnno
 {
-    @AliasFor(annotation = ReactorAnno.class, attribute = "group")
+    ForceOverride withForce() default @ForceOverride();
+
+    Class<? extends IRPCServerCommand>[] cmds() default {};
+
     String group() default "";
 }

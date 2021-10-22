@@ -1,6 +1,7 @@
 package com.cell.dispatcher;
 
-import com.cell.context.IRPCContext;
+import com.cell.protocol.IServerRequest;
+import com.cell.protocol.IServerResponse;
 import com.cell.reacotr.IRPCReactor;
 
 /**
@@ -13,7 +14,7 @@ import com.cell.reacotr.IRPCReactor;
  */
 public interface IRPCCommandDispatcher
 {
-    void dispatch(IRPCContext context);
+    void dispatch(IServerRequest request, IServerResponse response);
 
     void addReactor(IRPCReactor reactor);
 }
