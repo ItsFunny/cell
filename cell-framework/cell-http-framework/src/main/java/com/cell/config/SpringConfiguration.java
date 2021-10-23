@@ -1,11 +1,10 @@
 package com.cell.config;
 
-import cn.tass.math.raw.Mod;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
-import com.cell.dispatcher.IHttpCommandDispatcher;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.server.IHttpServer;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
@@ -19,7 +18,6 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -42,7 +40,7 @@ public class SpringConfiguration implements WebServerFactoryCustomizer<Configura
 {
 
     @AutoPlugin
-    protected IHttpCommandDispatcher dispatcher;
+    protected IHttpServer server;
 
     @Bean
     public RestTemplate restTemplate()
@@ -85,6 +83,6 @@ public class SpringConfiguration implements WebServerFactoryCustomizer<Configura
     @Override
     public void customize(ConfigurableWebServerFactory factory)
     {
-        factory.setPort(dispatcher.getPort());
+        factory.setPort(server.getPort());
     }
 }

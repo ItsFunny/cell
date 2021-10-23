@@ -12,6 +12,8 @@ public interface CommandProtocolID
 {
     float getVersion();
 
+    String id();
+
     String getGroup();
 
 }

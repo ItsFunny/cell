@@ -1,6 +1,6 @@
 package com.cell.protocol;
 
-import com.cell.concurrent.promise.BasePromise;
+import com.cell.concurrent.base.Promise;
 import com.cell.reactor.ICommandReactor;
 
 /**
@@ -23,7 +23,7 @@ public interface IBuzzContext extends IContext
     String getSequenceId();
 
 
-    BasePromise getPromise();
+    Promise<Object> getPromise();
 
     void setReactor(ICommandReactor reactor);
 

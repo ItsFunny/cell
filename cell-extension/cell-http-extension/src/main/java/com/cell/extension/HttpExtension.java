@@ -1,19 +1,23 @@
 package com.cell.extension;
 
+import com.cell.Root;
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
 import com.cell.channel.DefaultHttpChannel;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
+import com.cell.dispatcher.DefaultHttpDispatcher;
 import com.cell.dispatcher.DefaultReactorHolder;
-import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.log.LOG;
 import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.WebHandlerManager;
 import com.cell.models.Module;
+import com.cell.proxy.DefaultHttpProxy;
 import com.cell.reactor.IHttpReactor;
+import com.cell.server.DefaultHttpServer;
+import com.cell.server.IHttpServer;
 import com.cell.service.IDynamicControllerService;
-import com.cell.service.impl.DefaultHttpCommandDispatcher;
 import com.cell.service.impl.DynamicControllerServiceImpl;
 import com.cell.utils.StringUtils;
 import org.apache.commons.cli.CommandLine;
@@ -33,7 +37,8 @@ import java.util.Collection;
 public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
-    private IHttpCommandDispatcher dispatcher;
+    private IHttpDispatcher httpDispatcher;
+    private IHttpServer httpServer;
 
     @Plugin
     public IDynamicControllerService dynamicControllerService()
@@ -42,9 +47,15 @@ public class HttpExtension extends AbstractSpringNodeExtension
     }
 
     @Plugin
-    public IHttpCommandDispatcher dispatcher()
+    public IHttpDispatcher dispatcher()
     {
-        return this.dispatcher;
+        return this.httpDispatcher;
+    }
+
+    @Plugin
+    public IHttpServer httpServer()
+    {
+        return this.httpServer;
     }
 
 
@@ -66,29 +77,31 @@ public class HttpExtension extends AbstractSpringNodeExtension
     {
         CommandLine cmd = ctx.getCommandLine();
         this.dynamicControllerService = new DynamicControllerServiceImpl();
-        this.dispatcher = new DefaultHttpCommandDispatcher(ReactorSelectorManager.getInstance());
+        this.httpDispatcher = new DefaultHttpDispatcher(ReactorSelectorManager.getInstance());
+        this.httpServer = new DefaultHttpServer(new DefaultHttpProxy(this.httpDispatcher));
+        Root.getInstance().addServer(this.httpServer);
+
         String port = cmd.getOptionValue("port");
         if (!StringUtils.isEmpty(port))
         {
-            this.dispatcher.setPort(Short.valueOf(port));
+            this.httpServer.setPort(Short.valueOf(port));
         }
     }
 
     @Override
     public void onStart(INodeContext ctx) throws Exception
     {
+        Root.getInstance().start();
         Collection<IHttpReactor> reactors = DefaultReactorHolder.getReactors();
         for (IHttpReactor reactor : reactors)
         {
             LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);
-            this.dispatcher.addReactor(reactor);
+            this.httpDispatcher.addReactor(reactor);
         }
         DefaultHttpChannel instance = DefaultHttpChannel.getInstance();
         instance.setPipeline(WebHandlerManager.getInstance().getPipeline());
-        ((DefaultHttpCommandDispatcher) this.dispatcher).setHttpChannel(instance);
-
-        ((DefaultHttpCommandDispatcher) this.dispatcher).initOnce(null);
-
+        this.httpDispatcher.setChannel(instance);
+        this.httpDispatcher.initOnce(null);
         this.dynamicControllerService.batchRegisterReactor(reactors);
     }
 

@@ -5,6 +5,7 @@ import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.DummyHttpCommand;
+import com.cell.concurrent.base.Promise;
 import com.cell.constants.ContextConstants;
 import com.cell.constants.ProtocolConstants;
 import com.cell.enums.EnumHttpResponseType;
@@ -60,13 +61,19 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     @Override
     public Object getParameter(String key)
     {
-        return this.commandContext.getHttpRequest().getParameter(key);
+        return this.commandContext.getHttpRequest().getInternalRequest().getParameter(key);
     }
 
     @Override
     public IHttpReactor getHttpReactor()
     {
         return (IHttpReactor) this.getReactor();
+    }
+
+    @Override
+    public Promise<Object> getPromise()
+    {
+        return this.commandContext.getHttpResponse().getPromise();
     }
 
     @Override
@@ -100,9 +107,9 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         long currentTime = System.currentTimeMillis();
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.commandContext.getSummary().getSequenceId();
-        LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},method={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.commandContext.getHttpRequest().getMethod(), this.getIp(), sequenceId, consumeTime);
+        LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},method={},ip={},sequenceId={},cost={}", this.commandContext.getURI(), this.commandContext.getHttpRequest().getInternalRequest().getMethod(), this.getIp(), sequenceId, consumeTime);
 
-        HttpServletResponse response = this.commandContext.getHttpResponse();
+        HttpServletResponse response = this.commandContext.getHttpResponse().getInternalResponse();
         if (wp.getHeaders() != null)
         {
             Map<String, String> headers = wp.getHeaders();
@@ -124,7 +131,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         {
             LOG.error(Module.HTTP_FRAMEWORK, wp.getException(), "调用失败,from:{}", wp.getFrom());
             this.commandContext.getResponseResult().setResult(wp.getRet());
-            this.getPromise().trySuccess();
+            this.getPromise().trySuccess(null);
             return;
         }
         if (null == this.httpCmdAnno)
@@ -140,7 +147,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         if (this.timeout(status))
         {
             LOG.warn(Module.HTTP_FRAMEWORK, "触发了超时,cost={},info={}", consumeTime, wp);
-
         }
         if (this.getResult().isSetOrExpired())
         {
@@ -168,7 +174,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 view.addObject(wp.getRet());
             }
             this.commandContext.getResponseResult().setResult(view);
-            this.getPromise().trySuccess();
+            this.getPromise().trySuccess(null);
             return;
         }
 
@@ -196,7 +202,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             }
             this.commandContext.getResponseResult().setResult(ret);
-            this.getPromise().trySuccess();
+            this.getPromise().setSuccess(null);
         }
     }
 
@@ -236,11 +242,11 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     @Override
     public HttpServletRequest getHttpRequest()
     {
-        return this.commandContext.getHttpRequest();
+        return this.commandContext.getHttpRequest().getInternalRequest();
     }
 
     public HttpServletResponse getHttpResponse(){
-        return this.commandContext.getHttpResponse();
+        return this.commandContext.getHttpResponse().getInternalResponse();
     }
 
     public boolean viewMode()

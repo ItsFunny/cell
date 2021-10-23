@@ -26,4 +26,7 @@ public @interface Command
     Class<? extends ICommandReactor> reactor();
 
     Class<? extends ICommand> couple() default ICommand.class;
+
+    boolean async() default false;
+    long timeOut() default 0;
 }

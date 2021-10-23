@@ -19,6 +19,12 @@ public class ProcessManagerTest
             LOG.info("收到event,{}", event);
             promise.trySuccess(123);
         }
+
+        @Override
+        public void proxy(IProcessEvent event)
+        {
+
+        }
     }
 
 

@@ -6,7 +6,7 @@ import com.cell.annotations.*;
 import com.cell.application.CellApplication;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
-import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
@@ -88,7 +88,7 @@ public class App
     public static class Reactor1 extends AbstractHttpDymanicCommandReactor
     {
         @AutoPlugin
-        private IHttpCommandDispatcher commandDispatcher;
+        private IHttpDispatcher commandDispatcher;
         @AutoPlugin
         private LogicImpl logic;
     }

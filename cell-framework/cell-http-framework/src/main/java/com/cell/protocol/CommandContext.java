@@ -2,20 +2,13 @@ package com.cell.protocol;
 
 import com.cell.constant.HttpConstants;
 import com.cell.constants.NetworkConstants;
-import com.cell.enums.CellError;
-import com.cell.exceptions.CommonBusinessException;
-import com.cell.exceptions.MessageNotDoneException;
-import com.cell.reactor.IHttpReactor;
+import com.cell.couple.IHttpServerRequest;
+import com.cell.couple.IHttpServerResponse;
 import com.cell.util.HttpUtils;
 import com.cell.utils.StringUtils;
 import com.cell.utils.UUIDUtils;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.async.DeferredResult;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @author Charlie
@@ -29,23 +22,22 @@ import java.io.IOException;
 public class CommandContext
 {
     public static final String TOKEN = "token";
-    private HttpServletRequest httpRequest;
-    private HttpServletResponse httpResponse;
+    private IHttpServerRequest httpRequest;
+    private IHttpServerResponse httpResponse;
+    // 返回给 http上层的结果值
     private DeferredResult<Object> responseResult;
     private Throwable exception;
     private String sessionKey;
     private String funcName;
     private HttpSummary summary;
 
-    public CommandContext(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
-                          long defaultTimeount,
-                          String thirdPath)
+    public CommandContext(IHttpServerRequest httpRequest, IHttpServerResponse httpResponse,
+                          long defaultTimeount)
     {
-
         this.httpRequest = httpRequest;
         this.httpResponse = httpResponse;
 
-        this.funcName = thirdPath;
+        this.funcName = httpRequest.getInternalRequest().getRequestURI();
         summary = collectSummary(); // 从servletRequest中收集基本信息
         sessionKey = getHeaderData(NetworkConstants.SESSION_KEY);
         String timeout = getHeaderData(NetworkConstants.TIME_OUT);
@@ -60,14 +52,15 @@ public class CommandContext
         }
         DeferredResult<Object> responseResult = new DeferredResult<>(defaultTimeount);
         this.responseResult = responseResult;
+        this.httpResponse.setDeferredResponse(responseResult);
     }
 
 
     private HttpSummary collectSummary()
     {
         HttpSummary httpSummary = new HttpSummary();
-        httpSummary.setRequestIP(HttpUtils.getIpAddress(httpRequest));
-        httpSummary.setRequestUrl(httpRequest.getRequestURL().toString());
+        httpSummary.setRequestIP(HttpUtils.getIpAddress(this.httpRequest.getInternalRequest()));
+        httpSummary.setRequestUrl(this.httpRequest.getInternalRequest().getRequestURL().toString());
         httpSummary.setToken(getHeaderData(TOKEN));
         httpSummary.setReceiveTimestamp(System.currentTimeMillis());
         httpSummary.setVersionInt(getHeaderData(HttpConstants.VERSION_INT));
@@ -78,12 +71,12 @@ public class CommandContext
 
     private String getHeaderData(String headerName)
     {
-        return this.httpRequest.getHeader(headerName);
+        return this.httpRequest.getInternalRequest().getHeader(headerName);
     }
 
     private String getHeaderData(String headerName, String defaultValue)
     {
-        String ret = this.httpRequest.getHeader(headerName);
+        String ret = this.httpRequest.getInternalRequest().getHeader(headerName);
         ret = StringUtils.isEmpty(ret) ? defaultValue : ret;
         return ret;
     }
@@ -131,6 +124,6 @@ public class CommandContext
 
     public String getURI()
     {
-        return this.httpRequest.getRequestURI();
+        return this.httpRequest.getInternalRequest().getRequestURI();
     }
 }

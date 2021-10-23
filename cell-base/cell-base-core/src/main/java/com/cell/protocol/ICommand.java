@@ -1,7 +1,5 @@
 package com.cell.protocol;
 
-import com.cell.reactor.ICommandReactor;
-import com.cell.reactor.IReactor;
 import com.cell.serialize.BinaryOutput;
 import com.cell.serialize.ISerializable;
 import com.cell.serialize.JsonOutput;

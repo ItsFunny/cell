@@ -1,6 +1,7 @@
 package com.cell.proxy;
 
 import com.cell.concurrent.base.Promise;
+import com.cell.context.DispatchContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
@@ -27,11 +28,25 @@ public abstract class AbstractBaseFrameworkProxy extends AbstractProxy implement
     @Override
     public void onProxy(IProcessEvent event, Promise<Object> promise)
     {
+        this.proxy(event);
+    }
+
+    @Override
+    public void proxy(IProcessEvent event)
+    {
         IFrameworkEvent fe = (IFrameworkEvent) event;
         IServerRequest request = fe.getRequest();
         IServerResponse response = fe.getResponse();
-        response.setPromise(promise);
-        this.dispatcher.dispatch(request, response);
+        DispatchContext context = new DispatchContext();
+        context.setServerRequest(request);
+        context.setServerResponse(response);
+        this.dispatcher.dispatch(context);
+    }
+
+    @Override
+    public IDispatcher getDispatcher()
+    {
+        return this.dispatcher;
     }
 
     protected abstract void afterProxy(IServerRequest request, IServerResponse response, Promise<Object> promise);

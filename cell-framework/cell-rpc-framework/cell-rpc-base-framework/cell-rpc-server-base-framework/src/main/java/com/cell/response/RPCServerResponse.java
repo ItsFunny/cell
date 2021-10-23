@@ -1,7 +1,7 @@
 package com.cell.response;
 
-import com.cell.concurrent.base.Promise;
 import com.cell.protocol.IServerResponse;
+import com.cell.protocol.impl.AbstractBaseResponse;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,12 +14,11 @@ import java.util.Map;
  * @Attention:
  * @Date 创建时间：2021-10-22 13:18
  */
-public class RPCServerResponse implements IServerResponse
+public class RPCServerResponse extends AbstractBaseResponse implements IServerResponse
 {
     private Map<String, String> header;
     private long status;
     private volatile boolean expired;
-    private Promise<Object> promise;
 
     private void checkHeader()
     {
@@ -29,11 +28,6 @@ public class RPCServerResponse implements IServerResponse
         }
     }
 
-    @Override
-    public void setPromise(Promise<Object> promise)
-    {
-        this.promise = promise;
-    }
 
     @Override
     public void setHeader(String name, String value)
@@ -54,15 +48,5 @@ public class RPCServerResponse implements IServerResponse
 
     }
 
-    @Override
-    public void fireResult(Object o)
-    {
-        promise.trySuccess(o);
-    }
 
-    @Override
-    public boolean isSetOrExpired()
-    {
-        return promise.isDone() || !promise.isCancelled();
-    }
 }

@@ -16,4 +16,29 @@ public interface IFrameworkEvent extends IProcessEvent
     IServerRequest getRequest();
 
     IServerResponse getResponse();
+
+
+    class DefaultRequestResponseEvent implements IFrameworkEvent
+    {
+        private IServerRequest request;
+        private IServerResponse response;
+
+        public DefaultRequestResponseEvent(IServerRequest request, IServerResponse response)
+        {
+            this.request = request;
+            this.response = response;
+        }
+
+        @Override
+        public IServerRequest getRequest()
+        {
+            return this.request;
+        }
+
+        @Override
+        public IServerResponse getResponse()
+        {
+            return this.response;
+        }
+    }
 }

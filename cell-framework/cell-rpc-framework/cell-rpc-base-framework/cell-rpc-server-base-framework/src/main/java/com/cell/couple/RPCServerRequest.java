@@ -1,4 +1,4 @@
-package com.cell.request;
+package com.cell.couple;
 
 import com.cell.protocol.CommandProtocolID;
 import com.cell.protocol.IServerRequest;

@@ -1,15 +1,18 @@
 package com.cell.extension;
 
+import com.cell.Root;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.CellOrder;
 import com.cell.command.IHttpCommand;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.discovery.NacosNodeDiscoveryImpl;
-import com.cell.dispatcher.DefaultReactorHolder;
-import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.dispatcher.IDispatcher;
 import com.cell.model.Instance;
+import com.cell.proxy.IHttpProxy;
+import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.server.IHttpServer;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
@@ -71,20 +74,21 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
     private void register(INodeContext ctx)
     {
         String domain = ctx.getCommandLine().getOptionValue("domain", "demo.com");
+        IHttpServer server = (IHttpServer) Root.getInstance().getServer(IHttpServer.class);
+        IHttpProxy httpProxy = server.getHttpProxy();
+        IDispatcher dispatcher = httpProxy.getDispatcher();
 
-        IHttpCommandDispatcher dispatcher = DefaultReactorHolder.getInstance();
         NacosNodeDiscoveryImpl nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
-
-        Collection<IHttpReactor> values = dispatcher.getReactors();
-        if (values == null || values.isEmpty()) return;
+        List<? extends ICommandReactor> reactors = dispatcher.getReactors();
+        if (reactors == null || reactors.isEmpty()) return;
         Map<Class<?>, IHttpReactor> reactorMap = new HashMap<>();
-        for (IHttpReactor value : values)
+        for (ICommandReactor value : reactors)
         {
             // only use one
-            reactorMap.put(value.getClass(), value);
+            reactorMap.put(value.getClass(), (IHttpReactor) value);
         }
         ServerMetaData serverMetaData = new ServerMetaData();
-        values = reactorMap.values();
+        Collection<IHttpReactor> values = reactorMap.values();
         List<ServerMetaData.ServerMetaReactor> reacotrs = values.stream().map(value ->
         {
             ServerMetaData.ServerMetaReactor reactor = new ServerMetaData.ServerMetaReactor();
@@ -117,7 +121,7 @@ public class NacosDiscoveryExtension extends AbstractSpringNodeExtension
                 .ip(ctx.getIp())
                 .healthy(true)
                 .enable(true)
-                .port((int) dispatcher.getPort())
+                .port((int) server.getPort())
                 .serviceName(ctx.getApp().getApplicationName())
                 .build();
         nodeDiscovery.registerServerInstance(instance);

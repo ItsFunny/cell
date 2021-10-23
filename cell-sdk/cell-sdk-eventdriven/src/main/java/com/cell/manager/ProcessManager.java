@@ -8,6 +8,7 @@ import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
 import com.cell.event.ProcessEvent;
+import com.cell.exceptions.ProgramaException;
 import com.cell.proxy.IProxy;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class ProcessManager
     }
 
     private boolean dynamicAddProxy = false;
-    private List<IProxy> proxies;
+    private List<IProxy> proxies = new ArrayList<>();
     private ArrayBlockingQueue<ProcessEvent> epoll = new ArrayBlockingQueue<>(128);
     private AtomicBoolean started = new AtomicBoolean(false);
     private EventLoopGroup eventLoopGroup;
@@ -55,7 +56,6 @@ public class ProcessManager
             return this;
         }
         this.dynamicAddProxy = dynamicAddProxy;
-        this.proxies = newList();
         this.eventLoopGroup = new BaseDefaultEventLoopGroup(threadCount);
         this.runThread.start();
         return this;
@@ -82,6 +82,7 @@ public class ProcessManager
         byte proxyId = event.getProxyId();
         if (proxyId >= proxies.size())
         {
+            event.getPromise().tryFailure(new ProgramaException("no such proxy"));
             // TODO
             return;
         }
@@ -121,7 +122,8 @@ public class ProcessManager
         byte b = anno.proxyId();
         if (b > this.proxies.size())
         {
-            for (int i = this.proxies.size() - 1; i < b + 1; i++)
+            int delta = b - this.proxies.size() + 1;
+            for (int i = 0; i < delta; i++)
             {
                 this.proxies.add(null);
             }

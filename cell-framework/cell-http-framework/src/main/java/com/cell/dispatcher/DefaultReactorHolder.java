@@ -23,19 +23,20 @@ import java.util.Set;
 // FIXME too stupid & need clean
 public class DefaultReactorHolder
 {
-    private static IHttpCommandDispatcher instance = null;
+    private static IHttpDispatcher instance = null;
+
+
 
     private static Map<Class<? extends IHttpReactor>, IHttpReactor> reactors = new HashMap<>();
 
     private static Map<Class<? extends IHttpReactor>, Set<Class<? extends IHttpCommand>>> commands;
 
-
-    public static void setDispatcher(IHttpCommandDispatcher d)
+    public static void setDispatcher(IHttpDispatcher d)
     {
         instance = d;
     }
 
-    public static IHttpCommandDispatcher getInstance()
+    public static IHttpDispatcher getInstance()
     {
         return instance;
     }

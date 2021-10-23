@@ -19,9 +19,11 @@ public class DefaultStringCommandProtocolID implements CommandProtocolID
     private String group;
     private float version;
     private String logicCmd;
+    private String multiAddr;
 
     public DefaultStringCommandProtocolID(String multiAddr)
     {
+        this.multiAddr=multiAddr;
         String[] split = multiAddr.split("/");
         if (split.length < 3)
         {
@@ -42,6 +44,12 @@ public class DefaultStringCommandProtocolID implements CommandProtocolID
     public float getVersion()
     {
         return this.version;
+    }
+
+    @Override
+    public String id()
+    {
+        return this.multiAddr;
     }
 
     @Override

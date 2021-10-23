@@ -4,7 +4,6 @@ import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
-import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
@@ -13,6 +12,7 @@ import com.cell.protocol.ICommand;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.server.IHttpServer;
 import com.cell.service.IDynamicControllerService;
 import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
@@ -42,6 +42,8 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
 {
     @AutoPlugin
     private RequestMappingHandlerMapping handlerMapping;
+    @AutoPlugin
+    private IHttpServer httpServer;
 
     private ApplicationContext context;
 
@@ -138,10 +140,12 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
 
         EnumHttpRequestType requestType = annotation.requestType();
         String uri = annotation.uri();
-        Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
+
+        Method method = this.httpServer.getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
+//        Method method = DefaultReactorHolder.getInstance().getClass().getMethod(requestMethod, HttpServletRequest.class, HttpServletResponse.class);
         RequestMappingInfo mappingInfo = RequestMappingInfo.paths(uri).methods(getRequestMethod(requestType)).build();
         LOG.info(Module.HTTP_FRAMEWORK, "注册uri:{},method:{}", uri, annotation.requestType().name());
-        handlerMapping.registerMapping(mappingInfo, DefaultReactorHolder.getInstance(), method); // 注册映射处理
+        handlerMapping.registerMapping(mappingInfo, this.httpServer, method); // 注册映射处理
     }
 
     public RequestMethod getRequestMethod(EnumHttpRequestType requestType)

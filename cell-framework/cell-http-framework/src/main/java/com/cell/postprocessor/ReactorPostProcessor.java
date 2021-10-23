@@ -2,7 +2,7 @@ package com.cell.postprocessor;
 
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.dispatcher.DefaultReactorHolder;
-import com.cell.dispatcher.IHttpCommandDispatcher;
+import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import org.springframework.beans.BeansException;
@@ -20,9 +20,9 @@ public class ReactorPostProcessor implements IBeanPostProcessortAdapter
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
     {
-        if (bean instanceof IHttpCommandDispatcher)
+        if (bean instanceof IHttpDispatcher)
         {
-            DefaultReactorHolder.setDispatcher((IHttpCommandDispatcher) bean);
+            DefaultReactorHolder.setDispatcher((IHttpDispatcher) bean);
         } else if (bean instanceof IHttpReactor)
         {
             if (bean instanceof IDynamicHttpReactor)

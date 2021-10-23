@@ -1,5 +1,7 @@
 package com.cell.proxy;
 
+import com.cell.dispatcher.IDispatcher;
+
 /**
  * @author Charlie
  * @When
@@ -10,5 +12,5 @@ package com.cell.proxy;
  */
 public interface IFrameworkProxy extends IProxy
 {
-
+    IDispatcher getDispatcher();
 }
