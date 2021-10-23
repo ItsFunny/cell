@@ -2,6 +2,7 @@ package com.cell.couple;
 
 import com.cell.protocol.CommandProtocolID;
 import com.cell.protocol.IServerRequest;
+import lombok.Data;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +15,7 @@ import java.io.InputStream;
  * @Attention:
  * @Date 创建时间：2021-10-22 13:17
  */
+@Data
 public class RPCServerRequest implements IServerRequest
 {
     private CommandProtocolID protocolId;
@@ -26,11 +28,6 @@ public class RPCServerRequest implements IServerRequest
         return this.requestSize;
     }
 
-    @Override
-    public CommandProtocolID getProtocolId()
-    {
-        return this.protocolId;
-    }
 
     @Override
     public InputStream getInputStream() throws IOException

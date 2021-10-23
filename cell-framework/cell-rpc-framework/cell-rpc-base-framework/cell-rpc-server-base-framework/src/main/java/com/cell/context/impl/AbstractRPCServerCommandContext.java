@@ -1,5 +1,6 @@
 package com.cell.context.impl;
 
+import com.cell.concurrent.base.Promise;
 import com.cell.constants.ContextConstants;
 import com.cell.constants.ProtocolConstants;
 import com.cell.context.IRPCServerCommandContext;
@@ -29,6 +30,8 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
         this.commandContext = commandContext;
     }
 
+
+
     @Override
     public IServerRequest getRequest()
     {
@@ -39,6 +42,12 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
     public CommandProtocolID getProtocolID()
     {
         return this.commandContext.getProtocolID();
+    }
+
+    @Override
+    public Promise<Object> getPromise()
+    {
+        return this.commandContext.getResponse().getPromise();
     }
 
     @Override
@@ -69,7 +78,7 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
         {
             LOG.error(Module.HTTP_FRAMEWORK, wp.getException(), "调用失败,from:{}", wp.getFrom());
             this.commandContext.getResponse().fireResult(wp.getRet());
-            this.getPromise().trySuccess();
+            this.getPromise().trySuccess(null);
             return;
         }
 
@@ -88,7 +97,7 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
 
         this.commandContext.getResponse().setStatus(status);
         this.commandContext.getResponse().fireResult(wp.getRet());
-        this.getPromise().trySuccess();
+        this.getPromise().trySuccess(null);
     }
 
 

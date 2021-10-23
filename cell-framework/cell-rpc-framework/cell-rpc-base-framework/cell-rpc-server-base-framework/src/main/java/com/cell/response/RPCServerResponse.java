@@ -48,5 +48,11 @@ public class RPCServerResponse extends AbstractBaseResponse implements IServerRe
 
     }
 
+    @Override
+    public Object getResponse()
+    {
+        return null;
+    }
+
 
 }

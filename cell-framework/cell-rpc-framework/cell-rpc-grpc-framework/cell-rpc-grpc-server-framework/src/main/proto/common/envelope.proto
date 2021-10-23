@@ -1,0 +1,30 @@
+
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.cell.grpc.common";
+option java_outer_classname = "EvelopeProto";
+
+package common;
+
+message EnvelopeHeader{
+    // 0位代表的是大小端
+    //
+    int64 flag=1;
+    int64 length=2;
+    string protocol=3;
+}
+message Envelope {
+  EnvelopeHeader header=1;
+  bytes payload = 2;
+}
+
+message Payload {
+  Header header = 1;
+  bytes data = 2;
+}
+
+message Header {
+}
+
+

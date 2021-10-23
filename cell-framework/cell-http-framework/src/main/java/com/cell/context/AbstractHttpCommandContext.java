@@ -98,9 +98,11 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 .build());
     }
 
-    public boolean success(){
+    public boolean success()
+    {
         return this.success;
     }
+
     @Override
     public void response(ContextResponseWrapper wp)
     {
@@ -131,7 +133,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         {
             LOG.error(Module.HTTP_FRAMEWORK, wp.getException(), "调用失败,from:{}", wp.getFrom());
             this.commandContext.getResponseResult().setResult(wp.getRet());
-            this.getPromise().trySuccess(null);
+            this.commandContext.getHttpResponse().fireResult(null);
             return;
         }
         if (null == this.httpCmdAnno)
@@ -152,7 +154,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         {
             LOG.error("sequenceId = {}, duplicated response for request {} ", sequenceId, wp.getCmd());
             // FIXME
-            this.getPromise().setFailure(new HttpFramkeworkException("duplicate result", ""));
+            this.commandContext.getHttpResponse().fireFailure(new HttpFramkeworkException("duplicate result", ""));
             return;
         }
 
@@ -162,9 +164,9 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             if (StringUtils.isEmpty(viewName))
             {
                 LOG.erroring(Module.HTTP_FRAMEWORK, "没有设置viewName,cmd:{}", this);
-                this.getPromise().setFailure(new HttpFramkeworkException("zzz", "asd"));
                 // FIXME
                 this.getResult().setErrorResult(wp.getRet());
+                this.commandContext.getHttpResponse().fireFailure(new HttpFramkeworkException("zzz", "asd"));
                 return;
             }
             // FIXME ,添加前缀
@@ -183,7 +185,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             // success
             if (this.success(status))
             {
-                this.success=true;
+                this.success = true;
             } else if (this.programError(status))
             {
                 this.commandContext.getHttpResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
@@ -202,7 +204,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 this.commandContext.getHttpResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             }
             this.commandContext.getResponseResult().setResult(ret);
-            this.getPromise().setSuccess(null);
+            this.commandContext.getHttpResponse().fireResult(null);
         }
     }
 
@@ -245,7 +247,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         return this.commandContext.getHttpRequest().getInternalRequest();
     }
 
-    public HttpServletResponse getHttpResponse(){
+    public HttpServletResponse getHttpResponse()
+    {
         return this.commandContext.getHttpResponse().getInternalResponse();
     }
 
