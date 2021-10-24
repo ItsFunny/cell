@@ -26,6 +26,7 @@ public interface ICommand extends  ISerializable
 
     void setHead(IHead head);
 
+
 //    void setCtx(IContext ctx);
 //
 //    IContext getCtx();

@@ -63,6 +63,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     public void execute(IContext context)
     {
         DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
+
         Class<? extends IHttpCommand> cmdClz = ctx.getCommand();
         IHttpCommand cmd = null;
         try

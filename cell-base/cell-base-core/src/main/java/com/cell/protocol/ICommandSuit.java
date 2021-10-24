@@ -1,6 +1,7 @@
 package com.cell.protocol;
 
 
+import com.cell.concurrent.base.EventExecutor;
 import com.cell.services.IHandlerSuit;
 
 /**
@@ -13,4 +14,7 @@ import com.cell.services.IHandlerSuit;
  */
 public interface ICommandSuit extends IHandlerSuit
 {
+    IBuzzContext getBuzContext();
+    void setCommandEventExecutor(EventExecutor eventExecutor);
+    EventExecutor getCommandEventExecutor();
 }

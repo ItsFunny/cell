@@ -12,5 +12,5 @@ import com.cell.protocol.ICommandSuit;
  */
 public interface IHttpHandlerSuit extends ICommandSuit
 {
-    IHttpCommandContext getBuzContext();
+
 }

@@ -3,9 +3,11 @@ package com.cell.cmd.impl;
 import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
-import com.cell.exceptions.InternalWrapperException;
 import com.cell.header.DefaultRPCHeader;
-import com.cell.protocol.*;
+import com.cell.protocol.AbstractCommand;
+import com.cell.protocol.ICommand;
+import com.cell.protocol.IHead;
+import com.cell.protocol.IServerRequest;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.serialize.ISerializable;
@@ -45,25 +47,6 @@ public abstract class AbstractRPCServerCommand extends AbstractCommand implement
 
     }
 
-    @Override
-    public void execute(IBuzzContext ctx)
-    {
-        try
-        {
-            Class<?> bzClz = this.cmd.buzzClz();
-            Object bo = null;
-            if (bzClz != Void.class)
-            {
-                bo = this.newInstance((IRPCServerCommandContext) ctx, bzClz);
-            }
-            this.onExecute((IRPCServerCommandContext) ctx, bo);
-        } catch (Exception e)
-        {
-            throw new InternalWrapperException(e);
-        }
-    }
-
-    protected abstract void onExecute(IRPCServerCommandContext ctx, Object bo);
 
     private Object newInstance(IRPCServerCommandContext commandContext, Class<?> bzClz) throws Exception
     {

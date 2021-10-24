@@ -17,6 +17,4 @@ public interface IHttpServerResponse extends IServerResponse
 {
     HttpServletResponse getInternalResponse();
     void setDeferredResponse(DeferredResult<Object> response);
-
-
 }

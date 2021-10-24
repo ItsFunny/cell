@@ -1,5 +1,7 @@
 package com.cell.protocol;
 
+import com.cell.concurrent.base.EventExecutor;
+import com.cell.concurrent.base.Promise;
 import com.cell.constants.ContextConstants;
 import com.cell.reactor.ICommandReactor;
 import lombok.Data;
@@ -17,14 +19,17 @@ public abstract class AbstractBaseContext implements IBuzzContext
 {
     protected String sequenceId;
     protected long requestTimestamp;
+
+    private Summary summary;
     protected ICommandReactor reactor;
+    private CommandContext context;
+    private EventExecutor eventExecutor;
 
-    private String ip;
 
-
-    public AbstractBaseContext()
+    public AbstractBaseContext(CommandContext commandContext)
     {
         this.requestTimestamp = System.currentTimeMillis();
+        this.context=commandContext;
 //        promise.addListener((BaseFutureListener) future ->
 //        {
 //            if (!future.isSuccess())
@@ -34,6 +39,13 @@ public abstract class AbstractBaseContext implements IBuzzContext
 //            }
 //        });
     }
+
+    @Override
+    public CommandContext getCommandContext()
+    {
+        return this.context;
+    }
+
     protected boolean timeout(long status)
     {
         return (status & ContextConstants.TIMEOUT) >= ContextConstants.TIMEOUT;
@@ -44,4 +56,15 @@ public abstract class AbstractBaseContext implements IBuzzContext
         return (status & ContextConstants.PROGRAMA_ERROR) >= ContextConstants.PROGRAMA_ERROR;
     }
 
+    @Override
+    public void response(ContextResponseWrapper wp)
+    {
+
+    }
+
+    @Override
+    public Promise<Object> getPromise()
+    {
+        return this.context.getResponse().getPromise();
+    }
 }

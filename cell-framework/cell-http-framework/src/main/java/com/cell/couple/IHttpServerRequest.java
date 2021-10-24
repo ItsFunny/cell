@@ -1,7 +1,6 @@
 package com.cell.couple;
 
 import com.cell.protocol.IServerRequest;
-import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletRequest;
 

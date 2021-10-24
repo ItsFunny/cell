@@ -6,7 +6,6 @@ import com.cell.channel.IChannel;
 import com.cell.command.IHttpCommand;
 import com.cell.context.InitCTX;
 import com.cell.couple.IHttpServerRequest;
-import com.cell.couple.IHttpServerResponse;
 import com.cell.exceptions.ProgramaException;
 import com.cell.executor.IChainExecutor;
 import com.cell.executor.IReactorExecutor;
@@ -22,7 +21,6 @@ import com.cell.protocol.*;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
-import com.cell.wrapper.CommandWrapper;
 
 import java.util.Arrays;
 import java.util.List;
@@ -45,6 +43,7 @@ public class DefaultHttpDispatcher extends AbstractCommandDispatcher implements 
 
     // strategy
     private IReflectManager<IReactorExecutor<IContext>, IChainExecutor<IContext>, IContext> selectorStrategy;
+
 
     @Override
     protected CommandWrapper getCommandFromRequest(Map<String, CommandWrapper> commands, IServerRequest request)
@@ -74,10 +73,8 @@ public class DefaultHttpDispatcher extends AbstractCommandDispatcher implements 
     @Override
     protected ICommandSuit createSuit(IServerRequest request, IServerResponse response, IChannel<IHandler, IChainHandler> channel, CommandWrapper wp)
     {
-        IHttpReactor reactor = (IHttpReactor) wp.getReactor();
-        long timeOut = reactor.getResultTimeout();
-        CommandContext context = new CommandContext((IHttpServerRequest) request, (IHttpServerResponse) response, timeOut);
-        DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(channel, context, (IHttpReactor) wp.getReactor(), (Class<? extends IHttpCommand>) wp.getCmd());
+        HttpCommandContext context = new HttpCommandContext(channel, request, response, wp);
+        DefaultHttpHandlerSuit ctx = new DefaultHttpHandlerSuit(context, (IHttpReactor) wp.getReactor(), (Class<? extends IHttpCommand>) wp.getCmd());
         return ctx;
     }
 
@@ -96,8 +93,8 @@ public class DefaultHttpDispatcher extends AbstractCommandDispatcher implements 
             HttpCmdAnno anno = (HttpCmdAnno) ClassUtil.getAnnotation(cc, HttpCmdAnno.class);
 
             CommandWrapper wrapper = new CommandWrapper();
-            wrapper.setReactor((ICommandReactor) reactor);
-            wrapper.setCmd((Class<? extends IHttpCommand>) cc);
+            wrapper.setReactor(reactor);
+            wrapper.setCmd(cc);
             OnAddReactorContext ctx = OnAddReactorContext.builder()
                     .anno(anno)
                     .cmd((Class<? extends IHttpCommand>) cc)

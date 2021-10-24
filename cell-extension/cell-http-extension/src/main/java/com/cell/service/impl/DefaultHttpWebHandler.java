@@ -45,7 +45,7 @@ public class DefaultHttpWebHandler extends AbstractHttpHandler
         return super.exceptionCaught(suit, e, executor).then(Mono.fromRunnable(() ->
         {
             IHttpHandlerSuit httpHandlerSuit = (IHttpHandlerSuit) suit;
-            IHttpCommandContext bzCtx = httpHandlerSuit.getBuzContext();
+            IHttpCommandContext bzCtx = (IHttpCommandContext) httpHandlerSuit.getBuzContext();
             this.exceptionResolver.exceptionCaught(e, bzCtx);
         }));
     }

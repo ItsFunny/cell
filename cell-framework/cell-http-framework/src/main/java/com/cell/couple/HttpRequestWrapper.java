@@ -32,6 +32,12 @@ public class HttpRequestWrapper implements IHttpServerRequest
         return this.request.getContentLength();
     }
 
+    @Override
+    public String getHeader(String name)
+    {
+        return this.request.getHeader(name);
+    }
+
 
     @Override
     public InputStream getInputStream() throws IOException

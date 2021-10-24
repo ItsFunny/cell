@@ -28,5 +28,9 @@ public @interface Command
     Class<? extends ICommand> couple() default ICommand.class;
 
     boolean async() default false;
-    long timeOut() default 0;
+
+    long timeOut() default 30000;
+
+    // exception return
+    String fallBackMethod() default "";
 }

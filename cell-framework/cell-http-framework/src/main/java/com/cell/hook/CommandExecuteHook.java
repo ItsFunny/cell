@@ -20,8 +20,6 @@ import reactor.core.publisher.Mono;
         orderValue = Integer.MAX_VALUE)
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
-
-
     @Override
     protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
     {

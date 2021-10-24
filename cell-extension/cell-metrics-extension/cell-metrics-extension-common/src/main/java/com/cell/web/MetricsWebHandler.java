@@ -51,7 +51,7 @@ public class MetricsWebHandler extends AbstractHttpHandler
     protected Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor)
     {
         IHttpHandlerSuit suit = (IHttpHandlerSuit) context;
-        IHttpCommandContext buzContext = suit.getBuzContext();
+        IHttpCommandContext buzContext = (IHttpCommandContext) suit.getBuzContext();
         HttpServletRequest request = buzContext.getHttpRequest();
         totalCounter.labels(statContextService.getNodeName(), statContextService.getClusterName(), request.getMethod()).inc(1);
         return executor.execute(context).onErrorResume(e ->

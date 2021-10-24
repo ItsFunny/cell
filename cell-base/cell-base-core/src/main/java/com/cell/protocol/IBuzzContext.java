@@ -1,5 +1,6 @@
 package com.cell.protocol;
 
+import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.Promise;
 import com.cell.reactor.ICommandReactor;
 
@@ -13,24 +14,17 @@ import com.cell.reactor.ICommandReactor;
  */
 public interface IBuzzContext extends IContext
 {
+    CommandContext getCommandContext();
+    void setEventExecutor(EventExecutor executor);
+    EventExecutor getEventExecutor();
     void response(ContextResponseWrapper wp);
-//    boolean success();
-
     long getRequestTimestamp();
-
     void setSequenceId(String sequenceId);
-
     String getSequenceId();
-
-
     Promise<Object> getPromise();
-
     void setReactor(ICommandReactor reactor);
-
     ICommandReactor getReactor();
 
-
     void setIp(String ip);
-
     String getIp();
 }

@@ -2,9 +2,13 @@ package com.cell.protocol;
 
 import com.cell.annotations.Command;
 import com.cell.annotations.Optional;
+import com.cell.concurrent.base.EventExecutor;
+import com.cell.constants.ContextConstants;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.serialize.IInputArchive;
+import com.cell.serialize.IOutputArchive;
+import com.cell.serialize.ISerializable;
 import com.cell.utils.CommandUtils;
 import lombok.Data;
 import org.springframework.beans.BeanWrapper;
@@ -81,24 +85,57 @@ public abstract class AbstractCommand implements ICommand
         }
     }
 
-    //    @Override
-//    public ICommand couple()
-//    {
-//        Class<? extends ICommand> couple = commandAnnotation.couple();
-//        if (couple == null)
-//        {
-//            return null;
-//        }
-//        try
-//        {
-//            ICommand res = couple.newInstance();
-//            return res;
-//        } catch (Exception e)
-//        {
-//            // FIXME
-//            throw new RuntimeException("easd", e);
-//        }
-//    }
+    @Override
+    public void execute(IBuzzContext ctx)
+    {
+        this.ctx = ctx;
+        boolean async = this.commandAnnotation.async();
+        if (async)
+        {
+            EventExecutor eventExecutor = ctx.getEventExecutor();
+            eventExecutor.execute(this::fire);
+        } else
+        {
+            this.fire();
+        }
+    }
+
+    private void fire()
+    {
+        try
+        {
+            Class<?> bzClz = this.commandAnnotation.buzzClz();
+            Object bo = null;
+            if (bzClz != Void.class)
+            {
+                bo = this.newInstance(ctx, bzClz);
+            }
+            this.doExecute(ctx, bo);
+        } catch (Exception e)
+        {
+            ctx.response(this.createResponseWp().exception(e).status(ContextConstants.FAIL).build());
+        }
+    }
+
+    protected Object newInstance(IBuzzContext ctx, Class<?> bzClz) throws Exception
+    {
+        Object instance = null;
+        IInputArchive inputArchive = this.getInputArchiveFromCtx(ctx);
+        if (ISerializable.class.isAssignableFrom(bzClz))
+        {
+            instance = bzClz.newInstance();
+            ((ISerializable) instance).read(inputArchive);
+        } else
+        {
+            instance = this.reflectFill(bzClz, inputArchive);
+        }
+        return instance;
+    }
+
+    protected abstract IInputArchive getInputArchiveFromCtx(IBuzzContext c) throws Exception;
+
+    protected abstract void doExecute(IBuzzContext ctx, Object bo) throws IOException;
+
     protected Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
     {
         Field[] fields = clz.getDeclaredFields();
@@ -118,8 +155,22 @@ public abstract class AbstractCommand implements ICommand
         }
         return beanWrapper.getWrappedInstance();
     }
+
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {
         return this.baseComdResponseWrapper();
+    }
+
+    // 解析参数
+    @Override
+    public void read(IInputArchive input) throws IOException
+    {
+
+    }
+
+    @Override
+    public void write(IOutputArchive output) throws IOException
+    {
+
     }
 }

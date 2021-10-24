@@ -3,6 +3,8 @@ package com.cell.dispatcher;
 import com.cell.annotations.Command;
 import com.cell.channel.IChannel;
 import com.cell.concurrent.DummyExecutor;
+import com.cell.concurrent.base.EventExecutor;
+import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.concurrent.base.Promise;
 import com.cell.concurrent.promise.BaseDefaultPromise;
 import com.cell.config.AbstractInitOnce;
@@ -12,12 +14,11 @@ import com.cell.context.DispatchContext;
 import com.cell.exceptions.ProgramaException;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
-import com.cell.manager.ProcessManager;
+import com.cell.protocol.CommandWrapper;
 import com.cell.protocol.ICommandSuit;
 import com.cell.protocol.IServerRequest;
 import com.cell.protocol.IServerResponse;
 import com.cell.reactor.ICommandReactor;
-import com.cell.wrapper.CommandWrapper;
 
 import java.util.*;
 
@@ -32,9 +33,10 @@ import java.util.*;
 public abstract class AbstractCommandDispatcher extends AbstractInitOnce implements IDispatcher
 {
     private Map<String, CommandWrapper> commands = new HashMap<>();
-
-
     private IChannel<IHandler, IChainHandler> channel;
+
+    private EventLoopGroup eventLoopGroup;
+
 
     @Override
     public void dispatch(DispatchContext context)
@@ -48,32 +50,16 @@ public abstract class AbstractCommandDispatcher extends AbstractInitOnce impleme
             return;
         }
         Command commandAnno = wrapper.getCommandAnno();
-        Promise<Object> promise = null;
-        if (commandAnno.async())
-        {
-            // async
-            promise = new BaseDefaultPromise(ProcessManager.getInstance().getEventExecutor());
-        } else
-        {
-            promise = new BaseDefaultPromise(DummyExecutor.getInstance());
-        }
+        EventExecutor eventExecutor = commandAnno.async() ? this.eventLoopGroup.next() : DummyExecutor.getInstance();
+        Promise<Object> promise = new BaseDefaultPromise(eventExecutor);
         response.setPromise(promise);
         if (null != context.getOnOperationComplete())
         {
             promise.addListener(context.getOnOperationComplete());
         }
-        if (commandAnno.async())
-        {
-            ProcessManager.getInstance().getEventExecutor().execute(() ->
-            {
-                ICommandSuit suit = this.createSuit(request, response, this.channel, wrapper);
-                this.channel.readCommand(suit);
-            });
-        } else
-        {
-            ICommandSuit suit = this.createSuit(request, response, this.channel, wrapper);
-            this.channel.readCommand(suit);
-        }
+        ICommandSuit suit = this.createSuit(request, response, this.channel, wrapper);
+        suit.setCommandEventExecutor(eventExecutor);
+        this.channel.readCommand(suit);
     }
 
     protected abstract CommandWrapper getCommandFromRequest(Map<String, CommandWrapper> commands, IServerRequest request);
@@ -123,5 +109,9 @@ public abstract class AbstractCommandDispatcher extends AbstractInitOnce impleme
         response.fireFailure(new ProgramaException("no such protocol"));
     }
 
-
+    @Override
+    public void setEventGroup(EventLoopGroup eventLoopGroup)
+    {
+        this.eventLoopGroup = eventLoopGroup;
+    }
 }

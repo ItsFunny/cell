@@ -3,6 +3,7 @@ package com.cell.services.impl;
 import com.cell.channel.IChannel;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
+import com.cell.protocol.CommandContext;
 import com.cell.services.IHandlerSuit;
 import lombok.Data;
 
@@ -17,18 +18,18 @@ import lombok.Data;
 @Data
 public abstract class AbstractHandlerSuit implements IHandlerSuit
 {
-    protected IChannel<IHandler, IChainHandler> channel;
+    private CommandContext commandContext;
 
-    public AbstractHandlerSuit(IChannel<IHandler, IChainHandler> channel)
+    public AbstractHandlerSuit(CommandContext commandContext)
     {
-        this.channel = channel;
+        this.commandContext=commandContext;
     }
 
 
     @Override
     public IChannel<IHandler, IChainHandler> channel()
     {
-        return channel;
+        return this.commandContext.getChannel();
     }
 //
 //    @Override

@@ -1,6 +1,7 @@
 package com.cell.dispatcher;
 
 import com.cell.channel.IChannel;
+import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.config.IInitOnce;
 import com.cell.context.DispatchContext;
 import com.cell.handler.IChainHandler;
@@ -26,4 +27,6 @@ public interface IDispatcher extends IInitOnce
     void setChannel(IChannel<IHandler, IChainHandler> channel);
 
     List<? extends ICommandReactor> getReactors();
+
+    void setEventGroup(EventLoopGroup eventLoopGroup);
 }

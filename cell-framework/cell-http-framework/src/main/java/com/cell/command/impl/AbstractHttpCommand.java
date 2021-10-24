@@ -5,12 +5,12 @@ import com.cell.command.IHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
-import com.cell.exceptions.InternalWrapperException;
-import com.cell.protocol.*;
+import com.cell.protocol.AbstractCommand;
+import com.cell.protocol.IBuzzContext;
+import com.cell.protocol.ICommand;
+import com.cell.protocol.IHead;
 import com.cell.reactor.IHttpReactor;
 import com.cell.serialize.IInputArchive;
-import com.cell.serialize.IOutputArchive;
-import com.cell.serialize.ISerializable;
 import com.cell.serialize.JsonInput;
 import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
@@ -78,61 +78,27 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
         return (IHttpCommandContext) this.getCtx();
     }
 
-    // 解析参数
-    @Override
-    public void read(IInputArchive input) throws IOException
-    {
-
-    }
-
-    @Override
-    public void write(IOutputArchive output) throws IOException
-    {
-
-    }
-
 
 
     @Override
-    public void execute(IBuzzContext ctx)
+    protected IInputArchive getInputArchiveFromCtx(IBuzzContext c) throws Exception
     {
-        try
-        {
-            Class<?> bzClz = this.httpCmdAnno.buzzClz();
-            Object bo = null;
-            if (bzClz != Void.class)
-            {
-                bo = this.newInstance((IHttpCommandContext) ctx, bzClz);
-            }
-            this.onExecute((IHttpCommandContext) ctx, bo);
-        } catch (Exception e)
-        {
-            throw new InternalWrapperException(e);
-        }
+        return this.getInputArchive((IHttpCommandContext) c);
     }
 
-    private Object newInstance(IHttpCommandContext commandContext, Class<?> bzClz) throws Exception
-    {
-        Object instance = null;
-        IInputArchive inputArchive = this.getInputArchive(commandContext);
-        if (ISerializable.class.isAssignableFrom(bzClz))
-        {
-            instance = bzClz.newInstance();
-            ((ISerializable) instance).read(inputArchive);
-        } else
-        {
-            instance = this.reflectFill(bzClz, inputArchive);
-        }
-        return instance;
-    }
 
+    @Override
+    protected void doExecute(IBuzzContext ctx, Object bo) throws IOException
+    {
+        this.onExecute((IHttpCommandContext) ctx, bo);
+    }
 
 
     private IInputArchive getInputArchive(IHttpCommandContext commandContext) throws IOException
     {
         EnumHttpRequestType requestType = this.httpCmdAnno.requestType();
         HttpServletRequest httpRequest = commandContext.getHttpRequest();
-        String jsonStr = null;
+        String jsonStr;
         if (requestType.equals(EnumHttpRequestType.HTTP_POST))
         {
             jsonStr = HttpUtils.readStringFromPostRequest(httpRequest);
