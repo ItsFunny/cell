@@ -46,8 +46,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     private HttpCmdAnno httpCmdAnno;
     private Class<? extends IHttpCommand> command;
 
-    private String ip;
-
     private boolean success;
 
     public AbstractHttpCommandContext(CommandContext commandContext)
@@ -273,16 +271,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     }
 
 
-    @Override
-    public void setIp(String ip)
-    {
-        this.ip = ip;
-    }
 
-    @Override
-    public String getIp()
-    {
-        return this.ip;
-    }
 
 }

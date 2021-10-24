@@ -17,7 +17,6 @@ import com.cell.reactor.IRPCServerReactor;
 import com.cell.suit.DefaultServerRPCCommandSuit;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
-import com.cell.wrapper.CommandWrapper;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -46,9 +45,9 @@ public class DefaultRPCServerCommandDispatcher extends AbstractRPCCommandDispatc
     @Override
     protected ICommandSuit createSuit(IServerRequest request, IServerResponse response, IChannel<IHandler, IChainHandler> channel, CommandWrapper wrapper)
     {
-        RPCServerCommandContext rpcServerCommandContext = new RPCServerCommandContext(request, response);
+        RPCServerCommandContext rpcServerCommandContext = new RPCServerCommandContext(channel, request, response, wrapper);
         Class<? extends IRPCServerCommand> rpcServerCmd = (Class<? extends IRPCServerCommand>) wrapper.getCmd();
-        DefaultServerRPCCommandSuit suit = new DefaultServerRPCCommandSuit(channel, rpcServerCommandContext, (IRPCServerReactor) wrapper.getReactor(), rpcServerCmd);
+        DefaultServerRPCCommandSuit suit = new DefaultServerRPCCommandSuit(rpcServerCommandContext, (IRPCServerReactor) wrapper.getReactor(), rpcServerCmd);
         return suit;
     }
 

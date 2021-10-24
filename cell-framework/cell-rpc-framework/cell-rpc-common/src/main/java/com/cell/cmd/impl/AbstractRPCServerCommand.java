@@ -4,13 +4,8 @@ import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.header.DefaultRPCHeader;
-import com.cell.protocol.AbstractCommand;
-import com.cell.protocol.ICommand;
-import com.cell.protocol.IHead;
-import com.cell.protocol.IServerRequest;
+import com.cell.protocol.*;
 import com.cell.serialize.IInputArchive;
-import com.cell.serialize.IOutputArchive;
-import com.cell.serialize.ISerializable;
 import com.cell.serialize.JsonInput;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.RPCUtils;
@@ -48,36 +43,19 @@ public abstract class AbstractRPCServerCommand extends AbstractCommand implement
     }
 
 
-    private Object newInstance(IRPCServerCommandContext commandContext, Class<?> bzClz) throws Exception
+    @Override
+    protected IInputArchive getInputArchiveFromCtx(IBuzzContext c) throws Exception
     {
-        Object instance = null;
-        IInputArchive inputArchive = this.getInputArchive(commandContext);
-        if (ISerializable.class.isAssignableFrom(bzClz))
-        {
-            instance = bzClz.newInstance();
-            ((ISerializable) instance).read(inputArchive);
-        } else
-        {
-            instance = this.reflectFill(bzClz, inputArchive);
-        }
-        return instance;
-    }
-
-    protected IInputArchive getInputArchive(IRPCServerCommandContext commandContext) throws IOException
-    {
-        IServerRequest request = commandContext.getRequest();
+        IServerRequest request = c.getCommandContext().getRequest();
         return JsonInput.createArchive(RPCUtils.readStringFromRequest(request));
     }
 
     @Override
-    public void read(IInputArchive input) throws IOException
+    protected void doExecute(IBuzzContext ctx, Object bo) throws IOException
     {
-
+        this.onExecute((IRPCServerCommandContext) ctx, bo);
     }
 
-    @Override
-    public void write(IOutputArchive output) throws IOException
-    {
-
-    }
+    protected abstract void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException;
 }
+

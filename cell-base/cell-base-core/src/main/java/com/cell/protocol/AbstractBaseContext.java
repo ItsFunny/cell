@@ -25,11 +25,13 @@ public abstract class AbstractBaseContext implements IBuzzContext
     private CommandContext context;
     private EventExecutor eventExecutor;
 
+    private String ip;
+
 
     public AbstractBaseContext(CommandContext commandContext)
     {
         this.requestTimestamp = System.currentTimeMillis();
-        this.context=commandContext;
+        this.context = commandContext;
 //        promise.addListener((BaseFutureListener) future ->
 //        {
 //            if (!future.isSuccess())
@@ -66,5 +68,17 @@ public abstract class AbstractBaseContext implements IBuzzContext
     public Promise<Object> getPromise()
     {
         return this.context.getResponse().getPromise();
+    }
+
+    @Override
+    public void setIp(String ip)
+    {
+        this.ip = ip;
+    }
+
+    @Override
+    public String getIp()
+    {
+        return this.ip;
     }
 }

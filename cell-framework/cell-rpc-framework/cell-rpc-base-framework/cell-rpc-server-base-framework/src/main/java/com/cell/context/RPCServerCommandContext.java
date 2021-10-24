@@ -1,12 +1,10 @@
 package com.cell.context;
 
-import com.cell.model.RPCServerSummary;
-import com.cell.protocol.CommandProtocolID;
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
+import com.cell.channel.IChannel;
+import com.cell.handler.IChainHandler;
+import com.cell.handler.IHandler;
+import com.cell.protocol.*;
 import lombok.Data;
-
-import java.util.concurrent.Future;
 
 /**
  * @author Charlie
@@ -17,18 +15,26 @@ import java.util.concurrent.Future;
  * @Date 创建时间：2021-10-22 04:51
  */
 @Data
-public class RPCServerCommandContext
+public class RPCServerCommandContext extends CommandContext
 {
-    private IServerRequest request;
-    private IServerResponse response;
-    private RPCServerSummary summary;
     private CommandProtocolID protocolID;
 
-    private Future<Object>result;
-
-    public RPCServerCommandContext(IServerRequest request, IServerResponse response)
+    public RPCServerCommandContext(IChannel<IHandler, IChainHandler> channel, IServerRequest request, IServerResponse httpResponse, CommandWrapper wrapper)
     {
-        this.request = request;
-        this.response = response;
+        super(channel, request, httpResponse, wrapper);
     }
+
+    @Override
+    protected Summary collecSummary(IServerRequest request, CommandWrapper wrapper)
+    {
+        return null;
+    }
+
+    @Override
+    protected void onComplete(com.cell.concurrent.base.Future<? super Object> future) throws Exception
+    {
+
+    }
+
+
 }

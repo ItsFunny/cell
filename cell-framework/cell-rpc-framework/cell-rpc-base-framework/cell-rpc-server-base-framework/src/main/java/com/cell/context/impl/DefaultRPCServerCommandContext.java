@@ -12,7 +12,6 @@ import com.cell.context.RPCServerCommandContext;
  */
 public class DefaultRPCServerCommandContext extends AbstractRPCServerCommandContext
 {
-
     public DefaultRPCServerCommandContext(RPCServerCommandContext commandContext)
     {
         super(commandContext);

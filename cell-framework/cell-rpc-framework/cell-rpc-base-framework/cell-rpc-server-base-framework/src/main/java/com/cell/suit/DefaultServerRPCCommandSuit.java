@@ -1,14 +1,10 @@
 package com.cell.suit;
 
-import com.cell.channel.IChannel;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.context.RPCServerCommandContext;
-import com.cell.context.impl.DefaultRPCServerCommandContext;
-import com.cell.handler.IChainHandler;
-import com.cell.handler.IHandler;
+import com.cell.protocol.impl.AbstractCommandSuit;
 import com.cell.reactor.IRPCServerReactor;
-import com.cell.services.impl.AbstractHandlerSuit;
 
 /**
  * @author Charlie
@@ -18,19 +14,17 @@ import com.cell.services.impl.AbstractHandlerSuit;
  * @Attention:
  * @Date 创建时间：2021-10-21 18:29
  */
-public class DefaultServerRPCCommandSuit extends AbstractHandlerSuit implements IRPCHandlerSuit
+public class DefaultServerRPCCommandSuit extends AbstractCommandSuit implements IRPCHandlerSuit
 {
-    private RPCServerCommandContext ctx;
 
-    private IRPCServerReactor serverReactor;
-    private Class<? extends IRPCServerCommand> serverCommand;
+    private IRPCServerReactor reactor;
+    private Class<? extends IRPCServerCommand> command;
 
-    public DefaultServerRPCCommandSuit(IChannel<IHandler, IChainHandler> channel, RPCServerCommandContext ctx, IRPCServerReactor serverReactor, Class<? extends IRPCServerCommand> serverCommand)
+    public DefaultServerRPCCommandSuit(RPCServerCommandContext ctx, IRPCServerReactor serverReactor, Class<? extends IRPCServerCommand> serverCommand)
     {
-        super(channel);
-        this.ctx = ctx;
-        this.serverReactor = serverReactor;
-        this.serverCommand = serverCommand;
+        super(ctx);
+        this.reactor = serverReactor;
+        this.command = serverCommand;
     }
 
     @Override
@@ -42,6 +36,6 @@ public class DefaultServerRPCCommandSuit extends AbstractHandlerSuit implements 
     @Override
     public IRPCServerCommandContext getBuzContext()
     {
-        return new DefaultRPCServerCommandContext(this.ctx);
+        return null;
     }
 }
