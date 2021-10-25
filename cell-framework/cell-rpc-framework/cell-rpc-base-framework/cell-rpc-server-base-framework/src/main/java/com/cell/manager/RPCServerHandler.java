@@ -12,15 +12,14 @@ import com.cell.services.impl.DefaultHandlerMutableChainExecutor;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-10-22 11:16
+ * @Date 创建时间：2021-10-26 05:27
  */
 @Manager(name = ManagerConstants.MANAGER_RPC_HANDLER)
-public class RPCHandlerManager extends AbstractReflectManager
+public class RPCServerHandler extends AbstractReflectManager
 {
-    private static final RPCHandlerManager instance = new RPCHandlerManager();
-    public static RPCHandlerManager getInstance(){
-        return instance;
-    }
+    private static final RPCServerHandler instance = new RPCServerHandler();
+
+
     @Override
     protected ChainExecutorFactory<? extends IListChainExecutor> factory()
     {

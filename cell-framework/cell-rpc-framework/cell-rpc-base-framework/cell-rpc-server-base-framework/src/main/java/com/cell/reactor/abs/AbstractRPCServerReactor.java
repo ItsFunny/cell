@@ -1,9 +1,23 @@
 package com.cell.reactor.abs;
 
+import com.cell.annotation.RPCServerCmdAnno;
+import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.cmd.IRPCServerCommand;
+import com.cell.constants.ProtocolConstants;
 import com.cell.context.InitCTX;
+import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.ICommand;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IRPCServerReactor;
+import com.cell.utils.ClassUtil;
+import com.cell.utils.CollectionUtils;
+import com.cell.utils.ReflectUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -18,12 +32,40 @@ public abstract class AbstractRPCServerReactor extends AbstractBaseCommandReacto
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.fillCmd(ctx);
+        Class<? extends ICommand>[] cmds = this.getClass().getAnnotation(RPCServerReactorAnno.class).cmds();
+        List<? extends Class<? extends IRPCServerCommand>> commandList = Stream.of(cmds).map(c ->
+                (Class<? extends IRPCServerCommand>) c).collect(Collectors.toList());
 
+        if (CollectionUtils.isEmpty(commandList))
+        {
+            return;
+        }
+        commandList.stream().forEach(p ->
+                this.registerCmd((ICommand) ReflectUtil.newInstance(p)));
     }
 
     @Override
     public void registerCmd(ICommand cmd)
     {
 
+    }
+
+    // FIXME ,这个需要删除
+    private void fillCmd(InitCTX ctx)
+    {
+        Set<Class<? extends IRPCServerCommand>> httpCommandList = (Set<Class<? extends IRPCServerCommand>>) ctx.getData().get(ProtocolConstants.INIT_CTX_CMDS);
+        if (CollectionUtils.isEmpty(httpCommandList)) return;
+        RPCServerReactorAnno anno = ClassUtil.getMergedAnnotation(this.getClass(), RPCServerReactorAnno.class);
+        httpCommandList.stream().forEach(c ->
+        {
+            RPCServerCmdAnno annotation = c.getAnnotation(RPCServerCmdAnno.class);
+            if (annotation == null)
+            {
+                throw new ProgramaException("asd");
+            }
+        });
+        List<Class<? extends IRPCServerCommand>> cmds = new ArrayList<>(httpCommandList);
+        ReflectUtil.modify(this.getClass(), RPCServerReactorAnno.class, "cmds", cmds.toArray(new Class<?>[cmds.size()]));
     }
 }

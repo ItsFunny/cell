@@ -11,4 +11,10 @@ package com.cell.channel;
 public class DefaultRPCServerChannel extends AbstractRPCServerChannel
 {
 
+    private static final DefaultRPCServerChannel instance = new DefaultRPCServerChannel();
+
+    public static DefaultRPCServerChannel getInstance()
+    {
+        return instance;
+    }
 }

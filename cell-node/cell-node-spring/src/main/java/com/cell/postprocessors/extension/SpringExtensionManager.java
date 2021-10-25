@@ -15,6 +15,7 @@ import com.cell.log.LogLevel;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.tool.Banner;
+import com.cell.util.FrameworkUtil;
 import com.cell.utils.IPUtils;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.cli.*;
@@ -88,7 +89,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             if (def instanceof GenericBeanDefinition)
             {
                 GenericBeanDefinition gbdef = (GenericBeanDefinition) def;
-                if (ISpringNodeExtension.class.isAssignableFrom(gbdef.getBeanClass()))
+                if (FrameworkUtil.checkIsExtension(gbdef.getBeanClass()))
                 {
                     // FIXME factory proxy
                     ISpringNodeExtension ex = (ISpringNodeExtension) gbdef.getBeanClass().newInstance();

@@ -1,13 +1,11 @@
 package com.cell.cmd.impl;
 
-import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.header.DefaultRPCHeader;
 import com.cell.protocol.*;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.JsonInput;
-import com.cell.utils.ClassUtil;
 import com.cell.utils.RPCUtils;
 import lombok.Data;
 
@@ -24,12 +22,10 @@ import java.io.IOException;
 @Data
 public abstract class AbstractRPCServerCommand extends AbstractCommand implements IRPCServerCommand
 {
-    private RPCServerCmdAnno cmd;
 
     public AbstractRPCServerCommand()
     {
         super();
-        this.cmd = (RPCServerCmdAnno) ClassUtil.getAnnotation(this.getClass(), RPCServerCmdAnno.class);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cell.annotation;
 
 import com.cell.annotations.Command;
+import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.abs.DefaultRPCServerReactor;
 import org.springframework.core.annotation.AliasFor;
 
@@ -25,4 +26,7 @@ public @interface RPCServerCmdAnno
 
     @AliasFor(annotation = Command.class, attribute = "protocol")
     String protocol();
+
+    @AliasFor(annotation = Command.class, attribute = "reactor")
+    Class<? extends ICommandReactor> reactor() default DefaultRPCServerReactor.class;
 }

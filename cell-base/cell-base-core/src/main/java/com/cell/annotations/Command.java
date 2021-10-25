@@ -16,7 +16,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command
 {
-
     boolean forceOverRide() default false;
 
     String protocol();

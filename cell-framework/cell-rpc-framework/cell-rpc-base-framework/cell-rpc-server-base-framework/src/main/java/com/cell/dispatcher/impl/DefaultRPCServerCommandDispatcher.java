@@ -29,7 +29,7 @@ import java.util.stream.Stream;
  */
 public class DefaultRPCServerCommandDispatcher extends AbstractRPCCommandDispatcher implements IRPCServerCommandDispatcher
 {
-    public DefaultRPCServerCommandDispatcher(IChannel<IHandler, IChainHandler> channel)
+    public DefaultRPCServerCommandDispatcher()
     {
     }
 

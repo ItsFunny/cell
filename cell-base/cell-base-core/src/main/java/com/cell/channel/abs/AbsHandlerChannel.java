@@ -45,4 +45,9 @@ public abstract class AbsHandlerChannel implements IChannel<IHandler, IChainHand
         this.pipeline.chainExecutor().execute(cmdCtx).onErrorResume((e) ->
                 this.exceptionCaught(cmdCtx, e)).subscribe();
     }
+
+    public void setPipeline(Pipeline<IHandler, IChainHandler> pipeline)
+    {
+        this.pipeline = pipeline;
+    }
 }

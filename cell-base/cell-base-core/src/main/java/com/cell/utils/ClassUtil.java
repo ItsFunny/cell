@@ -351,7 +351,6 @@ public class ClassUtil
         final Set<Class<?>> classes = new HashSet<>();
         try
         {
-
             final PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver(Thread.currentThread().getContextClassLoader());
             final String packagePath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + packageName.replace(".", "/") + "/**/*.class";
 

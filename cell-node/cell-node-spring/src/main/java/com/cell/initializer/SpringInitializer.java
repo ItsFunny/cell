@@ -181,10 +181,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     return false;
                 }
                 String s = clazz.getName().toLowerCase();
+                // TODO OPTIMIZE
                 if (clazz.isInterface() || clazz.equals(AbstractNodeExtension.class)
                         || clazz.equals(AbstractSpringNodeExtension.class) || s.startsWith("abs")
                         // 特殊指定该类,不对其进行特殊处理
-                        || clazz.equals(SpringBeanRegistry.class))
+                        || clazz.equals(SpringBeanRegistry.class) || ClassUtil.checkIsAbstract(clazz))
                 {
                     ret = false;
                     return ret;

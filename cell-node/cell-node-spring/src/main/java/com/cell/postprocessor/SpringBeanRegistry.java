@@ -5,7 +5,6 @@ import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.LifeCycle;
-import com.cell.bridge.ISpringNodeExtension;
 import com.cell.config.ConfigConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.constants.SpringBridge;
@@ -14,6 +13,7 @@ import com.cell.enums.EnumLifeCycle;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.postprocessors.extension.SpringExtensionManager;
+import com.cell.util.FrameworkUtil;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ExtensionClassUtil;
@@ -101,7 +101,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
         for (BeanDefinition def : defins)
         {
             Class<?> clz = ((GenericBeanDefinition) def).getBeanClass();
-            if (ISpringNodeExtension.class.isAssignableFrom(clz))
+            if (FrameworkUtil.checkIsExtension(clz))
             {
                 registry.registerBeanDefinition((String) def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
                 LOG.info(Module.CONTAINER_REGISTRY, "register node extension name {} and beanDefination {}", def.getAttribute(SpringBridge.BEAN_NAME_ATTR), def);
@@ -145,7 +145,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
             beanDefinition.setBeanClass(clz);
             String group = SpringBridge.defaultExtensionGroup;
             Map<String, BeanDefinition> definitionMap = this.pluginBeanDefinitions;
-            if (ISpringNodeExtension.class.isAssignableFrom(clz))
+            if (FrameworkUtil.checkIsExtension(clz))
             {
                 processExtension(beanDefinition);
             } else

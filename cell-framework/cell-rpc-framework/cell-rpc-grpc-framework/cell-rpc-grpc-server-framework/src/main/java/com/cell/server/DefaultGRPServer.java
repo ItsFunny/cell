@@ -139,14 +139,14 @@ public class DefaultGRPServer extends BaseRPCServer implements IGRPCServer
     protected void configureServices(final ServerBuilder builder) {
         final Set<String> serviceNames = new LinkedHashSet<>();
 
-        for (final GrpcServiceDefinition service : this.serviceList) {
-            final String serviceName = service.getDefinition().getServiceDescriptor().getName();
-            if (!serviceNames.add(serviceName)) {
-                throw new IllegalStateException("Found duplicate service implementation: " + serviceName);
-            }
-            log.info("Registered gRPC service: " + serviceName + ", bean: " + service.getBeanName() + ", class: "
-                    + service.getBeanClazz().getName());
-            builder.addService(service.getDefinition());
-        }
+//        for (final GrpcServiceDefinition service : this.serviceList) {
+//            final String serviceName = service.getDefinition().getServiceDescriptor().getName();
+//            if (!serviceNames.add(serviceName)) {
+//                throw new IllegalStateException("Found duplicate service implementation: " + serviceName);
+//            }
+//            log.info("Registered gRPC service: " + serviceName + ", bean: " + service.getBeanName() + ", class: "
+//                    + service.getBeanClazz().getName());
+//            builder.addService(service.getDefinition());
+//        }
     }
 }

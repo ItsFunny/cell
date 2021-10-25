@@ -13,6 +13,7 @@ import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.WebHandlerManager;
 import com.cell.models.Module;
 import com.cell.proxy.DefaultHttpProxy;
+import com.cell.proxy.IHttpProxy;
 import com.cell.reactor.ICommandReactor;
 import com.cell.root.Root;
 import com.cell.server.DefaultHttpServer;
@@ -37,13 +38,21 @@ import java.util.Set;
 public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
-    private IHttpDispatcher httpDispatcher;
+
     private IHttpServer httpServer;
+    private IHttpProxy httpProxy;
+    private IHttpDispatcher httpDispatcher;
 
     @Plugin
     public IDynamicControllerService dynamicControllerService()
     {
         return this.dynamicControllerService;
+    }
+
+    @Plugin
+    public IHttpProxy httpProxy()
+    {
+        return this.httpProxy;
     }
 
     @Plugin
@@ -78,7 +87,8 @@ public class HttpExtension extends AbstractSpringNodeExtension
         CommandLine cmd = ctx.getCommandLine();
         this.dynamicControllerService = new DynamicControllerServiceImpl();
         this.httpDispatcher = new DefaultHttpDispatcher(ReactorSelectorManager.getInstance());
-        this.httpServer = new DefaultHttpServer(new DefaultHttpProxy(this.httpDispatcher));
+        this.httpProxy = new DefaultHttpProxy(this.httpDispatcher);
+        this.httpServer = new DefaultHttpServer(this.httpProxy);
 
         String port = cmd.getOptionValue("port");
         if (!StringUtils.isEmpty(port))
@@ -91,7 +101,6 @@ public class HttpExtension extends AbstractSpringNodeExtension
     public void onStart(INodeContext ctx) throws Exception
     {
         Set<ICommandReactor> reactors = Root.getInstance().getReactor(ProtocolConstants.REACTOR_TYPE_HTTP);
-//        Collection<ICommandReactor> reactors = DefaultReactorHolder.getReactors();
         for (ICommandReactor reactor : reactors)
         {
             LOG.info(Module.HTTP_FRAMEWORK, "添加http Reactor,info:{}", reactor);

@@ -124,4 +124,14 @@ public class Root
     {
         this.reactorCommands = reactorCommands;
     }
+
+    public void start()
+    {
+        Set<IServer> servers = this.servers;
+        for (IServer server : servers)
+        {
+            server.start();
+        }
+    }
 }
+
