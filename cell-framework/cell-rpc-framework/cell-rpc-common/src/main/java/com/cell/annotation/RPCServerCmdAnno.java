@@ -15,14 +15,10 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Inherited
 // TODO
-@Command(commandId = 1, reactor = ICommandReactor.class)
+@Command(reactor = ICommandReactor.class, protocol = "/protocol")
 public @interface RPCServerCmdAnno
 {
-    //
-    float version() default 1.0f;
-    String func();
     @AliasFor(annotation = Command.class, attribute = "buzzClz")
     Class<?> buzzClz() default Void.class;
 }

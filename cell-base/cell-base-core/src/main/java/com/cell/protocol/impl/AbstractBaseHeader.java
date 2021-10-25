@@ -8,7 +8,6 @@ import com.cell.utils.CommandUtils;
 import lombok.Data;
 
 import java.io.IOException;
-import java.nio.ByteOrder;
 
 /**
  * @author Charlie
@@ -22,14 +21,14 @@ import java.nio.ByteOrder;
 public abstract class AbstractBaseHeader implements IHead
 {
     //    private ByteOrder byteOrder = ByteOrder.BIG_ENDIAN;
-    private short commandId;
+    private String protocol;
 
     private String sequenceId;
 
     public AbstractBaseHeader(ICommand command)
     {
 //         用于跟踪command
-        this.commandId = CommandUtils.getCommandAnno(command.getClass()).commandId();
+        this.protocol = CommandUtils.getCommandAnno(command.getClass()).protocol();
     }
 
     @Override
@@ -41,14 +40,14 @@ public abstract class AbstractBaseHeader implements IHead
 //        }else{
 //            this.byteOrder = ByteOrder.BIG_ENDIAN;
 //        }
-        this.commandId = input.readShort("commandId");
+        this.protocol = input.readString("protocol");
         this.sequenceId = input.readString("sequenceId");
     }
 
     @Override
     public void write(IOutputArchive output) throws IOException
     {
-        output.writeShort("commandId", commandId);
+        output.writeString("protocol", protocol);
         output.writeString("sequenceId", sequenceId);
     }
 }

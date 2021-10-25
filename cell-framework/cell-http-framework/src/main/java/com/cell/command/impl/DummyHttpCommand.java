@@ -13,7 +13,7 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-09-04 08:38
  */
-@HttpCmdAnno(uri = "/dummy", httpCommandId = Short.MAX_VALUE)
+@HttpCmdAnno(uri = "/dummy")
 public class DummyHttpCommand extends AbstractHttpCommand
 {
     @Override

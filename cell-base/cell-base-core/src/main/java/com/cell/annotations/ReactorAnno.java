@@ -1,11 +1,9 @@
 package com.cell.annotations;
 
+import com.cell.constants.ProtocolConstants;
 import com.cell.protocol.ICommand;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author joker
@@ -16,6 +14,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@Inherited
 @ActivePlugin
 public @interface ReactorAnno
 {
@@ -24,4 +23,6 @@ public @interface ReactorAnno
     Class<? extends ICommand>[] cmds() default {};
 
     String group() default "";
+
+    byte type() default ProtocolConstants.REACTOR_TYPE_HTTP;
 }

@@ -29,7 +29,7 @@ public class MixTest
         private String name;
     }
 
-    @HttpCmdAnno(uri = "/my/demo", httpCommandId = 1)
+    @HttpCmdAnno(uri = "/my/demo")
     public static class MyAA extends AbstractHttpCommand
     {
         @Override
@@ -53,7 +53,7 @@ public class MixTest
 //
 //    }
 
-    @HttpCmdAnno(uri = "/my/demo2", httpCommandId = 2)
+    @HttpCmdAnno(uri = "/my/demo2")
     public static class NonAsMappingCmd extends AbstractHttpCommand
     {
 

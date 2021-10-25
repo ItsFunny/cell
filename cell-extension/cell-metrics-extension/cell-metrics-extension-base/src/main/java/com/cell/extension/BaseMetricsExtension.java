@@ -26,6 +26,7 @@ public  class BaseMetricsExtension extends AbstractSpringNodeExtension
         return this.service;
     }
 
+
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {

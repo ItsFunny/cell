@@ -5,6 +5,7 @@ import com.cell.context.IRPCServerCommandContext;
 import com.cell.context.RPCServerCommandContext;
 import com.cell.protocol.impl.AbstractCommandSuit;
 import com.cell.reactor.IRPCServerReactor;
+import lombok.Data;
 
 /**
  * @author Charlie
@@ -14,9 +15,9 @@ import com.cell.reactor.IRPCServerReactor;
  * @Attention:
  * @Date 创建时间：2021-10-21 18:29
  */
+@Data
 public class DefaultServerRPCCommandSuit extends AbstractCommandSuit implements IRPCHandlerSuit
 {
-
     private IRPCServerReactor reactor;
     private Class<? extends IRPCServerCommand> command;
 

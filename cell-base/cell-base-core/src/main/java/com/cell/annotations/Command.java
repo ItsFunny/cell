@@ -3,10 +3,7 @@ package com.cell.annotations;
 import com.cell.protocol.ICommand;
 import com.cell.reactor.ICommandReactor;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * @author joker
@@ -19,7 +16,12 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command
 {
-    short commandId();
+
+    boolean forceOverRide() default false;
+
+    String protocol();
+
+//    short commandId();
 
     Class<?> buzzClz() default Void.class;
 

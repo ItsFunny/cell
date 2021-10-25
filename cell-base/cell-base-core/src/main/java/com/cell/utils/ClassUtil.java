@@ -22,6 +22,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigDecimal;
 import java.net.URL;
 import java.time.LocalDate;
@@ -937,9 +938,10 @@ public class ClassUtil
         return AnnotatedElementUtils.getMergedAnnotationAttributes(element, annotationType);
     }
 
-    public static <T extends Annotation> T getMergedAnnotation(Class<?> clz, Class<T> ac)
+
+    public static <T extends Annotation> T getMergedAnnotation(AnnotatedElement element, Class<T> ac)
     {
-        return AnnotatedElementUtils.getMergedAnnotation(clz, ac);
+        return AnnotatedElementUtils.getMergedAnnotation(element, ac);
     }
 //    public static void addAnnotationIfNotExist(Class<?> clz, Annotation annotationType)
 //    {
@@ -950,4 +952,17 @@ public class ClassUtil
 //        }
 //        new ByteBuddy().redefine(clz).annotateType()
 //    }
+
+    public static boolean checkIsAbstract(Class<?> c)
+    {
+        Class a;
+        try
+        {
+            a = Class.forName(c.getName());
+        } catch (ClassNotFoundException e)
+        {
+            return false;
+        }
+        return Modifier.isAbstract(a.getModifiers());
+    }
 }

@@ -28,7 +28,6 @@ import java.util.Map;
  */
 @HttpCmdAnno(
         uri = "/health/service/{appName}",
-        httpCommandId = 1,
         requestType = EnumHttpRequestType.HTTP_URL_GET,
         buzzClz = ServiceHealthCommand.ServiceHealthCommandBO.class,
         reactor = ServiceReactor.class)

@@ -18,20 +18,8 @@ public class HttpUriProtocolId implements CommandProtocolID
     }
 
     @Override
-    public float getVersion()
-    {
-        return 0;
-    }
-
-    @Override
     public String id()
     {
         return this.uri;
-    }
-
-    @Override
-    public String getGroup()
-    {
-        return null;
     }
 }

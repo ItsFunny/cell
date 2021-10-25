@@ -8,7 +8,6 @@ import com.cell.bo.BuzzContextBO;
 import com.cell.command.IBuzzExecutor;
 import com.cell.command.IHttpCommand;
 import com.cell.command.impl.AbsDeltaHttpCommand;
-import com.cell.dispatcher.DefaultReactorHolder;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;
@@ -16,6 +15,7 @@ import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.impl.AbsMapHttpDynamicCommandReactor;
+import com.cell.root.Root;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.ReflectUtil;
 import com.cell.utils.StringUtils;
@@ -268,7 +268,8 @@ public class CellApplication
             }
             // FIXME OPTIMIZE
             IMapDynamicHttpReactor reactor = this.createDynamicHttpReactor();
-            DefaultReactorHolder.addReactor(reactor);
+            Root.getInstance().addReactor(reactor);
+//            DefaultReactorHolder.addReactor(reactor);
             return reactor;
         }
 
@@ -414,7 +415,7 @@ public class CellApplication
                             .define("responseType", this.responseType)
                             .define("uri", this.uri)
                             .define("viewName", this.viewName)
-                            .define("httpCommandId", (short) commandId.getAndIncrement())
+//                            .define("httpCommandId", (short) commandId.getAndIncrement())
                             .define("buzzClz", this.buzzClz)
                             .build())
                     .make()

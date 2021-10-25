@@ -1,6 +1,5 @@
 package com.cell.initializer;
 
-import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotation.CellSpringHttpApplication;
@@ -218,7 +217,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                     return ret;
                 }
 
-                if (IBeanDefinitionRegistryPostProcessorAdapter.class.isAssignableFrom(clazz) && !AbstractBeanDefiinitionRegistry.class.equals(clazz))
+                if (IBeanDefinitionRegistryPostProcessorAdapter.class.isAssignableFrom(clazz) && !ClassUtil.checkIsAbstract(clazz))
                 {
                     if (clazz.getAnnotation(Exclude.class) == null)
                     {

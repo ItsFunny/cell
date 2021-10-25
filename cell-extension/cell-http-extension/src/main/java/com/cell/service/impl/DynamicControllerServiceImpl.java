@@ -9,6 +9,7 @@ import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ICommand;
+import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
@@ -121,11 +122,11 @@ public class DynamicControllerServiceImpl implements IDynamicControllerService, 
     }
 
     @Override
-    public void batchRegisterReactor(Collection<IHttpReactor> reactors)
+    public void batchRegisterReactor(Collection<ICommandReactor> reactors)
     {
-        for (IHttpReactor reactor : reactors)
+        for (ICommandReactor reactor : reactors)
         {
-            this.registerReactor(reactor);
+            this.registerReactor((IHttpReactor) reactor);
         }
     }
 

@@ -9,7 +9,6 @@ import com.cell.protocol.AbstractCommand;
 import com.cell.protocol.IBuzzContext;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IHead;
-import com.cell.reactor.IHttpReactor;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.JsonInput;
 import com.cell.util.HttpUtils;
@@ -32,7 +31,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
 {
     protected HttpCmdAnno httpCmdAnno;
     protected String mov;
-    protected IHttpReactor reactor;
 
     public AbstractHttpCommand()
     {

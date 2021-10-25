@@ -1,6 +1,5 @@
 package com.cell.suit;
 
-import com.cell.context.IRPCServerCommandContext;
 import com.cell.protocol.ICommandSuit;
 
 /**
@@ -13,5 +12,4 @@ import com.cell.protocol.ICommandSuit;
  */
 public interface IRPCHandlerSuit extends ICommandSuit
 {
-    IRPCServerCommandContext getBuzContext();
 }

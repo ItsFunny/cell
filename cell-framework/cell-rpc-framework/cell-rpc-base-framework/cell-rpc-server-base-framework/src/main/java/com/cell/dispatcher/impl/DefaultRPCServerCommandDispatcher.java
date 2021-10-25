@@ -8,7 +8,6 @@ import com.cell.context.InitCTX;
 import com.cell.context.RPCServerCommandContext;
 import com.cell.dispatcher.IRPCServerCommandDispatcher;
 import com.cell.dispatcher.abs.AbstractRPCCommandDispatcher;
-import com.cell.exceptions.ProgramaException;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
 import com.cell.protocol.*;
@@ -16,7 +15,6 @@ import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IRPCServerReactor;
 import com.cell.suit.DefaultServerRPCCommandSuit;
 import com.cell.utils.ClassUtil;
-import com.cell.utils.StringUtils;
 
 import java.util.Map;
 import java.util.stream.Stream;
@@ -59,17 +57,8 @@ public class DefaultRPCServerCommandDispatcher extends AbstractRPCCommandDispatc
         Class<? extends IRPCServerCommand>[] serverCommmands = anno.cmds();
         Stream.of(serverCommmands).filter(p -> ClassUtil.getMergedAnnotation(p, RPCServerCmdAnno.class) != null).forEach(serverCommmand ->
         {
-            String group = anno.group();
-            group = StringUtils.isEmpty(group) ? "/default" : group;
             RPCServerCmdAnno rpcServerCmdAnno = ClassUtil.getMergedAnnotation(serverCommmand, RPCServerCmdAnno.class);
-            float version = rpcServerCmdAnno.version();
-            String func = rpcServerCmdAnno.func();
-            if (StringUtils.isEmpty(func))
-            {
-                throw new ProgramaException("funcs 不可为空");
-            }
-            String protocolId = String.join("/", group, func, version + "");
-            protocolId = protocolId.replaceAll("//", "/");
+            String protocolId = rpcServerCmdAnno.protocol();
             DefaultStringCommandProtocolID stringCommandProtocolID = new DefaultStringCommandProtocolID(protocolId);
             CommandWrapper wrapper = new CommandWrapper();
             wrapper.setCmd(serverCommmand);

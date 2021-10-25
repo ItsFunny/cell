@@ -13,10 +13,7 @@ import com.cell.enums.EnumHttpResponseType;
 import com.cell.exception.HttpFramkeworkException;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import com.cell.protocol.AbstractBaseContext;
-import com.cell.protocol.CommandContext;
-import com.cell.protocol.ContextResponseWrapper;
-import com.cell.protocol.HttpCommandContext;
+import com.cell.protocol.*;
 import com.cell.reactor.IHttpReactor;
 import com.cell.util.HttpUtils;
 import com.cell.utils.ClassUtil;
@@ -123,7 +120,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         final String sequenceId = this.getCommandContext().getSummary().getSequenceId();
         LOG.info(Module.HTTP_FRAMEWORK, "response,uri={},method={},ip={},sequenceId={},cost={}", this.getCommandContext().getSummary().getProtocolId(), this.getHttpServerRequest().getInternalRequest().getMethod(), this.getIp(), sequenceId, consumeTime);
 
-        HttpServletResponse response = this.getServerResponse().getInternalResponse();
+        IServerResponse response = this.getServerResponse();
         if (wp.getHeaders() != null)
         {
             Map<String, String> headers = wp.getHeaders();
@@ -133,18 +130,18 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             }
         }
 
-        this.getCommandContext().getResponse().addHeader(ProtocolConstants.RESPONSE_HEADER_CODE, String.valueOf(wp.getStatus()));
-        this.getCommandContext().getResponse().addHeader(ProtocolConstants.RESPONSE_HEADER_MSG, wp.getMsg());
+        response.addHeader(ProtocolConstants.RESPONSE_HEADER_CODE, String.valueOf(wp.getStatus()));
+        response.addHeader(ProtocolConstants.RESPONSE_HEADER_MSG, wp.getMsg());
         if (null != wp.getOther() && ((HttpContextResponseBody) wp.getOther()).getStatus() != null)
         {
-            this.getCommandContext().getResponse().setStatus(((HttpContextResponseBody) wp.getOther()).getStatus().value());
+            response.setStatus(((HttpContextResponseBody) wp.getOther()).getStatus().value());
         }
 
         // 提前结束
         if (null != wp.getException())
         {
             LOG.error(Module.HTTP_FRAMEWORK, wp.getException(), "调用失败,from:{}", wp.getFrom());
-            this.getCommandContext().getResponse().fireResult(null);
+            response.fireResult(null);
             return;
         }
         if (null == this.httpCmdAnno)
@@ -165,7 +162,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         {
             LOG.error("sequenceId = {}, duplicated response for request {} ", sequenceId, wp.getCmd());
             // FIXME
-            this.getCommandContext().getResponse().fireFailure(new HttpFramkeworkException("duplicate result", ""));
+            response.fireFailure(new HttpFramkeworkException("duplicate result", ""));
             return;
         }
 
@@ -176,7 +173,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             {
                 LOG.erroring(Module.HTTP_FRAMEWORK, "没有设置viewName,cmd:{}", this);
                 // FIXME
-                this.getCommandContext().getResponse().fireFailure(new HttpFramkeworkException("zzz", "asd"));
+                response.fireFailure(new HttpFramkeworkException("zzz", "asd"));
                 return;
             }
             // FIXME ,添加前缀
@@ -185,7 +182,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             {
                 view.addObject(wp.getRet());
             }
-            this.getCommandContext().getResponse().fireResult(view);
+            response.fireResult(view);
             return;
         }
 
@@ -197,7 +194,7 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
                 this.success = true;
             } else if (this.programError(status))
             {
-                this.getCommandContext().getResponse().setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+                response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
             }
         } finally
         {
@@ -207,12 +204,12 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
             {
                 HandlerMethodReturnValueHandler<Object> handler = new XMLHandlerMethodReturnValuleHandler<>();
                 ret = handler.handler(ret);
-                this.getCommandContext().getResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE);
+                response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML_VALUE);
             } else
             {
-                this.getCommandContext().getResponse().setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                response.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             }
-            this.getCommandContext().getResponse().fireResult(ret);
+            response.fireResult(ret);
         }
     }
 

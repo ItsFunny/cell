@@ -52,6 +52,24 @@ public abstract class AbstractNodeExtension implements INodeExtension
         return this.getClass().getSimpleName();
     }
 
+
+    @Override
+    public Object loadConfiguration(INodeContext ctx) throws Exception
+    {
+        if (this.status >= INodeExtension.init)
+        {
+            return null;
+        }
+        return this.onLoadExtensionConfiguration(ctx);
+    }
+
+    // TODO, 修改为abs
+    protected Object onLoadExtensionConfiguration(INodeContext ctx) throws Exception
+    {
+        return null;
+    }
+
+
     protected abstract void onInit(INodeContext ctx) throws Exception;
 
     protected abstract void onStart(INodeContext ctx) throws Exception;

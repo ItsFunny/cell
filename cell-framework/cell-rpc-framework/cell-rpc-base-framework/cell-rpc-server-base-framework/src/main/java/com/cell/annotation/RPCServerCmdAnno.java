@@ -17,12 +17,12 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 // TODO
-@Command(commandId = 1, reactor = DefaultRPCServerReactor.class)
+@Command(protocol = "/protocol", reactor = DefaultRPCServerReactor.class)
 public @interface RPCServerCmdAnno
 {
-    //
-    float version() default 1.0f;
-    String func();
     @AliasFor(annotation = Command.class, attribute = "buzzClz")
     Class<?> buzzClz() default Void.class;
+
+    @AliasFor(annotation = Command.class, attribute = "protocol")
+    String protocol();
 }

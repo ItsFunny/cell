@@ -224,9 +224,9 @@ public class ReflectUtil
         {
             Annotation annotationToBeModified = element.getAnnotation(annotationClass);
             if (annotationToBeModified == null) return;
-
             InvocationHandler invocationHandler = Proxy.getInvocationHandler(annotationToBeModified);
-            Field memberValuesField = invocationHandler.getClass().getDeclaredField("memberValues");
+            Field memberValuesField;
+            memberValuesField = invocationHandler.getClass().getDeclaredField("memberValues");
             memberValuesField.setAccessible(true);
             Map<String, Object> memberValues = (Map<String, Object>) memberValuesField.get(invocationHandler);
             memberValues.put(key, value);

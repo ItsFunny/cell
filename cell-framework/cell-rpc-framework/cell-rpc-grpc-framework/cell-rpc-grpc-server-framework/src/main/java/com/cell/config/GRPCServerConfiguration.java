@@ -14,4 +14,9 @@ import lombok.Data;
 public class GRPCServerConfiguration
 {
 
+    private static final GRPCServerConfiguration instance = new GRPCServerConfiguration();
+
+
+    private String address;
+    private int port;
 }

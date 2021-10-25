@@ -1,9 +1,7 @@
 package com.cell.reactor;
 
 import com.cell.context.InitCTX;
-import com.cell.protocol.IBuzzContext;
 import com.cell.protocol.ICommand;
-import com.cell.protocol.IContext;
 
 /**
  * @author Charlie
@@ -21,12 +19,6 @@ public  abstract  class AbstractBuzCommandReactor extends AbstractBaseCommandRea
 
     }
 
-    @Override
-    public void execute(IContext ctx)
-    {
-        IBuzzContext context= (IBuzzContext) ctx;
-        ICommandReactor reactor = context.getReactor();
-    }
 
     @Override
     public void registerCmd(ICommand cmd)

@@ -4,12 +4,9 @@ import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.command.IHttpCommand;
 import com.cell.constant.HttpConstants;
-import com.cell.constants.ContextConstants;
-import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.ICommand;
-import com.cell.protocol.IContext;
 import com.cell.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.utils.ClassUtil;
@@ -40,8 +37,6 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
 //    protected Map<String, CommandWrapper> cmds = new HashMap<>(1);
 
 
-
-
     protected void done(HttpStatus status, Object ret)
     {
     }
@@ -59,28 +54,28 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
         private Class<? extends IHttpCommand> cmd;
     }
 
-    @Override
-    public void execute(IContext context)
-    {
-        DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
-
-        Class<? extends IHttpCommand> cmdClz = ctx.getCommand();
-        IHttpCommand cmd = null;
-        try
-        {
-            // FIXME optimize
-            cmd = cmdClz.newInstance();
-            ctx.setReactor(this);
-            cmd.execute(ctx);
-        } catch (Exception e)
-        {
-            ctx.response(this.createResponseWp()
-                    .status(ContextConstants.FAIL)
-                    .cmd(cmd)
-                    .exception(e)
-                    .build());
-        }
-    }
+//    @Override
+//    public void execute(IContext context)
+//    {
+//        DefaultHttpCommandContext ctx = (DefaultHttpCommandContext) context;
+//
+//        Class<? extends IHttpCommand> cmdClz = ctx.getCommand();
+//        IHttpCommand cmd = null;
+//        try
+//        {
+//            // FIXME optimize
+//            cmd = cmdClz.newInstance();
+//            ctx.setReactor(this);
+//            cmd.execute(ctx);
+//        } catch (Exception e)
+//        {
+//            ctx.response(this.createResponseWp()
+//                    .status(ContextConstants.FAIL)
+//                    .cmd(cmd)
+//                    .exception(e)
+//                    .build());
+//        }
+//    }
 
 
 //    @Override
@@ -120,7 +115,7 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     private void fillCmd(InitCTX ctx)
     {
         Set<Class<? extends IHttpCommand>> httpCommandList = (Set<Class<? extends IHttpCommand>>) ctx.getData().get(HttpConstants.INIT_CTX_CMDS);
-        ReactorAnno anno = (ReactorAnno) ClassUtil.mustGetAnnotation(this.getClass(), ReactorAnno.class);
+        ReactorAnno anno = ClassUtil.getMergedAnnotation(this.getClass(), ReactorAnno.class);
         String group = anno.group();
         if (CollectionUtils.isEmpty(httpCommandList)) return;
 

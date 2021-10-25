@@ -9,6 +9,7 @@ import com.cell.serialize.IInputArchive;
 import com.cell.serialize.JsonInput;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.RPCUtils;
+import lombok.Data;
 
 import java.io.IOException;
 
@@ -20,6 +21,7 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-10-22 04:08
  */
+@Data
 public abstract class AbstractRPCServerCommand extends AbstractCommand implements IRPCServerCommand
 {
     private RPCServerCmdAnno cmd;

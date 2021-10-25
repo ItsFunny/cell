@@ -2,6 +2,7 @@ package com.cell.postprocessors.extension;
 
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.config.AbstractInitOnce;
+import com.cell.configuration.RootConfiguration;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.context.SpringNodeContext;
@@ -158,6 +159,11 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
             if (!unimportedSet.contains(newEx.getName()))
             {
                 Stopwatch started = Stopwatch.createStarted();
+                Object o = newEx.loadConfiguration(ctx);
+                if (o != null)
+                {
+                    RootConfiguration.getInstance().put(newEx.getClass(), o);
+                }
                 newEx.init(ctx);
                 started.stop();
                 long elapsed = started.elapsed(TimeUnit.SECONDS);

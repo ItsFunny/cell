@@ -28,7 +28,7 @@ import java.util.Map;
  * @Attention:
  * @Date 创建时间：2021-09-22 21:30
  */
-@HttpCmdAnno(uri = "/catalog/services", httpCommandId = 1,
+@HttpCmdAnno(uri = "/catalog/services",
         reactor = ServiceReactor.class,
         requestType = EnumHttpRequestType.HTTP_URL_GET,
         buzzClz = AllServiceCommand.AllServiceCommandBO.class)

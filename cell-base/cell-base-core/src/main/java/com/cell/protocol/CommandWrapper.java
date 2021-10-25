@@ -24,6 +24,7 @@ public class CommandWrapper
     private Command commandAnno;
     private Class<? extends ICommand> cmd;
     private Method fallBackMethod;
+    private CommandProtocolID protocolID;
 
 
     public static Object defaultEmptyFallBackMethod(IServerRequest request, IServerResponse response, Throwable throwable)
@@ -36,6 +37,7 @@ public class CommandWrapper
     {
         this.cmd = cmd;
         this.commandAnno = ClassUtil.getMergedAnnotation(cmd, Command.class);
+        this.protocolID = new DefaultStringCommandProtocolID(this.commandAnno.protocol());
         String fallBackMethod = this.commandAnno.fallBackMethod();
         try
         {

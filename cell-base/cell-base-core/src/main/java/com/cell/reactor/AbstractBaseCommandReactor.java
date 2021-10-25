@@ -1,7 +1,11 @@
 package com.cell.reactor;
 
 import com.cell.config.AbstractInitOnce;
+import com.cell.constants.ContextConstants;
 import com.cell.protocol.ContextResponseWrapper;
+import com.cell.protocol.IBuzzContext;
+import com.cell.protocol.ICommand;
+import com.cell.protocol.IContext;
 
 /**
  * @author Charlie
@@ -18,4 +22,26 @@ public abstract class AbstractBaseCommandReactor extends AbstractInitOnce implem
         return ContextResponseWrapper.builder();
     }
 
+    @Override
+    public void execute(IContext context)
+    {
+        IBuzzContext ctx = (IBuzzContext) context;
+
+        Class<? extends ICommand> cmdClz = ctx.getCommandContext().getWrapper().getCmd();
+        ICommand cmd = null;
+        try
+        {
+            // FIXME optimize
+            cmd = cmdClz.newInstance();
+            ctx.setReactor(this);
+            cmd.execute(ctx);
+        } catch (Exception e)
+        {
+            ctx.response(this.createResponseWp()
+                    .status(ContextConstants.FAIL)
+                    .cmd(cmd)
+                    .exception(e)
+                    .build());
+        }
+    }
 }

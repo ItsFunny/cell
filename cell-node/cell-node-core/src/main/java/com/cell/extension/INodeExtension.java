@@ -28,6 +28,9 @@ public interface INodeExtension
 
     default boolean isRequired() { return true; }
 
+    Object loadConfiguration(INodeContext ctx) throws Exception;
+
+
     void init(INodeContext ctx) throws Exception;
 
     void start(INodeContext ctx) throws Exception;

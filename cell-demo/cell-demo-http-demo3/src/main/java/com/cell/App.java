@@ -56,7 +56,7 @@ public class App
     }
 
 
-    @HttpCmdAnno(uri = "/cmd1", httpCommandId = 1, reactor = Reactor1.class)
+    @HttpCmdAnno(uri = "/cmd1",  reactor = Reactor1.class)
     public static class Reactor1Cmd1 extends AbstractHttpCommand
     {
         @Override
@@ -68,7 +68,7 @@ public class App
         }
     }
 
-    @HttpCmdAnno(uri = "/reactor2cmd1", httpCommandId = 1, reactor = Reactor2.class)
+    @HttpCmdAnno(uri = "/reactor2cmd1", reactor = Reactor2.class)
     public static class Reactor2CMD1 extends AbstractHttpCommand
     {
         @Override
@@ -110,7 +110,7 @@ public class App
         private Integer age;
     }
 
-    @HttpCmdAnno(uri = "/cmd3", httpCommandId = 1,
+    @HttpCmdAnno(uri = "/cmd3",
             buzzClz = Cmd3Buz.class,
             requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = Reactor3.class)
     public static class cm3 extends AbstractHttpCommand
@@ -122,7 +122,7 @@ public class App
         }
     }
 
-    @HttpCmdAnno(uri = "/long", httpCommandId = 1, requestType = EnumHttpRequestType.HTTP_URL_GET)
+    @HttpCmdAnno(uri = "/long",  requestType = EnumHttpRequestType.HTTP_URL_GET)
     public static class LongCmd extends AbstractHttpCommand
     {
 

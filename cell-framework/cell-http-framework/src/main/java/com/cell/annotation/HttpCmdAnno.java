@@ -22,13 +22,14 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@Command(commandId = 1, reactor = DefaultHttpReactor.class)
+@Command(reactor = DefaultHttpReactor.class, protocol = "/protocol")
 public @interface HttpCmdAnno
 {
     EnumHttpRequestType requestType() default EnumHttpRequestType.HTTP_POST;
 
     EnumHttpResponseType responseType() default EnumHttpResponseType.HTTP_JSON;
 
+    @AliasFor(annotation = Command.class, attribute = "protocol")
     String uri();
 
     Module module() default Module.UNKNOWN;
@@ -37,8 +38,6 @@ public @interface HttpCmdAnno
     @AliasFor(annotation = Command.class, attribute = "buzzClz")
     Class<?> buzzClz() default Void.class;
 
-    @AliasFor(annotation = Command.class, attribute = "commandId")
-    short httpCommandId();
 
     @AliasFor(annotation = Command.class, attribute = "reactor")
     Class<? extends IHttpReactor> reactor() default DefaultHttpReactor.class;
