@@ -23,6 +23,7 @@ import io.grpc.netty.shaded.io.netty.channel.epoll.EpollServerDomainSocketChanne
 import io.netty.channel.unix.DomainSocketAddress;
 import org.springframework.beans.factory.BeanCreationException;
 
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -38,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServer
 {
     protected List<GrpcServerConfigurer> serverConfigurers;
+    private Server server;
 
     public DefaultGRPServer(IRPCServerProxy proxy)
     {
@@ -79,6 +81,30 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
             nettyServerBuilder = NettyServerBuilder.forAddress(new InetSocketAddress(InetAddresses.forString(address), port));
         }
         this.configure(nettyServerBuilder);
+
+        Server server = nettyServerBuilder.build();
+        this.server = server;
+        try
+        {
+            this.server.start();
+        } catch (IOException e)
+        {
+            throw new RuntimeException(e);
+        }
+        LOG.info(Module.GRPC, "grpc 启动, port:{}", configuration.getPort());
+        final Thread awaitThread = new Thread(() ->
+        {
+            try
+            {
+                this.server.awaitTermination();
+            } catch (final InterruptedException e)
+            {
+                Thread.currentThread().interrupt();
+            }
+        });
+        awaitThread.setName("grpc-server-container-");
+        awaitThread.setDaemon(false);
+        awaitThread.start();
     }
 
     private void configure(NettyServerBuilder nettyServerBuilder)

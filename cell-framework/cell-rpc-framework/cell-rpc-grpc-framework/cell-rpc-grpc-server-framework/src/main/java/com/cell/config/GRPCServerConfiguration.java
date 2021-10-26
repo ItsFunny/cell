@@ -34,7 +34,7 @@ public class GRPCServerConfiguration
     public static GRPCServerConfiguration defaultConfiguration()
     {
         GRPCServerConfiguration ret = new GRPCServerConfiguration();
-        ret.setAddress("*");
+        ret.setAddress("0.0.0.0");
         ret.setPort(12000);
         return ret;
     }
