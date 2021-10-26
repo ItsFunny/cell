@@ -19,6 +19,7 @@ public enum Module
     COMMON((short) 10001, "公共模块"),
     NETWORK((short) 10002, "network"),
     RPC((short) 10003, "rpc"),
+
     THIRD_PARTY((short) 10004, "third party"),
     COMMONS_CONFIG((short) 10009, "commons config"),
     CONTAINER_REGISTRY((short) 100, "container registry"),
@@ -35,6 +36,7 @@ public enum Module
     SD_PROMETHEUS((short) 111, "SD_PROMETHEIUS"),
     SHELL((short) 112, "SHELL"),
     RPC_FRAMEWORK((short) 113, "RPC_FRAMEWORK"),
+    GRPC((short)114,"GRPC"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

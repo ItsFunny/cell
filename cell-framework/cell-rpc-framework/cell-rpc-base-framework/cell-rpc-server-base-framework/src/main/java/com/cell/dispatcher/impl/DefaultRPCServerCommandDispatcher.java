@@ -1,5 +1,6 @@
 package com.cell.dispatcher.impl;
 
+import com.cell.annotation.RPCDispatcherAnno;
 import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.annotation.RPCServerReactorAnno;
 import com.cell.channel.IChannel;
@@ -27,6 +28,7 @@ import java.util.stream.Stream;
  * @Attention:
  * @Date 创建时间：2021-10-21 16:59
  */
+@RPCDispatcherAnno
 public class DefaultRPCServerCommandDispatcher extends AbstractRPCCommandDispatcher implements IRPCServerCommandDispatcher
 {
     public DefaultRPCServerCommandDispatcher()

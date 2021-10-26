@@ -30,7 +30,7 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
         return Arrays.asList(ReactorPostProcessor.class);
     }
 
-    protected abstract Class<? extends Annotation> getTargetAnnotationClasses();
+    protected abstract List<Class<? extends Annotation>> getTargetAnnotationClasses();
 
     @Override
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
@@ -48,14 +48,18 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
     @Override
     public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
-        Class<? extends Annotation> targetAnnotationClasses = this.getTargetAnnotationClasses();
-        if (targetAnnotationClasses == null)
+        List<Class<? extends Annotation>> targetAnnotationClasses = this.getTargetAnnotationClasses();
+        if (CollectionUtils.isEmpty(targetAnnotationClasses))
         {
             return;
         }
-        List<Class<?>> cmds = classListMap.get(targetAnnotationClasses);
-        if (CollectionUtils.isEmpty(cmds)) return;
-        Root.getInstance().addCommands(cmds);
+        for (Class<? extends Annotation> targetAnnotationClass : targetAnnotationClasses)
+        {
+            List<Class<?>> classes = classListMap.get(targetAnnotationClass);
+            if (CollectionUtils.isEmpty(classes)) continue;
+//            Root.getInstance().addCommands(classes);
+            Root.getInstance().addAnnotationClasses(targetAnnotationClass, classes);
+        }
     }
 
     @Override

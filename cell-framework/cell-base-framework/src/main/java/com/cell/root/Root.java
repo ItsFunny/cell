@@ -1,5 +1,6 @@
 package com.cell.root;
 
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.Command;
 import com.cell.annotations.ReactorAnno;
 import com.cell.constants.ProtocolConstants;
@@ -12,7 +13,11 @@ import com.cell.server.IServer;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
+import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -25,9 +30,11 @@ import java.util.function.Predicate;
  * @Date 创建时间：2021-10-25 15:05
  */
 @Data
-public class Root
+@ActivePlugin
+public class Root implements ApplicationContextAware
 {
     private static final Root instance = new Root();
+    private static ApplicationContext context;
 
 
     public static Root getInstance()
@@ -37,6 +44,10 @@ public class Root
 
     private Map<Byte, Set<ICommandReactor>> reactors = new HashMap<>();
     private Map<Class<? extends ICommandReactor>, Set<Class<? extends ICommand>>> reactorCommands = new HashMap<>();
+
+//    private Map<Class<? extends Annotation>, Set<Class<?>>> annotationClasses = new HashMap<>();
+//    private Map<Class<? extends Annotation>, Set<Class<?>>> asBeanAnnotation = new HashMap<>();
+//    private Map<Class<?>, Object> asBeanInstances = new HashMap<>();
 
     private Set<IDispatcher> dispatchers = new HashSet<>();
 
@@ -115,6 +126,44 @@ public class Root
         });
     }
 
+    public synchronized void addAnnotationClasses(Class<? extends Annotation> an, List<Class<?>> classes)
+    {
+        if (CollectionUtils.isEmpty(classes)) return;
+        Iterator<Class<?>> iterator = classes.iterator();
+        Set<Class<?>> asBeanClass = new HashSet<>();
+        while (iterator.hasNext())
+        {
+            Class<?> next = iterator.next();
+            if (ClassUtil.isAsBean(next))
+            {
+                iterator.remove();
+                asBeanClass.add(next);
+            }
+        }
+//        Set<Class<?>> classSet = this.annotationClasses.get(an);
+//        if (CollectionUtils.isEmpty(classSet))
+//        {
+//            classSet = new HashSet<>();
+//            this.annotationClasses.put(an, classSet);
+//        }
+//        classSet.addAll(classes);
+//
+//        if (asBeanClass.isEmpty())
+//        {
+//            return;
+//        }
+//        asBeanClass.forEach(p ->
+//        {
+//            Set<Class<?>> asBeanClz = this.asBeanAnnotation.get(an);
+//            if (CollectionUtils.isEmpty(asBeanClz))
+//            {
+//                asBeanClz = new HashSet<>();
+//                this.asBeanAnnotation.put(an, asBeanClz);
+//            }
+//            asBeanClz.add(p);
+//        });
+    }
+
     public Set<ICommandReactor> getReactor(Byte type)
     {
         return this.reactors.get(type);
@@ -128,10 +177,55 @@ public class Root
     public void start()
     {
         Set<IServer> servers = this.servers;
+        InitCTX ctx = new InitCTX();
         for (IServer server : servers)
         {
+            server.initOnce(ctx);
             server.start();
         }
+    }
+
+    public void flushAfterStart()
+    {
+
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
+    {
+        context = applicationContext;
+//        if (asBeanAnnotation.isEmpty())
+//        {
+//            return;
+//        }
+//        Set<Class<? extends Annotation>> classes = asBeanAnnotation.keySet();
+//        for (Class<? extends Annotation> aClass : classes)
+//        {
+//            Set<Class<?>> classSet = asBeanAnnotation.get(aClass);
+//            classSet.forEach(c ->
+//            {
+//                Object bean = applicationContext.getBean(c);
+//                this.asBeanInstances.put(c, bean);
+//            });
+//        }
+    }
+
+
+    public static <T> T getBean(Class<T> type)
+    {
+        return context.getBean(type);
+    }
+
+    public static  Object getBean(String beanName){
+        return context.getBean(beanName);
+    }
+
+    public static ApplicationContext getApplicationContext(){
+        return context;
+    }
+    public static Collection<String> getBeanByAnnotation(Class<? extends Annotation> a)
+    {
+        return Arrays.asList(context.getBeanNamesForAnnotation(a));
     }
 }
 

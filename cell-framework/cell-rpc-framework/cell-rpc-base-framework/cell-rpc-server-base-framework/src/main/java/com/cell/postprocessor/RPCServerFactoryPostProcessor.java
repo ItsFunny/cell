@@ -3,6 +3,8 @@ package com.cell.postprocessor;
 import com.cell.annotation.RPCServerCmdAnno;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Charlie
@@ -15,8 +17,9 @@ import java.lang.annotation.Annotation;
 public class RPCServerFactoryPostProcessor extends AbstractReactorFactoryPostProcessor
 {
     @Override
-    protected Class<? extends Annotation> getTargetAnnotationClasses()
+    protected List<Class<? extends Annotation>> getTargetAnnotationClasses()
     {
-        return RPCServerCmdAnno.class;
+//        return Arrays.asList(RPCServerAnno.class, RPCDispatcherAnno.class, RPCServerCmdAnno.class);
+        return Arrays.asList(RPCServerCmdAnno.class);
     }
 }

@@ -5,6 +5,8 @@ import com.cell.annotations.LifeCycle;
 import com.cell.enums.EnumLifeCycle;
 
 import java.lang.annotation.Annotation;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Charlie
@@ -18,9 +20,9 @@ import java.lang.annotation.Annotation;
 public class HttpReactorFactoryPostProcessor extends AbstractReactorFactoryPostProcessor
 {
     @Override
-    protected Class<? extends Annotation> getTargetAnnotationClasses()
+    protected List<Class<? extends Annotation>> getTargetAnnotationClasses()
     {
-        return HttpCmdAnno.class;
+        return Arrays.asList(HttpCmdAnno.class);
     }
 //    @Override
 //    public List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()

@@ -21,5 +21,11 @@
             <artifactId>cell-rpc-server-base-framework</artifactId>
             <version>${cell.version}</version>
     </dependency>
-</dependencies>
+        <dependency>
+            <groupId>io.grpc</groupId>
+            <artifactId>grpc-services</artifactId>
+            <version>1.29.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
         </project>

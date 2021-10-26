@@ -1,7 +1,5 @@
 package com.cell.protocol;
 
-import javax.swing.*;
-
 /**
  * @author Charlie
  * @When
@@ -16,13 +14,11 @@ public interface IContext
     default boolean done(){return false;}
     EmptyContext EMPTY_CONTEXT = new EmptyContext();
 
-
     class EmptyContext implements IContext
     {
         @Override
         public void discard()
         {
-
         }
     }
 }

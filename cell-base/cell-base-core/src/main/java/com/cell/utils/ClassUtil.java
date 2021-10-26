@@ -1,6 +1,7 @@
 package com.cell.utils;
 
 
+import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.CellOrder;
 import com.cell.concurrent.base.DefaultThreadFactory;
 import com.cell.constants.Constants;
@@ -963,5 +964,15 @@ public class ClassUtil
             return false;
         }
         return Modifier.isAbstract(a.getModifiers());
+    }
+
+    public static boolean isAsBean(Class<?> c)
+    {
+        ActivePlugin mergedAnnotation = getMergedAnnotation(c, ActivePlugin.class);
+        if (mergedAnnotation != null)
+        {
+            return true;
+        }
+        return false;
     }
 }

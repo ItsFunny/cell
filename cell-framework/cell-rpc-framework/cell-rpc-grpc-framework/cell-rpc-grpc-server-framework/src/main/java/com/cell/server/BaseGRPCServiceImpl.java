@@ -15,7 +15,6 @@ import com.cell.log.LOG;
 import com.cell.protocol.DefaultStringCommandProtocolID;
 import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
