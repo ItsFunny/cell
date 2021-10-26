@@ -2,13 +2,18 @@ package com.cell;
 
 import com.cell.annotation.CellSpringHttpApplication;
 import com.cell.annotation.HttpCmdAnno;
+import com.cell.annotation.RPCServerCmdAnno;
+import com.cell.annotation.RPCServerReactorAnno;
 import com.cell.annotations.*;
 import com.cell.application.CellApplication;
+import com.cell.command.AbstractGRPCServerCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
+import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.utils.RandomUtils;
 import lombok.Data;
@@ -56,7 +61,7 @@ public class App
     }
 
 
-    @HttpCmdAnno(uri = "/cmd1",  reactor = Reactor1.class)
+    @HttpCmdAnno(uri = "/cmd1", reactor = Reactor1.class)
     public static class Reactor1Cmd1 extends AbstractHttpCommand
     {
         @Override
@@ -122,7 +127,7 @@ public class App
         }
     }
 
-    @HttpCmdAnno(uri = "/long",  requestType = EnumHttpRequestType.HTTP_URL_GET)
+    @HttpCmdAnno(uri = "/long", requestType = EnumHttpRequestType.HTTP_URL_GET)
     public static class LongCmd extends AbstractHttpCommand
     {
 
@@ -137,6 +142,25 @@ public class App
             {
 
             }
+        }
+    }
+
+    @RPCServerReactorAnno
+    public static class RPCServerReactor1 extends AbstractRPCServerReactor
+    {
+
+    }
+
+
+    @RPCServerCmdAnno(protocol = "/demo/1.0.0", reactor = RPCServerReactor1.class)
+    public static class RPCServerCommand1 extends AbstractGRPCServerCommand
+    {
+
+        @Override
+        protected void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException
+        {
+            System.out.println(123);
+            ctx.response(this.createResponseWp().ret(123).build());
         }
     }
 

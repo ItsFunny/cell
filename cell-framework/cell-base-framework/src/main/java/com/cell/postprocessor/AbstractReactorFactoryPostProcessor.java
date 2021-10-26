@@ -4,6 +4,7 @@ import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.context.InitCTX;
 import com.cell.root.Root;
+import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
@@ -48,7 +49,12 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
     public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
         Class<? extends Annotation> targetAnnotationClasses = this.getTargetAnnotationClasses();
+        if (targetAnnotationClasses == null)
+        {
+            return;
+        }
         List<Class<?>> cmds = classListMap.get(targetAnnotationClasses);
+        if (CollectionUtils.isEmpty(cmds)) return;
         Root.getInstance().addCommands(cmds);
     }
 

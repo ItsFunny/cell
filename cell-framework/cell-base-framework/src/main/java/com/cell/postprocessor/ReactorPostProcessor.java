@@ -30,6 +30,6 @@ public class ReactorPostProcessor implements IBeanPostProcessortAdapter
         {
             Root.getInstance().addDispatcher((IDispatcher) bean);
         }
-        return null;
+        return bean;
     }
 }

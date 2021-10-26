@@ -10,7 +10,8 @@ import com.cell.proxy.DefaultRPCServerProxy;
 import com.cell.proxy.IProxy;
 import com.cell.proxy.IRPCServerProxy;
 import com.cell.server.DefaultGRPServer;
-import com.cell.server.IServer;
+import com.cell.server.IGRPCServer;
+import org.springframework.context.annotation.Bean;
 
 /**
  * @author Charlie
@@ -24,12 +25,12 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
 {
     private static final String grpcServerConfigModule = "env.shared.rpc.grpc.json";
 
-    private IServer server;
+    private IGRPCServer server;
     private IDispatcher dispatcher;
     private IRPCServerProxy proxy;
 
-    @Plugin(name = "grpcServer")
-    public IServer server()
+    @Bean(name = "grpcServer")
+    public IGRPCServer server()
     {
         return this.server;
     }

@@ -33,7 +33,6 @@ import org.springframework.core.annotation.AnnotationAttributes;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -47,7 +46,6 @@ import java.util.stream.Stream;
  */
 public class CellApplication
 {
-    private static final AtomicLong commandId = new AtomicLong(1);
     private SpringApplicationBuilder builder;
     private int port;
 
@@ -94,7 +92,13 @@ public class CellApplication
         ReflectUtil.modify(mainClz, CellSpringHttpApplication.class, "scanInterestAnnotations", collect.toArray(new Class<?>[collect.size()]));
 
 //        app.setWebApplicationType(WebApplicationType.REACTIVE);
-        return app.run(args);
+        try
+        {
+            return app.run(args);
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
 

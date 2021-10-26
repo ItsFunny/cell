@@ -1,2 +1,2 @@
-org.springframework.context.ApplicationContextInitializer=\
+com.cell.initializer.CellSpringInitializer=\
 com.cell.inilizer.RPCServerInilizer

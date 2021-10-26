@@ -1,5 +1,7 @@
 package com.cell.initializer;
 
+import java.lang.annotation.Annotation;
+
 /**
  * @author Charlie
  * @When
@@ -8,7 +10,8 @@ package com.cell.initializer;
  * @Attention:
  * @Date 创建时间：2021-09-16 19:08
  */
-public class SpringInitializerHook
+public interface CellSpringInitializer
 {
 
+    Class<? extends Annotation>[] getInterestAnnotation();
 }

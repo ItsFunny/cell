@@ -1,13 +1,38 @@
 package com.cell;
 
+import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.annotation.RPCServerCmdAnno;
+import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.cmd.impl.AbstractRPCServerCommand;
+import com.cell.context.IRPCServerCommandContext;
+import com.cell.reactor.abs.AbstractRPCServerReactor;
+import org.springframework.boot.SpringApplication;
+
+import java.io.IOException;
+
 /**
  * Hello world!
- *
  */
-public class App 
+@CellSpringHttpApplication
+public class App
 {
-    public static void main( String[] args )
+    @RPCServerReactorAnno()
+    public static class MyServerRPCReactor extends AbstractRPCServerReactor
     {
-        System.out.println( "Hello World!" );
+    }
+
+    @RPCServerCmdAnno(protocol = "/demo/1.0.0", reactor = MyServerRPCReactor.class)
+    public static class DemoRpcCommand1 extends AbstractRPCServerCommand
+    {
+        @Override
+        protected void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException
+        {
+            ctx.response(this.createResponseWp().ret("123").build());
+        }
+    }
+
+    public static void main(String[] args)
+    {
+        SpringApplication.run(App.class, args);
     }
 }

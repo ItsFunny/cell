@@ -20,6 +20,7 @@ import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.postprocessor.SpringBeanRegistry;
+import com.cell.util.FrameworkUtil;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;
@@ -49,6 +50,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 {
     private List<IBeanDefinitionRegistryPostProcessorAdapter> processors = new ArrayList<>();
 
+
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext)
     {
@@ -66,6 +68,15 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
     @Override
     protected void onInit(InitCTX ctx)
     {
+        Collection<CellSpringInitializer> initializers = FrameworkUtil.getSpringFactoriesInstances(CellSpringInitializer.class, new Class<?>[]{});
+        Set<Class<? extends Annotation>> interesetAnnotations = new HashSet<>();
+        for (CellSpringInitializer initializer : initializers)
+        {
+            Class<? extends Annotation>[] interestAnnotation = initializer.getInterestAnnotation();
+            interesetAnnotations.addAll(Arrays.asList(interestAnnotation));
+        }
+
+
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
         String rootPath = Constants.SCAN_ROOT;
@@ -77,13 +88,14 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
         Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
+        interesetAnnotations.addAll(Arrays.asList(interestAnnotations));
         Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();
 
 
         MultiFilter filter = new MultiFilter();
         filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
         filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
-        filter.interestAnnotations.addAll(Arrays.asList(interestAnnotations));
+        filter.interestAnnotations.addAll(interesetAnnotations);
 
         // FIXME ,需要重构该部分,使用reflections
         Set<Class<?>> activePlugins = ClassUtil.scanPackage(rootPath, filter);
