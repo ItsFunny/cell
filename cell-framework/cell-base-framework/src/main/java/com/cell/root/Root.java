@@ -216,13 +216,17 @@ public class Root implements ApplicationContextAware
         return context.getBean(type);
     }
 
-    public static  Object getBean(String beanName){
+    public static Object getBean(String beanName)
+    {
         return context.getBean(beanName);
     }
 
-    public static ApplicationContext getApplicationContext(){
+    public static ApplicationContext getApplicationContext()
+    {
         return context;
     }
+
+
     public static Collection<String> getBeanByAnnotation(Class<? extends Annotation> a)
     {
         return Arrays.asList(context.getBeanNamesForAnnotation(a));

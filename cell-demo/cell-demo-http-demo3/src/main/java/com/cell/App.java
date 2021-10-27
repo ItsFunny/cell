@@ -1,9 +1,6 @@
 package com.cell;
 
-import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.annotation.HttpCmdAnno;
-import com.cell.annotation.RPCServerCmdAnno;
-import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.annotation.*;
 import com.cell.annotations.*;
 import com.cell.application.CellApplication;
 import com.cell.command.AbstractGRPCServerCommand;
@@ -162,6 +159,13 @@ public class App
             System.out.println(123);
             ctx.response(this.createResponseWp().ret(123).build());
         }
+    }
+
+
+    @RPCClient
+    public static class RPCClient1
+    {
+
     }
 
     public static void main(String[] args)

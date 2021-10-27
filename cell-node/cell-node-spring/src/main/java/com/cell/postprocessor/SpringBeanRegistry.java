@@ -198,6 +198,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
                 this.registerPostProcessors(new HashSet<>(toRegistryPostProcessor));
             } catch (Exception e)
             {
+                LOG.erroring(Module.CONTAINER, "err", e);
                 throw new RuntimeException(e.getMessage(), e);
             }
         }

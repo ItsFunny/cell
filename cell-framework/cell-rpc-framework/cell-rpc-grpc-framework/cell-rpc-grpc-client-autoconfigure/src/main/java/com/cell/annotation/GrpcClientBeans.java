@@ -15,22 +15,22 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.core;
+package com.cell.annotation;
 
-import java.util.Collection;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-/**
- * An interface for a bean that will be used to find grpc codecs.
- *
- * @author Daniel Theuke (daniel.theuke@heuboe.de)
- */
-@FunctionalInterface
-public interface GrpcCodecDiscoverer {
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface GrpcClientBeans {
 
     /**
-     * Find the grpc codecs that should uses by the client/server.
+     * Helper field containing multiple {@link GrpcClientBean} definitions.
      *
-     * @return The grpc codecs that should be provided. Never null.
+     * @return An array with bean definitions to create.
      */
-    Collection<GrpcCodecDefinition> findGrpcCodecs();
+    GrpcClientBean[] value();
+
 }

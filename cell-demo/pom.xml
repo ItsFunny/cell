@@ -27,6 +27,7 @@
         <module>cell-demo-dubbo-nacos</module>
         <module>cell-demo-grpc</module>
         <module>cell-demo-rpc</module>
+        <module>cell-demo-rpc-client</module>
     </modules>
 
     <properties>

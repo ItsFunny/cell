@@ -3,24 +3,35 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell-rpc-grpc-framework</artifactId>
+        <artifactId>cell-demo</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-rpc-grpc-client-autoconfigure</artifactId>
+    <artifactId>cell-demo-rpc-client</artifactId>
 
-    <name>cell-rpc-grpc-client-autoconfigure</name>
+    <name>cell-demo-rpc-client</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-client-base-framework</artifactId>
+            <artifactId>cell-rpc-grpc-client-autoconfigure</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-grpc-client-framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
 </project>

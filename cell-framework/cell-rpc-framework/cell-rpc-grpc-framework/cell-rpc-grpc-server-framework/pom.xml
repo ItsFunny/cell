@@ -22,6 +22,11 @@
             <version>${cell.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-grpc-common</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.grpc</groupId>
             <artifactId>grpc-services</artifactId>
             <version>1.29.0</version>

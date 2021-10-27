@@ -28,6 +28,12 @@
             <version>${cell.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-client-base-framework</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+
         <!--<dependency>-->
         <!--<groupId>com.cell</groupId>-->
         <!--<artifactId>cell-discovery-nacos-extension</artifactId>-->

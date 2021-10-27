@@ -35,13 +35,11 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
     @Override
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
-
     }
 
     @Override
     protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
     {
-
     }
 
     @Override
@@ -56,8 +54,7 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
         {
             List<Class<?>> classes = classListMap.get(targetAnnotationClass);
             if (CollectionUtils.isEmpty(classes)) continue;
-//            Root.getInstance().addCommands(classes);
-            Root.getInstance().addAnnotationClasses(targetAnnotationClass, classes);
+            Root.getInstance().addCommands(classes);
         }
     }
 

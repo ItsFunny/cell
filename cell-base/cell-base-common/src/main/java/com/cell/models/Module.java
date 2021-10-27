@@ -37,6 +37,7 @@ public enum Module
     SHELL((short) 112, "SHELL"),
     RPC_FRAMEWORK((short) 113, "RPC_FRAMEWORK"),
     GRPC((short)114,"GRPC"),
+    GRPC_CLIENT((short)116,"GRPC_CLIENT"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),
