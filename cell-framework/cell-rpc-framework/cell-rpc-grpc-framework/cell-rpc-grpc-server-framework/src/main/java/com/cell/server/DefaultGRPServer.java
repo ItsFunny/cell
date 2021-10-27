@@ -13,7 +13,7 @@ import com.cell.models.Module;
 import com.cell.proxy.IRPCServerProxy;
 import com.cell.root.Root;
 import com.cell.serverfactory.GrpcServerConfigurer;
-import com.cell.utils.GRPCUtils;
+import com.cell.utils.GrpcUtils;
 import com.google.common.collect.Lists;
 import com.google.common.net.InetAddresses;
 import io.grpc.*;
@@ -68,7 +68,7 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
         NettyServerBuilder nettyServerBuilder = null;
         if (address.startsWith(GRPCConstants.DOMAIN_SOCKET_ADDRESS_PREFIX))
         {
-            final String path = GRPCUtils.extractDomainSocketAddressPath(address);
+            final String path = GrpcUtils.extractDomainSocketAddressPath(address);
             nettyServerBuilder = NettyServerBuilder.forAddress(new DomainSocketAddress(path))
                     .channelType(EpollServerDomainSocketChannel.class)
                     .bossEventLoopGroup(new io.grpc.netty.shaded.io.netty.channel.epoll.EpollEventLoopGroup(1))
@@ -199,6 +199,7 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
             GRPCService grpcServiceAnnotation = Root.getApplicationContext().findAnnotationOnBean(beanName, GRPCService.class);
             serviceDefinition =
                     bindInterceptors(serviceDefinition, grpcServiceAnnotation, globalServerInterceptorRegistry);
+            definitions.add(new GrpcServiceDefinition(beanName, bindableService.getClass(), serviceDefinition));
             LOG.info(Module.GRPC, "Found gRPC service: " + serviceDefinition.getServiceDescriptor().getName() + ", bean: "
                     + beanName + ", class: " + bindableService.getClass().getName());
         }

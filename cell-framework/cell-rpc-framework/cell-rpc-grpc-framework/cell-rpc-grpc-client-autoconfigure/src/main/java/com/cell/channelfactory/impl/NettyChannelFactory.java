@@ -4,6 +4,7 @@ import com.cell.channelfactory.GrpcChannelConfigurer;
 import com.cell.config.GRPCConfiguration;
 import com.cell.config.GrpcChannelProperties;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
+import com.cell.nameresolver.StaticNameResolverProvider;
 import com.cell.utils.GrpcUtils;
 import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 import io.grpc.netty.shaded.io.netty.channel.epoll.EpollDomainSocketChannel;
@@ -38,15 +39,20 @@ public class NettyChannelFactory extends AbstractChannelFactory<NettyChannelBuil
         {
             address = URI.create(name);
         }
+        // TODO
         if (GrpcUtils.DOMAIN_SOCKET_ADDRESS_SCHEME.equals(address.getScheme()))
         {
             final String path = GrpcUtils.extractDomainSocketAddressPath(address.toString());
             return NettyChannelBuilder.forAddress(new DomainSocketAddress(path))
+                    .nameResolverFactory(new StaticNameResolverProvider())
                     .channelType(EpollDomainSocketChannel.class)
+                    .usePlaintext()
                     .eventLoopGroup(new EpollEventLoopGroup());
         } else
         {
             return NettyChannelBuilder.forTarget(address.toString())
+                    .nameResolverFactory(new StaticNameResolverProvider())
+                    .usePlaintext()
                     .defaultLoadBalancingPolicy(properties.getDefaultLoadBalancingPolicy());
         }
     }

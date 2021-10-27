@@ -1,6 +1,6 @@
 package com.cell.server;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.annotation.GRPCService;
 import com.cell.annotations.AutoPlugin;
 import com.cell.concurrent.base.Promise;
 import com.cell.couple.GRPCServerResponse;
@@ -27,7 +27,7 @@ import java.io.InputStream;
  * @Attention:
  * @Date 创建时间：2021-10-23 22:31
  */
-@ActivePlugin
+@GRPCService
 public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
 {
     @AutoPlugin

@@ -9,10 +9,16 @@ import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
+import com.cell.grpc.cluster.BaseGrpcGrpc;
+import com.cell.grpc.cluster.GrpcRequest;
+import com.cell.grpc.cluster.GrpcResponse;
+import com.cell.grpc.common.Envelope;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.utils.RandomUtils;
+import com.google.protobuf.ByteString;
+import io.grpc.stub.StreamObserver;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
@@ -162,10 +168,51 @@ public class App
     }
 
 
-    @RPCClient
+    @ActivePlugin
     public static class RPCClient1
     {
+        @GRPCClient(value = "static://127.0.0.1:12000")
+        BaseGrpcGrpc.BaseGrpcStub stub;
+    }
 
+    @ReactorAnno()
+    public static class RPCReactor extends AbstractHttpDymanicCommandReactor
+    {
+        @AutoPlugin
+        private RPCClient1 client1;
+    }
+
+    @HttpCmdAnno(uri = "/rpc", requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = RPCReactor.class)
+    public static class RpcCommand1 extends AbstractHttpCommand
+    {
+
+        @Override
+        protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
+        {
+            RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
+            GrpcRequest build = GrpcRequest.newBuilder().setEnvelope(Envelope.newBuilder().setPayload(ByteString.EMPTY).build()).build();
+            reactor.client1.stub.sendRequest(build, new StreamObserver<GrpcResponse>()
+            {
+                @Override
+                public void onNext(GrpcResponse value)
+                {
+                    System.out.println(value);
+                }
+
+                @Override
+                public void onError(Throwable t)
+                {
+                    System.out.println(t);
+                }
+
+                @Override
+                public void onCompleted()
+                {
+                    System.out.println("complete");
+
+                }
+            });
+        }
     }
 
     public static void main(String[] args)
