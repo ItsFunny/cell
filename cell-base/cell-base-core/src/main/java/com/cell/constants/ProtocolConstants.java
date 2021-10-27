@@ -17,4 +17,7 @@ public interface ProtocolConstants
     byte REACTOR_TYPE_HTTP = 1 << 0;
     byte REACTOR_TYPE_RPC_SERVER = 1 << 1;
     byte REACTOR_TYPE_RPC_CLIENT = 1 << 2;
+
+    byte SERIALIZE_JSON = 1 << 0;
+
 }

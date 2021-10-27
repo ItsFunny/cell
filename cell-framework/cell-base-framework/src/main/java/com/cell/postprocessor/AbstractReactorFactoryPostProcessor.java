@@ -36,7 +36,6 @@ public abstract class AbstractReactorFactoryPostProcessor extends AbstractBeanDe
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
     {
 
-
     }
 
     @Override
