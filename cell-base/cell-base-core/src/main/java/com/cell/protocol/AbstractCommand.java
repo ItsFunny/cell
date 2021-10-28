@@ -52,7 +52,7 @@ public abstract class AbstractCommand implements ICommand
         this.current = this;
         this.head = newHead();
     }
-
+    // TODO ,header 需要通过request中取
     protected abstract IHead newHead();
 
     // copy

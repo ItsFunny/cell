@@ -26,6 +26,7 @@ public @interface Command
 
     Class<? extends ICommandReactor> reactor();
 
+    // TODO ,删除
     Class<? extends ICommand> couple() default ICommand.class;
 
     boolean async() default false;
