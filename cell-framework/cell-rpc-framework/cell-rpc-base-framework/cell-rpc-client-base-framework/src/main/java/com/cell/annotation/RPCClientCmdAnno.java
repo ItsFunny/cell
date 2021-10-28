@@ -1,5 +1,7 @@
 package com.cell.annotation;
 
+import java.lang.annotation.*;
+
 /**
  * @author Charlie
  * @When
@@ -8,7 +10,12 @@ package com.cell.annotation;
  * @Attention:
  * @Date 创建时间：2021-10-28 15:09
  */
-public class RPCClientCmdAnno
+@Target({ElementType.TYPE, ElementType.FIELD, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+@Inherited
+public @interface RPCClientCmdAnno
 {
+    String protocol();
 
+    Class<?> responseType();
 }

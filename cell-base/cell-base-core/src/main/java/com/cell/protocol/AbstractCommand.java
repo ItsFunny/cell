@@ -1,21 +1,17 @@
 package com.cell.protocol;
 
 import com.cell.annotations.Command;
-import com.cell.annotations.Optional;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.constants.ContextConstants;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
-import com.cell.serialize.ISerializable;
 import com.cell.utils.CommandUtils;
+import com.cell.utils.ReflectUtil;
 import lombok.Data;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,6 +48,7 @@ public abstract class AbstractCommand implements ICommand
         this.current = this;
         this.head = newHead();
     }
+
     // TODO ,header 需要通过request中取
     protected abstract IHead newHead();
 
@@ -119,42 +116,14 @@ public abstract class AbstractCommand implements ICommand
 
     protected Object newInstance(IBuzzContext ctx, Class<?> bzClz) throws Exception
     {
-        Object instance = null;
         IInputArchive inputArchive = this.getInputArchiveFromCtx(ctx);
-        if (ISerializable.class.isAssignableFrom(bzClz))
-        {
-            instance = bzClz.newInstance();
-            ((ISerializable) instance).read(inputArchive);
-        } else
-        {
-            instance = this.reflectFill(bzClz, inputArchive);
-        }
-        return instance;
+        return ReflectUtil.instanceFill(bzClz, inputArchive);
     }
 
     protected abstract IInputArchive getInputArchiveFromCtx(IBuzzContext c) throws Exception;
 
     protected abstract void doExecute(IBuzzContext ctx, Object bo) throws IOException;
 
-    protected Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
-    {
-        Field[] fields = clz.getDeclaredFields();
-        BeanWrapper beanWrapper = new BeanWrapperImpl(clz);
-        for (Field field : fields)
-        {
-            String name = field.getName();
-            if (name.startsWith("abs")) continue;
-            Optional annotation = field.getAnnotation(Optional.class);
-            if (annotation == null)
-            {
-                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
-            } else
-            {
-                beanWrapper.setPropertyValue(name, inputArchive.readStringNullable(name));
-            }
-        }
-        return beanWrapper.getWrappedInstance();
-    }
 
     protected ContextResponseWrapper.ContextResponseWrapperBuilder createResponseWp()
     {

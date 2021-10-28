@@ -33,7 +33,7 @@ public class CommandDefferResultHook extends AbstractHttpCommandHook
 //    }
 
     @Override
-    protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
+    protected Mono<Void> doHook(IHttpCommandContext ctx, IChainHook hook)
     {
         ctx.setIp(HttpUtils.getIpAddress(ctx.getHttpRequest()));
         DeferredResult<Object> result = ctx.getResult();

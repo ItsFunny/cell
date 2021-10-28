@@ -40,7 +40,6 @@ public abstract class AbstractRPCServerCommand extends AbstractCommand implement
 
     }
 
-
     @Override
     protected IInputArchive getInputArchiveFromCtx(IBuzzContext c) throws Exception
     {

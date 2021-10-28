@@ -25,7 +25,7 @@ import reactor.core.publisher.Mono;
  */
 @ManagerNode(group = ManagerConstants.MANAGER_WEB_HANDLER, name = "web")
 @CellOrder(value = OrderConstants.MAX_ORDER)
-public class DefaultHttpWebHandler extends AbstractHttpHandler
+public class DefaultHttpWebHandlerNode extends AbstractHttpHandler
 {
     @AutoPlugin
     private IHttpExceptionResolver exceptionResolver;

@@ -36,8 +36,9 @@ public enum Module
     SD_PROMETHEUS((short) 111, "SD_PROMETHEIUS"),
     SHELL((short) 112, "SHELL"),
     RPC_FRAMEWORK((short) 113, "RPC_FRAMEWORK"),
-    GRPC((short)114,"GRPC"),
-    GRPC_CLIENT((short)116,"GRPC_CLIENT"),
+    GRPC((short) 114, "GRPC"),
+    GRPC_CLIENT((short) 116, "GRPC_CLIENT"),
+    HOOK((short) 117, "HOOK"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

@@ -15,15 +15,14 @@ import reactor.core.publisher.Mono;
  * @Attention:
  * @Date 创建时间：2021-10-22 13:03
  */
-@ManagerNode(group = ManagerConstants.MANAGER_RPC_HANDLER)
-public class DefaultRPCServerLogicHandler extends AbstractRPCServerCmdHandler
+@ManagerNode(group = ManagerConstants.MANAGER_RPC_SERVER_HANDLER)
+public class DefaultRPCServerLogicHandlerNode extends AbstractRPCServerCmdHandler
 {
 
     @Override
     protected Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor)
     {
         IRPCHandlerSuit suit = (IRPCHandlerSuit) context;
-        System.out.println(suit);
-        return executor.execute(context);
+        return executor.execute(suit.getBuzContext()).then(executor.execute(context));
     }
 }

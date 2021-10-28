@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 public class CommandExecuteHook extends AbstractHttpCommandHook
 {
     @Override
-    protected Mono<Void> onHook(IHttpCommandContext ctx, IChainHook hook)
+    protected Mono<Void> doHook(IHttpCommandContext ctx, IChainHook hook)
     {
         IHttpReactor reactor = ctx.getHttpReactor();
         reactor.execute(ctx);

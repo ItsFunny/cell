@@ -1,7 +1,13 @@
 package com.cell.utils;
 
+import com.cell.annotations.Optional;
 import com.cell.exceptions.ProgramaException;
+import com.cell.serialize.IInputArchive;
+import com.cell.serialize.ISerializable;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.BeanWrapperImpl;
 
+import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.Arrays;
@@ -349,5 +355,39 @@ public class ReflectUtil
         return false;
     }
 
+    public static Object instanceFill(Class<?> bzClz, IInputArchive inputArchive) throws Exception
+    {
+        Object instance = null;
+        if (ISerializable.class.isAssignableFrom(bzClz))
+        {
+            instance = bzClz.newInstance();
+            ((ISerializable) instance).read(inputArchive);
+        } else
+        {
+            instance = reflectFill(bzClz, inputArchive);
+        }
+        return instance;
+    }
+
+    private static Object reflectFill(Class<?> clz, IInputArchive inputArchive) throws IOException
+    {
+        Field[] fields = clz.getDeclaredFields();
+        BeanWrapper beanWrapper = new BeanWrapperImpl(clz);
+        for (Field field : fields)
+        {
+            String name = field.getName();
+            if (name.startsWith("abs")) continue;
+            Optional annotation = field.getAnnotation(Optional.class);
+            if (annotation == null)
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readString(name));
+            } else
+            {
+                beanWrapper.setPropertyValue(name, inputArchive.readStringNullable(name));
+            }
+        }
+        return beanWrapper.getWrappedInstance();
+
+    }
 }
 

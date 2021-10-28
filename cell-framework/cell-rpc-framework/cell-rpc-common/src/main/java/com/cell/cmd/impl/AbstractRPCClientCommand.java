@@ -1,7 +1,6 @@
 package com.cell.cmd.impl;
 
 import com.cell.cmd.IRPCClientCommand;
-import com.cell.constants.ProtocolConstants;
 
 /**
  * @author Charlie
@@ -13,11 +12,10 @@ import com.cell.constants.ProtocolConstants;
  */
 public abstract class AbstractRPCClientCommand implements IRPCClientCommand
 {
-    private byte serializeType = ProtocolConstants.SERIALIZE_JSON;
-
-    @Override
-    public byte serializeType()
-    {
-        return this.serializeType;
-    }
+//    private byte serializeType = ProtocolConstants.SERIALIZE_JSON;
+//    @Override
+//    public byte serializeType()
+//    {
+//        return this.serializeType;
+//    }
 }

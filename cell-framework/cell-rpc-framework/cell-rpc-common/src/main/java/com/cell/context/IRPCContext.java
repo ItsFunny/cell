@@ -1,6 +1,5 @@
 package com.cell.context;
 
-import com.cell.protocol.CommandProtocolID;
 import com.cell.protocol.IBuzzContext;
 
 /**
@@ -13,7 +12,6 @@ import com.cell.protocol.IBuzzContext;
  */
 public interface IRPCContext extends IBuzzContext
 {
-    CommandProtocolID getProtocolID();
 
 //    void response(RPCContextResponseWrapper wp);
 

@@ -1,6 +1,4 @@
-package com.cell.hook;
-
-import com.cell.hooks.IHook;
+package com.cell.hooks;
 
 /**
  * @author Charlie
@@ -12,4 +10,5 @@ import com.cell.hooks.IHook;
  */
 public interface ICommandHook extends IHook
 {
+    void onExceptionCaught(Throwable e);
 }

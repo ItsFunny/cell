@@ -24,7 +24,6 @@ public class WebHandlerManager extends AbstractReflectManager
         return instance;
     }
 
-
     @Override
     public IReflectManager createOrDefault()
     {

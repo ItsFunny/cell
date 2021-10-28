@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagerNode(group = ManagerConstants.MANAGER_WEB_HANDLER, name = "metrics")
 @CellOrder(OrderConstants.MIN_ORDER)
-public class MetricsWebHandler extends AbstractHttpHandler
+public class MetricsWebHandlerNode extends AbstractHttpHandler
 {
     @Autowired
     private HistogramStator exceedDelayThresoldCount;

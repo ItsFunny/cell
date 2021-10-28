@@ -1,6 +1,8 @@
 package com.cell.hook;
 
 
+import com.cell.hooks.ICommandHook;
+
 /**
  * @author Charlie
  * @When
@@ -11,5 +13,5 @@ package com.cell.hook;
  */
 public interface IHttpCommandHook extends ICommandHook
 {
-    void onExceptionCaught(Throwable e);
+
 }
