@@ -15,8 +15,8 @@ import java.io.IOException;
 public interface ISerializable
 {
 
-    // 先序列化为json，然后再转byte[]
-    default byte[] toJsonBytes() throws IOException
+    // 默认为json
+    default byte[] toBytes() throws IOException
     {
         JsonOutput output = new JsonOutput().createArchive();
         this.write(output);
@@ -24,8 +24,11 @@ public interface ISerializable
     }
 
 
-//	default void fromBytes(byte[] bytes) throws IOException{
-////	}
+    default void fromBytes(byte[] bytes) throws IOException
+    {
+        JsonInput jsonInput = new JsonInput(bytes);
+        this.read(jsonInput);
+    }
 
     void read(IInputArchive input) throws IOException;
 

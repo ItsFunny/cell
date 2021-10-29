@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../target/classes" />
-    <output-test url="file://$MODULE_DIR$/../target/test-classes" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
@@ -12,7 +12,8 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cell-metrics-extension-common" />
     <orderEntry type="module" module-name="cell-http-extension" />
-    <orderEntry type="library" name="Maven: com.cell:cell-discovery-nacos-extension:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-server-framework" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />

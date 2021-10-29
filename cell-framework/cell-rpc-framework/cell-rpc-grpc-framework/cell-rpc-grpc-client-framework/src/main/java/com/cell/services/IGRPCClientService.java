@@ -1,6 +1,7 @@
 package com.cell.services;
 
 import com.cell.concurrent.base.Future;
+import com.cell.serialize.ISerializable;
 
 /**
  * @author Charlie
@@ -12,5 +13,5 @@ import com.cell.concurrent.base.Future;
  */
 public interface IGRPCClientService
 {
-    Future<Object> call(IGRPCClientRequest request);
+    Future<Object> call(ISerializable req);
 }

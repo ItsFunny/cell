@@ -8,8 +8,10 @@ import com.cell.models.Module;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.utils.CommandUtils;
+import com.cell.utils.JSONUtil;
 import com.cell.utils.ReflectUtil;
 import lombok.Data;
+import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -130,16 +132,18 @@ public abstract class AbstractCommand implements ICommand
         return this.baseComdResponseWrapper();
     }
 
-    // 解析参数
     @Override
     public void read(IInputArchive input) throws IOException
     {
-
+        String json = input.readString("json");
+        AbstractCommand ret = JSONUtil.json2Obj(json, this.getClass());
+        BeanUtils.copyProperties(ret, this);
     }
 
     @Override
     public void write(IOutputArchive output) throws IOException
     {
-
+        String jsonData = JSONUtil.obj2Json(this);
+        output.writeString("json", jsonData);
     }
 }

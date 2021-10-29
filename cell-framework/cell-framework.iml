@@ -8,6 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="cell-sdk-eventdriven" />
     <orderEntry type="module" module-name="cell-base-core" />
     <orderEntry type="module" module-name="cell-base-configuration" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
