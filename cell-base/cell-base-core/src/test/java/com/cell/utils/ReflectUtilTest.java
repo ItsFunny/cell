@@ -62,6 +62,12 @@ public class ReflectUtilTest
             {
                 return "zzzzzzzz";
             }
+
+            @Override
+            public byte type()
+            {
+                return 0;
+            }
         };
         Class<? extends AAAA> aClass = aa.getClass();
         ReflectUtil.modify(aClass, ReactorAnno.class, "group", "zzzzzzz");

@@ -20,7 +20,6 @@
         <module>cell-plugin</module>
         <module>cell-tools</module>
         <module>cell-sdk</module>
-        <module>cell-sdk-eventexecutor</module>
     </modules>
     <packaging>pom</packaging>
 

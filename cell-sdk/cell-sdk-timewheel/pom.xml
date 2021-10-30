@@ -18,7 +18,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-sdk-eventexecutor</artifactId>
+            <artifactId>cell-base-core</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>
