@@ -1,0 +1,745 @@
+2021-09-21 12:46:16,068 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2021-09-21 12:46:16,099 INFO o.a.j.JMeter: Loading user properties from: /usr/local/jmeter/bin/user.properties
+2021-09-21 12:46:16,100 INFO o.a.j.JMeter: Loading system properties from: /usr/local/jmeter/bin/system.properties
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: Copyright (c) 1998-2020 The Apache Software Foundation
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: Version 5.4
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: java.version=1.8.0_191
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: java.vm.name=Java HotSpot(TM) 64-Bit Server VM
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: os.name=Mac OS X
+2021-09-21 12:46:16,111 INFO o.a.j.JMeter: os.arch=x86_64
+2021-09-21 12:46:16,112 INFO o.a.j.JMeter: os.version=10.15.2
+2021-09-21 12:46:16,112 INFO o.a.j.JMeter: file.encoding=UTF-8
+2021-09-21 12:46:16,112 INFO o.a.j.JMeter: java.awt.headless=null
+2021-09-21 12:46:16,112 INFO o.a.j.JMeter: Max memory     =1073741824
+2021-09-21 12:46:16,112 INFO o.a.j.JMeter: Available Processors =8
+2021-09-21 12:46:16,120 INFO o.a.j.JMeter: Default Locale=English (EN)
+2021-09-21 12:46:16,120 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2021-09-21 12:46:16,120 INFO o.a.j.JMeter: JMeterHome=/usr/local/jmeter
+2021-09-21 12:46:16,121 INFO o.a.j.JMeter: user.dir  =/Users/joker/Java/cell/cell-demo/cell-demo-metrics
+2021-09-21 12:46:16,121 INFO o.a.j.JMeter: PWD       =/Users/joker/Java/cell/cell-demo/cell-demo-metrics
+2021-09-21 12:46:16,171 INFO o.a.j.JMeter: IP: 192.168.1.101 Name: joker FullName: 192.168.1.101
+2021-09-21 12:46:17,225 INFO o.a.j.JMeter: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
+2021-09-21 12:46:20,252 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2021-09-21 12:46:35,087 INFO o.a.j.s.FileServer: Default base='/Users/joker/Java/cell/cell-demo/cell-demo-metrics'
+2021-09-21 12:46:35,090 INFO o.a.j.g.a.Load: Loading file: /Users/joker/fsdownload/gm_xxx_30_0To256bench.jmx
+2021-09-21 12:46:35,091 INFO o.a.j.s.FileServer: Set new base='/Users/joker/fsdownload'
+2021-09-21 12:46:35,270 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2021-09-21 12:46:35,286 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2021-09-21 12:46:35,287 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2021-09-21 12:46:35,289 INFO o.a.j.s.SaveService: Loading file: /Users/joker/fsdownload/gm_xxx_30_0To256bench.jmx
+2021-09-21 12:46:35,289 WARN o.a.j.g.a.Load: Error reading file. java.io.FileNotFoundException: /Users/joker/fsdownload/gm_xxx_30_0To256bench.jmx (No such file or directory)
+2021-09-21 12:46:35,289 ERROR o.a.j.u.JMeterUtils: /Users/joker/fsdownload/gm_xxx_30_0To256bench.jmx (No such file or directory)
+2021-09-21 12:48:44,095 INFO o.a.j.g.a.Load: Loading file: /Users/joker/company/go/src/github.com/hyperledger/fabric-demo/压测/压测.jmx
+2021-09-21 12:48:44,099 INFO o.a.j.s.FileServer: Set new base='/Users/joker/company/go/src/github.com/hyperledger/fabric-demo/压测'
+2021-09-21 12:48:44,099 INFO o.a.j.s.SaveService: Loading file: /Users/joker/company/go/src/github.com/hyperledger/fabric-demo/压测/压测.jmx
+2021-09-21 12:48:44,157 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-09-21 12:48:44,157 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-09-21 12:48:44,157 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-09-21 12:48:44,157 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2021-09-21 12:48:44,158 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2021-09-21 12:48:44,158 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2021-09-21 12:48:44,564 INFO o.a.j.s.SampleResult: Note: Sample TimeStamps are START times
+2021-09-21 12:48:44,564 INFO o.a.j.s.SampleResult: sampleresult.default.encoding is set to ISO-8859-1
+2021-09-21 12:48:44,564 INFO o.a.j.s.SampleResult: sampleresult.useNanoTime=true
+2021-09-21 12:48:44,564 INFO o.a.j.s.SampleResult: sampleresult.nanoThreadSleep=5000
+2021-09-21 12:48:45,250 WARN o.a.j.g.a.Load: Unexpected error. java.lang.NullPointerException
+java.lang.NullPointerException: null
+	at java.util.ArrayDeque.addLast(ArrayDeque.java:249) ~[?:1.8.0_191]
+	at java.util.ArrayDeque.add(ArrayDeque.java:423) ~[?:1.8.0_191]
+	at org.apache.jmeter.gui.action.LoadRecentProject.updateRecentFileMenuItems(LoadRecentProject.java:125) ~[ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.util.JMeterMenuBar.setProjectFileLoaded(JMeterMenuBar.java:144) ~[ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.MainFrame.setProjectFileLoaded(MainFrame.java:330) ~[ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.GuiPackage.setTestPlanFile(GuiPackage.java:732) ~[ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.action.Load.loadProjectFile(Load.java:136) [ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.action.Load.loadProjectFile(Load.java:101) [ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.action.LoadDraggedFile.loadProject(LoadDraggedFile.java:37) [ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.MainFrame.openJmxFilesFromDragAndDrop(MainFrame.java:849) [ApacheJMeter_core.jar:5.4]
+	at org.apache.jmeter.gui.tree.JMeterTreeTransferHandler.importData(JMeterTreeTransferHandler.java:207) [ApacheJMeter_core.jar:5.4]
+	at javax.swing.TransferHandler$DropHandler.drop(TransferHandler.java:1544) [?:1.8.0_191]
+	at java.awt.dnd.DropTarget.drop(DropTarget.java:455) [?:1.8.0_191]
+	at javax.swing.TransferHandler$SwingDropTarget.drop(TransferHandler.java:1282) [?:1.8.0_191]
+	at sun.awt.dnd.SunDropTargetContextPeer.processDropMessage(SunDropTargetContextPeer.java:538) [?:1.8.0_191]
+	at sun.lwawt.macosx.CDropTargetContextPeer.processDropMessage(CDropTargetContextPeer.java:143) [?:1.8.0_191]
+	at sun.awt.dnd.SunDropTargetContextPeer$EventDispatcher.dispatchDropEvent(SunDropTargetContextPeer.java:852) [?:1.8.0_191]
+	at sun.awt.dnd.SunDropTargetContextPeer$EventDispatcher.dispatchEvent(SunDropTargetContextPeer.java:776) [?:1.8.0_191]
+	at sun.awt.dnd.SunDropTargetEvent.dispatch(SunDropTargetEvent.java:48) [?:1.8.0_191]
+	at java.awt.Component.dispatchEventImpl(Component.java:4744) [?:1.8.0_191]
+	at java.awt.Container.dispatchEventImpl(Container.java:2297) [?:1.8.0_191]
+	at java.awt.Component.dispatchEvent(Component.java:4711) [?:1.8.0_191]
+	at java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4904) [?:1.8.0_191]
+	at java.awt.LightweightDispatcher.processDropTargetEvent(Container.java:4609) [?:1.8.0_191]
+	at java.awt.LightweightDispatcher.dispatchEvent(Container.java:4471) [?:1.8.0_191]
+	at java.awt.Container.dispatchEventImpl(Container.java:2283) [?:1.8.0_191]
+	at java.awt.Window.dispatchEventImpl(Window.java:2746) [?:1.8.0_191]
+	at java.awt.Component.dispatchEvent(Component.java:4711) [?:1.8.0_191]
+	at java.awt.EventQueue.dispatchEventImpl(EventQueue.java:760) [?:1.8.0_191]
+	at java.awt.EventQueue.access$500(EventQueue.java:97) [?:1.8.0_191]
+	at java.awt.EventQueue$3.run(EventQueue.java:709) [?:1.8.0_191]
+	at java.awt.EventQueue$3.run(EventQueue.java:703) [?:1.8.0_191]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_191]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:74) [?:1.8.0_191]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:84) [?:1.8.0_191]
+	at java.awt.EventQueue$4.run(EventQueue.java:733) [?:1.8.0_191]
+	at java.awt.EventQueue$4.run(EventQueue.java:731) [?:1.8.0_191]
+	at java.security.AccessController.doPrivileged(Native Method) ~[?:1.8.0_191]
+	at java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:74) [?:1.8.0_191]
+	at java.awt.EventQueue.dispatchEvent(EventQueue.java:730) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:205) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:116) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:105) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:101) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:93) [?:1.8.0_191]
+	at java.awt.EventDispatchThread.run(EventDispatchThread.java:82) [?:1.8.0_191]
+2021-09-21 12:48:45,258 ERROR o.a.j.u.JMeterUtils: Unexpected error - see log for details
+2021-09-21 12:56:37,427 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 12:56:37,434 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 12:56:37,434 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 12:56:37,441 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2021-09-21 12:56:37,441 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2021-09-21 12:56:37,879 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 12:56:38,516 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 12:56:38,517 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 12:56:38,517 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 12:56:38,518 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 12:56:38,523 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 12:56:38,523 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 12:56:38,523 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 12:56:38,537 INFO o.a.j.p.h.s.HTTPJavaImpl: Maximum connection retries = 0
+2021-09-21 12:56:38,858 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 12:56:39,190 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 12:56:43,223 INFO o.a.j.g.a.Start: Shutting test down
+2021-09-21 12:56:43,253 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 12:56:43,254 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 12:56:43,254 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 12:56:47,999 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 12:56:48,021 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 12:56:48,023 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 12:56:48,028 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 12:56:48,028 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 12:56:48,029 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 12:56:48,029 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 12:56:48,029 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,029 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,030 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,030 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,030 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,030 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 12:56:48,033 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 12:56:48,033 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 12:56:48,033 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 12:56:48,033 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 12:56:48,034 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 13:46:27,186 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 13:46:27,194 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 13:46:27,206 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 13:46:27,913 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 13:46:27,913 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 13:46:27,913 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 13:46:27,914 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 13:46:27,917 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 13:46:27,917 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 13:46:27,917 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 13:46:28,252 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 13:46:28,582 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 13:47:38,900 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 13:47:38,913 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 13:47:38,914 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 13:47:38,914 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 13:47:38,914 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 13:47:38,914 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 13:47:38,914 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,914 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 13:47:38,915 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,915 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,915 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,915 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,915 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 13:47:38,916 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 13:47:38,916 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 13:47:38,916 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 13:47:38,916 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 13:47:38,917 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 14:00:05,410 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 14:00:05,416 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 14:00:05,427 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 14:00:05,834 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 14:00:05,835 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 14:00:05,835 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 14:00:05,835 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 14:00:05,837 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 14:00:05,837 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 14:00:05,838 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 14:00:06,173 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 14:00:06,506 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 14:01:00,204 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 14:01:00,244 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 14:01:00,245 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 14:01:00,245 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 14:01:00,245 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 14:01:00,246 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,246 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 14:01:00,247 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,247 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 14:01:00,247 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,247 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,248 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,248 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:01:00,249 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 14:01:00,249 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 14:01:00,249 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 14:01:00,250 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 14:01:00,250 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 14:01:08,100 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 14:01:08,100 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 14:01:08,106 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 14:01:08,203 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 14:01:08,203 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 14:01:08,203 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 14:01:08,203 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 14:01:08,205 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 14:01:08,206 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 14:01:08,206 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 14:01:08,543 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 14:01:08,872 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 14:02:11,442 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 14:02:11,461 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 14:02:11,461 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 14:02:11,461 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 14:02:11,461 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 14:02:11,461 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,461 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 14:02:11,461 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,462 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,462 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 14:02:11,462 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,463 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,463 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:02:11,463 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 14:02:11,463 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 14:02:11,464 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 14:02:11,464 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 14:02:11,464 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 14:18:35,885 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 14:18:35,903 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 14:18:35,911 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 14:18:36,566 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 14:18:36,567 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 14:18:36,568 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 14:18:36,568 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 14:18:36,589 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 14:18:36,591 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 14:18:36,610 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 14:18:36,926 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 14:18:37,262 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 14:20:10,967 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 14:20:11,015 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 14:20:11,017 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 14:20:11,018 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 14:20:11,018 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 14:20:11,023 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 14:20:11,023 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,025 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 14:20:11,025 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,025 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,025 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,025 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,026 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:20:11,028 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 14:20:11,028 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 14:20:11,030 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 14:20:11,030 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 14:20:11,030 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 14:20:17,199 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 14:20:17,202 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 14:20:17,208 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 14:20:17,432 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 14:20:17,432 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 14:20:17,432 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 14:20:17,432 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 14:20:17,434 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 14:20:17,434 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 14:20:17,435 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 14:20:17,771 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 14:20:18,106 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 14:23:34,016 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 14:23:34,040 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 14:23:34,041 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 14:23:34,042 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 14:23:34,042 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 14:23:34,043 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 14:23:34,043 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,044 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,044 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,044 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 14:23:34,044 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,044 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,044 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 14:23:34,046 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 14:23:34,046 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 14:23:34,048 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 14:23:34,048 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 14:23:34,049 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 14:47:08,575 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 14:47:08,584 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 14:47:08,602 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 14:47:09,705 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 14:47:09,705 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 14:47:09,705 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 14:47:09,705 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 14:47:09,712 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 14:47:09,712 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 14:47:09,712 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 14:47:10,049 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 14:47:10,378 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 15:21:32,296 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 15:21:32,371 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 15:21:32,374 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 15:21:32,375 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 15:21:32,375 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 15:21:32,379 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 15:21:32,380 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,380 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 15:21:32,386 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 15:21:32,386 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 15:21:32,386 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 15:21:32,391 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 15:21:32,393 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 15:42:45,825 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 15:42:45,834 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 15:42:45,919 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 15:42:54,457 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 15:42:54,458 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 15:42:54,458 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 15:42:54,459 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 15:42:54,485 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 15:42:54,485 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 15:42:54,489 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 15:42:54,538 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,538 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,555 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,555 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,658 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,658 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,676 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,676 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,719 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,719 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,740 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,741 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,762 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,762 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,805 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,805 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,821 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,821 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,822 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 15:42:54,831 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,832 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,834 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,834 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,841 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,841 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,846 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,846 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,859 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,859 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,865 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,865 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,875 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,875 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,878 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,878 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,883 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,883 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,885 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,885 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,895 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,895 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,895 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,895 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,903 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,903 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,903 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,903 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,914 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,914 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,914 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,914 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,919 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,919 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,929 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,929 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,931 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,931 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,943 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,943 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,969 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,969 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,973 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:54,973 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,014 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,014 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,023 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,023 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,034 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,034 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,051 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,051 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,085 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,085 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,096 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,096 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,105 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,105 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,107 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,107 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,116 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,117 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,121 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,121 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,156 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 15:42:55,201 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,201 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,227 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,227 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,240 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,240 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,240 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,240 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,246 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,246 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,262 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,262 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,265 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,265 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,265 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,265 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,276 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,277 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,278 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,279 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,283 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,283 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,288 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,288 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,289 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,290 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,296 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,296 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,310 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,333 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,365 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,365 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,365 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,365 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,388 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,389 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,396 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,396 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,396 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,396 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,404 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,405 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,410 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,411 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,415 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,415 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,415 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,415 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,429 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,429 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,432 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,432 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,432 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,432 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,447 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,451 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,451 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,451 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,451 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,547 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,548 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,586 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,586 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,586 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,586 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,693 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,693 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,699 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,699 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,704 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,705 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,711 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,711 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,731 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,731 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,731 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,731 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,736 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,736 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,741 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,741 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,742 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,742 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,758 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,758 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,758 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,758 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,780 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,780 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,836 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,836 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,837 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,837 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,847 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,847 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,847 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,847 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,849 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,849 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,860 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,860 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,866 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,866 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,869 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,869 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,940 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,956 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,956 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,956 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,956 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,956 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:55,957 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,138 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,138 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,160 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,160 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,182 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,182 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,189 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,189 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,189 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,189 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,243 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,243 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,287 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,287 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,295 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,295 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,295 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,295 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,311 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,311 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,343 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,343 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,345 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,345 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,499 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,499 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,551 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,551 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,551 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,551 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,683 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,683 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,683 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,683 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,684 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,684 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,724 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,724 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,724 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,725 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,725 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,725 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,803 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,803 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,804 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,804 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,829 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,829 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,876 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,876 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,876 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,876 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,893 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,893 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,920 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,945 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,945 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,971 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,971 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,971 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:56,971 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,003 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,003 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,188 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,189 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,190 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,190 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,192 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,192 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,203 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,249 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,259 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,260 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,277 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,278 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,282 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,282 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,321 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,321 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,321 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,322 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,322 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,322 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,357 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,357 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,358 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,357 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,358 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,358 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,425 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,426 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,441 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,441 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,447 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,447 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,470 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,470 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,484 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,484 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,484 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 15:42:57,484 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Unexpected end of file from server
+2021-09-21 17:41:07,714 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 17:41:07,755 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 17:41:07,761 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 17:41:07,763 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 17:41:07,764 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 17:41:07,764 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 17:41:07,765 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 17:41:07,766 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,766 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,766 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,766 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,768 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,768 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 17:41:07,774 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 17:41:07,774 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 17:41:07,774 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 17:41:07,778 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 17:41:07,781 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 17:41:55,448 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 17:41:55,450 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 17:41:55,486 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 17:41:56,562 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 17:41:56,562 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 17:41:56,562 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 17:41:56,562 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 17:41:56,569 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 17:41:56,569 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 17:41:56,569 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 17:41:56,907 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 17:41:57,233 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 18:14:14,334 INFO o.a.j.g.a.Start: Shutting test down
+2021-09-21 18:14:14,376 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 18:14:14,377 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 18:14:14,377 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 18:14:15,268 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 18:14:15,279 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 18:14:17,968 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 18:14:17,989 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 18:14:17,989 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 18:14:17,990 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 18:14:17,990 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 18:14:17,992 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 18:14:17,994 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 18:14:17,995 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 19:27:35,992 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 19:27:35,998 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 19:27:36,020 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 19:27:38,913 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 19:27:38,913 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 19:27:38,913 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 19:27:38,913 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 19:27:38,916 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 19:27:38,916 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 19:27:38,917 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 19:27:39,250 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 19:27:39,586 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 19:28:07,742 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 19:28:07,770 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 19:28:07,771 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 19:28:07,772 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 19:28:07,773 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 19:28:07,773 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,773 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,774 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 19:28:07,776 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 19:28:07,776 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,776 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,777 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 19:28:07,777 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 19:28:07,778 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,778 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:28:07,779 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 19:28:07,779 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 19:28:07,779 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
+2021-09-21 19:30:30,136 INFO o.a.j.e.StandardJMeterEngine: Running the test!
+2021-09-21 19:30:30,137 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2021-09-21 19:30:30,142 INFO o.a.j.g.u.JMeterMenuBar: setRunning(true, *local*)
+2021-09-21 19:30:30,279 INFO o.a.j.e.StandardJMeterEngine: Starting ThreadGroup: 1 : gm_600_30_5KTo20K
+2021-09-21 19:30:30,279 INFO o.a.j.e.StandardJMeterEngine: Starting 3 threads for group gm_600_30_5KTo20K.
+2021-09-21 19:30:30,279 INFO o.a.j.e.StandardJMeterEngine: Thread will continue on error
+2021-09-21 19:30:30,279 INFO o.a.j.t.ThreadGroup: Starting thread group... number=1 threads=3 ramp-up=1 delayedStart=false
+2021-09-21 19:30:30,281 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-1
+2021-09-21 19:30:30,281 INFO o.a.j.t.ThreadGroup: Started thread group number 1
+2021-09-21 19:30:30,281 INFO o.a.j.e.StandardJMeterEngine: All thread groups have been started
+2021-09-21 19:30:30,617 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-2
+2021-09-21 19:30:30,951 INFO o.a.j.t.JMeterThread: Thread started: gm_600_30_5KTo20K 1-3
+2021-09-21 19:35:29,414 INFO o.a.j.g.a.Start: Stopping test
+2021-09-21 19:35:29,440 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-2
+2021-09-21 19:35:29,442 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-2 sampler: 批量set
+2021-09-21 19:35:29,444 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-1
+2021-09-21 19:35:29,444 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-1 sampler: 批量set
+2021-09-21 19:35:29,445 INFO o.a.j.t.JMeterThread: Stopping: gm_600_30_5KTo20K 1-3
+2021-09-21 19:35:29,445 WARN o.a.j.t.JMeterThread: Interrupting: gm_600_30_5KTo20K 1-3 sampler: 批量set
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: readResponse: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,446 ERROR o.a.j.p.h.s.HTTPJavaImpl: Cause: java.net.SocketException: Socket closed
+2021-09-21 19:35:29,449 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-2
+2021-09-21 19:35:29,449 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-3
+2021-09-21 19:35:29,449 INFO o.a.j.t.JMeterThread: Thread finished: gm_600_30_5KTo20K 1-1
+2021-09-21 19:35:29,450 INFO o.a.j.e.StandardJMeterEngine: Notifying test listeners of end of test
+2021-09-21 19:35:29,451 INFO o.a.j.g.u.JMeterMenuBar: setRunning(false, *local*)
