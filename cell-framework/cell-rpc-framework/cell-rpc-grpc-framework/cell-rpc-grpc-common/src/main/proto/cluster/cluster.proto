@@ -17,6 +17,9 @@ message GrpcRequest {
 
 message GrpcResponse {
     string message = 1;
+    int64 code=2;
+    bytes data=3;
 }
+
 
 

@@ -3,6 +3,7 @@ package com.cell.server;
 import com.cell.annotation.GRPCService;
 import com.cell.annotations.AutoPlugin;
 import com.cell.concurrent.base.Promise;
+import com.cell.constants.ContextConstants;
 import com.cell.couple.GRPCServerResponse;
 import com.cell.couple.RPCServerRequest;
 import com.cell.grpc.cluster.BaseGrpcGrpc;
@@ -13,6 +14,9 @@ import com.cell.grpc.common.EnvelopeHeader;
 import com.cell.grpc.common.Payload;
 import com.cell.log.LOG;
 import com.cell.protocol.DefaultStringCommandProtocolID;
+import com.cell.serialize.ISerializable;
+import com.cell.utils.JSONUtil;
+import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;
 
 import java.io.ByteArrayInputStream;
@@ -31,6 +35,8 @@ public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
 {
     @AutoPlugin
     private IGRPCServer rpcServer;
+
+    // TODO add default serialize
 
     @Override
     public void sendRequest(GrpcRequest request, StreamObserver<GrpcResponse> responseObserver)
@@ -53,11 +59,26 @@ public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
         try
         {
             Object o = promise.get();
-            System.out.println(o);
+
+            byte[] bytes = null;
+            if (o instanceof ISerializable)
+            {
+                bytes = ((ISerializable) o).toBytes();
+            } else
+            {
+                bytes = JSONUtil.toJsonString(o).getBytes();
+            }
+            // TODO ,返回值序列化成字节流
+            GrpcResponse resp = GrpcResponse.newBuilder()
+                    .setCode(ContextConstants.SUCCESS)
+                    .setData(ByteString.copyFrom(bytes)).build();
+            responseObserver.onNext(resp);
         } catch (Exception e)
         {
             LOG.error("asd", e);
             responseObserver.onError(e);
+        } finally
+        {
             responseObserver.onCompleted();
         }
     }

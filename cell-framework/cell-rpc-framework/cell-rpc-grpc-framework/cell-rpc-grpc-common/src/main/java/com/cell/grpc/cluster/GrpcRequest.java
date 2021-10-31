@@ -3,6 +3,9 @@
 
 package com.cell.grpc.cluster;
 
+import com.cell.grpc.common.Envelope;
+import com.cell.grpc.common.EnvelopeOrBuilder;
+
 /**
  * Protobuf type {@code GrpcRequest}
  */
@@ -49,11 +52,11 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            com.cell.grpc.common.Envelope.Builder subBuilder = null;
+            Envelope.Builder subBuilder = null;
             if (envelope_ != null) {
               subBuilder = envelope_.toBuilder();
             }
-            envelope_ = input.readMessage(com.cell.grpc.common.Envelope.parser(), extensionRegistry);
+            envelope_ = input.readMessage(Envelope.parser(), extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(envelope_);
               envelope_ = subBuilder.buildPartial();
@@ -82,19 +85,19 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.cell.grpc.cluster.ClusterProto.internal_static_GrpcRequest_descriptor;
+    return ClusterProto.internal_static_GrpcRequest_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.cell.grpc.cluster.ClusterProto.internal_static_GrpcRequest_fieldAccessorTable
+    return ClusterProto.internal_static_GrpcRequest_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            GrpcRequest.class, Builder.class);
+            GrpcRequest.class, GrpcRequest.Builder.class);
   }
 
   public static final int ENVELOPE_FIELD_NUMBER = 1;
-  private com.cell.grpc.common.Envelope envelope_;
+  private Envelope envelope_;
   /**
    * <code>.common.Envelope envelope = 1;</code>
    * @return Whether the envelope field is set.
@@ -106,13 +109,13 @@ private static final long serialVersionUID = 0L;
    * <code>.common.Envelope envelope = 1;</code>
    * @return The envelope.
    */
-  public com.cell.grpc.common.Envelope getEnvelope() {
-    return envelope_ == null ? com.cell.grpc.common.Envelope.getDefaultInstance() : envelope_;
+  public Envelope getEnvelope() {
+    return envelope_ == null ? Envelope.getDefaultInstance() : envelope_;
   }
   /**
    * <code>.common.Envelope envelope = 1;</code>
    */
-  public com.cell.grpc.common.EnvelopeOrBuilder getEnvelopeOrBuilder() {
+  public EnvelopeOrBuilder getEnvelopeOrBuilder() {
     return getEnvelope();
   }
 
@@ -282,18 +285,18 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:GrpcRequest)
-      com.cell.grpc.cluster.GrpcRequestOrBuilder {
+      GrpcRequestOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.cell.grpc.cluster.ClusterProto.internal_static_GrpcRequest_descriptor;
+      return ClusterProto.internal_static_GrpcRequest_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.cell.grpc.cluster.ClusterProto.internal_static_GrpcRequest_fieldAccessorTable
+      return ClusterProto.internal_static_GrpcRequest_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              GrpcRequest.class, Builder.class);
+              GrpcRequest.class, GrpcRequest.Builder.class);
     }
 
     // Construct using com.cell.grpc.cluster.GrpcRequest.newBuilder()
@@ -326,7 +329,7 @@ private static final long serialVersionUID = 0L;
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.cell.grpc.cluster.ClusterProto.internal_static_GrpcRequest_descriptor;
+      return ClusterProto.internal_static_GrpcRequest_descriptor;
     }
 
     @Override
@@ -431,9 +434,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.cell.grpc.common.Envelope envelope_;
+    private Envelope envelope_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.cell.grpc.common.Envelope, com.cell.grpc.common.Envelope.Builder, com.cell.grpc.common.EnvelopeOrBuilder> envelopeBuilder_;
+        Envelope, Envelope.Builder, EnvelopeOrBuilder> envelopeBuilder_;
     /**
      * <code>.common.Envelope envelope = 1;</code>
      * @return Whether the envelope field is set.
@@ -445,9 +448,9 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Envelope envelope = 1;</code>
      * @return The envelope.
      */
-    public com.cell.grpc.common.Envelope getEnvelope() {
+    public Envelope getEnvelope() {
       if (envelopeBuilder_ == null) {
-        return envelope_ == null ? com.cell.grpc.common.Envelope.getDefaultInstance() : envelope_;
+        return envelope_ == null ? Envelope.getDefaultInstance() : envelope_;
       } else {
         return envelopeBuilder_.getMessage();
       }
@@ -455,7 +458,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.Envelope envelope = 1;</code>
      */
-    public Builder setEnvelope(com.cell.grpc.common.Envelope value) {
+    public Builder setEnvelope(Envelope value) {
       if (envelopeBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -472,7 +475,7 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Envelope envelope = 1;</code>
      */
     public Builder setEnvelope(
-        com.cell.grpc.common.Envelope.Builder builderForValue) {
+        Envelope.Builder builderForValue) {
       if (envelopeBuilder_ == null) {
         envelope_ = builderForValue.build();
         onChanged();
@@ -485,11 +488,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.Envelope envelope = 1;</code>
      */
-    public Builder mergeEnvelope(com.cell.grpc.common.Envelope value) {
+    public Builder mergeEnvelope(Envelope value) {
       if (envelopeBuilder_ == null) {
         if (envelope_ != null) {
           envelope_ =
-            com.cell.grpc.common.Envelope.newBuilder(envelope_).mergeFrom(value).buildPartial();
+            Envelope.newBuilder(envelope_).mergeFrom(value).buildPartial();
         } else {
           envelope_ = value;
         }
@@ -517,31 +520,31 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.Envelope envelope = 1;</code>
      */
-    public com.cell.grpc.common.Envelope.Builder getEnvelopeBuilder() {
-      
+    public Envelope.Builder getEnvelopeBuilder() {
+
       onChanged();
       return getEnvelopeFieldBuilder().getBuilder();
     }
     /**
      * <code>.common.Envelope envelope = 1;</code>
      */
-    public com.cell.grpc.common.EnvelopeOrBuilder getEnvelopeOrBuilder() {
+    public EnvelopeOrBuilder getEnvelopeOrBuilder() {
       if (envelopeBuilder_ != null) {
         return envelopeBuilder_.getMessageOrBuilder();
       } else {
         return envelope_ == null ?
-            com.cell.grpc.common.Envelope.getDefaultInstance() : envelope_;
+            Envelope.getDefaultInstance() : envelope_;
       }
     }
     /**
      * <code>.common.Envelope envelope = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.cell.grpc.common.Envelope, com.cell.grpc.common.Envelope.Builder, com.cell.grpc.common.EnvelopeOrBuilder> 
+        Envelope, Envelope.Builder, EnvelopeOrBuilder>
         getEnvelopeFieldBuilder() {
       if (envelopeBuilder_ == null) {
         envelopeBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.cell.grpc.common.Envelope, com.cell.grpc.common.Envelope.Builder, com.cell.grpc.common.EnvelopeOrBuilder>(
+            Envelope, Envelope.Builder, EnvelopeOrBuilder>(
                 getEnvelope(),
                 getParentForChildren(),
                 isClean());

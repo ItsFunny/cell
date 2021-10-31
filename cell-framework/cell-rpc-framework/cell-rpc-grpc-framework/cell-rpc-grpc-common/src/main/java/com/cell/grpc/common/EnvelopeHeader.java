@@ -94,7 +94,7 @@ private static final long serialVersionUID = 0L;
       internalGetFieldAccessorTable() {
     return EvelopeProto.internal_static_common_EnvelopeHeader_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            EnvelopeHeader.class, Builder.class);
+            EnvelopeHeader.class, EnvelopeHeader.Builder.class);
   }
 
   public static final int FLAG_FIELD_NUMBER = 1;
@@ -132,7 +132,7 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof String) {
       return (String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
+      com.google.protobuf.ByteString bs =
           (com.google.protobuf.ByteString) ref;
       String s = bs.toStringUtf8();
       protocol_ = s;
@@ -147,7 +147,7 @@ private static final long serialVersionUID = 0L;
       getProtocolBytes() {
     Object ref = protocol_;
     if (ref instanceof String) {
-      com.google.protobuf.ByteString b = 
+      com.google.protobuf.ByteString b =
           com.google.protobuf.ByteString.copyFromUtf8(
               (String) ref);
       protocol_ = b;
@@ -341,7 +341,7 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:common.EnvelopeHeader)
-      com.cell.grpc.common.EnvelopeHeaderOrBuilder {
+      EnvelopeHeaderOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return EvelopeProto.internal_static_common_EnvelopeHeader_descriptor;
@@ -352,7 +352,7 @@ private static final long serialVersionUID = 0L;
         internalGetFieldAccessorTable() {
       return EvelopeProto.internal_static_common_EnvelopeHeader_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              EnvelopeHeader.class, Builder.class);
+              EnvelopeHeader.class, EnvelopeHeader.Builder.class);
     }
 
     // Construct using com.cell.grpc.common.EnvelopeHeader.newBuilder()
@@ -517,7 +517,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFlag(long value) {
-      
+
       flag_ = value;
       onChanged();
       return this;
@@ -531,7 +531,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFlag() {
-      
+
       flag_ = 0L;
       onChanged();
       return this;
@@ -551,7 +551,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setLength(long value) {
-      
+
       length_ = value;
       onChanged();
       return this;
@@ -561,7 +561,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearLength() {
-      
+
       length_ = 0L;
       onChanged();
       return this;
@@ -592,7 +592,7 @@ private static final long serialVersionUID = 0L;
         getProtocolBytes() {
       Object ref = protocol_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         protocol_ = b;
@@ -611,7 +611,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
     throw new NullPointerException();
   }
-  
+
       protocol_ = value;
       onChanged();
       return this;
@@ -621,7 +621,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearProtocol() {
-      
+
       protocol_ = getDefaultInstance().getProtocol();
       onChanged();
       return this;
@@ -637,7 +637,7 @@ private static final long serialVersionUID = 0L;
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      
+
       protocol_ = value;
       onChanged();
       return this;

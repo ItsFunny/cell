@@ -7,17 +7,17 @@ import com.cell.command.AbstractGRPCServerCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.Future;
+import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.grpc.cluster.BaseGrpcGrpc;
-import com.cell.grpc.cluster.GrpcRequest;
-import com.cell.grpc.common.Envelope;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.rpc.client.ClientRequestDemo;
+import com.cell.rpc.client.ServerRPCResponse;
 import com.cell.services.impl.GRPCClientServiceImpl;
 import com.cell.utils.RandomUtils;
 import lombok.Data;
@@ -149,26 +149,6 @@ public class App
         }
     }
 
-    @RPCServerReactorAnno
-    public static class RPCServerReactor1 extends AbstractRPCServerReactor
-    {
-
-    }
-
-
-    @RPCServerCmdAnno(protocol = "/demo/1.0.0", reactor = RPCServerReactor1.class)
-    public static class RPCServerCommand1 extends AbstractGRPCServerCommand
-    {
-
-        @Override
-        protected void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException
-        {
-            System.out.println(123);
-            ctx.response(this.createResponseWp().ret(123).build());
-        }
-    }
-
-
     @ActivePlugin
     public static class RPCClient1
     {
@@ -186,6 +166,29 @@ public class App
         private GRPCClientServiceImpl im;
     }
 
+
+    @RPCServerReactorAnno
+    public static class RPCServerReactor1 extends AbstractRPCServerReactor
+    {
+
+    }
+
+
+    @RPCServerCmdAnno(protocol = "/demo/1.0.0", reactor = RPCServerReactor1.class)
+    public static class RPCServerCommand1 extends AbstractGRPCServerCommand
+    {
+
+        @Override
+        protected void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException
+        {
+            System.out.println(123);
+            ServerRPCResponse response = new ServerRPCResponse();
+            ctx.response(this.createResponseWp().status(ContextConstants.SUCCESS).ret(response).build());
+        }
+    }
+
+
+
     @HttpCmdAnno(uri = "/rpc", requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = RPCReactor.class)
     public static class RpcCommand1 extends AbstractHttpCommand
     {
@@ -196,7 +199,6 @@ public class App
             RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
             ClientRequestDemo demo = new ClientRequestDemo();
             Future<Object> call = reactor.im.call(demo);
-            GrpcRequest build = GrpcRequest.newBuilder().setEnvelope(Envelope.newBuilder().build()).build();
             try
             {
                 Object o1 = call.get();

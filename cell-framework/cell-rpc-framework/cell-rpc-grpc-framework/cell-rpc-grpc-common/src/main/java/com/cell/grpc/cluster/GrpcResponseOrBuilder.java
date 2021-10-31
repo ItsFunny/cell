@@ -18,4 +18,16 @@ public interface GrpcResponseOrBuilder extends
    */
   com.google.protobuf.ByteString
       getMessageBytes();
+
+  /**
+   * <code>int64 code = 2;</code>
+   * @return The code.
+   */
+  long getCode();
+
+  /**
+   * <code>bytes data = 3;</code>
+   * @return The data.
+   */
+  com.google.protobuf.ByteString getData();
 }

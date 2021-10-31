@@ -8,6 +8,8 @@ import com.cell.channelfactory.impl.NettyChannelFactory;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.postprocessor.GRPCClientPostProcessor;
 import com.cell.stub.impl.AsyncFutureStubFactory;
+import com.cell.stub.impl.BlockingStubFactory;
+import com.cell.stub.impl.FutureStubFactory;
 import io.grpc.CompressorRegistry;
 import io.grpc.DecompressorRegistry;
 import org.springframework.context.ApplicationContext;
@@ -28,13 +30,27 @@ import java.util.List;
 public class SpringClientConfiguration
 {
     @Bean
-    static GRPCClientPostProcessor grpcClientBeanPostProcessor(final ApplicationContext applicationContext) {
+    static GRPCClientPostProcessor grpcClientBeanPostProcessor(final ApplicationContext applicationContext)
+    {
         return new GRPCClientPostProcessor(applicationContext);
     }
+
     @Bean
     AsyncFutureStubFactory asyncStubFactory()
     {
         return new AsyncFutureStubFactory();
+    }
+
+    @Bean
+    BlockingStubFactory blockingStubFactory()
+    {
+        return new BlockingStubFactory();
+    }
+
+    @Bean
+    FutureStubFactory futureStubFactory()
+    {
+        return new FutureStubFactory();
     }
 
     @Bean

@@ -20,7 +20,7 @@ public interface EnvelopeOrBuilder extends
   /**
    * <code>.common.EnvelopeHeader header = 1;</code>
    */
-  com.cell.grpc.common.EnvelopeHeaderOrBuilder getHeaderOrBuilder();
+  EnvelopeHeaderOrBuilder getHeaderOrBuilder();
 
   /**
    * <code>.common.Payload payload = 2;</code>

@@ -3,6 +3,8 @@
 
 package com.cell.grpc.cluster;
 
+import com.cell.grpc.common.EvelopeProto;
+
 public final class ClusterProto {
   private ClusterProto() {}
   public static void registerAllExtensions(
@@ -35,15 +37,16 @@ public final class ClusterProto {
     String[] descriptorData = {
       "\n\025cluster/cluster.proto\032\025common/envelope" +
       ".proto\"1\n\013GrpcRequest\022\"\n\010envelope\030\001 \001(\0132" +
-      "\020.common.Envelope\"\037\n\014GrpcResponse\022\017\n\007mes" +
-      "sage\030\001 \001(\t28\n\010BaseGrpc\022,\n\013sendRequest\022\014." +
-      "GrpcRequest\032\r.GrpcResponse\"\000B\'\n\025com.cell" +
-      ".grpc.clusterB\014ClusterProtoP\001b\006proto3"
+      "\020.common.Envelope\";\n\014GrpcResponse\022\017\n\007mes" +
+      "sage\030\001 \001(\t\022\014\n\004code\030\002 \001(\003\022\014\n\004data\030\003 \001(\01428" +
+      "\n\010BaseGrpc\022,\n\013sendRequest\022\014.GrpcRequest\032" +
+      "\r.GrpcResponse\"\000B\'\n\025com.cell.grpc.cluste" +
+      "rB\014ClusterProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
-          com.cell.grpc.common.EvelopeProto.getDescriptor(),
+          EvelopeProto.getDescriptor(),
         });
     internal_static_GrpcRequest_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -56,8 +59,8 @@ public final class ClusterProto {
     internal_static_GrpcResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_GrpcResponse_descriptor,
-        new String[] { "Message", });
-    com.cell.grpc.common.EvelopeProto.getDescriptor();
+        new String[] { "Message", "Code", "Data", });
+    EvelopeProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

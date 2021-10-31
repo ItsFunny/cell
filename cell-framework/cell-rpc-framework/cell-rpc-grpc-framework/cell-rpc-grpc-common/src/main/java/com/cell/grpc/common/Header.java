@@ -69,15 +69,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
+    return EvelopeProto.internal_static_common_Header_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_fieldAccessorTable
+    return EvelopeProto.internal_static_common_Header_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            Header.class, Builder.class);
+            Header.class, Header.Builder.class);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -230,18 +230,18 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:common.Header)
-      com.cell.grpc.common.HeaderOrBuilder {
+      HeaderOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
+      return EvelopeProto.internal_static_common_Header_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_fieldAccessorTable
+      return EvelopeProto.internal_static_common_Header_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Header.class, Builder.class);
+              Header.class, Header.Builder.class);
     }
 
     // Construct using com.cell.grpc.common.Header.newBuilder()
@@ -268,7 +268,7 @@ private static final long serialVersionUID = 0L;
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
+      return EvelopeProto.internal_static_common_Header_descriptor;
     }
 
     @Override

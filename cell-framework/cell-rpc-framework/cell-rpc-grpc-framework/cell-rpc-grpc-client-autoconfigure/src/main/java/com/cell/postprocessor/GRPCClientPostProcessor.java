@@ -5,8 +5,7 @@ import com.cell.annotation.GRPCClient;
 import com.cell.annotation.GrpcClientBean;
 import com.cell.channelfactory.GRPCChannelFactory;
 import com.cell.inject.StubTransformer;
-import com.cell.stubfactory.FallbackStubFactory;
-import com.cell.stubfactory.StubFactory;
+import com.cell.stub.IStubFactory;
 import com.google.common.collect.Lists;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;
@@ -201,7 +200,7 @@ public class GRPCClientPostProcessor implements IBeanPostProcessortAdapter
 
     private AbstractStub<?> createStub(final Class<? extends AbstractStub<?>> stubClass, final Channel channel)
     {
-        final StubFactory factory = getStubFactories().stream()
+        final IStubFactory factory = getStubFactories().stream()
                 .filter(stubFactory -> stubFactory.isApplicable(stubClass))
                 .findFirst()
                 .orElseThrow(() -> new BeanInstantiationException(stubClass,
@@ -217,14 +216,13 @@ public class GRPCClientPostProcessor implements IBeanPostProcessortAdapter
         }
     }
 
-    private List<StubFactory> stubFactories = null;
+    private List<IStubFactory> stubFactories = null;
 
-    private List<StubFactory> getStubFactories()
+    private List<IStubFactory> getStubFactories()
     {
         if (this.stubFactories == null)
         {
-            this.stubFactories = new ArrayList<>(this.applicationContext.getBeansOfType(StubFactory.class).values());
-            this.stubFactories.add(new FallbackStubFactory());
+            this.stubFactories = new ArrayList<>(this.applicationContext.getBeansOfType(IStubFactory.class).values());
         }
         return this.stubFactories;
     }

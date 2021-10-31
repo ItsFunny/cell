@@ -3,6 +3,9 @@
 
 package com.cell.grpc.cluster;
 
+import com.cell.grpc.common.Envelope;
+import com.cell.grpc.common.EnvelopeOrBuilder;
+
 public interface GrpcRequestOrBuilder extends
     // @@protoc_insertion_point(interface_extends:GrpcRequest)
     com.google.protobuf.MessageOrBuilder {
@@ -16,9 +19,9 @@ public interface GrpcRequestOrBuilder extends
    * <code>.common.Envelope envelope = 1;</code>
    * @return The envelope.
    */
-  com.cell.grpc.common.Envelope getEnvelope();
+  Envelope getEnvelope();
   /**
    * <code>.common.Envelope envelope = 1;</code>
    */
-  com.cell.grpc.common.EnvelopeOrBuilder getEnvelopeOrBuilder();
+  EnvelopeOrBuilder getEnvelopeOrBuilder();
 }

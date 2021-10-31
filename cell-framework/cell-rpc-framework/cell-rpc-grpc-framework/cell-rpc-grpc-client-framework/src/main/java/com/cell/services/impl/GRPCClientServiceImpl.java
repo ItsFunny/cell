@@ -17,8 +17,11 @@ import com.cell.grpc.common.Payload;
 import com.cell.serialize.ISerializable;
 import com.cell.services.IGRPCClientService;
 import com.cell.timewheel.DefaultHashedTimeWheel;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.ByteString;
-import io.grpc.stub.StreamObserver;
+import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -39,7 +42,8 @@ public class GRPCClientServiceImpl implements IGRPCClientService
     @GRPCClient(
             "static://127.0.0.1:12000"
     )
-    private BaseGrpcGrpc.BaseGrpcStub stub;
+    private BaseGrpcGrpc.BaseGrpcFutureStub stub;
+    //    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
     private EventExecutor eventExecutor;
 
     private DefaultHashedTimeWheel timeWheel;
@@ -96,44 +100,124 @@ public class GRPCClientServiceImpl implements IGRPCClientService
                 .setPayload(payload)
                 .build();
         GrpcRequest request = GrpcRequest.newBuilder().setEnvelope(envelope).build();
-        ret = newPromise(anno);
-        if (anno.async())
+        return this.fire(request, anno);
+    }
+
+    private Future<Object> fire(GrpcRequest request, GRPCClientRequestAnno anno)
+    {
+//        try
+//        {
+//            GrpcResponse grpcResponse = this.stub.sendRequest(request);
+//        }catch (Exception e){
+//
+//        }
+        Promise<Object> promise;
+        boolean async = anno.async();
+        EventExecutor e;
+        if (async)
         {
-            this.getNextExecutor().execute(() ->
-            {
-                this.fire(request, anno, ret);
-            });
+            e = this.eventExecutor;
         } else
         {
-            this.fire(request, anno, ret);
+            e = DummyExecutor.getInstance();
         }
-//
+        promise = new BasePromise<>(e);
+        byte l = anno.timeOut();
+        if (l > 0)
+        {
+            this.timeWheel.addTask((t) ->
+            {
+                if (promise.isDone())
+                {
+                    return Mono.empty();
+                }
+                promise.tryFailure(new TimeoutException("asd"));
+                return Mono.empty();
+            }, TimeUnit.SECONDS, l);
+        }
+
+        if (async)
+        {
+            this.getNextExecutor().execute(() ->
+                    this.call(request, anno, promise, e));
+        } else
+        {
+            this.call(request, anno, promise, e);
+        }
+
+        return promise;
+    }
+
+    private void call(GrpcRequest request, GRPCClientRequestAnno anno, Promise<Object> promise, EventExecutor eventExecutor)
+    {
+        try
+        {
+            ListenableFuture<GrpcResponse> future = this.stub.sendRequest(request);
+            Futures.addCallback(future, new FutureCallback<GrpcResponse>()
+            {
+                @Override
+                public void onSuccess(@NullableDecl GrpcResponse result)
+                {
+                    try
+                    {
+                        promise.trySuccess(getRet(result, anno));
+                    } catch (Exception e)
+                    {
+                        promise.tryFailure(e);
+                    }
+                }
+
+                @Override
+                public void onFailure(Throwable t)
+                {
+                    promise.tryFailure(t);
+                }
+            }, eventExecutor);
+//            GrpcResponse response = this.stub.sendRequest(request);
+//            promise.trySuccess(this.getRet(response, anno));
+        } catch (Exception ee)
+        {
+            promise.tryFailure(ee);
+        }
+    }
+
+    private ISerializable getRet(GrpcResponse response, GRPCClientRequestAnno anno) throws Exception
+    {
+        Class<? extends ISerializable> aClass = anno.responseType();
+        ISerializable ret = null;
+        ret = aClass.newInstance();
+        ret.fromBytes(response.getData().toByteArray());
         return ret;
     }
 
-    private void fire(GrpcRequest request, GRPCClientRequestAnno anno, Promise<Object> promise)
+    private void async()
     {
-
-        this.stub.sendRequest(request, new StreamObserver<GrpcResponse>()
-        {
-            @Override
-            public void onNext(GrpcResponse value)
-            {
-                System.out.println(value);
-            }
-
-            @Override
-            public void onError(Throwable t)
-            {
-                promise.tryFailure(t);
-            }
-
-            @Override
-            public void onCompleted()
-            {
-                System.out.println("completed");
-            }
-        });
+//        ListenableFuture<GrpcResponse> responseListenableFuture = this.stub.sendRequest(request);
+//        Futures.addCallback(responseListenableFuture, new FutureCallback<GrpcResponse>()
+//        {
+//            @Override
+//            public void onSuccess(@NullableDecl GrpcResponse result)
+//            {
+//                // TODO verify
+//                Class<? extends ISerializable> aClass = anno.responseType();
+//                ISerializable ret = null;
+//                try
+//                {
+//                    ret = aClass.newInstance();
+//                    ret.fromBytes(result.getData().toByteArray());
+//                    promise.trySuccess(ret);
+//                } catch (Exception e)
+//                {
+//                    promise.tryFailure(new ProgramaException(e));
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t)
+//            {
+//                promise.tryFailure(t);
+//            }
+//        }, e);
     }
 
     private EventExecutor getNextExecutor()
@@ -141,31 +225,34 @@ public class GRPCClientServiceImpl implements IGRPCClientService
         return this.eventExecutor.next();
     }
 
-    private Promise<Object> newPromise(GRPCClientRequestAnno anno)
-    {
-        Promise<Object> ret;
-        boolean async = anno.async();
-        if (async)
-        {
-            ret = new BasePromise<>(this.eventExecutor);
-        } else
-        {
-            ret = new BasePromise<>(DummyExecutor.getInstance());
-        }
-        byte l = anno.timeOut();
-        if (l > 0)
-        {
-            this.timeWheel.addTask((t) ->
-            {
-                if (ret.isDone())
-                {
-                    return Mono.empty();
-                }
-                ret.tryFailure(new TimeoutException("asd"));
-                return Mono.empty();
-            }, TimeUnit.SECONDS, l);
-        }
-        return ret;
-    }
+//    private Couple<Promise<Object>, EventExecutor> newPromise(GRPCClientRequestAnno anno)
+//    {
+//        Promise<Object> ret;
+//        EventExecutor e;
+//        boolean async = anno.async();
+//        if (async)
+//        {
+//            ret = new BasePromise<>(this.eventExecutor);
+//            e = this.eventExecutor;
+//        } else
+//        {
+//            ret = new BasePromise<>(DummyExecutor.getInstance());
+//            e = DummyExecutor.getInstance();
+//        }
+//        byte l = anno.timeOut();
+//        if (l > 0)
+//        {
+//            this.timeWheel.addTask((t) ->
+//            {
+//                if (ret.isDone())
+//                {
+//                    return Mono.empty();
+//                }
+//                ret.tryFailure(new TimeoutException("asd"));
+//                return Mono.empty();
+//            }, TimeUnit.SECONDS, l);
+//        }
+//        return new Couple<>(ret, e);
+//    }
 
 }

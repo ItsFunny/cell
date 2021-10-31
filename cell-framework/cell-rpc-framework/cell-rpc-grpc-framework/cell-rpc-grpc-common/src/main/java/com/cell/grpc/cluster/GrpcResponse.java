@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private GrpcResponse() {
     message_ = "";
+    data_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @Override
@@ -55,6 +56,16 @@ private static final long serialVersionUID = 0L;
             message_ = s;
             break;
           }
+          case 16: {
+
+            code_ = input.readInt64();
+            break;
+          }
+          case 26: {
+
+            data_ = input.readBytes();
+            break;
+          }
           default: {
             if (!parseUnknownField(
                 input, unknownFields, extensionRegistry, tag)) {
@@ -84,7 +95,7 @@ private static final long serialVersionUID = 0L;
       internalGetFieldAccessorTable() {
     return ClusterProto.internal_static_GrpcResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            GrpcResponse.class, Builder.class);
+            GrpcResponse.class, GrpcResponse.Builder.class);
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 1;
@@ -98,7 +109,7 @@ private static final long serialVersionUID = 0L;
     if (ref instanceof String) {
       return (String) ref;
     } else {
-      com.google.protobuf.ByteString bs = 
+      com.google.protobuf.ByteString bs =
           (com.google.protobuf.ByteString) ref;
       String s = bs.toStringUtf8();
       message_ = s;
@@ -113,7 +124,7 @@ private static final long serialVersionUID = 0L;
       getMessageBytes() {
     Object ref = message_;
     if (ref instanceof String) {
-      com.google.protobuf.ByteString b = 
+      com.google.protobuf.ByteString b =
           com.google.protobuf.ByteString.copyFromUtf8(
               (String) ref);
       message_ = b;
@@ -121,6 +132,26 @@ private static final long serialVersionUID = 0L;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int CODE_FIELD_NUMBER = 2;
+  private long code_;
+  /**
+   * <code>int64 code = 2;</code>
+   * @return The code.
+   */
+  public long getCode() {
+    return code_;
+  }
+
+  public static final int DATA_FIELD_NUMBER = 3;
+  private com.google.protobuf.ByteString data_;
+  /**
+   * <code>bytes data = 3;</code>
+   * @return The data.
+   */
+  public com.google.protobuf.ByteString getData() {
+    return data_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -140,6 +171,12 @@ private static final long serialVersionUID = 0L;
     if (!getMessageBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, message_);
     }
+    if (code_ != 0L) {
+      output.writeInt64(2, code_);
+    }
+    if (!data_.isEmpty()) {
+      output.writeBytes(3, data_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -151,6 +188,14 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!getMessageBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, message_);
+    }
+    if (code_ != 0L) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeInt64Size(2, code_);
+    }
+    if (!data_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(3, data_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -169,6 +214,10 @@ private static final long serialVersionUID = 0L;
 
     if (!getMessage()
         .equals(other.getMessage())) return false;
+    if (getCode()
+        != other.getCode()) return false;
+    if (!getData()
+        .equals(other.getData())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -182,6 +231,11 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
     hash = (53 * hash) + getMessage().hashCode();
+    hash = (37 * hash) + CODE_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+        getCode());
+    hash = (37 * hash) + DATA_FIELD_NUMBER;
+    hash = (53 * hash) + getData().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -283,7 +337,7 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:GrpcResponse)
-      com.cell.grpc.cluster.GrpcResponseOrBuilder {
+      GrpcResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return ClusterProto.internal_static_GrpcResponse_descriptor;
@@ -294,7 +348,7 @@ private static final long serialVersionUID = 0L;
         internalGetFieldAccessorTable() {
       return ClusterProto.internal_static_GrpcResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              GrpcResponse.class, Builder.class);
+              GrpcResponse.class, GrpcResponse.Builder.class);
     }
 
     // Construct using com.cell.grpc.cluster.GrpcResponse.newBuilder()
@@ -316,6 +370,10 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       message_ = "";
+
+      code_ = 0L;
+
+      data_ = com.google.protobuf.ByteString.EMPTY;
 
       return this;
     }
@@ -344,6 +402,8 @@ private static final long serialVersionUID = 0L;
     public GrpcResponse buildPartial() {
       GrpcResponse result = new GrpcResponse(this);
       result.message_ = message_;
+      result.code_ = code_;
+      result.data_ = data_;
       onBuilt();
       return result;
     }
@@ -395,6 +455,12 @@ private static final long serialVersionUID = 0L;
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
         onChanged();
+      }
+      if (other.getCode() != 0L) {
+        setCode(other.getCode());
+      }
+      if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
+        setData(other.getData());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -450,7 +516,7 @@ private static final long serialVersionUID = 0L;
         getMessageBytes() {
       Object ref = message_;
       if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
+        com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
         message_ = b;
@@ -469,7 +535,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
     throw new NullPointerException();
   }
-  
+
       message_ = value;
       onChanged();
       return this;
@@ -479,7 +545,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearMessage() {
-      
+
       message_ = getDefaultInstance().getMessage();
       onChanged();
       return this;
@@ -495,8 +561,71 @@ private static final long serialVersionUID = 0L;
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
-      
+
       message_ = value;
+      onChanged();
+      return this;
+    }
+
+    private long code_ ;
+    /**
+     * <code>int64 code = 2;</code>
+     * @return The code.
+     */
+    public long getCode() {
+      return code_;
+    }
+    /**
+     * <code>int64 code = 2;</code>
+     * @param value The code to set.
+     * @return This builder for chaining.
+     */
+    public Builder setCode(long value) {
+
+      code_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>int64 code = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearCode() {
+
+      code_ = 0L;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes data = 3;</code>
+     * @return The data.
+     */
+    public com.google.protobuf.ByteString getData() {
+      return data_;
+    }
+    /**
+     * <code>bytes data = 3;</code>
+     * @param value The data to set.
+     * @return This builder for chaining.
+     */
+    public Builder setData(com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+
+      data_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes data = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearData() {
+
+      data_ = getDefaultInstance().getData();
       onChanged();
       return this;
     }

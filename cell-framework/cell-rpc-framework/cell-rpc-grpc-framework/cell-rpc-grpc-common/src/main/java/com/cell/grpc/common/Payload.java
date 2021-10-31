@@ -88,15 +88,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Payload_descriptor;
+    return EvelopeProto.internal_static_common_Payload_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Payload_fieldAccessorTable
+    return EvelopeProto.internal_static_common_Payload_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            Payload.class, Builder.class);
+            Payload.class, Payload.Builder.class);
   }
 
   public static final int HEADER_FIELD_NUMBER = 1;
@@ -118,7 +118,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <code>.common.Header header = 1;</code>
    */
-  public com.cell.grpc.common.HeaderOrBuilder getHeaderOrBuilder() {
+  public HeaderOrBuilder getHeaderOrBuilder() {
     return getHeader();
   }
 
@@ -309,18 +309,18 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:common.Payload)
-      com.cell.grpc.common.PayloadOrBuilder {
+      PayloadOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Payload_descriptor;
+      return EvelopeProto.internal_static_common_Payload_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Payload_fieldAccessorTable
+      return EvelopeProto.internal_static_common_Payload_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Payload.class, Builder.class);
+              Payload.class, Payload.Builder.class);
     }
 
     // Construct using com.cell.grpc.common.Payload.newBuilder()
@@ -355,7 +355,7 @@ private static final long serialVersionUID = 0L;
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Payload_descriptor;
+      return EvelopeProto.internal_static_common_Payload_descriptor;
     }
 
     @Override
@@ -466,7 +466,7 @@ private static final long serialVersionUID = 0L;
 
     private Header header_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        Header, Header.Builder, com.cell.grpc.common.HeaderOrBuilder> headerBuilder_;
+        Header, Header.Builder, HeaderOrBuilder> headerBuilder_;
     /**
      * <code>.common.Header header = 1;</code>
      * @return Whether the header field is set.
@@ -551,14 +551,14 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Header header = 1;</code>
      */
     public Header.Builder getHeaderBuilder() {
-      
+
       onChanged();
       return getHeaderFieldBuilder().getBuilder();
     }
     /**
      * <code>.common.Header header = 1;</code>
      */
-    public com.cell.grpc.common.HeaderOrBuilder getHeaderOrBuilder() {
+    public HeaderOrBuilder getHeaderOrBuilder() {
       if (headerBuilder_ != null) {
         return headerBuilder_.getMessageOrBuilder();
       } else {
@@ -570,11 +570,11 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Header header = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        Header, Header.Builder, com.cell.grpc.common.HeaderOrBuilder>
+        Header, Header.Builder, HeaderOrBuilder>
         getHeaderFieldBuilder() {
       if (headerBuilder_ == null) {
         headerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            Header, Header.Builder, com.cell.grpc.common.HeaderOrBuilder>(
+            Header, Header.Builder, HeaderOrBuilder>(
                 getHeader(),
                 getParentForChildren(),
                 isClean());
@@ -600,7 +600,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
     throw new NullPointerException();
   }
-  
+
       data_ = value;
       onChanged();
       return this;
@@ -610,7 +610,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearData() {
-      
+
       data_ = getDefaultInstance().getData();
       onChanged();
       return this;

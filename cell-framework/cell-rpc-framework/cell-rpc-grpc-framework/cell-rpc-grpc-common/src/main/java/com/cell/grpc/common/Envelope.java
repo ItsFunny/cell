@@ -49,11 +49,11 @@ private static final long serialVersionUID = 0L;
             done = true;
             break;
           case 10: {
-            com.cell.grpc.common.EnvelopeHeader.Builder subBuilder = null;
+            EnvelopeHeader.Builder subBuilder = null;
             if (header_ != null) {
               subBuilder = header_.toBuilder();
             }
-            header_ = input.readMessage(com.cell.grpc.common.EnvelopeHeader.parser(), extensionRegistry);
+            header_ = input.readMessage(EnvelopeHeader.parser(), extensionRegistry);
             if (subBuilder != null) {
               subBuilder.mergeFrom(header_);
               header_ = subBuilder.buildPartial();
@@ -95,19 +95,19 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Envelope_descriptor;
+    return EvelopeProto.internal_static_common_Envelope_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.cell.grpc.common.EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
+    return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            Envelope.class, Builder.class);
+            Envelope.class, Envelope.Builder.class);
   }
 
   public static final int HEADER_FIELD_NUMBER = 1;
-  private com.cell.grpc.common.EnvelopeHeader header_;
+  private EnvelopeHeader header_;
   /**
    * <code>.common.EnvelopeHeader header = 1;</code>
    * @return Whether the header field is set.
@@ -119,13 +119,13 @@ private static final long serialVersionUID = 0L;
    * <code>.common.EnvelopeHeader header = 1;</code>
    * @return The header.
    */
-  public com.cell.grpc.common.EnvelopeHeader getHeader() {
-    return header_ == null ? com.cell.grpc.common.EnvelopeHeader.getDefaultInstance() : header_;
+  public EnvelopeHeader getHeader() {
+    return header_ == null ? EnvelopeHeader.getDefaultInstance() : header_;
   }
   /**
    * <code>.common.EnvelopeHeader header = 1;</code>
    */
-  public com.cell.grpc.common.EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
+  public EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
     return getHeader();
   }
 
@@ -148,7 +148,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <code>.common.Payload payload = 2;</code>
    */
-  public com.cell.grpc.common.PayloadOrBuilder getPayloadOrBuilder() {
+  public PayloadOrBuilder getPayloadOrBuilder() {
     return getPayload();
   }
 
@@ -334,18 +334,18 @@ private static final long serialVersionUID = 0L;
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
       // @@protoc_insertion_point(builder_implements:common.Envelope)
-      com.cell.grpc.common.EnvelopeOrBuilder {
+      EnvelopeOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Envelope_descriptor;
+      return EvelopeProto.internal_static_common_Envelope_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
+      return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Envelope.class, Builder.class);
+              Envelope.class, Envelope.Builder.class);
     }
 
     // Construct using com.cell.grpc.common.Envelope.newBuilder()
@@ -384,7 +384,7 @@ private static final long serialVersionUID = 0L;
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.cell.grpc.common.EvelopeProto.internal_static_common_Envelope_descriptor;
+      return EvelopeProto.internal_static_common_Envelope_descriptor;
     }
 
     @Override
@@ -497,9 +497,9 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.cell.grpc.common.EnvelopeHeader header_;
+    private EnvelopeHeader header_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.cell.grpc.common.EnvelopeHeader, com.cell.grpc.common.EnvelopeHeader.Builder, com.cell.grpc.common.EnvelopeHeaderOrBuilder> headerBuilder_;
+        EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder> headerBuilder_;
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      * @return Whether the header field is set.
@@ -511,9 +511,9 @@ private static final long serialVersionUID = 0L;
      * <code>.common.EnvelopeHeader header = 1;</code>
      * @return The header.
      */
-    public com.cell.grpc.common.EnvelopeHeader getHeader() {
+    public EnvelopeHeader getHeader() {
       if (headerBuilder_ == null) {
-        return header_ == null ? com.cell.grpc.common.EnvelopeHeader.getDefaultInstance() : header_;
+        return header_ == null ? EnvelopeHeader.getDefaultInstance() : header_;
       } else {
         return headerBuilder_.getMessage();
       }
@@ -521,7 +521,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
-    public Builder setHeader(com.cell.grpc.common.EnvelopeHeader value) {
+    public Builder setHeader(EnvelopeHeader value) {
       if (headerBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
@@ -538,7 +538,7 @@ private static final long serialVersionUID = 0L;
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
     public Builder setHeader(
-        com.cell.grpc.common.EnvelopeHeader.Builder builderForValue) {
+        EnvelopeHeader.Builder builderForValue) {
       if (headerBuilder_ == null) {
         header_ = builderForValue.build();
         onChanged();
@@ -551,11 +551,11 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
-    public Builder mergeHeader(com.cell.grpc.common.EnvelopeHeader value) {
+    public Builder mergeHeader(EnvelopeHeader value) {
       if (headerBuilder_ == null) {
         if (header_ != null) {
           header_ =
-            com.cell.grpc.common.EnvelopeHeader.newBuilder(header_).mergeFrom(value).buildPartial();
+            EnvelopeHeader.newBuilder(header_).mergeFrom(value).buildPartial();
         } else {
           header_ = value;
         }
@@ -583,31 +583,31 @@ private static final long serialVersionUID = 0L;
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
-    public com.cell.grpc.common.EnvelopeHeader.Builder getHeaderBuilder() {
-      
+    public EnvelopeHeader.Builder getHeaderBuilder() {
+
       onChanged();
       return getHeaderFieldBuilder().getBuilder();
     }
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
-    public com.cell.grpc.common.EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
+    public EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
       if (headerBuilder_ != null) {
         return headerBuilder_.getMessageOrBuilder();
       } else {
         return header_ == null ?
-            com.cell.grpc.common.EnvelopeHeader.getDefaultInstance() : header_;
+            EnvelopeHeader.getDefaultInstance() : header_;
       }
     }
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.cell.grpc.common.EnvelopeHeader, com.cell.grpc.common.EnvelopeHeader.Builder, com.cell.grpc.common.EnvelopeHeaderOrBuilder> 
+        EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>
         getHeaderFieldBuilder() {
       if (headerBuilder_ == null) {
         headerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.cell.grpc.common.EnvelopeHeader, com.cell.grpc.common.EnvelopeHeader.Builder, com.cell.grpc.common.EnvelopeHeaderOrBuilder>(
+            EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>(
                 getHeader(),
                 getParentForChildren(),
                 isClean());
@@ -618,7 +618,7 @@ private static final long serialVersionUID = 0L;
 
     private Payload payload_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder> payloadBuilder_;
+        Payload, Payload.Builder, PayloadOrBuilder> payloadBuilder_;
     /**
      * <code>.common.Payload payload = 2;</code>
      * @return Whether the payload field is set.
@@ -703,14 +703,14 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Payload payload = 2;</code>
      */
     public Payload.Builder getPayloadBuilder() {
-      
+
       onChanged();
       return getPayloadFieldBuilder().getBuilder();
     }
     /**
      * <code>.common.Payload payload = 2;</code>
      */
-    public com.cell.grpc.common.PayloadOrBuilder getPayloadOrBuilder() {
+    public PayloadOrBuilder getPayloadOrBuilder() {
       if (payloadBuilder_ != null) {
         return payloadBuilder_.getMessageOrBuilder();
       } else {
@@ -722,11 +722,11 @@ private static final long serialVersionUID = 0L;
      * <code>.common.Payload payload = 2;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder>
+        Payload, Payload.Builder, PayloadOrBuilder>
         getPayloadFieldBuilder() {
       if (payloadBuilder_ == null) {
         payloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder>(
+            Payload, Payload.Builder, PayloadOrBuilder>(
                 getPayload(),
                 getParentForChildren(),
                 isClean());
