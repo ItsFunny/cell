@@ -10,5 +10,6 @@ package com.cell.constants;
  */
 public interface RPCHookConstants
 {
-    String GROUP_RPC_CMD_HOOK = "GROUP_RPC_CMD_HOOK";
+    String GROUP_RPC_CLIENT_CMD_HOOK = "GROUP_RPC_CMD_HOOK";
+    String GROUP_RPC_SERVER_CMD_HOOK = "GROUP_RPC_SERVER_CMD_HOOK";
 }

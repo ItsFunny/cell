@@ -23,8 +23,17 @@ public interface EnvelopeOrBuilder extends
   com.cell.grpc.common.EnvelopeHeaderOrBuilder getHeaderOrBuilder();
 
   /**
-   * <code>bytes payload = 2;</code>
+   * <code>.common.Payload payload = 2;</code>
+   * @return Whether the payload field is set.
+   */
+  boolean hasPayload();
+  /**
+   * <code>.common.Payload payload = 2;</code>
    * @return The payload.
    */
-  com.google.protobuf.ByteString getPayload();
+  Payload getPayload();
+  /**
+   * <code>.common.Payload payload = 2;</code>
+   */
+  PayloadOrBuilder getPayloadOrBuilder();
 }

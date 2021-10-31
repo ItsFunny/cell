@@ -16,7 +16,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private Envelope() {
-    payload_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   @Override
@@ -63,8 +62,16 @@ private static final long serialVersionUID = 0L;
             break;
           }
           case 18: {
+            Payload.Builder subBuilder = null;
+            if (payload_ != null) {
+              subBuilder = payload_.toBuilder();
+            }
+            payload_ = input.readMessage(Payload.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(payload_);
+              payload_ = subBuilder.buildPartial();
+            }
 
-            payload_ = input.readBytes();
             break;
           }
           default: {
@@ -123,13 +130,26 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int PAYLOAD_FIELD_NUMBER = 2;
-  private com.google.protobuf.ByteString payload_;
+  private Payload payload_;
   /**
-   * <code>bytes payload = 2;</code>
+   * <code>.common.Payload payload = 2;</code>
+   * @return Whether the payload field is set.
+   */
+  public boolean hasPayload() {
+    return payload_ != null;
+  }
+  /**
+   * <code>.common.Payload payload = 2;</code>
    * @return The payload.
    */
-  public com.google.protobuf.ByteString getPayload() {
-    return payload_;
+  public Payload getPayload() {
+    return payload_ == null ? Payload.getDefaultInstance() : payload_;
+  }
+  /**
+   * <code>.common.Payload payload = 2;</code>
+   */
+  public com.cell.grpc.common.PayloadOrBuilder getPayloadOrBuilder() {
+    return getPayload();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -149,8 +169,8 @@ private static final long serialVersionUID = 0L;
     if (header_ != null) {
       output.writeMessage(1, getHeader());
     }
-    if (!payload_.isEmpty()) {
-      output.writeBytes(2, payload_);
+    if (payload_ != null) {
+      output.writeMessage(2, getPayload());
     }
     unknownFields.writeTo(output);
   }
@@ -165,9 +185,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getHeader());
     }
-    if (!payload_.isEmpty()) {
+    if (payload_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(2, payload_);
+        .computeMessageSize(2, getPayload());
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -189,8 +209,11 @@ private static final long serialVersionUID = 0L;
       if (!getHeader()
           .equals(other.getHeader())) return false;
     }
-    if (!getPayload()
-        .equals(other.getPayload())) return false;
+    if (hasPayload() != other.hasPayload()) return false;
+    if (hasPayload()) {
+      if (!getPayload()
+          .equals(other.getPayload())) return false;
+    }
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -206,8 +229,10 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + HEADER_FIELD_NUMBER;
       hash = (53 * hash) + getHeader().hashCode();
     }
-    hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
-    hash = (53 * hash) + getPayload().hashCode();
+    if (hasPayload()) {
+      hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
+      hash = (53 * hash) + getPayload().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -347,8 +372,12 @@ private static final long serialVersionUID = 0L;
         header_ = null;
         headerBuilder_ = null;
       }
-      payload_ = com.google.protobuf.ByteString.EMPTY;
-
+      if (payloadBuilder_ == null) {
+        payload_ = null;
+      } else {
+        payload_ = null;
+        payloadBuilder_ = null;
+      }
       return this;
     }
 
@@ -380,7 +409,11 @@ private static final long serialVersionUID = 0L;
       } else {
         result.header_ = headerBuilder_.build();
       }
-      result.payload_ = payload_;
+      if (payloadBuilder_ == null) {
+        result.payload_ = payload_;
+      } else {
+        result.payload_ = payloadBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -432,8 +465,8 @@ private static final long serialVersionUID = 0L;
       if (other.hasHeader()) {
         mergeHeader(other.getHeader());
       }
-      if (other.getPayload() != com.google.protobuf.ByteString.EMPTY) {
-        setPayload(other.getPayload());
+      if (other.hasPayload()) {
+        mergePayload(other.getPayload());
       }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
@@ -583,37 +616,123 @@ private static final long serialVersionUID = 0L;
       return headerBuilder_;
     }
 
-    private com.google.protobuf.ByteString payload_ = com.google.protobuf.ByteString.EMPTY;
+    private Payload payload_;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder> payloadBuilder_;
     /**
-     * <code>bytes payload = 2;</code>
+     * <code>.common.Payload payload = 2;</code>
+     * @return Whether the payload field is set.
+     */
+    public boolean hasPayload() {
+      return payloadBuilder_ != null || payload_ != null;
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
      * @return The payload.
      */
-    public com.google.protobuf.ByteString getPayload() {
-      return payload_;
+    public Payload getPayload() {
+      if (payloadBuilder_ == null) {
+        return payload_ == null ? Payload.getDefaultInstance() : payload_;
+      } else {
+        return payloadBuilder_.getMessage();
+      }
     }
     /**
-     * <code>bytes payload = 2;</code>
-     * @param value The payload to set.
-     * @return This builder for chaining.
+     * <code>.common.Payload payload = 2;</code>
      */
-    public Builder setPayload(com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
-      payload_ = value;
-      onChanged();
+    public Builder setPayload(Payload value) {
+      if (payloadBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        payload_ = value;
+        onChanged();
+      } else {
+        payloadBuilder_.setMessage(value);
+      }
+
       return this;
     }
     /**
-     * <code>bytes payload = 2;</code>
-     * @return This builder for chaining.
+     * <code>.common.Payload payload = 2;</code>
+     */
+    public Builder setPayload(
+        Payload.Builder builderForValue) {
+      if (payloadBuilder_ == null) {
+        payload_ = builderForValue.build();
+        onChanged();
+      } else {
+        payloadBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
+     */
+    public Builder mergePayload(Payload value) {
+      if (payloadBuilder_ == null) {
+        if (payload_ != null) {
+          payload_ =
+            Payload.newBuilder(payload_).mergeFrom(value).buildPartial();
+        } else {
+          payload_ = value;
+        }
+        onChanged();
+      } else {
+        payloadBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
      */
     public Builder clearPayload() {
-      
-      payload_ = getDefaultInstance().getPayload();
-      onChanged();
+      if (payloadBuilder_ == null) {
+        payload_ = null;
+        onChanged();
+      } else {
+        payload_ = null;
+        payloadBuilder_ = null;
+      }
+
       return this;
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
+     */
+    public Payload.Builder getPayloadBuilder() {
+      
+      onChanged();
+      return getPayloadFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
+     */
+    public com.cell.grpc.common.PayloadOrBuilder getPayloadOrBuilder() {
+      if (payloadBuilder_ != null) {
+        return payloadBuilder_.getMessageOrBuilder();
+      } else {
+        return payload_ == null ?
+            Payload.getDefaultInstance() : payload_;
+      }
+    }
+    /**
+     * <code>.common.Payload payload = 2;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder>
+        getPayloadFieldBuilder() {
+      if (payloadBuilder_ == null) {
+        payloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            Payload, Payload.Builder, com.cell.grpc.common.PayloadOrBuilder>(
+                getPayload(),
+                getParentForChildren(),
+                isClean());
+        payload_ = null;
+      }
+      return payloadBuilder_;
     }
     @Override
     public final Builder setUnknownFields(

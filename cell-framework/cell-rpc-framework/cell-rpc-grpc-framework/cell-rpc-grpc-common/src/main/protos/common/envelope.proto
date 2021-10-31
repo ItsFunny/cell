@@ -16,7 +16,7 @@ message EnvelopeHeader{
 }
 message Envelope {
   EnvelopeHeader header=1;
-  bytes payload = 2;
+  Payload payload = 2;
 }
 
 message Payload {

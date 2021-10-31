@@ -69,13 +69,13 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return EvelopeProto.internal_static_common_Header_descriptor;
+    return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
   }
 
   @Override
   protected FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return EvelopeProto.internal_static_common_Header_fieldAccessorTable
+    return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             Header.class, Builder.class);
   }
@@ -233,13 +233,13 @@ private static final long serialVersionUID = 0L;
       com.cell.grpc.common.HeaderOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return EvelopeProto.internal_static_common_Header_descriptor;
+      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return EvelopeProto.internal_static_common_Header_fieldAccessorTable
+      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Header.class, Builder.class);
     }
@@ -268,7 +268,7 @@ private static final long serialVersionUID = 0L;
     @Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return EvelopeProto.internal_static_common_Header_descriptor;
+      return com.cell.grpc.common.EvelopeProto.internal_static_common_Header_descriptor;
     }
 
     @Override

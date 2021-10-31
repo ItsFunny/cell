@@ -4,16 +4,23 @@ import com.cell.Configuration;
 import com.cell.annotations.Plugin;
 import com.cell.channel.DefaultRPCServerChannel;
 import com.cell.config.GRPCServerConfiguration;
+import com.cell.constants.ProtocolConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.dispatcher.impl.DefaultRPCServerCommandDispatcher;
+import com.cell.log.LOG;
 import com.cell.manager.RPCHandlerManager;
+import com.cell.models.Module;
 import com.cell.proxy.DefaultRPCServerProxy;
 import com.cell.proxy.IProxy;
 import com.cell.proxy.IRPCServerProxy;
+import com.cell.reactor.ICommandReactor;
+import com.cell.root.Root;
 import com.cell.server.DefaultGRPServer;
 import com.cell.server.IGRPCServer;
 import org.springframework.context.annotation.Bean;
+
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -117,33 +124,12 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
-//        this.codecDiscoverer = new AnnotationGrpcCodecDiscoverer();
-//        this.compressorRegistry = CompressorRegistry.getDefaultInstance();
-//        for (final GrpcCodecDefinition definition : codecDiscoverer.findGrpcCodecs())
-//        {
-//            if (definition.getCodecType().isForCompression())
-//            {
-//                final Codec codec = definition.getCodec();
-//                LOG.info(Module.GRPC, "Registering compressor: '{}' ({})", codec.getMessageEncoding(), codec.getClass().getName());
-//                this.compressorRegistry.register(codec);
-//            }
-//        }
-//        this.compressionServerConfigurer = builder -> builder.compressorRegistry(this.compressorRegistry);
-//        this.defaultDecompressorRegistry = DecompressorRegistry.getDefaultInstance();
-//        for (final GrpcCodecDefinition definition : codecDiscoverer.findGrpcCodecs())
-//        {
-//            if (definition.getCodecType().isForDecompression())
-//            {
-//                final Codec codec = definition.getCodec();
-//                final boolean isAdvertised = definition.isAdvertised();
-//                LOG.info(Module.GRPC, "Registering {} decompressor: '{}' ({})",
-//                        isAdvertised ? "advertised" : "", codec.getMessageEncoding(), codec.getClass().getName());
-//                this.defaultDecompressorRegistry = this.defaultDecompressorRegistry.with(codec, isAdvertised);
-//            }
-//        }
-//        this.decompressionServerConfigurer = builder -> builder.decompressorRegistry(this.defaultDecompressorRegistry);
-
-
+        Set<ICommandReactor> reactors = Root.getInstance().getReactor(ProtocolConstants.REACTOR_TYPE_RPC_GRPC_SERVER);
+        for (ICommandReactor reactor : reactors)
+        {
+            LOG.info(Module.GRPC_SERVER, "添加http Reactor,info:{}", reactor);
+            this.dispatcher.addReactor(reactor);
+        }
         DefaultRPCServerChannel instance = DefaultRPCServerChannel.getInstance();
         instance.setPipeline(RPCHandlerManager.getInstance().getPipeline());
         this.dispatcher.setChannel(instance);

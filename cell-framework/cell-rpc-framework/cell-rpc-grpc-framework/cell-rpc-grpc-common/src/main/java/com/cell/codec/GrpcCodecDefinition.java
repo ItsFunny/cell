@@ -19,11 +19,11 @@ package com.cell.codec;
 
 import com.google.common.collect.ImmutableList;
 import io.grpc.Codec;
-import lombok.Getter;
+import lombok.Data;
 
 import java.util.Collection;
 
-@Getter
+@Data
 public class GrpcCodecDefinition {
 
     /**
@@ -49,13 +49,11 @@ public class GrpcCodecDefinition {
     private final boolean advertised;
     private final CodecType codecType;
 
-    /**
-     * Creates a new GrpcCodecDefinition.
-     *
-     * @param codec The codec bean.
-     * @param advertised Whether the codec should be advertised in the headers.
-     * @param codecType The type of the codec.
-     */
+    public boolean isAdvertised()
+    {
+        return advertised;
+    }
+
     public GrpcCodecDefinition(final Codec codec, final boolean advertised, final CodecType codecType) {
         this.codec = codec;
         this.advertised = advertised;

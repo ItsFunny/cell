@@ -21,4 +21,7 @@ public @interface GRPCClientRequestAnno
     boolean async();
 
     Class<? extends ISerializable> responseType();
+
+    // seconds: 0 means sync
+    byte timeOut() default 0;
 }

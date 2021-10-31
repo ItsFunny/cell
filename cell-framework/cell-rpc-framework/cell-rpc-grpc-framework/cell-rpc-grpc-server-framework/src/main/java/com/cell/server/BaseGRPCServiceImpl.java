@@ -13,7 +13,6 @@ import com.cell.grpc.common.EnvelopeHeader;
 import com.cell.grpc.common.Payload;
 import com.cell.log.LOG;
 import com.cell.protocol.DefaultStringCommandProtocolID;
-import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.stub.StreamObserver;
 
 import java.io.ByteArrayInputStream;
@@ -40,15 +39,7 @@ public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
         EnvelopeHeader header = envelope.getHeader();
         RPCServerRequest rpcServerRequest = new RPCServerRequest();
         rpcServerRequest.setRequestSize((int) header.getLength());
-        Payload payload;
-        try
-        {
-            payload = Payload.parseFrom(envelope.getPayload());
-        } catch (InvalidProtocolBufferException e)
-        {
-            responseObserver.onError(e);
-            return;
-        }
+        Payload payload = envelope.getPayload();
         InputStream inputStream = new ByteArrayInputStream(payload.getData().toByteArray());
         rpcServerRequest.setRequestStream(inputStream);
         DefaultStringCommandProtocolID protocolID = new DefaultStringCommandProtocolID(header.getProtocol());
@@ -61,7 +52,8 @@ public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
 
         try
         {
-            promise.get();
+            Object o = promise.get();
+            System.out.println(o);
         } catch (Exception e)
         {
             LOG.error("asd", e);

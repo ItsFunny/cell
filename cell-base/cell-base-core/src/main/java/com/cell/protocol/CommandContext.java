@@ -43,12 +43,12 @@ public abstract class CommandContext
 
     protected abstract void onComplete(Future<? super Object> future) throws Exception;
 
-    private String getHeaderData(String headerName)
+    protected String getHeaderData(String headerName)
     {
         return this.request.getHeader(headerName);
     }
 
-    private String getHeaderData(String headerName, String defaultValue)
+    protected String getHeaderData(String headerName, String defaultValue)
     {
         String ret = this.request.getHeader(headerName);
         ret = StringUtils.isEmpty(ret) ? defaultValue : ret;

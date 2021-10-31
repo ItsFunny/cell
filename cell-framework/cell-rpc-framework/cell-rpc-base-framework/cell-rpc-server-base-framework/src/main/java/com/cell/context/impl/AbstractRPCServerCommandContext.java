@@ -34,7 +34,6 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
                 .build());
     }
 
-    @Override
     public CommandProtocolID getProtocolID()
     {
         return this.getRPCServerCommandContext().getProtocolID();
@@ -43,5 +42,12 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
     protected RPCServerCommandContext getRPCServerCommandContext()
     {
         return (RPCServerCommandContext) this.getCommandContext();
+    }
+
+
+    @Override
+    protected boolean isSetOrExpired()
+    {
+        return false;
     }
 }

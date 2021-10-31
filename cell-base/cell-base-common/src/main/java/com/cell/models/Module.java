@@ -37,6 +37,7 @@ public enum Module
     SHELL((short) 112, "SHELL"),
     RPC_FRAMEWORK((short) 113, "RPC_FRAMEWORK"),
     GRPC((short) 114, "GRPC"),
+    GRPC_SERVER((short) 115, "GRPC_SERVER"),
     GRPC_CLIENT((short) 116, "GRPC_CLIENT"),
     HOOK((short) 117, "HOOK"),
     ////////////

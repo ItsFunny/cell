@@ -21,7 +21,7 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@ReactorAnno(type = ProtocolConstants.REACTOR_TYPE_RPC_SERVER)
+@ReactorAnno(type = ProtocolConstants.REACTOR_TYPE_RPC_GRPC_SERVER)
 public @interface RPCServerReactorAnno
 {
     @AliasFor(

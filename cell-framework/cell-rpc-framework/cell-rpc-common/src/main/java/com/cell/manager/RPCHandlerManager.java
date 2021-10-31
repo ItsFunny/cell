@@ -14,7 +14,7 @@ import com.cell.services.impl.DefaultHandlerMutableChainExecutor;
  * @Attention:
  * @Date 创建时间：2021-10-22 11:16
  */
-@Manager(name = ManagerConstants.MANAGER_RPC_HANDLER)
+@Manager(name = ManagerConstants.MANAGER_RPC_SERVER_HANDLER)
 public class RPCHandlerManager extends AbstractReflectManager
 {
     private static final RPCHandlerManager instance = new RPCHandlerManager();

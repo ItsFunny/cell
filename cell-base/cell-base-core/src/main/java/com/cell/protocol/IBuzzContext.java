@@ -22,7 +22,6 @@ public interface IBuzzContext extends IContext
     void setSequenceId(String sequenceId);
     String getSequenceId();
     Promise<Object> getPromise();
-    void setReactor(ICommandReactor reactor);
     ICommandReactor getReactor();
 
     void setIp(String ip);

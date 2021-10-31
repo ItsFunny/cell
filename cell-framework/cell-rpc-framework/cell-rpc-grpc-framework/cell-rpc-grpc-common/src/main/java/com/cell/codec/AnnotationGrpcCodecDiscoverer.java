@@ -17,15 +17,14 @@
 
 package com.cell.codec;
 
+import com.cell.log.LOG;
 import com.google.common.collect.ImmutableList;
 import io.grpc.Codec;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import java.util.Collection;
 
-@Slf4j
 public class AnnotationGrpcCodecDiscoverer implements ApplicationContextAware, GrpcCodecDiscoverer
 {
 
@@ -43,7 +42,7 @@ public class AnnotationGrpcCodecDiscoverer implements ApplicationContextAware, G
     {
         if (this.definitions == null)
         {
-            log.debug("Searching for codecs...");
+            LOG.debug("Searching for codecs...");
             final String[] beanNames = this.applicationContext.getBeanNamesForAnnotation(GrpcCodec.class);
             final ImmutableList.Builder<GrpcCodecDefinition> builder = ImmutableList.builder();
             for (final String beanName : beanNames)
@@ -51,11 +50,11 @@ public class AnnotationGrpcCodecDiscoverer implements ApplicationContextAware, G
                 final Codec codec = this.applicationContext.getBean(beanName, Codec.class);
                 final GrpcCodec annotation = this.applicationContext.findAnnotationOnBean(beanName, GrpcCodec.class);
                 builder.add(new GrpcCodecDefinition(codec, annotation.advertised(), annotation.codecType()));
-                log.debug("Found gRPC codec: {}, bean: {}, class: {}",
+                LOG.debug("Found gRPC codec: {}, bean: {}, class: {}",
                         codec.getMessageEncoding(), beanName, codec.getClass().getName());
             }
             this.definitions = builder.build();
-            log.debug("Done");
+            LOG.debug("Done");
         }
         return this.definitions;
     }

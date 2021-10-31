@@ -3,6 +3,7 @@ package com.cell.suit;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.context.RPCServerCommandContext;
+import com.cell.context.impl.DefaultRPCServerCommandContext;
 import com.cell.protocol.impl.AbstractCommandSuit;
 import com.cell.reactor.IRPCServerReactor;
 import lombok.Data;
@@ -37,6 +38,7 @@ public class DefaultServerRPCCommandSuit extends AbstractCommandSuit implements 
     @Override
     public IRPCServerCommandContext getBuzContext()
     {
-        return null;
+        DefaultRPCServerCommandContext ret=new DefaultRPCServerCommandContext((RPCServerCommandContext) this.getCommandContext());
+        return ret;
     }
 }

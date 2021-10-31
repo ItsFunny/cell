@@ -22,5 +22,13 @@ public abstract class AbstractRPCHook extends AbstractCommandHook
         return this.doHook((IRPCContext) ctx, hook);
     }
 
-    protected abstract Mono<Void> doHook(IRPCContext context, IChainHook hook);
+    protected Mono<Void> doHook(IRPCContext context, IChainHook hook)
+    {
+        context.getReactor().execute(context);
+        return hook.execute(context).doOnError(this::onExceptionCaught).then(Mono.fromRunnable(() ->
+        {
+        }));
+    }
+
+
 }

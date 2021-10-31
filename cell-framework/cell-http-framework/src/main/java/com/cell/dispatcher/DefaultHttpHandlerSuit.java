@@ -45,7 +45,6 @@ public class DefaultHttpHandlerSuit extends AbstractCommandSuit implements IHttp
     public IBuzzContext getBuzContext()
     {
         DefaultHttpCommandContext ret = new DefaultHttpCommandContext(this.getCommandContext());
-        ret.setReactor(this.reactor);
         ret.setCommand(cmd);
         ret.setEventExecutor(this.getCommandEventExecutor());
         return ret;

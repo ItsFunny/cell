@@ -3,6 +3,7 @@ package com.cell.handler;
 import com.cell.annotations.ManagerNode;
 import com.cell.constants.ManagerConstants;
 import com.cell.executor.IBaseChainExecutor;
+import com.cell.manager.RPCServerCommandHookManager;
 import com.cell.services.IHandlerSuit;
 import com.cell.suit.IRPCHandlerSuit;
 import reactor.core.publisher.Mono;
@@ -23,6 +24,8 @@ public class DefaultRPCServerLogicHandlerNode extends AbstractRPCServerCmdHandle
     protected Mono<Void> onHandle(IHandlerSuit context, IBaseChainExecutor executor)
     {
         IRPCHandlerSuit suit = (IRPCHandlerSuit) context;
-        return executor.execute(suit.getBuzContext()).then(executor.execute(context));
+        return RPCServerCommandHookManager.getInstance().
+                execute(suit.getBuzContext()).
+                then(executor.execute(context));
     }
 }

@@ -5,20 +5,21 @@ import com.cell.annotations.*;
 import com.cell.application.CellApplication;
 import com.cell.command.AbstractGRPCServerCommand;
 import com.cell.command.impl.AbstractHttpCommand;
+import com.cell.concurrent.DummyExecutor;
+import com.cell.concurrent.base.Future;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.grpc.cluster.BaseGrpcGrpc;
 import com.cell.grpc.cluster.GrpcRequest;
-import com.cell.grpc.cluster.GrpcResponse;
 import com.cell.grpc.common.Envelope;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
+import com.cell.rpc.client.ClientRequestDemo;
+import com.cell.services.impl.GRPCClientServiceImpl;
 import com.cell.utils.RandomUtils;
-import com.google.protobuf.ByteString;
-import io.grpc.stub.StreamObserver;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;
@@ -180,6 +181,9 @@ public class App
     {
         @AutoPlugin
         private RPCClient1 client1;
+
+        @AutoPlugin
+        private GRPCClientServiceImpl im;
     }
 
     @HttpCmdAnno(uri = "/rpc", requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = RPCReactor.class)
@@ -190,30 +194,27 @@ public class App
         protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
         {
             RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
-            GrpcRequest build = GrpcRequest.newBuilder().setEnvelope(Envelope.newBuilder().setPayload(ByteString.EMPTY).build()).build();
-            reactor.client1.stub.sendRequest(build, new StreamObserver<GrpcResponse>()
+            ClientRequestDemo demo = new ClientRequestDemo();
+            Future<Object> call = reactor.im.call(demo);
+            GrpcRequest build = GrpcRequest.newBuilder().setEnvelope(Envelope.newBuilder().build()).build();
+            try
             {
-                @Override
-                public void onNext(GrpcResponse value)
-                {
-                    System.out.println(value);
-                }
-
-                @Override
-                public void onError(Throwable t)
-                {
-                    System.out.println(t);
-                }
-
-                @Override
-                public void onCompleted()
-                {
-                    System.out.println("complete");
-
-                }
-            });
+                Object o1 = call.get();
+            } catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            System.out.println(1);
         }
     }
+
+    @Bean
+    public GRPCClientServiceImpl service()
+    {
+        GRPCClientServiceImpl ret = new GRPCClientServiceImpl(DummyExecutor.getInstance());
+        return ret;
+    }
+
 
     public static void main(String[] args)
     {

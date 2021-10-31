@@ -2,7 +2,7 @@ package com.cell.protocol;
 
 import com.cell.channel.IChannel;
 import com.cell.concurrent.base.Future;
-import com.cell.constant.HttpConstants;
+import com.cell.constants.DebugConstants;
 import com.cell.constants.NetworkConstants;
 import com.cell.couple.IHttpServerRequest;
 import com.cell.couple.IHttpServerResponse;
@@ -74,21 +74,10 @@ public class HttpCommandContext extends CommandContext
         httpSummary.setProtocolId(request.getInternalRequest().getRequestURL().toString());
         httpSummary.setToken(getHeaderData(TOKEN));
         httpSummary.setReceiveTimestamp(System.currentTimeMillis());
-        httpSummary.setSequenceId(getHeaderData(HttpConstants.SEQUENCE_ID, UUIDUtils.uuid2()));
+        httpSummary.setSequenceId(getHeaderData(DebugConstants.SEQUENCE_ID, UUIDUtils.uuid2()));
         return httpSummary;
     }
 
-    private String getHeaderData(String headerName)
-    {
-        return this.getRequest().getHeader(headerName);
-    }
-
-    private String getHeaderData(String headerName, String defaultValue)
-    {
-        String ret = this.getRequest().getHeader(headerName);
-        ret = StringUtils.isEmpty(ret) ? defaultValue : ret;
-        return ret;
-    }
 
 
 }

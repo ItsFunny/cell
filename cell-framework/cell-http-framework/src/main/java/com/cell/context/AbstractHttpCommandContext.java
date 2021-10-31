@@ -213,14 +213,34 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         }
     }
 
+    @Override
+    protected void decorateOnSuccess(IServerResponse response)
+    {
+        // do nothing
+    }
+
+    @Override
+    protected void decorateOnFail(IServerResponse response)
+    {
+
+    }
+
+    @Override
+    protected Object decorateRetBeforeFire(Object ret)
+    {
+        return null;
+    }
+
+    @Override
+    protected boolean isSetOrExpired()
+    {
+        return this.getResult().isSetOrExpired();
+    }
+
+
     private boolean fail(long status)
     {
         return (status & ContextConstants.FAIL) >= ContextConstants.FAIL;
-    }
-
-    private boolean success(long status)
-    {
-        return (status & ContextConstants.SUCCESS) >= ContextConstants.SUCCESS;
     }
 
 
@@ -266,8 +286,6 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
     {
         return this.httpCmdAnno.responseType() == EnumHttpResponseType.HTTP_XML;
     }
-
-
 
 
 }

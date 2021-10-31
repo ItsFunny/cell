@@ -19,29 +19,29 @@ public final class BaseGrpcGrpc {
   public static final String SERVICE_NAME = "BaseGrpc";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<GrpcRequest,
-      GrpcResponse> getSendRequestMethod;
+  private static volatile io.grpc.MethodDescriptor<com.cell.grpc.cluster.GrpcRequest,
+      com.cell.grpc.cluster.GrpcResponse> getSendRequestMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "sendRequest",
-      requestType = GrpcRequest.class,
-      responseType = GrpcResponse.class,
+      requestType = com.cell.grpc.cluster.GrpcRequest.class,
+      responseType = com.cell.grpc.cluster.GrpcResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<GrpcRequest,
-      GrpcResponse> getSendRequestMethod() {
-    io.grpc.MethodDescriptor<GrpcRequest, GrpcResponse> getSendRequestMethod;
+  public static io.grpc.MethodDescriptor<com.cell.grpc.cluster.GrpcRequest,
+      com.cell.grpc.cluster.GrpcResponse> getSendRequestMethod() {
+    io.grpc.MethodDescriptor<com.cell.grpc.cluster.GrpcRequest, com.cell.grpc.cluster.GrpcResponse> getSendRequestMethod;
     if ((getSendRequestMethod = BaseGrpcGrpc.getSendRequestMethod) == null) {
       synchronized (BaseGrpcGrpc.class) {
         if ((getSendRequestMethod = BaseGrpcGrpc.getSendRequestMethod) == null) {
           BaseGrpcGrpc.getSendRequestMethod = getSendRequestMethod =
-              io.grpc.MethodDescriptor.<GrpcRequest, GrpcResponse>newBuilder()
+              io.grpc.MethodDescriptor.<com.cell.grpc.cluster.GrpcRequest, com.cell.grpc.cluster.GrpcResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "sendRequest"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  GrpcRequest.getDefaultInstance()))
+                  com.cell.grpc.cluster.GrpcRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  GrpcResponse.getDefaultInstance()))
+                  com.cell.grpc.cluster.GrpcResponse.getDefaultInstance()))
               .setSchemaDescriptor(new BaseGrpcMethodDescriptorSupplier("sendRequest"))
               .build();
         }
@@ -100,8 +100,8 @@ public final class BaseGrpcGrpc {
 
     /**
      */
-    public void sendRequest(GrpcRequest request,
-                            io.grpc.stub.StreamObserver<GrpcResponse> responseObserver) {
+    public void sendRequest(com.cell.grpc.cluster.GrpcRequest request,
+        io.grpc.stub.StreamObserver<com.cell.grpc.cluster.GrpcResponse> responseObserver) {
       asyncUnimplementedUnaryCall(getSendRequestMethod(), responseObserver);
     }
 
@@ -111,8 +111,8 @@ public final class BaseGrpcGrpc {
             getSendRequestMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                GrpcRequest,
-                GrpcResponse>(
+                com.cell.grpc.cluster.GrpcRequest,
+                com.cell.grpc.cluster.GrpcResponse>(
                   this, METHODID_SEND_REQUEST)))
           .build();
     }
@@ -134,8 +134,8 @@ public final class BaseGrpcGrpc {
 
     /**
      */
-    public void sendRequest(GrpcRequest request,
-                            io.grpc.stub.StreamObserver<GrpcResponse> responseObserver) {
+    public void sendRequest(com.cell.grpc.cluster.GrpcRequest request,
+        io.grpc.stub.StreamObserver<com.cell.grpc.cluster.GrpcResponse> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getSendRequestMethod(), getCallOptions()), request, responseObserver);
     }
@@ -157,7 +157,7 @@ public final class BaseGrpcGrpc {
 
     /**
      */
-    public GrpcResponse sendRequest(GrpcRequest request) {
+    public com.cell.grpc.cluster.GrpcResponse sendRequest(com.cell.grpc.cluster.GrpcRequest request) {
       return blockingUnaryCall(
           getChannel(), getSendRequestMethod(), getCallOptions(), request);
     }
@@ -179,8 +179,8 @@ public final class BaseGrpcGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<GrpcResponse> sendRequest(
-        GrpcRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.cell.grpc.cluster.GrpcResponse> sendRequest(
+        com.cell.grpc.cluster.GrpcRequest request) {
       return futureUnaryCall(
           getChannel().newCall(getSendRequestMethod(), getCallOptions()), request);
     }
@@ -206,8 +206,8 @@ public final class BaseGrpcGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_SEND_REQUEST:
-          serviceImpl.sendRequest((GrpcRequest) request,
-              (io.grpc.stub.StreamObserver<GrpcResponse>) responseObserver);
+          serviceImpl.sendRequest((com.cell.grpc.cluster.GrpcRequest) request,
+              (io.grpc.stub.StreamObserver<com.cell.grpc.cluster.GrpcResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -231,7 +231,7 @@ public final class BaseGrpcGrpc {
 
     @Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return ClusterProto.getDescriptor();
+      return com.cell.grpc.cluster.ClusterProto.getDescriptor();
     }
 
     @Override

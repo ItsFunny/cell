@@ -33,7 +33,6 @@ public abstract class AbstractBaseCommandReactor extends AbstractInitOnce implem
         {
             // FIXME optimize
             cmd = cmdClz.newInstance();
-            ctx.setReactor(this);
             cmd.execute(ctx);
         } catch (Exception e)
         {

@@ -1,9 +1,13 @@
 package com.cell.context;
 
 import com.cell.channel.IChannel;
+import com.cell.constants.DebugConstants;
+import com.cell.context.summary.RPCServerSummary;
+import com.cell.couple.IRPCServerRequest;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
 import com.cell.protocol.*;
+import com.cell.utils.UUIDUtils;
 import lombok.Data;
 
 /**
@@ -27,7 +31,14 @@ public class RPCServerCommandContext extends CommandContext
     @Override
     protected Summary collecSummary(IServerRequest request, CommandWrapper wrapper)
     {
-        return null;
+        RPCServerSummary ret = new RPCServerSummary();
+        IRPCServerRequest req = (IRPCServerRequest) request;
+        ret.setRequestIP(request.getHeader(DebugConstants.IP));
+        ret.setProtocolId(req.getProtocol());
+        ret.setToken(getHeaderData(TOKEN));
+        ret.setReceiveTimestamp(System.currentTimeMillis());
+        ret.setSequenceId(getHeaderData(DebugConstants.SEQUENCE_ID, UUIDUtils.uuid2()));
+        return ret;
     }
 
     @Override

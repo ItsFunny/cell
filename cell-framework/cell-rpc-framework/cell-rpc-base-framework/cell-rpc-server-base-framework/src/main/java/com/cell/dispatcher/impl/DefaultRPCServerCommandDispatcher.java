@@ -7,6 +7,7 @@ import com.cell.channel.IChannel;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.InitCTX;
 import com.cell.context.RPCServerCommandContext;
+import com.cell.couple.IRPCServerRequest;
 import com.cell.dispatcher.IRPCServerCommandDispatcher;
 import com.cell.dispatcher.abs.AbstractRPCCommandDispatcher;
 import com.cell.handler.IChainHandler;
@@ -39,7 +40,7 @@ public class DefaultRPCServerCommandDispatcher extends AbstractRPCCommandDispatc
     @Override
     protected CommandWrapper getCommandFromRequest(Map<String, CommandWrapper> commands, IServerRequest request)
     {
-        return null;
+        return commands.get(((IRPCServerRequest) request).getProtocol());
     }
 
     @Override
