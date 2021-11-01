@@ -2,6 +2,7 @@ package com.cell;
 
 import com.cell.annotation.*;
 import com.cell.annotations.*;
+import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.command.AbstractGRPCServerCommand;
 import com.cell.command.impl.AbstractHttpCommand;
 import com.cell.concurrent.base.Future;
@@ -10,7 +11,6 @@ import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
-import com.cell.grpc.cluster.BaseGrpcGrpc;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
@@ -193,7 +193,7 @@ public class App
         {
             RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
             ClientRequestDemo demo = new ClientRequestDemo();
-            Future<Object> call = reactor.im.call(demo);
+            Future<Object> call = reactor.im.call(ctx, demo);
             try
             {
                 Object o1 = call.get();

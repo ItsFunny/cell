@@ -2,11 +2,12 @@ package com.cell.server;
 
 import com.cell.annotation.GRPCService;
 import com.cell.annotations.AutoPlugin;
+import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.concurrent.base.Promise;
 import com.cell.constants.ContextConstants;
+import com.cell.constants.DebugConstants;
 import com.cell.couple.GRPCServerResponse;
 import com.cell.couple.RPCServerRequest;
-import com.cell.grpc.cluster.BaseGrpcGrpc;
 import com.cell.grpc.cluster.GrpcRequest;
 import com.cell.grpc.cluster.GrpcResponse;
 import com.cell.grpc.common.Envelope;
@@ -50,6 +51,7 @@ public class BaseGRPCServiceImpl extends BaseGrpcGrpc.BaseGrpcImplBase
         rpcServerRequest.setRequestStream(inputStream);
         DefaultStringCommandProtocolID protocolID = new DefaultStringCommandProtocolID(header.getProtocol());
         rpcServerRequest.setProtocolId(protocolID);
+        rpcServerRequest.getHeader().put(DebugConstants.SEQUENCE_ID, header.getSequenceId());
 
         GRPCServerResponse grpcServerResponse = new GRPCServerResponse();
 

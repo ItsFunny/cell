@@ -19,11 +19,7 @@ public interface IBuzzContext extends IContext
     EventExecutor getEventExecutor();
     void response(ContextResponseWrapper wp);
     long getRequestTimestamp();
-    void setSequenceId(String sequenceId);
-    String getSequenceId();
+    Summary getSummary();
     Promise<Object> getPromise();
     ICommandReactor getReactor();
-
-    void setIp(String ip);
-    String getIp();
 }

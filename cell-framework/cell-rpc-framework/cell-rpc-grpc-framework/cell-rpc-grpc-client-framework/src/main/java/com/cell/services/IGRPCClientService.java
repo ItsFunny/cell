@@ -1,6 +1,7 @@
 package com.cell.services;
 
 import com.cell.concurrent.base.Future;
+import com.cell.protocol.IBuzzContext;
 import com.cell.serialize.ISerializable;
 
 /**
@@ -13,5 +14,5 @@ import com.cell.serialize.ISerializable;
  */
 public interface IGRPCClientService
 {
-    Future<Object> call(ISerializable req);
+    Future<Object> call(IBuzzContext ctx, ISerializable req);
 }

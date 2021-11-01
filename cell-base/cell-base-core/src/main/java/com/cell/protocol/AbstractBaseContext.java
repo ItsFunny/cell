@@ -23,13 +23,11 @@ import java.util.Map;
 @Data
 public abstract class AbstractBaseContext implements IBuzzContext
 {
-    protected String sequenceId;
     protected long requestTimestamp;
 
     private CommandContext context;
     private EventExecutor eventExecutor;
 
-    private String ip;
 
 
     public AbstractBaseContext(CommandContext commandContext)
@@ -44,6 +42,12 @@ public abstract class AbstractBaseContext implements IBuzzContext
 //                discard();
 //            }
 //        });
+    }
+
+    @Override
+    public Summary getSummary()
+    {
+        return this.context.getSummary();
     }
 
     @Override
@@ -75,8 +79,8 @@ public abstract class AbstractBaseContext implements IBuzzContext
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.getCommandContext().getSummary().getSequenceId();
         LOG.info(Module.ALL,
-                "response ip={},sequenceId={},cost={}",
-                this.getCommandContext().getSummary().getProtocolId(), this.getIp(), sequenceId, consumeTime);
+                "response protocol={}, ip={},sequenceId={},cost={}",
+                this.getCommandContext().getSummary().getProtocolId(), this.getSummary().getRequestIP(), sequenceId, consumeTime);
 
         IServerResponse response = this.getCommandContext().getResponse();
         if (wp.getHeaders() != null)
@@ -176,17 +180,5 @@ public abstract class AbstractBaseContext implements IBuzzContext
     public Promise<Object> getPromise()
     {
         return this.context.getResponse().getPromise();
-    }
-
-    @Override
-    public void setIp(String ip)
-    {
-        this.ip = ip;
-    }
-
-    @Override
-    public String getIp()
-    {
-        return this.ip;
     }
 }

@@ -38,7 +38,7 @@ public class DefaultServerRPCCommandSuit extends AbstractCommandSuit implements 
     @Override
     public IRPCServerCommandContext getBuzContext()
     {
-        DefaultRPCServerCommandContext ret=new DefaultRPCServerCommandContext((RPCServerCommandContext) this.getCommandContext());
+        DefaultRPCServerCommandContext ret = new DefaultRPCServerCommandContext((RPCServerCommandContext) this.getCommandContext());
         return ret;
     }
 }

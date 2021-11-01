@@ -34,4 +34,16 @@ public interface EnvelopeHeaderOrBuilder extends
    */
   com.google.protobuf.ByteString
       getProtocolBytes();
+
+  /**
+   * <code>string sequenceId = 4;</code>
+   * @return The sequenceId.
+   */
+  String getSequenceId();
+  /**
+   * <code>string sequenceId = 4;</code>
+   * @return The bytes for sequenceId.
+   */
+  com.google.protobuf.ByteString
+      getSequenceIdBytes();
 }

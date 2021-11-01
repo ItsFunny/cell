@@ -56,7 +56,7 @@ public class DummyExecutor implements EventExecutor
     @Override
     public boolean inEventLoop()
     {
-        return true;
+        return false;
     }
 
     @Override

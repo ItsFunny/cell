@@ -1,13 +1,16 @@
 package com.cell;
 
-import static org.junit.Assert.assertTrue;
-
+import com.cell.concurrent.DummyExecutor;
+import com.cell.concurrent.base.Promise;
+import com.cell.concurrent.promise.BaseDefaultPromise;
 import org.junit.Test;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
     /**
      * Rigorous Test :-)
@@ -15,6 +18,14 @@ public class AppTest
     @Test
     public void shouldAnswerWithTrue()
     {
-        assertTrue( true );
+        assertTrue(true);
+    }
+
+    @Test
+    public void test123() throws Exception
+    {
+        Promise<Object> promise = new BaseDefaultPromise(DummyExecutor.getInstance());
+        Object o = promise.get();
+        System.out.println(o);
     }
 }

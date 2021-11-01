@@ -43,14 +43,14 @@ public final class EvelopeProto {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\025common/envelope.proto\022\006common\"@\n\016Envel" +
+      "\n\025common/envelope.proto\022\006common\"T\n\016Envel" +
       "opeHeader\022\014\n\004flag\030\001 \001(\003\022\016\n\006length\030\002 \001(\003\022" +
-      "\020\n\010protocol\030\003 \001(\t\"T\n\010Envelope\022&\n\006header\030" +
-      "\001 \001(\0132\026.common.EnvelopeHeader\022 \n\007payload" +
-      "\030\002 \001(\0132\017.common.Payload\"7\n\007Payload\022\036\n\006he" +
-      "ader\030\001 \001(\0132\016.common.Header\022\014\n\004data\030\002 \001(\014" +
-      "\"\010\n\006HeaderB&\n\024com.cell.grpc.commonB\014Evel" +
-      "opeProtoP\001b\006proto3"
+      "\020\n\010protocol\030\003 \001(\t\022\022\n\nsequenceId\030\004 \001(\t\"T\n" +
+      "\010Envelope\022&\n\006header\030\001 \001(\0132\026.common.Envel" +
+      "opeHeader\022 \n\007payload\030\002 \001(\0132\017.common.Payl" +
+      "oad\"7\n\007Payload\022\036\n\006header\030\001 \001(\0132\016.common." +
+      "Header\022\014\n\004data\030\002 \001(\014\"\010\n\006HeaderB&\n\024com.ce" +
+      "ll.grpc.commonB\014EvelopeProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -61,7 +61,7 @@ public final class EvelopeProto {
     internal_static_common_EnvelopeHeader_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_common_EnvelopeHeader_descriptor,
-        new String[] { "Flag", "Length", "Protocol", });
+        new String[] { "Flag", "Length", "Protocol", "SequenceId", });
     internal_static_common_Envelope_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_common_Envelope_fieldAccessorTable = new

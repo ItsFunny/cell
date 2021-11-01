@@ -17,6 +17,7 @@ private static final long serialVersionUID = 0L;
   }
   private EnvelopeHeader() {
     protocol_ = "";
+    sequenceId_ = "";
   }
 
   @Override
@@ -63,6 +64,12 @@ private static final long serialVersionUID = 0L;
             String s = input.readStringRequireUtf8();
 
             protocol_ = s;
+            break;
+          }
+          case 34: {
+            String s = input.readStringRequireUtf8();
+
+            sequenceId_ = s;
             break;
           }
           default: {
@@ -157,6 +164,42 @@ private static final long serialVersionUID = 0L;
     }
   }
 
+  public static final int SEQUENCEID_FIELD_NUMBER = 4;
+  private volatile Object sequenceId_;
+  /**
+   * <code>string sequenceId = 4;</code>
+   * @return The sequenceId.
+   */
+  public String getSequenceId() {
+    Object ref = sequenceId_;
+    if (ref instanceof String) {
+      return (String) ref;
+    } else {
+      com.google.protobuf.ByteString bs =
+          (com.google.protobuf.ByteString) ref;
+      String s = bs.toStringUtf8();
+      sequenceId_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string sequenceId = 4;</code>
+   * @return The bytes for sequenceId.
+   */
+  public com.google.protobuf.ByteString
+      getSequenceIdBytes() {
+    Object ref = sequenceId_;
+    if (ref instanceof String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (String) ref);
+      sequenceId_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   @Override
   public final boolean isInitialized() {
@@ -180,6 +223,9 @@ private static final long serialVersionUID = 0L;
     if (!getProtocolBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 3, protocol_);
     }
+    if (!getSequenceIdBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, sequenceId_);
+    }
     unknownFields.writeTo(output);
   }
 
@@ -199,6 +245,9 @@ private static final long serialVersionUID = 0L;
     }
     if (!getProtocolBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, protocol_);
+    }
+    if (!getSequenceIdBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, sequenceId_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -221,6 +270,8 @@ private static final long serialVersionUID = 0L;
         != other.getLength()) return false;
     if (!getProtocol()
         .equals(other.getProtocol())) return false;
+    if (!getSequenceId()
+        .equals(other.getSequenceId())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -240,6 +291,8 @@ private static final long serialVersionUID = 0L;
         getLength());
     hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
     hash = (53 * hash) + getProtocol().hashCode();
+    hash = (37 * hash) + SEQUENCEID_FIELD_NUMBER;
+    hash = (53 * hash) + getSequenceId().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -379,6 +432,8 @@ private static final long serialVersionUID = 0L;
 
       protocol_ = "";
 
+      sequenceId_ = "";
+
       return this;
     }
 
@@ -408,6 +463,7 @@ private static final long serialVersionUID = 0L;
       result.flag_ = flag_;
       result.length_ = length_;
       result.protocol_ = protocol_;
+      result.sequenceId_ = sequenceId_;
       onBuilt();
       return result;
     }
@@ -464,6 +520,10 @@ private static final long serialVersionUID = 0L;
       }
       if (!other.getProtocol().isEmpty()) {
         protocol_ = other.protocol_;
+        onChanged();
+      }
+      if (!other.getSequenceId().isEmpty()) {
+        sequenceId_ = other.sequenceId_;
         onChanged();
       }
       this.mergeUnknownFields(other.unknownFields);
@@ -639,6 +699,82 @@ private static final long serialVersionUID = 0L;
   checkByteStringIsUtf8(value);
 
       protocol_ = value;
+      onChanged();
+      return this;
+    }
+
+    private Object sequenceId_ = "";
+    /**
+     * <code>string sequenceId = 4;</code>
+     * @return The sequenceId.
+     */
+    public String getSequenceId() {
+      Object ref = sequenceId_;
+      if (!(ref instanceof String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        sequenceId_ = s;
+        return s;
+      } else {
+        return (String) ref;
+      }
+    }
+    /**
+     * <code>string sequenceId = 4;</code>
+     * @return The bytes for sequenceId.
+     */
+    public com.google.protobuf.ByteString
+        getSequenceIdBytes() {
+      Object ref = sequenceId_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        sequenceId_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string sequenceId = 4;</code>
+     * @param value The sequenceId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSequenceId(
+        String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+
+      sequenceId_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string sequenceId = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSequenceId() {
+
+      sequenceId_ = getDefaultInstance().getSequenceId();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string sequenceId = 4;</code>
+     * @param value The bytes for sequenceId to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSequenceIdBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+
+      sequenceId_ = value;
       onChanged();
       return this;
     }

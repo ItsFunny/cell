@@ -12,11 +12,14 @@ public interface Summary
 {
     String getRequestIP();
 
+
     String getProtocolId();
 
     long getReceiveTimestamp();
 
     String getToken();
+
+    void setSequenceId(String id);
 
     String getSequenceId();
 
