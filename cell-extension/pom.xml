@@ -17,7 +17,6 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <modules>
-        <module>cell-http-extension</module>
         <module>cell-discovery-nacos-extension</module>
         <module>cell-extension-common</module>
         <module>cell-metrics-extension</module>

@@ -2,10 +2,8 @@ package com.cell;
 
 import com.cell.annotation.*;
 import com.cell.annotations.*;
-import com.cell.application.CellApplication;
 import com.cell.command.AbstractGRPCServerCommand;
 import com.cell.command.impl.AbstractHttpCommand;
-import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.Future;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
@@ -18,7 +16,7 @@ import com.cell.reactor.abs.AbstractRPCServerReactor;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.rpc.client.ClientRequestDemo;
 import com.cell.rpc.client.ServerRPCResponse;
-import com.cell.services.impl.GRPCClientServiceImpl;
+import com.cell.services.IGRPCClientService;
 import com.cell.utils.RandomUtils;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
@@ -163,7 +161,7 @@ public class App
         private RPCClient1 client1;
 
         @AutoPlugin
-        private GRPCClientServiceImpl im;
+        private IGRPCClientService im;
     }
 
 
@@ -181,18 +179,15 @@ public class App
         @Override
         protected void onExecute(IRPCServerCommandContext ctx, Object o) throws IOException
         {
-            System.out.println(123);
             ServerRPCResponse response = new ServerRPCResponse();
             ctx.response(this.createResponseWp().status(ContextConstants.SUCCESS).ret(response).build());
         }
     }
 
 
-
     @HttpCmdAnno(uri = "/rpc", requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = RPCReactor.class)
     public static class RpcCommand1 extends AbstractHttpCommand
     {
-
         @Override
         protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
         {
@@ -202,21 +197,13 @@ public class App
             try
             {
                 Object o1 = call.get();
+                ctx.response(this.createResponseWp().ret(o1).build());
             } catch (Exception e)
             {
-                e.printStackTrace();
+                ctx.response(this.createResponseWp().exception(e).build());
             }
-            System.out.println(1);
         }
     }
-
-    @Bean
-    public GRPCClientServiceImpl service()
-    {
-        GRPCClientServiceImpl ret = new GRPCClientServiceImpl(DummyExecutor.getInstance());
-        return ret;
-    }
-
 
     public static void main(String[] args)
     {

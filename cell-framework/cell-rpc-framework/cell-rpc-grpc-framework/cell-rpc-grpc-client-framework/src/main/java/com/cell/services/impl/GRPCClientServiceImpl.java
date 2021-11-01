@@ -3,10 +3,7 @@ package com.cell.services.impl;
 import com.cell.annotation.GRPCClient;
 import com.cell.annotation.GRPCClientRequestAnno;
 import com.cell.concurrent.DummyExecutor;
-import com.cell.concurrent.base.BasePromise;
-import com.cell.concurrent.base.EventExecutor;
-import com.cell.concurrent.base.Future;
-import com.cell.concurrent.base.Promise;
+import com.cell.concurrent.base.*;
 import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.cluster.BaseGrpcGrpc;
 import com.cell.grpc.cluster.GrpcRequest;
@@ -17,11 +14,7 @@ import com.cell.grpc.common.Payload;
 import com.cell.serialize.ISerializable;
 import com.cell.services.IGRPCClientService;
 import com.cell.timewheel.DefaultHashedTimeWheel;
-import com.google.common.util.concurrent.FutureCallback;
-import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.ByteString;
-import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
@@ -39,28 +32,21 @@ import java.util.concurrent.TimeoutException;
 
 public class GRPCClientServiceImpl implements IGRPCClientService
 {
+    // TODO, discovery
     @GRPCClient(
             "static://127.0.0.1:12000"
     )
-    private BaseGrpcGrpc.BaseGrpcFutureStub stub;
-    //    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
-    private EventExecutor eventExecutor;
+    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
+    private EventLoopGroup group;
 
     private DefaultHashedTimeWheel timeWheel;
 
     // 时间轮
 
-
-    public GRPCClientServiceImpl(EventExecutor eventExecutor)
+    public GRPCClientServiceImpl(EventLoopGroup group)
     {
-        this.eventExecutor = eventExecutor;
+        this.group = group;
         this.timeWheel = DefaultHashedTimeWheel.getInstance();
-    }
-
-
-    public void send()
-    {
-
     }
 
 
@@ -105,18 +91,12 @@ public class GRPCClientServiceImpl implements IGRPCClientService
 
     private Future<Object> fire(GrpcRequest request, GRPCClientRequestAnno anno)
     {
-//        try
-//        {
-//            GrpcResponse grpcResponse = this.stub.sendRequest(request);
-//        }catch (Exception e){
-//
-//        }
         Promise<Object> promise;
         boolean async = anno.async();
         EventExecutor e;
         if (async)
         {
-            e = this.eventExecutor;
+            e = this.group.next();
         } else
         {
             e = DummyExecutor.getInstance();
@@ -136,9 +116,10 @@ public class GRPCClientServiceImpl implements IGRPCClientService
             }, TimeUnit.SECONDS, l);
         }
 
+        // BUG-FIX HERE
         if (async)
         {
-            this.getNextExecutor().execute(() ->
+            e.execute(() ->
                     this.call(request, anno, promise, e));
         } else
         {
@@ -152,33 +133,41 @@ public class GRPCClientServiceImpl implements IGRPCClientService
     {
         try
         {
-            ListenableFuture<GrpcResponse> future = this.stub.sendRequest(request);
-            Futures.addCallback(future, new FutureCallback<GrpcResponse>()
-            {
-                @Override
-                public void onSuccess(@NullableDecl GrpcResponse result)
-                {
-                    try
-                    {
-                        promise.trySuccess(getRet(result, anno));
-                    } catch (Exception e)
-                    {
-                        promise.tryFailure(e);
-                    }
-                }
-
-                @Override
-                public void onFailure(Throwable t)
-                {
-                    promise.tryFailure(t);
-                }
-            }, eventExecutor);
-//            GrpcResponse response = this.stub.sendRequest(request);
-//            promise.trySuccess(this.getRet(response, anno));
-        } catch (Exception ee)
+            GrpcResponse response = this.stub.sendRequest(request);
+            promise.trySuccess(getRet(response, anno));
+        } catch (Exception e)
         {
-            promise.tryFailure(ee);
+            promise.tryFailure(e);
         }
+//        try
+//        {
+//            ListenableFuture<GrpcResponse> future = this.stub.sendRequest(request);
+//            Futures.addCallback(future, new FutureCallback<GrpcResponse>()
+//            {
+//                @Override
+//                public void onSuccess(@NullableDecl GrpcResponse result)
+//                {
+//                    try
+//                    {
+//                        promise.trySuccess(getRet(result, anno));
+//                    } catch (Exception e)
+//                    {
+//                        promise.tryFailure(e);
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t)
+//                {
+//                    promise.tryFailure(t);
+//                }
+//            }, eventExecutor);
+////            GrpcResponse response = this.stub.sendRequest(request);
+////            promise.trySuccess(this.getRet(response, anno));
+//        } catch (Exception ee)
+//        {
+//            promise.tryFailure(ee);
+//        }
     }
 
     private ISerializable getRet(GrpcResponse response, GRPCClientRequestAnno anno) throws Exception
@@ -220,10 +209,6 @@ public class GRPCClientServiceImpl implements IGRPCClientService
 //        }, e);
     }
 
-    private EventExecutor getNextExecutor()
-    {
-        return this.eventExecutor.next();
-    }
 
 //    private Couple<Promise<Object>, EventExecutor> newPromise(GRPCClientRequestAnno anno)
 //    {

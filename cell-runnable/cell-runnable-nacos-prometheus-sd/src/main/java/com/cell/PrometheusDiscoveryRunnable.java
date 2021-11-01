@@ -1,7 +1,6 @@
 package com.cell;
 
 import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.application.CellApplication;
 
 /**
  * Hello world!

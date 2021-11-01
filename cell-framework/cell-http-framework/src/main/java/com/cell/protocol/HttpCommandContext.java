@@ -64,7 +64,6 @@ public class HttpCommandContext extends CommandContext
         }
     }
 
-
     @Override
     protected Summary collecSummary(IServerRequest req, CommandWrapper wrapper)
     {

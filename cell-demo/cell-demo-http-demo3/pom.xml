@@ -22,30 +22,13 @@
             <artifactId>cell-metrics-extension-common</artifactId>
             <version>${cell.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-http-extension</artifactId>
+            <artifactId>cell-runnable-spring-application</artifactId>
             <version>${cell.version}</version>
         </dependency>
 
-
-        <!--<dependency>-->
-        <!--<groupId>com.cell</groupId>-->
-        <!--<artifactId>cell-discovery-nacos-extension</artifactId>-->
-        <!--<version>${cell.version}</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-grpc-server-framework</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-
-        <!--rpc client-->
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-grpc-client-framework</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
     </dependencies>
 
     <build>

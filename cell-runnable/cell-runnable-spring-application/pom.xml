@@ -10,32 +10,27 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-runnable-nacos-prometheus-sd</artifactId>
+    <artifactId>cell-runnable-spring-application</artifactId>
 
-    <name>cell-runnable-nacos-prometheus-sd</name>
+    <name>cell-runnable-spring-application</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-metrics-prometheus-sd-extension</artifactId>
+            <artifactId>cell-rpc-grpc-client-framework</artifactId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-runnable-spring-application</artifactId>
+            <artifactId>cell-rpc-grpc-server-framework</artifactId>
             <version>${cell.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-rpc-grpc-server-framework</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-rpc-grpc-client-framework</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
-
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
     </dependencies>
 </project>
