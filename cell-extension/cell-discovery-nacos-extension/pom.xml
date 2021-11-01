@@ -11,10 +11,15 @@
 
     <groupId>com.cell</groupId>
     <artifactId>cell-discovery-nacos-extension</artifactId>
+    <packaging>pom</packaging>
 
     <name>cell-discovery-nacos-extension</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
+    <modules>
+        <module>cell-discovery-nacos-http-extension</module>
+        <module>cell-discovery-nacos-grpc-extension</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>

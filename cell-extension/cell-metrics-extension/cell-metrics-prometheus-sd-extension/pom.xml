@@ -24,7 +24,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-discovery-nacos-extension</artifactId>
+            <artifactId>cell-discovery-nacos-http-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>
