@@ -97,4 +97,5 @@ public class HttpUtils
         if (cmds.length == 0) return Optional.empty();
         return Optional.of(Stream.of(cmds).map(c -> (Class<? extends IHttpCommand>) c).collect(Collectors.toList()));
     }
+
 }

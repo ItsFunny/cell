@@ -2,7 +2,7 @@ package com.cell.log.internal;
 
 import com.cell.log.ILogConsumer;
 import com.cell.log.LogLevel;
-import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 import lombok.Data;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class LogPolicy
 
     private int priority;
 
-    public boolean matchModule(Module module)
+    public boolean matchModule(ModuleInterface module)
     {
         return moduleIds == null || moduleIds.size() == 0 || (moduleIds.contains((int) module.getModuleId()));
     }

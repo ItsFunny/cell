@@ -3,11 +3,10 @@ package com.cell.log;
 import com.cell.decorators.TypeStateful;
 import com.cell.enums.BeeEnums;
 import com.cell.enums.TypeEnums;
-import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +27,7 @@ public class LogEntry implements TypeStateful<TypeEnums>
     private Object[] objects;
     private Long logType;
     private String message;
-    private Module module;
+    private ModuleInterface module;
 
     private List<ILogHook>hooks;
     private BeeEnums beeEnums;

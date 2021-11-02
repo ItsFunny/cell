@@ -213,7 +213,7 @@ public class ServiceDiscovery extends AbstractInitOnce
     class RuleWp
     {
         String method;
-        String uri;
+        String protocol;
     }
 
     private Couple<Map<String, List<ServerCmdMetaInfo>>, Set<RuleWp>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
@@ -241,10 +241,10 @@ public class ServiceDiscovery extends AbstractInitOnce
                             {
                                 RuleWp wp = new RuleWp();
                                 wp.method = EnumHttpRequestType.getStrById(c.getMethod());
-                                wp.uri = c.getUri();
+                                wp.protocol = c.getProtocol();
                                 ruleWps.add(wp);
 
-                                String key = this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().uri(c.getUri()).method(wp.method).build());
+                                String key = this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().uri(c.getProtocol()).method(wp.method).build());
                                 List<ServerCmdMetaInfo> serverMetaInfos = metas.get(key);
                                 if (CollectionUtils.isEmpty(serverMetaInfos))
                                 {
@@ -338,7 +338,7 @@ public class ServiceDiscovery extends AbstractInitOnce
         Set<GatewayFlowRule> rules = new HashSet<>();
         for (RuleWp ruleWp : ruleWps)
         {
-            GatewayFlowRule rule = GatewayUtils.createGatewayFlowRule(ruleWp.method, ruleWp.uri);
+            GatewayFlowRule rule = GatewayUtils.createGatewayFlowRule(ruleWp.method, ruleWp.protocol);
             rules.add(rule);
         }
         GatewayRuleManager.loadRules(rules);

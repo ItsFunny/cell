@@ -1,13 +1,12 @@
 package com.cell.log;
 
 import com.cell.context.InitCTX;
-import com.cell.enums.CellError;
 import com.cell.log.bridge.ACLoggingFactory;
 import com.cell.log.config.Log4j2ConfigBuilder;
 import com.cell.log.factory.DefaultSlf4jLoggerFactory;
 import com.cell.log.impl.DefaultCellLogger;
 import com.cell.models.Module;
-import com.cell.utils.StringUtils;
+import com.cell.models.ModuleInterface;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -92,7 +91,7 @@ public class LOG
         trace(null, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void minfo(Module module, String msg, Object... data)
+    public static void minfo(ModuleInterface module, String msg, Object... data)
     {
         info(module, DEFAULT_LOG_TYPE, msg, data);
     }
@@ -102,7 +101,7 @@ public class LOG
         info(null, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void info(Module module,String msg, LogTypeEnums en, Object... data)
+    public static void info(ModuleInterface module,String msg, LogTypeEnums en, Object... data)
     {
         info(module, null, en, msg, data);
     }
@@ -117,42 +116,42 @@ public class LOG
         warn(null, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void warning(Module module, Throwable error, String msg, Object... data)
+    public static void warning(ModuleInterface module, Throwable error, String msg, Object... data)
     {
         warn(module, error, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void debug(Module module, Error error, String msg, Object... data)
+    public static void debug(ModuleInterface module, Error error, String msg, Object... data)
     {
         debug(module, error, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void info(Module module, Error error, String msg, Object... data)
+    public static void info(ModuleInterface module, Error error, String msg, Object... data)
     {
         info(module, error, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void info(Module module, String msg, Object... data)
+    public static void info(ModuleInterface module, String msg, Object... data)
     {
         info(module, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void error(Module module, Error error, String msg, Object... data)
+    public static void error(ModuleInterface module, Error error, String msg, Object... data)
     {
         error(module, error, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void erroring(Module module, String msg, Object... data)
+    public static void erroring(ModuleInterface module, String msg, Object... data)
     {
         error(module, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void warn(Module module, String msg, Object... data)
+    public static void warn(ModuleInterface module, String msg, Object... data)
     {
         warn(module, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void debug(Module module, String msg, Object... data)
+    public static void debug(ModuleInterface module, String msg, Object... data)
     {
         debug(module, null, DEFAULT_LOG_TYPE, msg, data);
     }
@@ -204,7 +203,7 @@ public class LOG
 //    {
 //        error(module, null, DEFAULT_LOG_TYPE, format, data);
 //    }
-    public static void error(Module module, Throwable throwable, String format, Object... data)
+    public static void error(ModuleInterface module, Throwable throwable, String format, Object... data)
     {
         error(module, throwable, DEFAULT_LOG_TYPE, format, data);
     }
@@ -219,17 +218,17 @@ public class LOG
 //        warn(module, null, DEFAULT_LOG_TYPE, format, data);
 //    }
 
-    public static void info(Module module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void info(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         cellLogger.log(module, LogLevel.INFO, logTypeEnums, throwable, format, data);
     }
 
-    public static void info(Module module, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void info(ModuleInterface module, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         info(module, null, logTypeEnums, format, data);
     }
 
-    public static void debug(Module module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void debug(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         cellLogger.log(module, LogLevel.DEBUG, logTypeEnums, throwable, format, data);
     }
@@ -239,27 +238,27 @@ public class LOG
         debug(module, null, logTypeEnums, format, data);
     }
 
-    public static void error(Module module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void error(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         cellLogger.log(module, LogLevel.ERROR, logTypeEnums, throwable, format, data);
     }
 
-    public static void warn(Module module, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void warn(ModuleInterface module, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         warn(module, null, logTypeEnums, format, data);
     }
 
-    public static void trace(Module module, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void trace(ModuleInterface module, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         trace(module, null, logTypeEnums, format, data);
     }
 
-    public static void warn(Module module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void warn(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         cellLogger.log(module, LogLevel.WARN, logTypeEnums, throwable, format, data);
     }
 
-    public static void trace(Module module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    public static void trace(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
         cellLogger.log(module, LogLevel.TRACE, logTypeEnums, throwable, format, data);
     }
@@ -291,7 +290,7 @@ public class LOG
     }
 
 
-    public static boolean haveReceiver(Module module, LogLevel logLevel, long type)
+    public static boolean haveReceiver(ModuleInterface module, LogLevel logLevel, long type)
     {
         return cellLogger.haveReceiver(module, logLevel, type);
     }

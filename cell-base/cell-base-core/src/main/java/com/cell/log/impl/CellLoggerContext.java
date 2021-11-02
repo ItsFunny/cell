@@ -1,11 +1,10 @@
 package com.cell.log.impl;
 
-import com.cell.blacklists.InternalBlackList;
 import com.cell.log.ILogHook;
 import com.cell.log.LogEntry;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
-import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 import com.cell.utils.DebugUtil;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +25,7 @@ public class CellLoggerContext
     private static final CellLoggerContext LOG_CONTEXT = new CellLoggerContext();
     final static char[] LOG_LEVEL_SIMPLE = {'T', 'D', 'I', 'W', 'E', 'F', 'O'};
 
-    public static LogEntry createLogEntry(Module module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, Optional<ILogHook> afterCreate, String formatMsg, Object... params)
+    public static LogEntry createLogEntry(ModuleInterface module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, Optional<ILogHook> afterCreate, String formatMsg, Object... params)
     {
         LogEntry logEntry = LogEntryFactory.createLogEntry(module, blackList, logLevel, logTypeEnums, err, formatMsg, params);
         afterCreate.ifPresent(l -> l.hook(logEntry));
@@ -46,7 +45,7 @@ public class CellLoggerContext
 
     private static class LogEntryFactory
     {
-        static LogEntry createLogEntry(Module module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, String msg, Object... data)
+        static LogEntry createLogEntry(ModuleInterface module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, String msg, Object... data)
         {
             LogEntry logEntry = LogEntry.builder()
                     .logLevel(logLevel)
@@ -60,7 +59,7 @@ public class CellLoggerContext
 
         public static String defaultLogFormat(boolean isDebug,
                                               LogLevel logLevel,
-                                              Module module,
+                                              ModuleInterface module,
                                               List<String> blackList,
                                               String format,
                                               Date timeStamp, Throwable error)

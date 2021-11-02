@@ -10,16 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cell</groupId>
-    <artifactId>cell-discovery-nacos-grpc-extension</artifactId>
+    <artifactId>cell-discovery-nacos-base</artifactId>
 
-    <name>cell-discovery-nacos-grpc-extension</name>
+    <name>cell-discovery-nacos-base</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
-    <dependencies>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-grpc-server-framework</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-    </dependencies>
+
 </project>

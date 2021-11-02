@@ -5,6 +5,7 @@ import com.cell.decorators.DefaultStatefulDecoratorManager;
 import com.cell.enums.TypeEnums;
 import com.cell.log.*;
 import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 import com.cell.services.TypeFul;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
@@ -29,7 +30,7 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     private List<String> blackList;
 
 
-    protected abstract Set<ILogConsumer> getLogConsumers(Module module, LogTypeEnums logType, LogLevel logLevel);
+    protected abstract Set<ILogConsumer> getLogConsumers(ModuleInterface module, LogTypeEnums logType, LogLevel logLevel);
 
     public abstract void registerConsumers(ILogConsumer consumer);
 
@@ -69,7 +70,7 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
         this.log(this.module, LogLevel.ERROR, logType, err, format, data);
     }
 
-    public void log(Module module, LogLevel logLevel, LogTypeEnums logType, Throwable err, String format, Object... data)
+    public void log(ModuleInterface module, LogLevel logLevel, LogTypeEnums logType, Throwable err, String format, Object... data)
     {
 // 1. 通过自身的logLevel 过滤,可以认为是全局的logLevel
         if (!this.logAble(logLevel)) return;

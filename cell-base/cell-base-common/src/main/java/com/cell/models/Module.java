@@ -12,7 +12,7 @@ import java.util.Map;
  * @Attention:
  * @Date 创建时间：2021-07-04 16:53
  */
-public enum Module
+public enum Module implements ModuleInterface
 {
     ALL((short) 0, "全部模块"),
     LOG((short) 1, "日志模块"),

@@ -1,13 +1,12 @@
 package com.cell.log.impl;
 
 import com.cell.context.InitCTX;
-import com.cell.exceptions.ConfigException;
 import com.cell.log.ILogConsumer;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
 import com.cell.log.internal.LogCache;
 import com.cell.log.internal.LogPolicy;
-import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 
 import java.io.Serializable;
 import java.util.*;
@@ -30,7 +29,7 @@ public class DefaultCellLogger extends AbstractCellLogger
     }
 
     @Override
-    protected Set<ILogConsumer> getLogConsumers(Module module, LogTypeEnums logType, LogLevel logLevel)
+    protected Set<ILogConsumer> getLogConsumers(ModuleInterface module, LogTypeEnums logType, LogLevel logLevel)
     {
         return LOG_CACHE.getLogReceivers(module, logLevel, logType.getCode());
     }
@@ -74,7 +73,7 @@ public class DefaultCellLogger extends AbstractCellLogger
         LOG_CACHE.start();
     }
 
-    public boolean haveReceiver(Module module, LogLevel logLevel, Long logType)
+    public boolean haveReceiver(ModuleInterface module, LogLevel logLevel, Long logType)
     {
         return LOG_CACHE.getLogReceivers(module, logLevel, logType).size() != 0;
     }

@@ -27,6 +27,7 @@ public @interface RPCServerCmdAnno
     @AliasFor(annotation = Command.class, attribute = "protocol")
     String protocol();
 
+
     @AliasFor(annotation = Command.class, attribute = "reactor")
     Class<? extends ICommandReactor> reactor() default DefaultRPCServerReactor.class;
 }

@@ -1,14 +1,12 @@
 package com.cell.log.internal;
 
 import com.cell.log.ILogConsumer;
-import com.cell.log.LOG;
 import com.cell.log.LogLevel;
-import com.cell.models.Module;
+import com.cell.models.ModuleInterface;
 import com.cell.utils.CollectionUtils;
 import lombok.Data;
 
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -58,7 +56,7 @@ public class LogCache
         });
     }
 
-    long makeKey(Module module, LogLevel logLevel, Long logType)
+    long makeKey(ModuleInterface module, LogLevel logLevel, Long logType)
     {
         long moduleId = module == null ? 0 : module.getModuleId();
         return (moduleId + (((long) logLevel.getValue()) << 16)
@@ -113,7 +111,7 @@ public class LogCache
         }
     }
 
-    public Set<ILogConsumer> getLogReceivers(Module module, LogLevel logLevel, Long logType)
+    public Set<ILogConsumer> getLogReceivers(ModuleInterface module, LogLevel logLevel, Long logType)
     {
         LogThreadCache threadCache = threadLocal.get();
         Map<Long, Set<ILogConsumer>> logReceiverSetCacheByMask = threadCache.getLogReceiverSetCacheByMask();

@@ -1,7 +1,14 @@
 package com.cell.utils;
 
 import com.cell.annotations.Command;
+import com.cell.annotations.ReactorAnno;
 import com.cell.protocol.ICommand;
+import com.cell.reactor.ICommandReactor;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -35,4 +42,12 @@ public class CommandUtils
 //        }
 //        return sequenceId;
 //    }
+
+    public static Optional<List<Class<? extends ICommand>>> getReactorCommands(ICommandReactor reactor)
+    {
+        ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
+        Class<? extends ICommand>[] cmds = annotation.cmds();
+        if (cmds.length == 0) return Optional.empty();
+        return Optional.of(Stream.of(cmds).map(c -> (Class<? extends ICommand>) c).collect(Collectors.toList()));
+    }
 }

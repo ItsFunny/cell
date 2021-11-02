@@ -19,6 +19,7 @@
     <modules>
         <module>cell-discovery-nacos-http-extension</module>
         <module>cell-discovery-nacos-grpc-extension</module>
+        <module>cell-discovery-nacos-base</module>
     </modules>
     <dependencies>
         <dependency>
