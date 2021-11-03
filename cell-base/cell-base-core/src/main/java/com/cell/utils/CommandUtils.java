@@ -45,7 +45,7 @@ public class CommandUtils
 
     public static Optional<List<Class<? extends ICommand>>> getReactorCommands(ICommandReactor reactor)
     {
-        ReactorAnno annotation = reactor.getClass().getAnnotation(ReactorAnno.class);
+        ReactorAnno annotation = ClassUtil.getMergedAnnotation(reactor.getClass(), ReactorAnno.class);
         Class<? extends ICommand>[] cmds = annotation.cmds();
         if (cmds.length == 0) return Optional.empty();
         return Optional.of(Stream.of(cmds).map(c -> (Class<? extends ICommand>) c).collect(Collectors.toList()));

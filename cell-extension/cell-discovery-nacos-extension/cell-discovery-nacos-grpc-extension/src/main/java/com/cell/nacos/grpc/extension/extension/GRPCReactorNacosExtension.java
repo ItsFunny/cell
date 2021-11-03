@@ -1,6 +1,7 @@
 package com.cell.nacos.grpc.extension.extension;
 
 import com.cell.annotations.CellOrder;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
@@ -12,6 +13,7 @@ import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IRPCServerReactor;
 import com.cell.root.Root;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
+import com.cell.server.IGRPCServer;
 import com.cell.server.IRPCServer;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.utils.ClassUtil;
@@ -44,7 +46,7 @@ public class GRPCReactorNacosExtension extends AbstractSpringNodeExtension
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
-        IRPCServer server = (IRPCServer) Root.getInstance().getServer(IRPCServer.class);
+        IGRPCServer server = (IGRPCServer) Root.getInstance().getServer(IGRPCServer.class);
         IRPCProxy proxy = (IRPCProxy) server.getProxy();
         IRPCServerCommandDispatcher dispatcher = (IRPCServerCommandDispatcher) proxy.getDispatcher();
         List<? extends ICommandReactor> reactors = dispatcher.getReactors();
@@ -77,6 +79,11 @@ public class GRPCReactorNacosExtension extends AbstractSpringNodeExtension
             reactor.setCmds(cmds);
             return reactor;
         }).collect(Collectors.toList());
+        serverMetaData.setReactors(reacotrs);
+        ServerMetaData.ServerExtraInfo extraInfo = new ServerMetaData.ServerExtraInfo();
+        extraInfo.setDomain(domain);
+        extraInfo.setType(ProtocolConstants.TYPE_RPC);
+        serverMetaData.setExtraInfo(extraInfo);
     }
 
     @Override

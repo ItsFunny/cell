@@ -32,7 +32,7 @@ public @interface HttpCmdAnno
     @AliasFor(annotation = Command.class, attribute = "protocol")
     String uri();
 
-    Module module() default Module.UNKNOWN;
+    String module() default "UNKNOWN";
 
 
     @AliasFor(annotation = Command.class, attribute = "buzzClz")

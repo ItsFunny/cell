@@ -1,5 +1,6 @@
 package com.cell.transport.model;
 
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.exceptions.ProgramaException;
 import com.cell.utils.JSONUtil;
 import com.cell.utils.StringUtils;
@@ -30,6 +31,7 @@ public class ServerMetaData
     public static class ServerExtraInfo
     {
         private String domain;
+        private byte type = ProtocolConstants.TYPE_HTTP;
     }
 
     public ServerMetaData()
