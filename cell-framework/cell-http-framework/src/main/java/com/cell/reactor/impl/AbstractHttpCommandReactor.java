@@ -1,8 +1,8 @@
 package com.cell.reactor.impl;
 
-import com.cell.http.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
-import com.cell.http.framework.command.IHttpCommand;
+import com.cell.rpc.client.base.framework.command.IHttpCommand;
 import com.cell.constant.HttpConstants;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;

@@ -20,7 +20,7 @@ import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
-import com.cell.http.framework.util.DiscoveryUtils;
+import com.cell.rpc.client.base.framework.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.StringUtils;
 

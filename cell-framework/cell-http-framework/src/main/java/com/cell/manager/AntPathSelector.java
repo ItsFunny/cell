@@ -1,9 +1,9 @@
 package com.cell.manager;
 
-import com.cell.http.framework.annotation.ActiveMethod;
-import com.cell.http.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.client.base.framework.annotation.ActiveMethod;
+import com.cell.rpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.ManagerNode;
-import com.cell.http.framework.command.IHttpCommand;
+import com.cell.rpc.client.base.framework.command.IHttpCommand;
 import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;

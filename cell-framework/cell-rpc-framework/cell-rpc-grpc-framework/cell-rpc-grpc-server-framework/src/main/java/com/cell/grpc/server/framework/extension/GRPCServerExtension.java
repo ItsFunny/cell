@@ -21,6 +21,9 @@ import com.cell.proxy.IProxy;
 import com.cell.proxy.IRPCServerProxy;
 import com.cell.reactor.ICommandReactor;
 import com.cell.root.Root;
+import com.cell.utils.StringUtils;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.Options;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Set;
@@ -33,7 +36,7 @@ import java.util.Set;
  * @Attention:
  * @Date 创建时间：2021-10-25 10:30
  */
-@CellOrder(value = OrderConstants.RPC_NACOS_DISCOVERY_EXTENSION)
+@CellOrder(value = OrderConstants.RPC_EXTENSION)
 public class GRPCServerExtension extends AbstractSpringNodeExtension
 {
     private static final String moduleName = "env.shared.rpc.grpc.json";
@@ -104,6 +107,15 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
     }
 
     @Override
+    public Options getOptions()
+    {
+        // TODO ,not here
+        Options ret = new Options();
+        ret.addOption("rpcPort", true, "rpc 端口号");
+        return ret;
+    }
+
+    @Override
     public Object loadConfiguration(INodeContext ctx) throws Exception
     {
         try
@@ -119,10 +131,16 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-
+        CommandLine cmd = ctx.getCommandLine();
         this.dispatcher = new DefaultRPCServerCommandDispatcher();
         this.proxy = new DefaultRPCServerProxy(this.dispatcher);
         this.server = new DefaultGRPServer(this.proxy);
+
+        String port = cmd.getOptionValue("rpcPort");
+        if (!StringUtils.isEmpty(port))
+        {
+            this.server.setPort(Short.valueOf(port));
+        }
     }
 
     @Override

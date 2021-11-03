@@ -11,7 +11,7 @@ import com.cell.grpc.common.EnvelopeHeader;
 import com.cell.grpc.common.Payload;
 import com.cell.constants.ContextConstants;
 import com.cell.constants.DebugConstants;
-import com.cell.http.framework.annotation.GRPCService;
+import com.cell.rpc.client.base.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.couple.GRPCServerResponse;
 import com.cell.log.LOG;
 import com.cell.protocol.DefaultStringCommandProtocolID;

@@ -35,11 +35,11 @@
             <version>${cell.version}</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.cell</groupId>-->
-            <!--<artifactId>cell-discovery-nacos-grpc-extension</artifactId>-->
-            <!--<version>${cell.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-discovery-nacos-grpc-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
 
     </dependencies>
 

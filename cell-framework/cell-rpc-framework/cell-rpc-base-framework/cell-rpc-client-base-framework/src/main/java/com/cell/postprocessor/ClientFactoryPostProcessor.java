@@ -1,7 +1,7 @@
 package com.cell.postprocessor;
 
 import com.cell.adapter.AbstractAutoRegistry;
-import com.cell.http.framework.annotation.RPCClient;
+import com.cell.rpc.client.base.framework.annotation.RPCClient;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
 import java.lang.annotation.Annotation;

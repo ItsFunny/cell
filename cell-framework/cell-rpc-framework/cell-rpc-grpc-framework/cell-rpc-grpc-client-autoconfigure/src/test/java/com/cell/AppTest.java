@@ -1,7 +1,7 @@
 package com.cell;
 
-import com.cell.http.framework.annotation.CellSpringHttpApplication;
-import com.cell.http.framework.annotation.GRPCClient;
+import com.cell.rpc.client.base.framework.annotation.CellSpringHttpApplication;
+import com.cell.rpc.client.base.framework.annotation.GRPCClient;
 import com.cell.cluster.BaseGrpcGrpc;
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;

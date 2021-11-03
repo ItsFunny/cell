@@ -1,8 +1,8 @@
 package com.cell.reactor.commands;
 
-import com.cell.http.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.Optional;
-import com.cell.http.framework.command.impl.AbstractHttpCommand;
+import com.cell.rpc.client.base.framework.command.impl.AbstractHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;

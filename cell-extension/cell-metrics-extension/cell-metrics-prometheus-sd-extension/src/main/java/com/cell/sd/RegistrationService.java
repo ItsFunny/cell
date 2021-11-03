@@ -13,7 +13,7 @@ import com.cell.model.ServiceInstanceHealth;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.http.framework.util.DiscoveryUtils;
+import com.cell.rpc.client.base.framework.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

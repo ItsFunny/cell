@@ -1,6 +1,6 @@
 package com.cell.manager.nodes;
 
-import com.cell.http.framework.annotation.ActiveMethod;
+import com.cell.rpc.client.base.framework.annotation.ActiveMethod;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.constants.GatewayConstants;

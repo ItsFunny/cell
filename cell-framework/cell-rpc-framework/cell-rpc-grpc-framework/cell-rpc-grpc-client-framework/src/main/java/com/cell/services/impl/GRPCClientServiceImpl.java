@@ -1,7 +1,7 @@
 package com.cell.services.impl;
 
-import com.cell.http.framework.annotation.GRPCClient;
-import com.cell.http.framework.annotation.GRPCClientRequestAnno;
+import com.cell.rpc.client.base.framework.annotation.GRPCClient;
+import com.cell.rpc.client.base.framework.annotation.GRPCClientRequestAnno;
 import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.*;

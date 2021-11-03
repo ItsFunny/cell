@@ -1,8 +1,8 @@
 package com.cell.reactor.commands;
 
 import com.alibaba.fastjson.JSONObject;
-import com.cell.http.framework.annotation.HttpCmdAnno;
-import com.cell.http.framework.command.impl.AbstractHttpCommand;
+import com.cell.rpc.client.base.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.client.base.framework.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.reactor.ServiceReactor;

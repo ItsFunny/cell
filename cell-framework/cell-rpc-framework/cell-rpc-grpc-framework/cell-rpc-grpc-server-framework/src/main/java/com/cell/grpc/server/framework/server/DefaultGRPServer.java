@@ -3,7 +3,7 @@ package com.cell.grpc.server.framework.server;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
-import com.cell.http.framework.annotation.GRPCService;
+import com.cell.rpc.client.base.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.constants.GRPCConstants;
 import com.cell.grpc.server.framework.extension.GRPCServerExtension;
@@ -45,6 +45,7 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
     public DefaultGRPServer(IRPCServerProxy proxy)
     {
         super(proxy);
+        this.setPort((short) 12000);
     }
 
     @Override
