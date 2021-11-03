@@ -1,6 +1,7 @@
 package com.cell.dispatcher;
 
 import com.cell.annotations.Command;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.channel.IChannel;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.EventExecutor;
@@ -9,7 +10,6 @@ import com.cell.concurrent.base.Promise;
 import com.cell.concurrent.promise.BaseDefaultPromise;
 import com.cell.config.AbstractInitOnce;
 import com.cell.constants.ContextConstants;
-import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.context.DispatchContext;
 import com.cell.exceptions.ProgramaException;
 import com.cell.handler.IChainHandler;

@@ -1,9 +1,11 @@
 package com.cell.grpc.server.framework.extension;
 
 import com.cell.Configuration;
+import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.channel.DefaultRPCServerChannel;
+import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.dispatcher.impl.DefaultRPCServerCommandDispatcher;
@@ -31,6 +33,7 @@ import java.util.Set;
  * @Attention:
  * @Date 创建时间：2021-10-25 10:30
  */
+@CellOrder(value = OrderConstants.RPC_NACOS_DISCOVERY_EXTENSION)
 public class GRPCServerExtension extends AbstractSpringNodeExtension
 {
     private static final String moduleName = "env.shared.rpc.grpc.json";

@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.base.common.annotation.ActiveMethod;
+import com.cell.http.framework.annotation.ActiveMethod;
 import com.cell.executor.IReactorExecutor;
 import org.junit.Test;
 

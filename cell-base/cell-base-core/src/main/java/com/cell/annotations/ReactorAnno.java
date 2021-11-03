@@ -1,6 +1,6 @@
 package com.cell.annotations;
 
-import com.cell.grpc.server.framework.constants.ProtocolConstants;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.protocol.ICommand;
 
 import java.lang.annotation.*;

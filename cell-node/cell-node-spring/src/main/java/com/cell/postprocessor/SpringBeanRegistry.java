@@ -13,7 +13,7 @@ import com.cell.enums.EnumLifeCycle;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.postprocessors.extension.SpringExtensionManager;
-import com.cell.discovery.nacos.util.FrameworkUtil;
+import com.cell.http.framework.util.FrameworkUtil;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ExtensionClassUtil;

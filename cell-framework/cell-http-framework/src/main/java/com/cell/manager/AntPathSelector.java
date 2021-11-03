@@ -1,9 +1,9 @@
 package com.cell.manager;
 
-import com.cell.base.common.annotation.ActiveMethod;
-import com.cell.base.common.annotation.HttpCmdAnno;
+import com.cell.http.framework.annotation.ActiveMethod;
+import com.cell.http.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.ManagerNode;
-import com.cell.grpc.server.framework.command.IHttpCommand;
+import com.cell.http.framework.command.IHttpCommand;
 import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;

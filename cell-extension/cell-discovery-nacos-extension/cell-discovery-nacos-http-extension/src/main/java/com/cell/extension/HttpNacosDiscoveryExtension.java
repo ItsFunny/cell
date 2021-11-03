@@ -1,6 +1,6 @@
 package com.cell.extension;
 
-import com.cell.base.common.annotation.HttpCmdAnno;
+import com.cell.http.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;

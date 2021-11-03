@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-http-extension</artifactId>
+            <artifactId>cell-http-framework</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>

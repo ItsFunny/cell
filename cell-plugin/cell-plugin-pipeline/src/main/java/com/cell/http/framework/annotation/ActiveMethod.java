@@ -1,0 +1,23 @@
+package com.cell.http.framework.annotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * @author Charlie
+ * @When
+ * @Description
+ * @Detail
+ * @Attention:
+ * @Date 创建时间：2021-09-20 12:55
+ */
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface ActiveMethod
+{
+    String id();
+
+    String description() default "";
+}

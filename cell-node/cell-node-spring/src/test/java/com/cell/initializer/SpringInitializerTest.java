@@ -1,6 +1,6 @@
 package com.cell.initializer;
 
-import com.cell.base.common.annotation.CellSpringHttpApplication;
+import com.cell.http.framework.annotation.CellSpringHttpApplication;
 import com.cell.annotations.ActiveConfiguration;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;

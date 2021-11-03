@@ -1,8 +1,8 @@
 package com.cell.reactor.abs;
 
-import com.cell.base.common.annotation.RPCServerReactorAnno;
+import com.cell.http.framework.annotation.RPCServerReactorAnno;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.cmd.IRPCServerCommand;
-import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.ICommand;
@@ -54,7 +54,8 @@ public abstract class AbstractRPCServerReactor extends AbstractBaseCommandReacto
     // FIXME ,这个需要删除
     private void fillCmd(InitCTX ctx)
     {
-        Set<Class<? extends IRPCServerCommand>> httpCommandList = (Set<Class<? extends IRPCServerCommand>>) ctx.getData().get(ProtocolConstants.INIT_CTX_CMDS);
+        Set<Class<? extends IRPCServerCommand>> httpCommandList = (Set<Class<? extends IRPCServerCommand>>) ctx.getData().get(
+                ProtocolConstants.INIT_CTX_CMDS);
         if (CollectionUtils.isEmpty(httpCommandList)) return;
         RPCServerReactorAnno anno = ClassUtil.getMergedAnnotation(this.getClass(), RPCServerReactorAnno.class);
         httpCommandList.stream().forEach(c ->

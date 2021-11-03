@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.base.common.annotation.ProxyAnno;
+import com.cell.http.framework.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
 import com.cell.log.LOG;

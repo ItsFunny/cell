@@ -1,6 +1,6 @@
 package com.cell.exception;
 
-import com.cell.grpc.server.framework.command.IHttpCommand;
+import com.cell.http.framework.command.IHttpCommand;
 import com.cell.enums.CellError;
 import com.cell.exceptions.AbstractZZException;
 import lombok.Data;
