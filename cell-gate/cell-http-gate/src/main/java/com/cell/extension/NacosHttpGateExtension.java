@@ -2,12 +2,12 @@ package com.cell.extension;
 
 import com.cell.annotations.Plugin;
 import com.cell.base.IScheduleCounter;
-import com.cell.config.GatePropertyNode;
-import com.cell.config.GatewayConfiguration;
+import com.cell.discovery.nacos.config.GatePropertyNode;
+import com.cell.discovery.nacos.config.GatewayConfiguration;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
-import com.cell.discovery.NacosNodeDiscoveryImpl;
+import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;

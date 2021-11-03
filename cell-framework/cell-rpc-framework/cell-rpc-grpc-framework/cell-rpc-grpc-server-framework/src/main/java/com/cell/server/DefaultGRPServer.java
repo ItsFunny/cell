@@ -1,7 +1,7 @@
 package com.cell.server;
 
 import com.cell.annotation.GRPCService;
-import com.cell.config.GRPCServerConfiguration;
+import com.cell.discovery.nacos.config.GRPCServerConfiguration;
 import com.cell.configuration.RootConfiguration;
 import com.cell.constants.GRPCConstants;
 import com.cell.context.InitCTX;

@@ -1,6 +1,6 @@
 package com.cell.postprocessor;
 
-import com.cell.annotation.RPCServerCmdAnno;
+import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

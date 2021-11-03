@@ -1,7 +1,7 @@
 package com.cell.postprocessors.extension;
 
 import com.cell.bridge.ISpringNodeExtension;
-import com.cell.config.AbstractInitOnce;
+import com.cell.discovery.nacos.config.AbstractInitOnce;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
@@ -15,7 +15,7 @@ import com.cell.log.LogLevel;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.tool.Banner;
-import com.cell.util.FrameworkUtil;
+import com.cell.discovery.nacos.util.FrameworkUtil;
 import com.cell.utils.IPUtils;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.cli.*;

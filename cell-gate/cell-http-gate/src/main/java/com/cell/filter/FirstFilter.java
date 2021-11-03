@@ -1,10 +1,9 @@
 package com.cell.filter;
 
 import com.cell.annotations.ActivePlugin;
+import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.constants.GatewayConstants;
-import com.cell.constants.OrderConstants;
 import com.cell.discovery.ServiceDiscovery;
-import com.cell.model.ServerMetaInfo;
 import com.cell.utils.GatewayUtils;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

@@ -1,7 +1,5 @@
 package com.cell.dispatcher.impl;
 
-import com.cell.annotation.RPCDispatcherAnno;
-import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.annotation.RPCServerReactorAnno;
 import com.cell.channel.IChannel;
 import com.cell.cmd.IRPCServerCommand;
@@ -15,6 +13,8 @@ import com.cell.handler.IHandler;
 import com.cell.protocol.*;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IRPCServerReactor;
+import com.cell.rpc.server.base.annotation.RPCDispatcherAnno;
+import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 import com.cell.suit.DefaultServerRPCCommandSuit;
 import com.cell.utils.ClassUtil;
 

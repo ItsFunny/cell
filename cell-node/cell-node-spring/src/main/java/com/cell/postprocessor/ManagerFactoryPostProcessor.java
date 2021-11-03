@@ -4,7 +4,7 @@ import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.comparators.InstanceOrderComparator;
-import com.cell.config.ConfigConstants;
+import com.cell.discovery.nacos.config.ConfigConstants;
 import com.cell.constants.BitConstants;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;

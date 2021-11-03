@@ -3,7 +3,7 @@ package com.cell.extension;
 import com.cell.Configuration;
 import com.cell.annotations.Plugin;
 import com.cell.channel.DefaultRPCServerChannel;
-import com.cell.config.GRPCServerConfiguration;
+import com.cell.discovery.nacos.config.GRPCServerConfiguration;
 import com.cell.constants.ProtocolConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;

@@ -1,7 +1,6 @@
 package com.cell.discovery;
 
-import com.cell.config.ConfigFactory;
-import com.cell.context.InitCTX;
+import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.model.Instance;
 import org.junit.Test;
 
@@ -9,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import static org.junit.Assert.*;
 
 public class NacosNodeDiscoveryImplTest
 {

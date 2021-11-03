@@ -1,6 +1,6 @@
 package com.cell.wrapper;
 
-import com.cell.model.ServerMetaInfo;
+import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import lombok.Data;
 
 import java.net.URI;

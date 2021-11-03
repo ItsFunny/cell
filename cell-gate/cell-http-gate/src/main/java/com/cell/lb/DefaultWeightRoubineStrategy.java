@@ -1,8 +1,7 @@
 package com.cell.lb;
 
-import com.cell.annotations.ActivePlugin;
-import com.cell.model.ServerCmdMetaInfo;
-import com.cell.model.ServerMetaInfo;
+
+import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,4 +32,5 @@ public class DefaultWeightRoubineStrategy implements ILoadBalancerStrategy
         }
         return null;
     }
+
 }

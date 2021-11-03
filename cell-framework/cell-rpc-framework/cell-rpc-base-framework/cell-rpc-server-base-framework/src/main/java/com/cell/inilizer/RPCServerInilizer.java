@@ -1,9 +1,9 @@
 package com.cell.inilizer;
 
-import com.cell.annotation.RPCServerCmdAnno;
 import com.cell.annotation.RPCServerReactorAnno;
 import com.cell.annotation.RPCService;
 import com.cell.initializer.CellSpringInitializer;
+import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 
 import java.lang.annotation.Annotation;
 

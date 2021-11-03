@@ -1,6 +1,6 @@
 package com.cell.service;
 
-import com.cell.config.IInitOnce;
+import com.cell.discovery.nacos.config.IInitOnce;
 import com.cell.model.Instance;
 
 import java.util.List;

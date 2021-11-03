@@ -47,6 +47,17 @@ public class GrpcCodecDefinition {
 
     private final Codec codec;
     private final boolean advertised;
+
+    public Codec getCodec()
+    {
+        return codec;
+    }
+
+    public CodecType getCodecType()
+    {
+        return codecType;
+    }
+
     private final CodecType codecType;
 
     public boolean isAdvertised()

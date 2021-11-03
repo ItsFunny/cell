@@ -1,7 +1,6 @@
 package com.cell.reactor;
 
-import com.cell.config.IInitOnce;
-import com.cell.exceptions.CommandException;
+import com.cell.discovery.nacos.config.IInitOnce;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 

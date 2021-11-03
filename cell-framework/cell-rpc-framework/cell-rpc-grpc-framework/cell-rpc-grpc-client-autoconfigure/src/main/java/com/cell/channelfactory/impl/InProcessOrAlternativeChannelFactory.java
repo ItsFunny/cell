@@ -18,7 +18,7 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GRPCChannelFactory;
-import com.cell.config.GRPCConfiguration;
+import com.cell.discovery.nacos.config.GRPCConfiguration;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;

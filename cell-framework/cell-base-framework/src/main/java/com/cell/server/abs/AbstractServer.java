@@ -2,7 +2,7 @@ package com.cell.server.abs;
 
 import com.cell.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
-import com.cell.config.AbstractInitOnce;
+import com.cell.discovery.nacos.config.AbstractInitOnce;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
 import com.cell.manager.ProcessManager;

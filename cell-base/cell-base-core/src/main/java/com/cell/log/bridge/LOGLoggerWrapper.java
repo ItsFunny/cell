@@ -1,6 +1,6 @@
 package com.cell.log.bridge;
 
-import com.cell.config.AbstractInitOnce;
+import com.cell.discovery.nacos.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;

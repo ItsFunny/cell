@@ -11,7 +11,7 @@ import com.cell.protocol.ICommand;
 import com.cell.protocol.IHead;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.JsonInput;
-import com.cell.util.HttpUtils;
+import com.cell.discovery.nacos.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import lombok.Data;
 

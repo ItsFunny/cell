@@ -1,12 +1,10 @@
 package com.cell.adapter;
 
-import com.cell.config.AbstractInitOnce;
+import com.cell.discovery.nacos.config.AbstractInitOnce;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
-
-import java.util.List;
 
 /**
  * @author Charlie
