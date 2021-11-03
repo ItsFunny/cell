@@ -1,13 +1,13 @@
 package com.cell;
 
-import com.cell.annotation.CellSpringHttpApplication;
-import com.cell.annotation.HttpCmdAnno;
+import com.cell.base.common.annotation.CellSpringHttpApplication;
+import com.cell.grpc.server.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.ForceOverride;
 import com.cell.annotations.ReactorAnno;
 import com.cell.bo.BuzzContextBO;
-import com.cell.command.IBuzzExecutor;
-import com.cell.command.IHttpCommand;
-import com.cell.command.impl.AbsDeltaHttpCommand;
+import com.cell.grpc.server.framework.command.IBuzzExecutor;
+import com.cell.grpc.server.framework.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.impl.AbsDeltaHttpCommand;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
 import com.cell.exceptions.ProgramaException;

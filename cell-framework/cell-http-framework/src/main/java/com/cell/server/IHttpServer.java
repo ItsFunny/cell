@@ -18,8 +18,7 @@ public interface IHttpServer extends IServer
 {
     IHttpProxy getHttpProxy();
     DeferredResult<Object> request(HttpServletRequest request, HttpServletResponse response);
-    void setPort(short port);
-    short getPort();
+
     boolean ready();
 
 }

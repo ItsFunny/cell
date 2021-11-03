@@ -1,6 +1,6 @@
 package com.cell.adapter;
 
-import com.cell.discovery.nacos.config.IInitOnce;
+import com.cell.config.IInitOnce;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
 import java.lang.annotation.Annotation;

@@ -1,6 +1,6 @@
 package com.cell.proxy;
 
-import com.cell.annotation.ProxyAnno;
+import com.cell.base.common.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.protocol.IServerRequest;

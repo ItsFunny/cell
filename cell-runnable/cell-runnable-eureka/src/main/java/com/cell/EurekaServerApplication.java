@@ -1,6 +1,6 @@
 package com.cell;
 
-import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.base.common.annotation.CellSpringHttpApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 

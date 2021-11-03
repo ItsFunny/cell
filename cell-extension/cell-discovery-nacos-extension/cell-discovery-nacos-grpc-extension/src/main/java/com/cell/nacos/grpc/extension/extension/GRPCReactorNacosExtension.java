@@ -7,6 +7,7 @@ import com.cell.context.INodeContext;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.IRPCServerCommandDispatcher;
 import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.model.Instance;
 import com.cell.protocol.ICommand;
 import com.cell.proxy.IRPCProxy;
 import com.cell.reactor.ICommandReactor;
@@ -14,7 +15,6 @@ import com.cell.reactor.IRPCServerReactor;
 import com.cell.root.Root;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 import com.cell.server.IGRPCServer;
-import com.cell.server.IRPCServer;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CommandUtils;
@@ -34,6 +34,7 @@ import java.util.stream.Collectors;
  * @Date 创建时间：2021-11-02 08:53
  */
 @CellOrder(value = OrderConstants.RPC_NACOS_DISCOVERY_EXTENSION)
+// TODO: 公共基类
 public class GRPCReactorNacosExtension extends AbstractSpringNodeExtension
 {
 
@@ -84,6 +85,20 @@ public class GRPCReactorNacosExtension extends AbstractSpringNodeExtension
         extraInfo.setDomain(domain);
         extraInfo.setType(ProtocolConstants.TYPE_RPC);
         serverMetaData.setExtraInfo(extraInfo);
+
+        Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
+
+        Instance instance = Instance.builder()
+                .weight((byte) 1)
+                .metaData(metadatas)
+                .clusterName(ctx.getCluster())
+                .ip(ctx.getIp())
+                .healthy(true)
+                .enable(true)
+                .port((int) server.getPort())
+                .serviceName(ctx.getApp().getApplicationName())
+                .build();
+        nodeDiscovery.registerServerInstance(instance);
     }
 
     @Override

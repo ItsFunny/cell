@@ -2,7 +2,7 @@ package com.cell.postprocessors.extension;
 
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.constants.DebugConstants;
-import com.cell.discovery.nacos.config.AbstractInitOnce;
+import com.cell.config.AbstractInitOnce;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;

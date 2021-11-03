@@ -3,7 +3,7 @@ package com.cell.protocol;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.Promise;
 import com.cell.constants.ContextConstants;
-import com.cell.constants.ProtocolConstants;
+import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.models.Module;

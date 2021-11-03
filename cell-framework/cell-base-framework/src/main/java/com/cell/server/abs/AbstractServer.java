@@ -1,8 +1,8 @@
 package com.cell.server.abs;
 
-import com.cell.annotation.ProxyAnno;
+import com.cell.base.common.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
-import com.cell.discovery.nacos.config.AbstractInitOnce;
+import com.cell.config.AbstractInitOnce;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
 import com.cell.manager.ProcessManager;
@@ -12,6 +12,7 @@ import com.cell.proxy.IFrameworkProxy;
 import com.cell.proxy.IProxy;
 import com.cell.server.IServer;
 import com.cell.utils.ClassUtil;
+import lombok.Data;
 
 /**
  * @author Charlie
@@ -21,8 +22,10 @@ import com.cell.utils.ClassUtil;
  * @Attention:
  * @Date 创建时间：2021-10-22 23:34
  */
+@Data
 public abstract class AbstractServer extends AbstractInitOnce implements IServer
 {
+    private short port = 8081;
     private ProxyAnno anno;
     private IFrameworkProxy proxy;
     private ProcessManager manager;

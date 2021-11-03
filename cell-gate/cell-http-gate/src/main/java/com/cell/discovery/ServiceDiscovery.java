@@ -9,7 +9,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
-import com.cell.discovery.nacos.config.AbstractInitOnce;
+import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;

@@ -1,7 +1,5 @@
 package com.cell.comparators;
 
-import com.cell.annotations.CellOrder;
-import com.cell.constants.Constants;
 import com.cell.utils.ClassUtil;
 
 import java.util.Comparator;

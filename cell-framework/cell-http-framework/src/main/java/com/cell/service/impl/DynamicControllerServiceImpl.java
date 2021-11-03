@@ -1,9 +1,9 @@
 package com.cell.service.impl;
 
-import com.cell.annotation.HttpCmdAnno;
+import com.cell.base.common.annotation.HttpCmdAnno;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ReactorAnno;
-import com.cell.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.IHttpCommand;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;

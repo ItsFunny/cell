@@ -1,9 +1,9 @@
 package com.cell.dispatcher;
 
-import com.cell.annotation.HttpCmdAnno;
+import com.cell.base.common.annotation.HttpCmdAnno;
 import com.cell.annotations.ReactorAnno;
 import com.cell.channel.IChannel;
-import com.cell.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.IHttpCommand;
 import com.cell.context.InitCTX;
 import com.cell.couple.IHttpServerRequest;
 import com.cell.exceptions.ProgramaException;

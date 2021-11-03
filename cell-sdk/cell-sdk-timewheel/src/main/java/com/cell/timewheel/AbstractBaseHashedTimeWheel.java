@@ -1,7 +1,7 @@
 package com.cell.timewheel;
 
-import com.cell.discovery.nacos.config.AbstractInitOnce;
-import com.cell.discovery.nacos.config.WheelTimerConfigurableNode;
+import com.cell.config.AbstractInitOnce;
+import com.cell.config.WheelTimerConfigurableNode;
 import com.cell.context.InitCTX;
 import com.cell.enums.TimeWheelDeleyLevel;
 import com.cell.task.DefaultTimerTask;

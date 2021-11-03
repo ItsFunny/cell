@@ -1,6 +1,6 @@
 package com.cell.dispatcher.impl;
 
-import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.base.common.annotation.RPCServerReactorAnno;
 import com.cell.channel.IChannel;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.InitCTX;

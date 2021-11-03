@@ -2,12 +2,12 @@ package com.cell.initializer;
 
 import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.base.common.annotation.CellSpringHttpApplication;
 import com.cell.annotations.*;
 import com.cell.bridge.ISpringNodeExtension;
-import com.cell.discovery.nacos.config.AbstractInitOnce;
-import com.cell.discovery.nacos.config.Config;
-import com.cell.discovery.nacos.config.ConfigConstants;
+import com.cell.config.AbstractInitOnce;
+import com.cell.config.Config;
+import com.cell.config.ConfigConstants;
 import com.cell.constants.BitConstants;
 import com.cell.constants.Constants;
 import com.cell.context.InitCTX;

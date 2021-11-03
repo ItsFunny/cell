@@ -4,7 +4,6 @@ import com.cell.annotations.ActivePlugin;
 import com.cell.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpCommandContext;
-import com.cell.exception.HttpFramkeworkException;
 import com.cell.exceptions.IHttpExceptionResolver;
 import com.cell.protocol.ContextResponseWrapper;
 import org.springframework.http.HttpStatus;

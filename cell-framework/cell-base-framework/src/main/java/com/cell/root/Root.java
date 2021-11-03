@@ -3,7 +3,7 @@ package com.cell.root;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.Command;
 import com.cell.annotations.ReactorAnno;
-import com.cell.constants.ProtocolConstants;
+import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.exceptions.ProgramaException;

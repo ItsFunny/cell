@@ -1,6 +1,6 @@
 package com.cell.rpc.client;
 
-import com.cell.annotation.GRPCClientRequestAnno;
+import com.cell.base.common.annotation.GRPCClientRequestAnno;
 import com.cell.serialize.DefaultSelfJsonSerialize;
 import lombok.Data;
 

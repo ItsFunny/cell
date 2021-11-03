@@ -1,6 +1,6 @@
 package com.cell.reactor;
 
-import com.cell.discovery.nacos.config.AbstractInitOnce;
+import com.cell.config.AbstractInitOnce;
 import com.cell.constants.ContextConstants;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.IBuzzContext;

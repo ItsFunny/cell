@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.annotation.ActiveMethod;
+import com.cell.base.common.annotation.ActiveMethod;
 import com.cell.exception.ManagerException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.executor.IChainExecutor;

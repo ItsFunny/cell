@@ -1,6 +1,6 @@
 package com.cell;
 
-import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.base.common.annotation.CellSpringHttpApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 

@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.util;
 
 import com.cell.annotations.ReactorAnno;
-import com.cell.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.IHttpCommand;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.ICommand;

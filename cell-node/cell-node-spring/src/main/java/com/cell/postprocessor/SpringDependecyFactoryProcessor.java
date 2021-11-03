@@ -2,7 +2,7 @@ package com.cell.postprocessor;
 
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.discovery.nacos.config.AbstractInitOnce;
+import com.cell.config.AbstractInitOnce;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;

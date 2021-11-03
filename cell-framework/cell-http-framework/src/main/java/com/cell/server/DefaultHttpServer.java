@@ -22,18 +22,12 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DefaultHttpServer extends AbstractServer implements IHttpServer
 {
-    private short port = 8081;
     private volatile boolean ready;
 
     public DefaultHttpServer(IFrameworkProxy proxy)
     {
         super(proxy);
-    }
-
-    @Override
-    public short getPort()
-    {
-        return this.port;
+        this.setPort((short) 8081);
     }
 
     @Override
@@ -42,11 +36,6 @@ public class DefaultHttpServer extends AbstractServer implements IHttpServer
         return this.ready;
     }
 
-    @Override
-    public void setPort(short port)
-    {
-        this.port = port;
-    }
 
     @Override
     protected void onStart()

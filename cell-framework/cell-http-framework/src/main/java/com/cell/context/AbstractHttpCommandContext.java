@@ -2,11 +2,11 @@ package com.cell.context;
 
 import com.cell.adapter.HandlerMethodReturnValueHandler;
 import com.cell.adapter.XMLHandlerMethodReturnValuleHandler;
-import com.cell.annotation.HttpCmdAnno;
-import com.cell.command.IHttpCommand;
-import com.cell.command.impl.DummyHttpCommand;
+import com.cell.base.common.annotation.HttpCmdAnno;
+import com.cell.grpc.server.framework.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.impl.DummyHttpCommand;
 import com.cell.constants.ContextConstants;
-import com.cell.constants.ProtocolConstants;
+import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.couple.IHttpServerRequest;
 import com.cell.couple.IHttpServerResponse;
 import com.cell.enums.EnumHttpResponseType;

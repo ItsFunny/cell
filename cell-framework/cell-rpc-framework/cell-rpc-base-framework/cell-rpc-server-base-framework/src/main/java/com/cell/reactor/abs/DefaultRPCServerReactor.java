@@ -1,6 +1,6 @@
 package com.cell.reactor.abs;
 
-import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.base.common.annotation.RPCServerReactorAnno;
 
 /**
  * @author Charlie

@@ -1,6 +1,6 @@
 package com.cell.metrics;
 
-import com.cell.annotation.ActiveMethod;
+import com.cell.base.common.annotation.ActiveMethod;
 import com.cell.annotations.ManagerNode;
 import com.cell.executor.IChainExecutor;
 import com.cell.executor.IMetricsExecutor;

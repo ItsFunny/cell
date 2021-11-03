@@ -1,7 +1,6 @@
 package com.cell.context;
 
-import com.cell.command.IHttpCommand;
-import com.cell.handler.IHttpCmdHandler;
+import com.cell.grpc.server.framework.command.IHttpCommand;
 import com.cell.protocol.CommandContext;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package com.cell.reactor.abs;
 
-import com.cell.annotation.RPCServerReactorAnno;
+import com.cell.base.common.annotation.RPCServerReactorAnno;
 import com.cell.cmd.IRPCServerCommand;
-import com.cell.constants.ProtocolConstants;
+import com.cell.grpc.server.framework.constants.ProtocolConstants;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.protocol.ICommand;

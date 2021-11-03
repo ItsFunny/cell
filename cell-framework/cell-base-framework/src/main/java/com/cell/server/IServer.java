@@ -1,6 +1,6 @@
 package com.cell.server;
 
-import com.cell.discovery.nacos.config.IInitOnce;
+import com.cell.config.IInitOnce;
 import com.cell.manager.ProcessManager;
 import com.cell.protocol.IServerRequest;
 import com.cell.protocol.IServerResponse;
@@ -25,4 +25,7 @@ public interface IServer extends IInitOnce
     void serve(IServerRequest request, IServerResponse response);
 
     void setSwitch(ProcessManager manager);
+
+    void setPort(short port);
+    short getPort();
 }

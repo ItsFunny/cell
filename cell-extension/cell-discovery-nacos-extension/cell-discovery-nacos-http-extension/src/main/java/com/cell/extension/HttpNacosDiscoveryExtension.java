@@ -1,13 +1,11 @@
 package com.cell.extension;
 
-import com.cell.annotation.HttpCmdAnno;
+import com.cell.base.common.annotation.HttpCmdAnno;
 import com.cell.annotations.CellOrder;
-import com.cell.command.IHttpCommand;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.IDispatcher;
-import com.cell.model.Instance;
 import com.cell.protocol.ICommand;
 import com.cell.proxy.IHttpProxy;
 import com.cell.reactor.ICommandReactor;
@@ -16,10 +14,8 @@ import com.cell.root.Root;
 import com.cell.server.DefaultHttpServer;
 import com.cell.server.IHttpServer;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.discovery.nacos.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CommandUtils;
-import org.apache.commons.cli.Options;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -118,18 +114,6 @@ public class HttpNacosDiscoveryExtension extends AbstractSpringNodeExtension
         serverMetaData.setExtraInfo(extraInfo);
 
 
-        Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
 
-        Instance instance = Instance.builder()
-                .weight((byte) 1)
-                .metaData(metadatas)
-                .clusterName(ctx.getCluster())
-                .ip(ctx.getIp())
-                .healthy(true)
-                .enable(true)
-                .port((int) server.getPort())
-                .serviceName(ctx.getApp().getApplicationName())
-                .build();
-        nodeDiscovery.registerServerInstance(instance);
     }
 }

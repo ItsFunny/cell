@@ -1,11 +1,10 @@
 package com.cell.bo;
 
-import com.cell.command.IHttpCommand;
+import com.cell.grpc.server.framework.command.IHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.reactor.IMapDynamicHttpReactor;
-import com.cell.serialize.ISerializable;
 import lombok.Data;
 
 /**

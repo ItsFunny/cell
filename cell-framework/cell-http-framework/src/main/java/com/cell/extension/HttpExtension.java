@@ -2,9 +2,9 @@ package com.cell.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.channel.DefaultHttpChannel;
 import com.cell.constants.OrderConstants;
-import com.cell.constants.ProtocolConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultHttpDispatcher;
 import com.cell.dispatcher.IHttpDispatcher;

@@ -1,7 +1,7 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GrpcChannelConfigurer;
-import com.cell.discovery.nacos.config.GRPCConfiguration;
+import com.cell.config.GRPCConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import io.grpc.inprocess.InProcessChannelBuilder;
 

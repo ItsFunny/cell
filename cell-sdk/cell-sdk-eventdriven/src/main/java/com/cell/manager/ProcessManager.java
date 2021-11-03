@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.annotation.ProxyAnno;
+import com.cell.base.common.annotation.ProxyAnno;
 import com.cell.concurrent.BaseDefaultEventLoopGroup;
 import com.cell.concurrent.base.BasePromise;
 import com.cell.concurrent.base.EventExecutor;

@@ -1,6 +1,6 @@
 package com.cell.initializer;
 
-import com.cell.annotation.CellSpringHttpApplication;
+import com.cell.base.common.annotation.CellSpringHttpApplication;
 import com.cell.annotations.ActiveConfiguration;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
@@ -10,9 +10,7 @@ import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 
 @CellSpringHttpApplication
 public class SpringInitializerTest
