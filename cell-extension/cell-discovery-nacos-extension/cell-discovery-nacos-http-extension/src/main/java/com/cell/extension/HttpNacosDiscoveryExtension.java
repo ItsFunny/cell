@@ -1,6 +1,5 @@
 package com.cell.extension;
 
-import com.cell.Root;
 import com.cell.annotation.HttpCmdAnno;
 import com.cell.annotations.CellOrder;
 import com.cell.command.IHttpCommand;
@@ -12,6 +11,8 @@ import com.cell.model.Instance;
 import com.cell.proxy.IHttpProxy;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.root.Root;
+import com.cell.server.DefaultHttpServer;
 import com.cell.server.IHttpServer;
 import com.cell.transport.model.ServerMetaData;
 import com.cell.discovery.nacos.util.HttpUtils;
@@ -40,13 +41,6 @@ public class HttpNacosDiscoveryExtension extends AbstractSpringNodeExtension
     {
     }
 
-    @Override
-    public Options getOptions()
-    {
-        Options options = new Options();
-        options.addOption("domain", true, "域名,外网域名");
-        return options;
-    }
 
     @Override
     public void onInit(INodeContext ctx) throws Exception
@@ -73,7 +67,7 @@ public class HttpNacosDiscoveryExtension extends AbstractSpringNodeExtension
 
     private void register(INodeContext ctx)
     {
-        IHttpServer server = (IHttpServer) Root.getInstance().getServer(IHttpServer.class);
+        IHttpServer server = (IHttpServer) Root.getInstance().getServer(DefaultHttpServer.class);
         if (server != null)
         {
             this.registerHttp(ctx, server);

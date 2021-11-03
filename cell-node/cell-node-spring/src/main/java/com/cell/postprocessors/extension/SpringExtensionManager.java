@@ -1,6 +1,7 @@
 package com.cell.postprocessors.extension;
 
 import com.cell.bridge.ISpringNodeExtension;
+import com.cell.constants.DebugConstants;
 import com.cell.discovery.nacos.config.AbstractInitOnce;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.INodeContext;
@@ -135,6 +136,12 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         } else
         {
             ctx.setIp(IPUtils.getLocalAddress());
+        }
+
+        Option option = allOps.getOption(DebugConstants.DOMAIN);
+        if (option == null)
+        {
+            allOps.addOption(DebugConstants.DOMAIN, true, "公网域名");
         }
     }
 

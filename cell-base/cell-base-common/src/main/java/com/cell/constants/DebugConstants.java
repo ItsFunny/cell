@@ -10,6 +10,7 @@ package com.cell.constants;
  */
 public interface DebugConstants
 {
-    String IP="ip";
+    String IP = "ip";
     String SEQUENCE_ID = "sequenceId";
+    String DOMAIN = "domain";
 }

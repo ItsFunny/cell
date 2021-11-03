@@ -51,7 +51,7 @@ public class Root implements ApplicationContextAware
 
     private Set<IDispatcher> dispatchers = new HashSet<>();
 
-    private Set<IServer> servers = new HashSet<>();
+    private Map<Class<? extends IServer>, IServer> servers = new HashMap<>();
 
     public void addReactor(ICommandReactor reactor)
     {
@@ -85,7 +85,7 @@ public class Root implements ApplicationContextAware
 
     public void addServer(IServer server)
     {
-        this.servers.add(server);
+        this.servers.put(server.getClass(), server);
     }
 
     public void addDispatcher(IDispatcher dispatcher)
@@ -176,13 +176,12 @@ public class Root implements ApplicationContextAware
 
     public void start()
     {
-        Set<IServer> servers = this.servers;
         InitCTX ctx = new InitCTX();
-        for (IServer server : servers)
+        this.servers.values().forEach(server ->
         {
             server.initOnce(ctx);
             server.start();
-        }
+        });
     }
 
     public void flushAfterStart()
@@ -226,6 +225,18 @@ public class Root implements ApplicationContextAware
         return context;
     }
 
+    public IServer getServer(Class<? extends IServer> s)
+    {
+        Collection<IServer> values = this.servers.values();
+        for (IServer value : values)
+        {
+            if (s.isAssignableFrom(value.getClass()))
+            {
+                return value;
+            }
+        }
+        throw new ProgramaException("asd");
+    }
 
     public static Collection<String> getBeanByAnnotation(Class<? extends Annotation> a)
     {

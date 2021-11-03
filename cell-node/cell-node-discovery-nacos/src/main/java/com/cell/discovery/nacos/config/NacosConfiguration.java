@@ -26,7 +26,7 @@ public class NacosConfiguration
         try
         {
             instance = Configuration.getDefault().getConfigValue(NACOS_CONFIG_MODULE).asObject(NacosConfiguration.class);
-        } catch (IOException e)
+        } catch (Exception e)
         {
             NacosConfiguration def = new NacosConfiguration();
             instance = def;
