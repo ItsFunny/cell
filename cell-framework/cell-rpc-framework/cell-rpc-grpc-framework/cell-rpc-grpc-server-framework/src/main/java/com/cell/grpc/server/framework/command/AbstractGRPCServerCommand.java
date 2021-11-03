@@ -1,4 +1,4 @@
-package com.cell.rpc.client.base.framework.command;
+package com.cell.grpc.server.framework.command;
 
 import com.cell.cmd.impl.AbstractRPCServerCommand;
 

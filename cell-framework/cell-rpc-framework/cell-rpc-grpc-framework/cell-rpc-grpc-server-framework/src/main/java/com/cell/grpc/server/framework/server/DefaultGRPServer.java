@@ -3,7 +3,7 @@ package com.cell.grpc.server.framework.server;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
-import com.cell.rpc.client.base.framework.annotation.GRPCService;
+import com.cell.grpc.server.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.constants.GRPCConstants;
 import com.cell.grpc.server.framework.extension.GRPCServerExtension;

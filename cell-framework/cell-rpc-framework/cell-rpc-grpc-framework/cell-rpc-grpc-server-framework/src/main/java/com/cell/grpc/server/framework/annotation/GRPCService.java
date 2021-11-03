@@ -1,4 +1,4 @@
-package com.cell.rpc.client.base.framework.annotation;
+package com.cell.grpc.server.framework.annotation;
 
 import io.grpc.ServerInterceptor;
 import org.springframework.context.annotation.Bean;
