@@ -1,6 +1,7 @@
 package com.cell.adapter;
 
 import com.cell.config.IInitOnce;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 
 import java.lang.annotation.Annotation;
@@ -17,12 +18,13 @@ import java.util.Map;
  */
 public interface IBeanDefinitionRegistryPostProcessorAdapter extends BeanDefinitionRegistryPostProcessor, IInitOnce
 {
-    default  List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor(){
+    default List<Class<? extends IBeanPostProcessortAdapter>> getToRegistryPostProcessor()
+    {
         return null;
     }
 
-    default void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
+    default Map<Class<?>, BeanPostProcessor> choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
-
+        return null;
     }
 }

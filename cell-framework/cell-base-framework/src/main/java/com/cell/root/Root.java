@@ -45,7 +45,7 @@ public class Root implements ApplicationContextAware
     private Map<Byte, Set<ICommandReactor>> reactors = new HashMap<>();
     private Map<Class<? extends ICommandReactor>, Set<Class<? extends ICommand>>> reactorCommands = new HashMap<>();
 
-//    private Map<Class<? extends Annotation>, Set<Class<?>>> annotationClasses = new HashMap<>();
+    private Map<Class<? extends Annotation>, Set<Class<?>>> annotationClasses = new HashMap<>();
 //    private Map<Class<? extends Annotation>, Set<Class<?>>> asBeanAnnotation = new HashMap<>();
 //    private Map<Class<?>, Object> asBeanInstances = new HashMap<>();
 
@@ -140,6 +140,7 @@ public class Root implements ApplicationContextAware
                 asBeanClass.add(next);
             }
         }
+        this.annotationClasses.put(an,new HashSet<>(classes));
 //        Set<Class<?>> classSet = this.annotationClasses.get(an);
 //        if (CollectionUtils.isEmpty(classSet))
 //        {

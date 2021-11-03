@@ -39,6 +39,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     private Set<String> unimportedSet = new HashSet<>();
     private SpringNodeContext ctx;
     private Map<String, BeanDefinition> BeanDefinitionMap;
+    private Map<Class<?>, BeanPostProcessor> processors = new HashMap<>();
 
     private Options allOps;
     private int state = 0;
@@ -148,7 +149,11 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException
     {
-
+        BeanPostProcessor beanPostProcessor = this.processors.get(bean.getClass());
+        if (null != beanPostProcessor)
+        {
+            return beanPostProcessor.postProcessBeforeInitialization(bean, beanName);
+        }
         return bean;
     }
 
@@ -158,7 +163,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         boolean is = bean instanceof ISpringNodeExtension;
         if (!is)
         {
-            return bean;
+            return getAfterProcessor(bean, beanName);
         }
         this.initOnce(null);
         INodeExtension newEx = addExtension((INodeExtension) bean);
@@ -188,6 +193,16 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 unimportedSet.add(newEx.getName());
                 LOG.error(Module.CONTAINER, e, "extension {} init fail and stop to import it", newEx);
             }
+        }
+        return getAfterProcessor(bean, beanName);
+    }
+
+    private Object getAfterProcessor(Object bean, String beanName)
+    {
+        BeanPostProcessor beanPostProcessor = this.processors.get(bean.getClass());
+        if (null != beanPostProcessor)
+        {
+            return beanPostProcessor.postProcessAfterInitialization(bean, beanName);
         }
         return bean;
     }
@@ -427,4 +442,13 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         }
     }
 
+    public Map<Class<?>, BeanPostProcessor> getProcessors()
+    {
+        return processors;
+    }
+
+    public void setProcessors(Map<Class<?>, BeanPostProcessor> processors)
+    {
+        this.processors = processors;
+    }
 }

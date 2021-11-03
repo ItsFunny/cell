@@ -22,6 +22,7 @@ import com.cell.wrapper.AnnotaionManagerWrapper;
 import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
@@ -123,7 +124,6 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     protected void onPostProcessBeanFactory(ConfigurableListableBeanFactory factory) throws BeansException
     {
         factory.addBeanPostProcessor(SpringExtensionManager.getInstance());
-
     }
 
 
@@ -180,6 +180,7 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
 
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = (Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>>) ctx.getData().get(ConfigConstants.FACTORIES);
         Map<Class<? extends Annotation>, List<Class<?>>> interestAnnotationsClazzs = (Map<Class<? extends Annotation>, List<Class<?>>>) ctx.getData().get(ConfigConstants.interestAnnotationsClazzs);
+        Map<Class<?>, BeanPostProcessor> postProcessorMap = new HashMap<>();
         for (Class<? extends IBeanDefinitionRegistryPostProcessorAdapter> clz : factories)
         {
             GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
@@ -189,7 +190,14 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
             try
             {
                 IBeanDefinitionRegistryPostProcessorAdapter adapter = clz.newInstance();
-                adapter.choseInterestAnnotations(interestAnnotationsClazzs);
+                Map<Class<?>, BeanPostProcessor> m = adapter.choseInterestAnnotations(interestAnnotationsClazzs);
+                if (null != m)
+                {
+                    Set<Class<?>> classSet = m.keySet();
+                    classSet.forEach(s ->
+                            postProcessorMap.put(s, m.get(s)));
+                }
+
                 List<Class<? extends IBeanPostProcessortAdapter>> toRegistryPostProcessor = adapter.getToRegistryPostProcessor();
                 if (CollectionUtils.isEmpty(toRegistryPostProcessor))
                 {
@@ -202,6 +210,8 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
                 throw new RuntimeException(e.getMessage(), e);
             }
         }
+
+        SpringExtensionManager.getInstance().setProcessors(postProcessorMap);
         LOG.info(Module.CONTAINER, "DefaultActivePluginCollector init success");
         Map<String, AnnotaionManagerWrapper> managers = (Map<String, AnnotaionManagerWrapper>) ctx.getData().get(ConfigConstants.MANAGERS);
 
@@ -246,9 +256,9 @@ public class SpringBeanRegistry extends AbstractBeanDefiinitionRegistry implemen
     }
 
     @Override
-    public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
+    public Map<Class<?>, BeanPostProcessor> choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
-
+        return null;
     }
 
 

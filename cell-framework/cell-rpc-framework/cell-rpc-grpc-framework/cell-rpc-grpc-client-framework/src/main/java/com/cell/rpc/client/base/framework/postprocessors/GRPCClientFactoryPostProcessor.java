@@ -1,7 +1,10 @@
-package com.cell.postprocessor;
+package com.cell.rpc.client.base.framework.postprocessors;
 
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
+import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.context.InitCTX;
+import com.cell.root.Root;
+import com.cell.rpc.client.base.framework.annotation.GRPCClientRequestAnno;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
@@ -17,15 +20,10 @@ import java.util.Map;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-10-25 13:26
+ * @Date 创建时间：2021-11-04 05:12
  */
-public class RPCReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
+public class GRPCClientFactoryPostProcessor extends AbstractBeanDefiinitionRegistry
 {
-    @Override
-    public Map<Class<?>, BeanPostProcessor> choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
-    {
-        return null;
-    }
 
     @Override
     protected void onPostProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry)
@@ -43,5 +41,13 @@ public class RPCReactorFactoryPostProcessor extends AbstractBeanDefiinitionRegis
     protected void onInit(InitCTX ctx)
     {
 
+    }
+
+    @Override
+    public Map<Class<?>, BeanPostProcessor> choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
+    {
+        List<Class<?>> requests = classListMap.get(GRPCClientRequestAnno.class);
+        Root.getInstance().addAnnotationClasses(GRPCClientRequestAnno.class, requests);
+        return null;
     }
 }

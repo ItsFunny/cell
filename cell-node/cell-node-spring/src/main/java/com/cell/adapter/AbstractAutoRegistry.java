@@ -3,6 +3,7 @@ package com.cell.adapter;
 import com.cell.context.InitCTX;
 import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 
@@ -24,10 +25,10 @@ public abstract class AbstractAutoRegistry extends AbstractBeanDefiinitionRegist
     private Map<Class<? extends Annotation>, Set<Class<?>>> classes = new HashMap<>();
 
     @Override
-    public void choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
+    public Map<Class<?>, BeanPostProcessor> choseInterestAnnotations(Map<Class<? extends Annotation>, List<Class<?>>> classListMap)
     {
         List<Class<? extends Annotation>> annotations = this.interestAnnotations();
-        if (CollectionUtils.isEmpty(annotations)) return;
+        if (CollectionUtils.isEmpty(annotations)) return null;
         for (Class<? extends Annotation> annotation : annotations)
         {
             List<Class<?>> classes = classListMap.get(annotation);
@@ -40,6 +41,7 @@ public abstract class AbstractAutoRegistry extends AbstractBeanDefiinitionRegist
             }
             classSet.addAll(classes);
         }
+        return null;
     }
 
     @Override
