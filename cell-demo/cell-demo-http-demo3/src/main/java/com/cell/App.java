@@ -154,8 +154,8 @@ public class App
     @ActivePlugin
     public static class RPCClient1
     {
-        @GRPCClient(value = "static://127.0.0.1:12000")
-        BaseGrpcGrpc.BaseGrpcStub stub;
+//        @GRPCClient(value = "static://127.0.0.1:12000")
+//        BaseGrpcGrpc.BaseGrpcStub stub;
     }
 
     @ReactorAnno()

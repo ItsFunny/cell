@@ -2,8 +2,7 @@ package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GRPCChannelFactory;
 import com.cell.channelfactory.GrpcChannelConfigurer;
-import com.cell.config.GRPCConfiguration;
-import com.cell.config.GrpcChannelProperties;
+import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.log.LOG;
 import com.cell.models.Module;
@@ -185,8 +184,9 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
         }
     }
 
-    protected final GrpcChannelProperties getPropertiesFor(final String name)
+    protected final GRPCClientConfiguration.GRPCClientConfigurationNode getPropertiesFor(final String name)
     {
-        return this.properties.getChannel(name);
+        return GRPCClientConfiguration.getInstance().getChannel(name);
+//        return this.properties.getChannel(name);
     }
 }

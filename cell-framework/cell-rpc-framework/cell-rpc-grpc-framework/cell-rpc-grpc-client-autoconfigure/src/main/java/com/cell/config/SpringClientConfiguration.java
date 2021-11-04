@@ -12,6 +12,7 @@ import com.cell.stub.impl.BlockingStubFactory;
 import com.cell.stub.impl.FutureStubFactory;
 import io.grpc.CompressorRegistry;
 import io.grpc.DecompressorRegistry;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +28,7 @@ import java.util.List;
  * @Date 创建时间：2021-10-27 09:56
  */
 @Configuration
-public class SpringClientConfiguration
+public class SpringClientConfiguration implements InitializingBean
 {
     @Bean
     static GRPCClientPostProcessor grpcClientBeanPostProcessor(final ApplicationContext applicationContext)
@@ -53,11 +54,11 @@ public class SpringClientConfiguration
         return new FutureStubFactory();
     }
 
-    @Bean
-    GRPCConfiguration grpcChannelsProperties()
-    {
-        return GRPCConfiguration.getInstance();
-    }
+//    @Bean
+//    GRPCConfiguration grpcChannelsProperties()
+//    {
+//        return GRPCConfiguration.getInstance();
+//    }
 
     @Bean
     GlobalClientInterceptorRegistry globalClientInterceptorRegistry(final ApplicationContext applicationContext)
@@ -78,7 +79,7 @@ public class SpringClientConfiguration
     }
 
     @Bean
-    public GRPCChannelFactory nettyChannelFactory(final GRPCConfiguration properties,
+    public GRPCChannelFactory nettyChannelFactory(
                                                   final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
                                                   final List<GrpcChannelConfigurer> channelConfigurers)
     {
@@ -87,5 +88,11 @@ public class SpringClientConfiguration
         final InProcessChannelFactory inProcessChannelFactory =
                 new InProcessChannelFactory(properties, globalClientInterceptorRegistry, channelConfigurers);
         return new InProcessOrAlternativeChannelFactory(properties, inProcessChannelFactory, channelFactory);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception
+    {
+
     }
 }

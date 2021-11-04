@@ -1,6 +1,7 @@
 package com.cell.grpc.client.base.framework.services.impl;
 
 import com.cell.cluster.BaseGrpcGrpc;
+import com.cell.com.cell.grpc.common.annotation.GRPCClient;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.*;
 import com.cell.exceptions.ProgramaException;
@@ -39,16 +40,15 @@ import java.util.concurrent.TimeoutException;
 public class GRPCClientServiceImpl implements IGRPCClientService
 {
     // TODO, discovery
-//    @GRPCClient(
-//            "static://127.0.0.1:12000"
-//    )
-//    private BaseGrpcGrpc.BaseGrpcFutureStub stub;
+    @GRPCClient(
+            "static://127.0.0.1:12001,127.0.0.1:12000"
+    )
+    private BaseGrpcGrpc.BaseGrpcFutureStub stub;
     //    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
     private EventLoopGroup group;
 
     private DefaultHashedTimeWheel timeWheel;
 
-    private Map<String, BaseGrpcGrpc.BaseGrpcFutureStub> stubs = new HashMap<>();
 
     // 时间轮
 
@@ -58,10 +58,6 @@ public class GRPCClientServiceImpl implements IGRPCClientService
         this.timeWheel = DefaultHashedTimeWheel.getInstance();
     }
 
-    public synchronized void addStub(String protocol, BaseGrpcGrpc.BaseGrpcFutureStub stub)
-    {
-        this.stubs.put(protocol, stub);
-    }
 
 
     @Override
@@ -77,7 +73,7 @@ public class GRPCClientServiceImpl implements IGRPCClientService
             return ret;
         }
         String protocol = anno.protocol();
-        BaseGrpcGrpc.BaseGrpcFutureStub stub = this.stubs.get(protocol);
+        BaseGrpcGrpc.BaseGrpcFutureStub stub = this.stub;
         if (stub == null)
         {
             ret = new BasePromise<>(DummyExecutor.getInstance());

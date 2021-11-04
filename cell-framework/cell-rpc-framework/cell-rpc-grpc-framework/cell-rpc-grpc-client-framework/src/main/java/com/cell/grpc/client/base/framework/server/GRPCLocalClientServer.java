@@ -39,13 +39,13 @@ import java.util.concurrent.TimeoutException;
  * @Attention:
  * @Date 创建时间：2021-10-28 15:37
  */
-public class GRPCLoclaClientServer extends AbstractRPCClientServer
+public class GRPCLocalClientServer extends AbstractRPCClientServer implements IGRPCClientServer
 {
     private EventLoopGroup group;
     private DefaultHashedTimeWheel timeWheel;
     private BaseGrpcGrpc.BaseGrpcFutureStub stub;
 
-    public GRPCLoclaClientServer(EventLoopGroup group)
+    public GRPCLocalClientServer(EventLoopGroup group)
     {
         super();
         this.group = group;

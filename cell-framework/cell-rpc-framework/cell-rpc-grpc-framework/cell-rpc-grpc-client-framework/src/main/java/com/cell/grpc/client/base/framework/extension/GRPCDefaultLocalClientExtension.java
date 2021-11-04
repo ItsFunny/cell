@@ -5,6 +5,8 @@ import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.context.INodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.extension.ConcurrentExtension;
+import com.cell.grpc.client.base.framework.server.GRPCLocalClientServer;
+import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
 import com.cell.grpc.client.base.framework.services.IGRPCClientService;
 import com.cell.grpc.client.base.framework.services.impl.GRPCClientServiceImpl;
 
@@ -21,6 +23,8 @@ public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
 
     private IGRPCClientService grpcClientService;
 
+    private IGRPCClientServer clientServer;
+
     @Plugin
     public IGRPCClientService service()
     {
@@ -32,12 +36,13 @@ public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
     {
         EventLoopGroup eventLoopGroup = ConcurrentExtension.getEventLoopGroup();
         this.grpcClientService = new GRPCClientServiceImpl(eventLoopGroup);
+        this.clientServer = new GRPCLocalClientServer(eventLoopGroup);
     }
 
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
-
+//        this.clientServer.setStub();
     }
 
     @Override
