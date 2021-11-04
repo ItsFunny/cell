@@ -269,7 +269,6 @@ public class ServiceDiscovery extends AbstractInitOnce
         @Override
         public void onEvent(InstancesChangeEvent event)
         {
-//            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
             LOG.info(Module.HTTP_GATEWAY, "收到event:{},hosts:{}", event);
             // FIXME , 处理nacos 的cluster
             String clusters = event.getClusters();

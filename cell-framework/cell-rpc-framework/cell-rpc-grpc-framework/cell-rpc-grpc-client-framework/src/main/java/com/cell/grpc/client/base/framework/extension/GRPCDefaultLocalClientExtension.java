@@ -18,7 +18,6 @@ import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
  */
 public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
 {
-
     private IGRPCClientServer clientServer;
 
     @Plugin
@@ -31,7 +30,6 @@ public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
     protected void onInit(INodeContext ctx) throws Exception
     {
         EventLoopGroup eventLoopGroup = ConcurrentExtension.getEventLoopGroup();
-//        this.grpcClientService = new GRPCClientServiceImpl(eventLoopGroup);
         this.clientServer = new GRPCLocalClientServer(eventLoopGroup);
     }
 
