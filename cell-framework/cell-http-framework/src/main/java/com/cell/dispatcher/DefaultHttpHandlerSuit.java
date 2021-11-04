@@ -1,6 +1,6 @@
 package com.cell.dispatcher;
 
-import com.cell.rpc.client.base.framework.command.IHttpCommand;
+import com.cell.grpc.client.base.framework.command.IHttpCommand;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.IHttpHandlerSuit;
 import com.cell.protocol.CommandContext;

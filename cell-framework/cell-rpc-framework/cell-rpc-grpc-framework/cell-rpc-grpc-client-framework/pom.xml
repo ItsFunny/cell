@@ -24,14 +24,18 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-client-base-framework</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-rpc-grpc-client-autoconfigure</artifactId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-bee-event</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
+            <version>${cell.version}</version>
         </dependency>
     </dependencies>
 

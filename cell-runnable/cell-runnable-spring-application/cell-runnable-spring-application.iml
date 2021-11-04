@@ -26,8 +26,10 @@
     <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
     <orderEntry type="module" module-name="cell-sdk-timewheel" />
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
-    <orderEntry type="module" module-name="cell-rpc-grpc-client-autoconfigure" />
     <orderEntry type="module" module-name="cell-rpc-client-base-framework" />
+    <orderEntry type="module" module-name="cell-rpc-common" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" level="project" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-client-autoconfigure" />
     <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-rpc-base-framework" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.29.0" level="project" />
@@ -95,8 +97,6 @@
     <orderEntry type="module" module-name="cell-base-configuration" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-framework" />
     <orderEntry type="module" module-name="cell-rpc-server-base-framework" />
-    <orderEntry type="module" module-name="cell-rpc-common" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-rpc-grpc-common" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-services:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.protobuf:protobuf-java-util:3.11.4" level="project" />

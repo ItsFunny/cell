@@ -1,7 +1,7 @@
 package com.cell.extension;
 
 import com.cell.base.common.constants.ProtocolConstants;
-import com.cell.rpc.client.base.framework.annotation.HttpCmdAnno;
+import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;

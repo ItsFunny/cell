@@ -21,10 +21,5 @@
             <artifactId>cell-rpc-common</artifactId>
             <version>${cell.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-grpc-common</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
     </dependencies>
 </project>

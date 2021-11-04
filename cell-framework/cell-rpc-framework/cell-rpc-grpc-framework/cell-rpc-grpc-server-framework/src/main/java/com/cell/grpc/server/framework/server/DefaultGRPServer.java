@@ -1,10 +1,10 @@
 package com.cell.grpc.server.framework.server;
 
+import com.cell.com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.server.framework.annotation.GRPCService;
-import com.cell.grpc.server.framework.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.constants.GRPCConstants;
 import com.cell.grpc.server.framework.extension.GRPCServerExtension;
 import com.cell.grpc.server.framework.interceptor.GlobalServerInterceptorRegistry;

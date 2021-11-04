@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.rpc.client.base.framework.annotation.ActiveMethod;
+import com.cell.grpc.client.base.framework.annotation.ActiveMethod;
 import com.cell.exception.ManagerException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.executor.IChainExecutor;

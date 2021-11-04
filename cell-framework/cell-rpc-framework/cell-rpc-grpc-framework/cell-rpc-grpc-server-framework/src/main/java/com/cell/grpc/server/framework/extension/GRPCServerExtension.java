@@ -5,12 +5,12 @@ import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.channel.DefaultRPCServerChannel;
+import com.cell.com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.dispatcher.impl.DefaultRPCServerCommandDispatcher;
 import com.cell.extension.AbstractSpringNodeExtension;
-import com.cell.grpc.server.framework.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.server.DefaultGRPServer;
 import com.cell.grpc.server.framework.server.IGRPCServer;
 import com.cell.log.LOG;
@@ -118,13 +118,17 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
     @Override
     public Object loadConfiguration(INodeContext ctx) throws Exception
     {
+        GRPCServerConfiguration configuration = null;
         try
         {
-            GRPCServerConfiguration configuration = Configuration.getDefault().getConfigValue(moduleName).asObject(GRPCServerConfiguration.class);
+            configuration = Configuration.getDefault().getConfigValue(moduleName).asObject(GRPCServerConfiguration.class);
             return configuration;
         } catch (Exception e)
         {
-            return GRPCServerConfiguration.defaultConfiguration();
+            configuration = GRPCServerConfiguration.defaultConfiguration();
+            return configuration;
+        } finally
+        {
         }
     }
 

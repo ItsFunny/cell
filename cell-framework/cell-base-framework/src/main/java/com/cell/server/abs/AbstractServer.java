@@ -1,6 +1,6 @@
 package com.cell.server.abs;
 
-import com.cell.rpc.client.base.framework.annotation.ProxyAnno;
+import com.cell.grpc.client.base.framework.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
 import com.cell.config.AbstractInitOnce;
 import com.cell.event.IFrameworkEvent;

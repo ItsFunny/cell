@@ -23,7 +23,7 @@ import com.cell.models.Module;
 import com.cell.resolver.DefaultStringKeyResolver;
 import com.cell.resolver.IKeyResolver;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.rpc.client.base.framework.util.DiscoveryUtils;
+import com.cell.grpc.client.base.framework.util.DiscoveryUtils;
 import com.cell.utils.GatewayUtils;
 import com.cell.utils.MetaDataUtils;
 import lombok.Data;

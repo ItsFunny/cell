@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.rpc.client.base.framework.annotation.ActiveMethod;
+import com.cell.grpc.client.base.framework.annotation.ActiveMethod;
 import com.cell.executor.IReactorExecutor;
 import org.junit.Test;
 

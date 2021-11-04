@@ -14,7 +14,7 @@ public interface OrderConstants
     int DEFAULT_ORDER = Integer.MAX_VALUE - 100;
     int HTTP_EXTENSION = 10000;
     int RPC_EXTENSION = 10000;
-    int ROOT_EXTENSION = Integer.MIN_VALUE + 100;
+    int ROOT_EXTENSION = Integer.MAX_VALUE;
 
     int DISCOVERY_EXTENSION = Integer.MAX_VALUE - 100;
     int HTTP_NACOS_DISCOVERY_EXTENSION = DISCOVERY_EXTENSION;

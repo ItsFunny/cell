@@ -1,6 +1,6 @@
 package com.cell.reactor.abs;
 
-import com.cell.rpc.client.base.framework.annotation.RPCServerReactorAnno;
+import com.cell.grpc.client.base.framework.annotation.RPCServerReactorAnno;
 
 /**
  * @author Charlie

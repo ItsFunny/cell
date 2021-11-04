@@ -31,6 +31,20 @@ public class RootConfiguration
         return Optional.ofNullable(this.extensionConfigurations.get(clz));
     }
 
+    public <T> Optional<T> getConfigurationByType(Class<T> clz)
+    {
+        for (Class<? extends INodeExtension> aClass : extensionConfigurations.keySet())
+        {
+            Object o = extensionConfigurations.get(aClass);
+            if (clz.isAssignableFrom(o.getClass()))
+            {
+                return (Optional<T>) Optional.of(o);
+            }
+        }
+        return Optional.empty();
+    }
+
+
     public void put(Class<? extends INodeExtension> clz, Object cfg)
     {
         this.extensionConfigurations.put(clz, cfg);
