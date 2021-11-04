@@ -13,7 +13,7 @@ import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
-import com.cell.grpc.client.base.framework.services.IGRPCClientService;
+import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
 import com.cell.grpc.server.framework.command.AbstractGRPCServerCommand;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
@@ -165,7 +165,7 @@ public class App
         private RPCClient1 client1;
 
         @AutoPlugin
-        private IGRPCClientService im;
+        private IGRPCClientServer im;
     }
 
 

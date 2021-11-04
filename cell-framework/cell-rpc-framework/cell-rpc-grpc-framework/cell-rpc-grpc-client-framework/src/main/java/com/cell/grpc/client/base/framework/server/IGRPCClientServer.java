@@ -13,5 +13,4 @@ import com.cell.rpc.client.base.server.IRPCClientServer;
  */
 public interface IGRPCClientServer extends IRPCClientServer
 {
-    void setStub(BaseGrpcGrpc.BaseGrpcFutureStub stub);
 }

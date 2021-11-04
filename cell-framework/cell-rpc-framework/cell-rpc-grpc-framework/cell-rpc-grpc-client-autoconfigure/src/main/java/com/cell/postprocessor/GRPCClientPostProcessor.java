@@ -6,6 +6,8 @@ import com.cell.grpc.client.base.framework.annotation.GrpcClientBean;
 import com.cell.channelfactory.GRPCChannelFactory;
 import com.cell.inject.StubTransformer;
 import com.cell.stub.IStubFactory;
+import com.cell.util.GRPCUtil;
+import com.cell.utils.GrpcUtils;
 import com.google.common.collect.Lists;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;
@@ -112,6 +114,7 @@ public class GRPCClientPostProcessor implements IBeanPostProcessortAdapter
 
     private void processFields(final Class<?> clazz, final Object bean)
     {
+//        GRPCUtil.processFields(this.applicationContext, clazz, bean);
         for (final Field field : clazz.getDeclaredFields())
         {
             final GRPCClient annotation = AnnotationUtils.findAnnotation(field, GRPCClient.class);
@@ -150,6 +153,7 @@ public class GRPCClientPostProcessor implements IBeanPostProcessortAdapter
 
         return value;
     }
+
 
     private GRPCChannelFactory channelFactory = null;
 

@@ -1,18 +1,17 @@
-package com.cell.grpc.client.base.framework.services.impl;
+package com.cell.grpc.client.base.framework.server;
 
 import com.cell.cluster.BaseGrpcGrpc;
-import com.cell.com.cell.grpc.common.annotation.GRPCClient;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.*;
 import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.client.base.framework.annotation.GRPCClientRequestAnno;
-import com.cell.grpc.client.base.framework.services.IGRPCClientService;
 import com.cell.grpc.cluster.GrpcRequest;
 import com.cell.grpc.cluster.GrpcResponse;
 import com.cell.grpc.common.Envelope;
 import com.cell.grpc.common.EnvelopeHeader;
 import com.cell.grpc.common.Payload;
 import com.cell.protocol.IBuzzContext;
+import com.cell.rpc.client.base.server.AbstractRPCClientServer;
 import com.cell.serialize.ISerializable;
 import com.cell.timewheel.DefaultHashedTimeWheel;
 import com.google.common.util.concurrent.FutureCallback;
@@ -23,8 +22,6 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -34,30 +31,31 @@ import java.util.concurrent.TimeoutException;
  * @Description
  * @Detail
  * @Attention:
- * @Date 创建时间：2021-10-28 16:35
+ * @Date 创建时间：2021-11-04 21:06
  */
-
-public class GRPCClientServiceImpl implements IGRPCClientService
+public abstract class AbstractGRPCClientServer extends AbstractRPCClientServer implements IGRPCClientServer
 {
-    // TODO, discovery
-    @GRPCClient(
-            "default"
-    )
-    private BaseGrpcGrpc.BaseGrpcFutureStub stub;
-    //    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
-    private EventLoopGroup group;
+    protected EventLoopGroup group;
+    protected DefaultHashedTimeWheel timeWheel;
 
-    private DefaultHashedTimeWheel timeWheel;
-
-
-    // 时间轮
-
-    public GRPCClientServiceImpl(EventLoopGroup group)
+    public AbstractGRPCClientServer(EventLoopGroup group)
     {
+        super();
         this.group = group;
         this.timeWheel = DefaultHashedTimeWheel.getInstance();
     }
 
+    @Override
+    protected void onStart()
+    {
+
+    }
+
+    @Override
+    protected void onShutdown()
+    {
+
+    }
 
     @Override
     public Future<Object> call(IBuzzContext context, ISerializable req)
@@ -72,7 +70,7 @@ public class GRPCClientServiceImpl implements IGRPCClientService
             return ret;
         }
         String protocol = anno.protocol();
-        BaseGrpcGrpc.BaseGrpcFutureStub stub = this.stub;
+        final BaseGrpcGrpc.BaseGrpcFutureStub stub = this.getStub(protocol);
         if (stub == null)
         {
             ret = new BasePromise<>(DummyExecutor.getInstance());
@@ -105,6 +103,8 @@ public class GRPCClientServiceImpl implements IGRPCClientService
         GrpcRequest request = GrpcRequest.newBuilder().setEnvelope(envelope).build();
         return this.fire(stub, request, anno);
     }
+
+    protected abstract BaseGrpcGrpc.BaseGrpcFutureStub getStub(String protocol);
 
     private Future<Object> fire(BaseGrpcGrpc.BaseGrpcFutureStub stub, GrpcRequest request, GRPCClientRequestAnno anno)
     {
@@ -175,68 +175,10 @@ public class GRPCClientServiceImpl implements IGRPCClientService
         return ret;
     }
 
-    private void async()
-    {
-//        ListenableFuture<GrpcResponse> responseListenableFuture = this.stub.sendRequest(request);
-//        Futures.addCallback(responseListenableFuture, new FutureCallback<GrpcResponse>()
-//        {
-//            @Override
-//            public void onSuccess(@NullableDecl GrpcResponse result)
-//            {
-//                // TODO verify
-//                Class<? extends ISerializable> aClass = anno.responseType();
-//                ISerializable ret = null;
-//                try
-//                {
-//                    ret = aClass.newInstance();
-//                    ret.fromBytes(result.getData().toByteArray());
-//                    promise.trySuccess(ret);
-//                } catch (Exception e)
-//                {
-//                    promise.tryFailure(new ProgramaException(e));
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Throwable t)
-//            {
-//                promise.tryFailure(t);
-//            }
-//        }, e);
-    }
-
-    private EventExecutor getExecutor()
+    protected EventExecutor getExecutor()
     {
         return this.group.next();
     }
-//    private Couple<Promise<Object>, EventExecutor> newPromise(GRPCClientRequestAnno anno)
-//    {
-//        Promise<Object> ret;
-//        EventExecutor e;
-//        boolean async = anno.async();
-//        if (async)
-//        {
-//            ret = new BasePromise<>(this.eventExecutor);
-//            e = this.eventExecutor;
-//        } else
-//        {
-//            ret = new BasePromise<>(DummyExecutor.getInstance());
-//            e = DummyExecutor.getInstance();
-//        }
-//        byte l = anno.timeOut();
-//        if (l > 0)
-//        {
-//            this.timeWheel.addTask((t) ->
-//            {
-//                if (ret.isDone())
-//                {
-//                    return Mono.empty();
-//                }
-//                ret.tryFailure(new TimeoutException("asd"));
-//                return Mono.empty();
-//            }, TimeUnit.SECONDS, l);
-//        }
-//        return new Couple<>(ret, e);
-//    }
+
 
 }

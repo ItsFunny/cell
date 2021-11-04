@@ -2,6 +2,7 @@ package com.cell.grpc.client.base.framework.server;
 
 import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.com.cell.grpc.common.config.GRPCServerConfiguration;
+import com.cell.com.cell.grpc.common.constants.GRPCConstants;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.*;
 import com.cell.configuration.RootConfiguration;
@@ -19,14 +20,17 @@ import com.cell.root.Root;
 import com.cell.rpc.client.base.server.AbstractRPCClientServer;
 import com.cell.serialize.ISerializable;
 import com.cell.timewheel.DefaultHashedTimeWheel;
+import com.cell.util.GRPCUtil;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.protobuf.ByteString;
+import io.grpc.stub.AbstractStub;
 import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import reactor.core.publisher.Mono;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -39,168 +43,30 @@ import java.util.concurrent.TimeoutException;
  * @Attention:
  * @Date 创建时间：2021-10-28 15:37
  */
-public class GRPCLocalClientServer extends AbstractRPCClientServer implements IGRPCClientServer
+public class GRPCLocalClientServer extends AbstractGRPCClientServer implements IGRPCClientServer
 {
-    private EventLoopGroup group;
-    private DefaultHashedTimeWheel timeWheel;
     private BaseGrpcGrpc.BaseGrpcFutureStub stub;
 
     public GRPCLocalClientServer(EventLoopGroup group)
     {
-        super();
-        this.group = group;
-        this.timeWheel = DefaultHashedTimeWheel.getInstance();
+        super(group);
     }
 
-
-    public void setStub(BaseGrpcGrpc.BaseGrpcFutureStub stub)
-    {
-        this.stub = stub;
-    }
 
     @Override
-    protected void onStart()
+    protected BaseGrpcGrpc.BaseGrpcFutureStub getStub(String protocol)
     {
-
-    }
-
-    @Override
-    protected void onShutdown()
-    {
-
+        return this.stub;
     }
 
     @Override
     protected void onInit(InitCTX ctx)
     {
-        Optional<GRPCServerConfiguration> opt = RootConfiguration.getInstance().getConfigurationByType(GRPCServerConfiguration.class);
-        if (!opt.isPresent())
-        {
-            throw new ProgramaException("asd");
-        }
-        GRPCServerConfiguration cfg = opt.get();
-
-
-    }
-
-    @Override
-    public Future<Object> call(IBuzzContext context, ISerializable req)
-    {
-        // TODO OPTIMIZE ,编译时确定
-        Promise<Object> ret;
-        GRPCClientRequestAnno anno = req.getClass().getAnnotation(GRPCClientRequestAnno.class);
-        if (anno == null)
-        {
-            ret = new BasePromise<>(DummyExecutor.getInstance());
-            ret.setFailure(new ProgramaException("asd"));
-            return ret;
-        }
-        String protocol = anno.protocol();
-        final BaseGrpcGrpc.BaseGrpcFutureStub stub = this.stub;
-        if (stub == null)
-        {
-            ret = new BasePromise<>(DummyExecutor.getInstance());
-            ret.setFailure(new ProgramaException("asd"));
-            return ret;
-        }
-
-        byte[] bytes = null;
-        try
-        {
-            bytes = req.toBytes();
-        } catch (IOException e)
-        {
-            ret = new BasePromise<>(DummyExecutor.getInstance());
-            ret.setFailure(e);
-            return ret;
-        }
-        EnvelopeHeader envelopeHeader = EnvelopeHeader.newBuilder()
-                .setProtocol(protocol)
-                .setLength(bytes.length)
-                .setSequenceId(context.getSummary().getSequenceId())
-                .build();
-        Payload payload = Payload.newBuilder()
-                .setData(ByteString.copyFrom(bytes))
-                .build();
-        Envelope envelope = Envelope.newBuilder()
-                .setHeader(envelopeHeader)
-                .setPayload(payload)
-                .build();
-        GrpcRequest request = GrpcRequest.newBuilder().setEnvelope(envelope).build();
-        return this.fire(stub, request, anno);
-    }
-
-    private Future<Object> fire(BaseGrpcGrpc.BaseGrpcFutureStub stub, GrpcRequest request, GRPCClientRequestAnno anno)
-    {
-        Promise<Object> promise = new BasePromise<>(DummyExecutor.getInstance());
-        byte l = anno.timeOut();
-        if (l > 0)
-        {
-            this.timeWheel.addTask((t) ->
-            {
-                if (promise.isDone())
-                {
-                    return Mono.empty();
-                }
-                promise.tryFailure(new TimeoutException("asd"));
-                return Mono.empty();
-            }, TimeUnit.SECONDS, l);
-        }
-
-        try
-        {
-            if (anno.async())
-            {
-                getExecutor().execute(() ->
-                {
-                    ListenableFuture<GrpcResponse> future = stub.sendRequest(request);
-                    Futures.addCallback(future, new FutureCallback<GrpcResponse>()
-                    {
-                        @Override
-                        public void onSuccess(@NullableDecl GrpcResponse result)
-                        {
-                            try
-                            {
-                                promise.trySuccess(getRet(result, anno));
-                            } catch (Exception e)
-                            {
-                                promise.tryFailure(e);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t)
-                        {
-                            promise.tryFailure(t);
-                        }
-                    }, this.getExecutor());
-                });
-            } else
-            {
-                ListenableFuture<GrpcResponse> future = stub.sendRequest(request);
-                GrpcResponse response = future.get();
-                promise.trySuccess(getRet(response, anno));
-            }
-        } catch (Exception ee)
-        {
-            promise.tryFailure(ee);
-        }
-
-        return promise;
-    }
-
-
-    private ISerializable getRet(GrpcResponse response, GRPCClientRequestAnno anno) throws Exception
-    {
-        Class<? extends ISerializable> aClass = anno.responseType();
-        ISerializable ret = null;
-        ret = aClass.newInstance();
-        ret.fromBytes(response.getData().toByteArray());
-        return ret;
-    }
-
-    private EventExecutor getExecutor()
-    {
-        return this.group.next();
+        AbstractStub<?> abstractStub = GRPCUtil.createaaStub(Root.getApplicationContext(),
+                (Class<? extends AbstractStub<?>>) BaseGrpcGrpc.BaseGrpcFutureStub.class.asSubclass(AbstractStub.class),
+                GRPCConstants.DEFAULT_GRPC_SERVER,
+                new ArrayList<>(),
+                false);
+        this.stub = (BaseGrpcGrpc.BaseGrpcFutureStub) abstractStub;
     }
 }

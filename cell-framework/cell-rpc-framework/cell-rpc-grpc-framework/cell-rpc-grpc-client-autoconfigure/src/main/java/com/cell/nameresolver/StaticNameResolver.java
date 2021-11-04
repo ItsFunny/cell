@@ -18,7 +18,6 @@ import static java.util.Objects.requireNonNull;
  */
 public class StaticNameResolver extends NameResolver
 {
-
     private final String authority;
     private final ResolutionResult result;
 
