@@ -1,7 +1,6 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GrpcChannelConfigurer;
-import com.cell.config.GRPCConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import io.grpc.inprocess.InProcessChannelBuilder;
 
@@ -18,17 +17,17 @@ import java.util.List;
  */
 public class InProcessChannelFactory extends AbstractChannelFactory<InProcessChannelBuilder>
 {
-    public InProcessChannelFactory(final GRPCConfiguration properties,
-                                   final GlobalClientInterceptorRegistry globalClientInterceptorRegistry)
+    public InProcessChannelFactory(
+            final GlobalClientInterceptorRegistry globalClientInterceptorRegistry)
     {
-        this(properties, globalClientInterceptorRegistry, Collections.emptyList());
+        this(globalClientInterceptorRegistry, Collections.emptyList());
     }
 
-    public InProcessChannelFactory(final GRPCConfiguration properties,
-                                   final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
-                                   final List<GrpcChannelConfigurer> channelConfigurers)
+    public InProcessChannelFactory(
+            final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
+            final List<GrpcChannelConfigurer> channelConfigurers)
     {
-        super(properties, globalClientInterceptorRegistry, channelConfigurers);
+        super(globalClientInterceptorRegistry, channelConfigurers);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.cell.exceptions.ProgramaException;
 import io.grpc.netty.shaded.io.grpc.netty.NegotiationType;
 import lombok.Data;
 
+import java.net.URI;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
@@ -30,6 +31,17 @@ public class GRPCClientConfiguration
         return instance;
     }
 
+    private static final String DEFAULT_DEFAULT_LOAD_BALANCING_POLICY = "round_robin";
+    private static final boolean DEFAULT_ENABLE_KEEP_ALIVE = false;
+    private static final Duration DEFAULT_KEEP_ALIVE_TIME = Duration.of(5, ChronoUnit.MINUTES);
+    private static final Duration DEFAULT_KEEP_ALIVE_TIMEOUT = Duration.of(20, ChronoUnit.SECONDS);
+    private static final boolean DEFAULT_KEEP_ALIVE_WITHOUT_CALLS = false;
+    private static final Duration DEFAULT_SHUTDOWN_GRACE_PERIOD = Duration.ofSeconds(30);
+    private static final boolean DEFAULT_FULL_STREAM_DECOMPRESSION = false;
+    private static final NegotiationType DEFAULT_NEGOTIATION_TYPE = NegotiationType.TLS;
+    private static final Duration DEFAULT_IMMEDIATE_CONNECT = Duration.ZERO;
+
+
     static
     {
         try
@@ -40,7 +52,7 @@ public class GRPCClientConfiguration
         {
             instance = new GRPCClientConfiguration();
             GRPCClientConfigurationNode node = new GRPCClientConfigurationNode();
-            node.setAddress("static://" + GRPCConstants.DEFAULT_GRPC_SERVER_ADDR + ":" + GRPCConstants.DEFAULT_GRPC_SERVER_PORT);
+            node.setAddress(URI.create("static://" + GRPCConstants.DEFAULT_GRPC_SERVER_ADDR + ":" + GRPCConstants.DEFAULT_GRPC_SERVER_PORT));
             instance.getClient().put(GRPCConstants.DEFAULT_GRPC_SERVER, node);
         }
     }
@@ -56,20 +68,10 @@ public class GRPCClientConfiguration
     }
 
 
-    private static final String DEFAULT_DEFAULT_LOAD_BALANCING_POLICY = "round_robin";
-    private static final boolean DEFAULT_ENABLE_KEEP_ALIVE = false;
-    private static final Duration DEFAULT_KEEP_ALIVE_TIME = Duration.of(5, ChronoUnit.MINUTES);
-    private static final Duration DEFAULT_KEEP_ALIVE_TIMEOUT = Duration.of(20, ChronoUnit.SECONDS);
-    private static final boolean DEFAULT_KEEP_ALIVE_WITHOUT_CALLS = false;
-    private static final Duration DEFAULT_SHUTDOWN_GRACE_PERIOD = Duration.ofSeconds(30);
-    private static final boolean DEFAULT_FULL_STREAM_DECOMPRESSION = false;
-    private static final NegotiationType DEFAULT_NEGOTIATION_TYPE = NegotiationType.TLS;
-    private static final Duration DEFAULT_IMMEDIATE_CONNECT = Duration.ZERO;
-
     @Data
     public static class GRPCClientConfigurationNode
     {
-        private String address;
+        private URI address;
         private String defaultLoadBalancingPolicy = DEFAULT_DEFAULT_LOAD_BALANCING_POLICY;
         private Boolean enableKeepAlive = DEFAULT_ENABLE_KEEP_ALIVE;
         private Long keepAliveTime = DEFAULT_KEEP_ALIVE_TIME.toMillis();
@@ -77,7 +79,7 @@ public class GRPCClientConfiguration
         private boolean keepAliveWithoutCalls = DEFAULT_KEEP_ALIVE_WITHOUT_CALLS;
         private Long shutdownGracePeriod = DEFAULT_SHUTDOWN_GRACE_PERIOD.toMillis();
         private Long maxInboundMessageSize = null;
-        private Boolean fullStreamDecompression;
+        private boolean fullStreamDecompression;
         private NegotiationType negotiationType = DEFAULT_NEGOTIATION_TYPE;
         private Long immediateConnectTimeout = DEFAULT_IMMEDIATE_CONNECT.toMillis();
 
@@ -116,10 +118,7 @@ public class GRPCClientConfiguration
             {
                 this.maxInboundMessageSize = config.maxInboundMessageSize;
             }
-            if (this.fullStreamDecompression == null)
-            {
-                this.fullStreamDecompression = config.fullStreamDecompression;
-            }
+            this.fullStreamDecompression = config.fullStreamDecompression;
             if (this.negotiationType == null)
             {
                 this.negotiationType = config.negotiationType;

@@ -84,10 +84,10 @@ public class SpringClientConfiguration implements InitializingBean
                                                   final List<GrpcChannelConfigurer> channelConfigurers)
     {
         final NettyChannelFactory channelFactory =
-                new NettyChannelFactory(properties, globalClientInterceptorRegistry, channelConfigurers);
+                new NettyChannelFactory(globalClientInterceptorRegistry, channelConfigurers);
         final InProcessChannelFactory inProcessChannelFactory =
-                new InProcessChannelFactory(properties, globalClientInterceptorRegistry, channelConfigurers);
-        return new InProcessOrAlternativeChannelFactory(properties, inProcessChannelFactory, channelFactory);
+                new InProcessChannelFactory( globalClientInterceptorRegistry, channelConfigurers);
+        return new InProcessOrAlternativeChannelFactory(inProcessChannelFactory, channelFactory);
     }
 
     @Override

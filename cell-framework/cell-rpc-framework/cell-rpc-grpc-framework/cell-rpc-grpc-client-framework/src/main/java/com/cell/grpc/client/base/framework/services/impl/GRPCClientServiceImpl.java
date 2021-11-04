@@ -41,7 +41,7 @@ public class GRPCClientServiceImpl implements IGRPCClientService
 {
     // TODO, discovery
     @GRPCClient(
-            "static://127.0.0.1:12001,127.0.0.1:12000"
+            "default"
     )
     private BaseGrpcGrpc.BaseGrpcFutureStub stub;
     //    private BaseGrpcGrpc.BaseGrpcBlockingStub stub;
@@ -57,7 +57,6 @@ public class GRPCClientServiceImpl implements IGRPCClientService
         this.group = group;
         this.timeWheel = DefaultHashedTimeWheel.getInstance();
     }
-
 
 
     @Override

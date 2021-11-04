@@ -30,7 +30,6 @@ import static java.util.Objects.requireNonNull;
  */
 public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>> implements GRPCChannelFactory
 {
-    private final GRPCConfiguration properties;
     protected final GlobalClientInterceptorRegistry globalClientInterceptorRegistry;
     protected final List<GrpcChannelConfigurer> channelConfigurers;
 
@@ -39,10 +38,9 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
     private final Map<String, ConnectivityState> channelStates = new ConcurrentHashMap<>();
     private boolean shutdown = false;
 
-    public AbstractChannelFactory(final GRPCConfiguration properties, final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
+    public AbstractChannelFactory(final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
                                   final List<GrpcChannelConfigurer> channelConfigurers)
     {
-        this.properties = properties;
         this.globalClientInterceptorRegistry =
                 requireNonNull(globalClientInterceptorRegistry, "globalClientInterceptorRegistry");
         this.channelConfigurers = requireNonNull(channelConfigurers, "channelConfigurers");
@@ -82,10 +80,10 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
         final T builder = newChannelBuilder(name);
         configure(builder, name);
         final ManagedChannel channel = builder.build();
-        final Duration timeout = this.properties.getChannel(name).getImmediateConnectTimeout();
-        if (!timeout.isZero())
+        final Long immediateConnectTimeout = GRPCClientConfiguration.getInstance().getChannel(name).getImmediateConnectTimeout();
+        if (immediateConnectTimeout != 0)
         {
-            connectOnStartup(name, channel, timeout);
+            connectOnStartup(name, channel, immediateConnectTimeout);
         }
         watchConnectivityState(name, channel);
         return channel;
@@ -101,7 +99,7 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
         }
     }
 
-    private void connectOnStartup(final String name, final ManagedChannel channel, final Duration timeout)
+    private void connectOnStartup(final String name, final ManagedChannel channel, final long timeout)
     {
         LOG.info(Module.GRPC_CLIENT, "Initiating connection to channel {}", name);
         channel.getState(true);
@@ -112,7 +110,7 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
         try
         {
             LOG.info(Module.GRPC_CLIENT, "Waiting for connection to channel {}", name);
-            connected = !readyLatch.await(timeout.toMillis(), TimeUnit.MILLISECONDS);
+            connected = !readyLatch.await(timeout, TimeUnit.MILLISECONDS);
         } catch (final InterruptedException e)
         {
             Thread.currentThread().interrupt();
@@ -155,7 +153,7 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
 
     protected void configureCompression(final T builder, final String name)
     {
-        final GrpcChannelProperties properties = getPropertiesFor(name);
+        GRPCClientConfiguration.GRPCClientConfigurationNode properties = getPropertiesFor(name);
         if (properties.isFullStreamDecompression())
         {
             builder.enableFullStreamDecompression();
@@ -164,22 +162,22 @@ public abstract class AbstractChannelFactory<T extends ManagedChannelBuilder<T>>
 
     protected void configureLimits(final T builder, final String name)
     {
-        final GrpcChannelProperties properties = getPropertiesFor(name);
-        final DataSize maxInboundMessageSize = properties.getMaxInboundMessageSize();
+        GRPCClientConfiguration.GRPCClientConfigurationNode properties = getPropertiesFor(name);
+        final Long maxInboundMessageSize = properties.getMaxInboundMessageSize();
         if (maxInboundMessageSize != null)
         {
-            builder.maxInboundMessageSize((int) maxInboundMessageSize.toBytes());
+            builder.maxInboundMessageSize(maxInboundMessageSize.intValue());
         }
     }
 
 
     protected void configureKeepAlive(final T builder, final String name)
     {
-        final GrpcChannelProperties properties = getPropertiesFor(name);
-        if (properties.isEnableKeepAlive())
+        GRPCClientConfiguration.GRPCClientConfigurationNode properties = getPropertiesFor(name);
+        if (properties.getEnableKeepAlive())
         {
-            builder.keepAliveTime(properties.getKeepAliveTime().toNanos(), TimeUnit.NANOSECONDS)
-                    .keepAliveTimeout(properties.getKeepAliveTimeout().toNanos(), TimeUnit.NANOSECONDS)
+            builder.keepAliveTime(properties.getKeepAliveTime(), TimeUnit.MILLISECONDS)
+                    .keepAliveTimeout(properties.getKeepAliveTimeout(), TimeUnit.MINUTES)
                     .keepAliveWithoutCalls(properties.isKeepAliveWithoutCalls());
         }
     }

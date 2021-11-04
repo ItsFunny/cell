@@ -10,7 +10,8 @@
       "modules": {
         "nacos.properties": "env/shared/discovery/nacos.json",
         "gateway.properties": "env/shared/gateway/gateway.json",
-        "gateway.metrics.properties": "env/shared/gateway/metrics/metrics.json"
+        "gateway.metrics.properties": "env/shared/gateway/metrics/metrics.json",
+        "grpc.client.propertoes": "env/shared/rpc/grpc/client.json"
       },
       "schema": null
     }

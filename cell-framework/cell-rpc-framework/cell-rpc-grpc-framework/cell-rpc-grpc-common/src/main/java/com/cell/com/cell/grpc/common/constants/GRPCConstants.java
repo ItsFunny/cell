@@ -14,6 +14,6 @@ public interface GRPCConstants
     Integer DEFAULT_GRPC_SERVER_PORT = 12000;
 
     String DEFAULT_GRPC_SERVER_ADDR = "127.0.0.1";
-    String DEFAULT_GRPC_CONFIG_MODULE = "env.shared.rpc.grpc.client.json";
+    String DEFAULT_GRPC_CONFIG_MODULE = "grpc.client.propertoes";
 
 }

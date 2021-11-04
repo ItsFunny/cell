@@ -1,8 +1,7 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GrpcChannelConfigurer;
-import com.cell.config.GRPCConfiguration;
-import com.cell.config.GrpcChannelProperties;
+import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.nameresolver.StaticNameResolverProvider;
 import com.cell.utils.GrpcUtils;
@@ -25,15 +24,15 @@ import java.util.List;
 public class NettyChannelFactory extends AbstractChannelFactory<NettyChannelBuilder>
 {
 
-    public NettyChannelFactory(GRPCConfiguration properties, GlobalClientInterceptorRegistry globalClientInterceptorRegistry, List<GrpcChannelConfigurer> channelConfigurers)
+    public NettyChannelFactory(GlobalClientInterceptorRegistry globalClientInterceptorRegistry, List<GrpcChannelConfigurer> channelConfigurers)
     {
-        super(properties, globalClientInterceptorRegistry, channelConfigurers);
+        super(globalClientInterceptorRegistry, channelConfigurers);
     }
 
     @Override
     protected NettyChannelBuilder newChannelBuilder(String name)
     {
-        final GrpcChannelProperties properties = getPropertiesFor(name);
+        GRPCClientConfiguration.GRPCClientConfigurationNode properties = getPropertiesFor(name);
         URI address = properties.getAddress();
         if (address == null)
         {

@@ -18,7 +18,7 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GRPCChannelFactory;
-import com.cell.config.GRPCConfiguration;
+import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;
@@ -55,29 +55,29 @@ public class InProcessOrAlternativeChannelFactory implements GRPCChannelFactory
 
     private static final String IN_PROCESS_SCHEME = "in-process";
 
-    private final GRPCConfiguration properties;
     private final InProcessChannelFactory inProcessChannelFactory;
     private final GRPCChannelFactory alternativeChannelFactory;
 
     /**
      * Creates a new InProcessOrAlternativeChannelFactory with the given properties and channel factories.
      *
-     * @param properties The properties used to resolved the target scheme
-     * @param inProcessChannelFactory The in process channel factory implementation to use.
+     * @param inProcessChannelFactory   The in process channel factory implementation to use.
      * @param alternativeChannelFactory The alternative channel factory implementation to use.
      */
-    public InProcessOrAlternativeChannelFactory(final GRPCConfiguration properties,
-            final InProcessChannelFactory inProcessChannelFactory, final GRPCChannelFactory alternativeChannelFactory) {
-        this.properties = requireNonNull(properties, "properties");
+    public InProcessOrAlternativeChannelFactory(
+            final InProcessChannelFactory inProcessChannelFactory, final GRPCChannelFactory alternativeChannelFactory)
+    {
         this.inProcessChannelFactory = requireNonNull(inProcessChannelFactory, "inProcessChannelFactory");
         this.alternativeChannelFactory = requireNonNull(alternativeChannelFactory, "alternativeChannelFactory");
     }
 
     @Override
     public Channel createChannel(final String name, final List<ClientInterceptor> interceptors,
-            boolean sortInterceptors) {
-        final URI address = this.properties.getChannel(name).getAddress();
-        if (address != null && IN_PROCESS_SCHEME.equals(address.getScheme())) {
+                                 boolean sortInterceptors)
+    {
+        final URI address = GRPCClientConfiguration.getInstance().getChannel(name).getAddress();
+        if (address != null && IN_PROCESS_SCHEME.equals(address.getScheme()))
+        {
             return this.inProcessChannelFactory.createChannel(address.getSchemeSpecificPart(), interceptors,
                     sortInterceptors);
         }
@@ -85,7 +85,8 @@ public class InProcessOrAlternativeChannelFactory implements GRPCChannelFactory
     }
 
     @Override
-    public Map<String, ConnectivityState> getConnectivityState() {
+    public Map<String, ConnectivityState> getConnectivityState()
+    {
         return ImmutableMap.<String, ConnectivityState>builder()
                 .putAll(inProcessChannelFactory.getConnectivityState())
                 .putAll(alternativeChannelFactory.getConnectivityState())
@@ -93,10 +94,13 @@ public class InProcessOrAlternativeChannelFactory implements GRPCChannelFactory
     }
 
     @Override
-    public void close() {
-        try {
+    public void close()
+    {
+        try
+        {
             this.inProcessChannelFactory.close();
-        } finally {
+        } finally
+        {
             this.alternativeChannelFactory.close();
         }
     }
