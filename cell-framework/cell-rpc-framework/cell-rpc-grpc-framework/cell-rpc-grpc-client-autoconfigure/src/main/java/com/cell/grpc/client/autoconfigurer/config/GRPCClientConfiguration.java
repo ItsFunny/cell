@@ -9,6 +9,7 @@ import lombok.Data;
 import java.net.URI;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -25,10 +26,15 @@ public class GRPCClientConfiguration
 {
     private static GRPCClientConfiguration instance = null;
     private final Map<String, GRPCClientConfigurationNode> client = new ConcurrentHashMap<>();
+    // 运行时变更,不从配置文件中读取
+    private final Map<String, GRPCClientConfigurationNode> runtimeChangeableClient = new HashMap<>();
 
     public static GRPCClientConfiguration getInstance()
     {
         return instance;
+    }
+    public void updateRuntime(String key,GRPCClientConfigurationNode node){
+        this.runtimeChangeableClient.put(key,node);
     }
 
     private static final String DEFAULT_DEFAULT_LOAD_BALANCING_POLICY = "round_robin";
@@ -59,12 +65,17 @@ public class GRPCClientConfiguration
 
     public GRPCClientConfigurationNode getChannel(final String name)
     {
-        GRPCClientConfigurationNode grpcClientConfigurationNode = this.client.get(name);
-        if (grpcClientConfigurationNode == null)
+        GRPCClientConfigurationNode ret = this.runtimeChangeableClient.get(name);
+        if (null != ret)
+        {
+            return ret;
+        }
+        ret = this.client.get(name);
+        if (ret == null)
         {
             throw new ProgramaException("asd");
         }
-        return grpcClientConfigurationNode;
+        return ret;
     }
 
 

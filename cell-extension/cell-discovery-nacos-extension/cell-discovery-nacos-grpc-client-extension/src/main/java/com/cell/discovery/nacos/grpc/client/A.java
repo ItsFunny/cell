@@ -1,4 +1,4 @@
-package com.cell.com.cell.discovery.nacos.grpc.client;
+package com.cell.discovery.nacos.grpc.client;
 
 /**
  * @author Charlie

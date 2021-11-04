@@ -1,9 +1,11 @@
 package com.cell.root;
 
+import com.cell.App;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.Command;
 import com.cell.annotations.ReactorAnno;
 import com.cell.base.common.constants.ProtocolConstants;
+import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.exceptions.ProgramaException;
@@ -140,7 +142,7 @@ public class Root implements ApplicationContextAware
                 asBeanClass.add(next);
             }
         }
-        this.annotationClasses.put(an,new HashSet<>(classes));
+        this.annotationClasses.put(an, new HashSet<>(classes));
 //        Set<Class<?>> classSet = this.annotationClasses.get(an);
 //        if (CollectionUtils.isEmpty(classSet))
 //        {
@@ -175,9 +177,13 @@ public class Root implements ApplicationContextAware
         this.reactorCommands = reactorCommands;
     }
 
-    public void start()
+    public void start(INodeContext context)
     {
         InitCTX ctx = new InitCTX();
+        Map<String, Object> data = new HashMap<>();
+        data.put(INodeContext.class.getName(), context);
+        data.put(ApplicationContext.class.getName(), context);
+        ctx.setData(data);
         this.servers.values().forEach(server ->
         {
             server.initOnce(ctx);

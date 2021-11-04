@@ -1,4 +1,4 @@
-package com.cell.com.cell.discovery.nacos.grpc.client.server;
+package com.cell.discovery.nacos.grpc.client.server;
 
 import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
 

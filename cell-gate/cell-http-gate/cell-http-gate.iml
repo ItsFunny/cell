@@ -65,6 +65,7 @@
     <orderEntry type="module" module-name="cell-bee-rate-base" />
     <orderEntry type="module" module-name="cell-bee-loadbalance" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.10.RELEASE" level="project" />
+    <orderEntry type="module" module-name="cell-node-discovery" />
     <orderEntry type="module" module-name="cell-base-configuration" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.49" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
@@ -102,7 +103,6 @@
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
     <orderEntry type="module" module-name="cell-node-core" />
-    <orderEntry type="module" module-name="cell-node-discovery" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.3.5.RELEASE" level="project" />

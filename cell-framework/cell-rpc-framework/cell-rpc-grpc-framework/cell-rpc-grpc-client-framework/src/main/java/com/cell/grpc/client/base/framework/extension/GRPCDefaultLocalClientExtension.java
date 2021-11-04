@@ -7,6 +7,7 @@ import com.cell.extension.AbstractSpringNodeExtension;
 import com.cell.extension.ConcurrentExtension;
 import com.cell.grpc.client.base.framework.server.GRPCLocalClientServer;
 import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
+import com.cell.grpc.client.base.framework.server.ILocalGRPCClientServer;
 
 /**
  * @author Charlie
@@ -18,10 +19,10 @@ import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
  */
 public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
 {
-    private IGRPCClientServer clientServer;
+    private ILocalGRPCClientServer clientServer;
 
     @Plugin
-    public IGRPCClientServer clientServer()
+    public ILocalGRPCClientServer clientServer()
     {
         return this.clientServer;
     }

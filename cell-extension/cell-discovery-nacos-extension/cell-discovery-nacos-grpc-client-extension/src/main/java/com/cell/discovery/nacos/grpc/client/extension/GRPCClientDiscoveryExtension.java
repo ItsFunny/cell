@@ -1,9 +1,14 @@
-package com.cell.com.cell.discovery.nacos.grpc.client.extension;
+package com.cell.discovery.nacos.grpc.client.extension;
 
 import com.cell.annotations.CellOrder;
+import com.cell.annotations.Plugin;
+import com.cell.discovery.nacos.grpc.client.server.DefaultGrpcNacosClientServer;
+import com.cell.discovery.nacos.grpc.client.server.IGRPCNacosClientServer;
+import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.extension.ConcurrentExtension;
 
 /**
  * @author Charlie
@@ -16,16 +21,25 @@ import com.cell.extension.AbstractSpringNodeExtension;
 @CellOrder(value = OrderConstants.RPC_CLIENT_NACOS_DISCOVERY_EXTENSION)
 public class GRPCClientDiscoveryExtension extends AbstractSpringNodeExtension
 {
+    private IGRPCNacosClientServer nacosClientServer;
+
+    @Plugin
+    public IGRPCNacosClientServer nacosClientServer()
+    {
+        return this.nacosClientServer;
+    }
 
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-
+        EventLoopGroup eventLoopGroup = ConcurrentExtension.getEventLoopGroup();
+        this.nacosClientServer = new DefaultGrpcNacosClientServer(eventLoopGroup);
     }
 
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
+
 
     }
 

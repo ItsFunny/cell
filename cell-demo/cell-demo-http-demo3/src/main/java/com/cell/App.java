@@ -1,11 +1,10 @@
 package com.cell;
 
-import com.cell.com.cell.grpc.common.annotation.GRPCClient;
+import com.cell.discovery.nacos.grpc.client.server.IGRPCNacosClientServer;
 import com.cell.grpc.client.base.framework.annotation.CellSpringHttpApplication;
 import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.grpc.client.base.framework.annotation.RPCServerReactorAnno;
 import com.cell.annotations.*;
-import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.grpc.client.base.framework.command.impl.AbstractHttpCommand;
 import com.cell.concurrent.base.Future;
 import com.cell.constants.ContextConstants;
@@ -14,6 +13,7 @@ import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
+import com.cell.grpc.client.base.framework.server.ILocalGRPCClientServer;
 import com.cell.grpc.server.framework.command.AbstractGRPCServerCommand;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
@@ -165,7 +165,10 @@ public class App
         private RPCClient1 client1;
 
         @AutoPlugin
-        private IGRPCClientServer im;
+        private ILocalGRPCClientServer im;
+
+        @AutoPlugin
+        private IGRPCNacosClientServer nacosClientServer;
     }
 
 

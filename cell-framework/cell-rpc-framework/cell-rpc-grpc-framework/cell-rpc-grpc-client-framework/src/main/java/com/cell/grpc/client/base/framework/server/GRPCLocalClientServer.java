@@ -4,10 +4,12 @@ import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.com.cell.grpc.common.constants.GRPCConstants;
 import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.context.InitCTX;
+import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.root.Root;
 import com.cell.util.GRPCUtil;
 import io.grpc.stub.AbstractStub;
 
+import java.net.URI;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +20,7 @@ import java.util.ArrayList;
  * @Attention:
  * @Date 创建时间：2021-10-28 15:37
  */
-public class GRPCLocalClientServer extends AbstractGRPCClientServer implements IGRPCClientServer
+public class GRPCLocalClientServer extends AbstractGRPCClientServer implements ILocalGRPCClientServer
 {
     private BaseGrpcGrpc.BaseGrpcFutureStub stub;
 
@@ -38,6 +40,9 @@ public class GRPCLocalClientServer extends AbstractGRPCClientServer implements I
     protected void onInit(InitCTX ctx)
     {
         // TODO,server 名字需要从配置文件中读取
+        GRPCClientConfiguration.GRPCClientConfigurationNode node = new GRPCClientConfiguration.GRPCClientConfigurationNode();
+        node.setAddress(URI.create("static://" + GRPCConstants.DEFAULT_GRPC_SERVER_ADDR + ":" + GRPCConstants.DEFAULT_GRPC_SERVER_PORT));
+        GRPCClientConfiguration.getInstance().updateRuntime(GRPCConstants.DEFAULT_GRPC_SERVER, node);
         AbstractStub<?> abstractStub = GRPCUtil.createaaStub(Root.getApplicationContext(),
                 (Class<? extends AbstractStub<?>>) BaseGrpcGrpc.BaseGrpcFutureStub.class.asSubclass(AbstractStub.class),
                 GRPCConstants.DEFAULT_GRPC_SERVER,

@@ -26,7 +26,7 @@ public class RootFrameworkExtension extends AbstractSpringNodeExtension
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
-        Root.getInstance().start();
+        Root.getInstance().start(ctx);
         Root.getInstance().flushAfterStart();
     }
 
