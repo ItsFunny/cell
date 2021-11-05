@@ -8,7 +8,7 @@ import com.cell.couple.IHttpServerRequest;
 import com.cell.couple.IHttpServerResponse;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
-import com.cell.grpc.client.base.framework.util.HttpUtils;
+import com.cell.discovery.nacos.util.HttpUtils;
 import com.cell.utils.StringUtils;
 import com.cell.utils.UUIDUtils;
 import lombok.Data;

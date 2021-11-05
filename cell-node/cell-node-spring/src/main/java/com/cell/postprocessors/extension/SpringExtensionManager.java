@@ -16,7 +16,7 @@ import com.cell.log.LogLevel;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.tool.Banner;
-import com.cell.grpc.client.base.framework.util.FrameworkUtil;
+import com.cell.discovery.nacos.util.FrameworkUtil;
 import com.cell.utils.IPUtils;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.cli.*;

@@ -33,12 +33,12 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
         ServerMetaInfoWrapper wrapper = exchange.getAttribute(GatewayConstants.attributeCmdInfo);
-        ServerMetaInfo metaInfo = wrapper.getMetaInfo();
+//        ServerMetaInfo metaInfo = wrapper.getMetaInfo();
         URI uri = wrapper.getUri();
-        URI mergedUrl = UriComponentsBuilder.fromUri(uri).host(metaInfo.getIp()).port(metaInfo.getPort())
+        URI mergedUrl = UriComponentsBuilder.fromUri(uri).host(wrapper.getIp()).port(wrapper.getPort())
                 .replacePath(uri.getPath()).build().toUri();
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, mergedUrl);
-        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{},method:{},module:{}", uri, metaInfo.getIp(), metaInfo.getPort(), metaInfo.getServiceName(), wrapper.getMethod(), metaInfo.getModule());
+        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{},method:{},module:{}", uri, wrapper.getIp(), wrapper.getPort(), wrapper.getServiceName(), wrapper.getMethod(), wrapper.getModule());
         return chain.filter(exchange);
     }
 

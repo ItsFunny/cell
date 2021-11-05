@@ -35,7 +35,7 @@ public class FirstFilter implements GlobalFilter, Ordered
         URI uri = request.getURI();
         ServerMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
         ServerMetaInfoWrapper wrapper = new ServerMetaInfoWrapper();
-        wrapper.setMetaInfo(metaInfo);
+        wrapper.fillWithMeta(metaInfo);
         wrapper.setUri(uri);
         wrapper.setMethod(request.getMethod().name());
         // FIXME ,定制化信息

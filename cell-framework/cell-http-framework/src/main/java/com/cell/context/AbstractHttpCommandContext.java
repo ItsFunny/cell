@@ -15,7 +15,7 @@ import com.cell.log.LOG;
 import com.cell.models.Module;
 import com.cell.protocol.*;
 import com.cell.reactor.IHttpReactor;
-import com.cell.grpc.client.base.framework.util.HttpUtils;
+import com.cell.discovery.nacos.util.HttpUtils;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import lombok.Data;

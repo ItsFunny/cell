@@ -15,7 +15,7 @@ import com.cell.transport.model.ServerMetaData;
  */
 public class LBUtils
 {
-    public static Couple<ServerMetaInfo, ServerMetaData> fromInstance(Instance inst)
+    public static ServerMetaInfo  fromInstance(Instance inst)
     {
         final ServerMetaInfo info = new ServerMetaInfo();
         info.setIp(inst.getIp());
@@ -24,7 +24,8 @@ public class LBUtils
         info.setHealthy(inst.isHealthy());
         info.setEnable(inst.isEnable());
         ServerMetaData metaData = ServerMetaData.fromMetaData(inst.getMetaData());
-        return new Couple<>(info, metaData);
+        info.setMetaData(metaData);
+        return info;
     }
 
 }

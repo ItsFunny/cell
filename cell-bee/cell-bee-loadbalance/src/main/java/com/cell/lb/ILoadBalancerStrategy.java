@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface ILoadBalancerStrategy
 {
-    ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String uri);
+    ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String protocol);
 }

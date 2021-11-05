@@ -72,10 +72,10 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
         InitCTX initCTX = new InitCTX();
         Map<String, Object> data = new HashMap<>();
         data.put("domain", domain);
-        data.put("cluster",ctx.getCluster());
-        data.put("ip",ctx.getIp());
-        data.put("port",this.port);
-        data.put("serviceName",ctx.getApp().getApplicationName());
+        data.put("cluster", ctx.getCluster());
+        data.put("ip", ctx.getIp());
+        data.put("port", this.port);
+        data.put("serviceName", ctx.getApp().getApplicationName());
         initCTX.setData(data);
         this.serviceDiscovery.initOnce(initCTX);
         this.schedualCaculateErrorCount.start();

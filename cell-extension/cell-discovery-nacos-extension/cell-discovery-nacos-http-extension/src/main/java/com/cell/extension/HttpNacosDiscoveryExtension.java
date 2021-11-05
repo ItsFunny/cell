@@ -48,6 +48,7 @@ public class HttpNacosDiscoveryExtension extends AbstractSpringNodeExtension
         NacosNodeDiscoveryImpl.setupDiscovery();
     }
 
+
     @Override
     public void onStart(INodeContext ctx) throws Exception
     {

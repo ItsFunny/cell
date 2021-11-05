@@ -11,16 +11,16 @@ import com.alibaba.nacos.common.notify.NotifyCenter;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.config.AbstractInitOnce;
-import com.cell.config.ConfigFactory;
 import com.cell.context.InitCTX;
-import com.cell.config.NacosConfiguration;
+import com.cell.discovery.nacos.config.ConfigFactory;
+import com.cell.discovery.nacos.config.NacosConfiguration;
+import com.cell.discovery.nacos.util.DiscoveryUtils;
 import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
 import com.cell.models.Module;
 import com.cell.service.INodeDiscovery;
-import com.cell.grpc.client.base.framework.util.DiscoveryUtils;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.StringUtils;
 
@@ -50,13 +50,23 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
 
     public static void setupDiscovery()
     {
-        instance = new NacosNodeDiscoveryImpl();
-        String serverAddr = NacosConfiguration.getInstance().getServerAddr();
-        InitCTX initCTX = new InitCTX();
-        Map<String, Object> data = new HashMap<>();
-        data.put(ConfigFactory.serverAddr, serverAddr);
-        initCTX.setData(data);
-        instance.initOnce(initCTX);
+        if (instance == null)
+        {
+            synchronized (NacosNodeDiscoveryImpl.class)
+            {
+                if (instance != null)
+                {
+                    return;
+                }
+                instance = new NacosNodeDiscoveryImpl();
+                String serverAddr = NacosConfiguration.getInstance().getServerAddr();
+                InitCTX initCTX = new InitCTX();
+                Map<String, Object> data = new HashMap<>();
+                data.put(ConfigFactory.serverAddr, serverAddr);
+                initCTX.setData(data);
+                instance.initOnce(initCTX);
+            }
+        }
     }
 
     public static NacosNodeDiscoveryImpl getInstance()

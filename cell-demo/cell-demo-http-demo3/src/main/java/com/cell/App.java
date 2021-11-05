@@ -1,6 +1,7 @@
 package com.cell;
 
 import com.cell.discovery.nacos.grpc.client.server.IGRPCNacosClientServer;
+import com.cell.discovery.services.IDiscoveryClientService;
 import com.cell.grpc.client.base.framework.annotation.CellSpringHttpApplication;
 import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
 import com.cell.grpc.client.base.framework.annotation.RPCServerReactorAnno;
@@ -167,6 +168,7 @@ public class App
         @AutoPlugin
         private ILocalGRPCClientServer im;
 
+
         @AutoPlugin
         private IGRPCNacosClientServer nacosClientServer;
     }
@@ -200,6 +202,27 @@ public class App
             RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
             ClientRequestDemo demo = new ClientRequestDemo();
             Future<Object> call = reactor.im.call(ctx, demo);
+            try
+            {
+                Object o1 = call.get();
+                ctx.response(this.createResponseWp().ret(o1).build());
+            } catch (Exception e)
+            {
+                ctx.response(this.createResponseWp().exception(e).build());
+            }
+        }
+    }
+
+    @HttpCmdAnno(uri = "/rpc2", requestType = EnumHttpRequestType.HTTP_URL_GET, reactor = RPCReactor.class)
+    public static class RpcCommand2 extends AbstractHttpCommand
+    {
+
+        @Override
+        protected void onExecute(IHttpCommandContext ctx, Object o) throws IOException
+        {
+            RPCReactor reactor = (RPCReactor) ctx.getHttpReactor();
+            ClientRequestDemo demo = new ClientRequestDemo();
+            Future<Object> call = reactor.nacosClientServer.call(ctx, demo);
             try
             {
                 Object o1 = call.get();

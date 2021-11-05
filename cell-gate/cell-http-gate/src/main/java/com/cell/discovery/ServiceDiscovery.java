@@ -9,11 +9,13 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
+import com.cell.bee.loadbalance.utils.LBUtils;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.enums.EnumHttpRequestType;
+import com.cell.discovery.nacos.util.DiscoveryUtils;
 import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
@@ -23,9 +25,7 @@ import com.cell.models.Module;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;
 import com.cell.transport.model.ServerMetaData;
-import com.cell.grpc.client.base.framework.util.DiscoveryUtils;
 import com.cell.utils.GatewayUtils;
-import com.cell.utils.MetaDataUtils;
 import lombok.Data;
 import reactor.core.publisher.Flux;
 
@@ -229,9 +229,8 @@ public class ServiceDiscovery extends AbstractInitOnce
             List<Instance> instances = m.get(k);
             instances.stream().forEach(inst ->
                     {
-                        Couple<ServerMetaInfo, ServerMetaData> couple = MetaDataUtils.fromInstance(inst);
-                        ServerMetaInfo info = couple.getV1();
-                        ServerMetaData metaData = couple.getV2();
+                        ServerMetaInfo info = LBUtils.fromInstance(inst);
+                        ServerMetaData metaData = info.getMetaData();
 
                         List<ServerMetaData.ServerMetaReactor> reactors = metaData.getReactors();
                         if (CollectionUtils.isEmpty(reactors)) return;

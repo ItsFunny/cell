@@ -32,6 +32,7 @@ public class ServerMetaData
     {
         private String domain;
         private byte type = ProtocolConstants.TYPE_HTTP;
+        private Map<String, Object> extraInfo;
     }
 
     public ServerMetaData()

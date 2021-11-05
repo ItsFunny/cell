@@ -1,7 +1,7 @@
 package com.cell.grpc.client.base.framework.command.impl;
 
 import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
-import com.cell.grpc.client.base.framework.util.HttpUtils;
+import com.cell.discovery.nacos.util.HttpUtils;
 import com.cell.grpc.client.base.framework.command.IHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;

@@ -20,7 +20,7 @@ import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
 import com.cell.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.postprocessor.SpringBeanRegistry;
-import com.cell.grpc.client.base.framework.util.FrameworkUtil;
+import com.cell.discovery.nacos.util.FrameworkUtil;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectUtil;

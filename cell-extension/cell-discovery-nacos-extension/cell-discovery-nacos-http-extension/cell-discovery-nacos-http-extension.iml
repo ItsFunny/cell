@@ -23,6 +23,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="cell-discovery-nacos-base" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />

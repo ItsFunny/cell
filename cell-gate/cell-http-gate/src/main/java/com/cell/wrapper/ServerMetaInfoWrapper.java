@@ -16,7 +16,18 @@ import java.net.URI;
 @Data
 public class ServerMetaInfoWrapper
 {
-    private ServerMetaInfo metaInfo;
+    private String ip;
+    private short port;
+    private String serviceName;
+    private String module;
     private URI uri;
     private String method;
+
+    public void fillWithMeta(ServerMetaInfo info)
+    {
+        this.ip = info.getIp();
+        this.port = info.getPort();
+        this.serviceName = info.getServiceName();
+        this.module=info.getModule();
+    }
 }
