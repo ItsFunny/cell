@@ -152,7 +152,7 @@
     <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.29.0" level="project" />
     <orderEntry type="module" module-name="cell-discovery-nacos-grpc-client-extension" />
-    <orderEntry type="module" module-name="cell-bee-discovery-client" />
+    <orderEntry type="library" name="Maven: com.cell:cell-bee-discovery-client:1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-extension" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-framework" />
     <orderEntry type="module" module-name="cell-rpc-server-base-framework" />

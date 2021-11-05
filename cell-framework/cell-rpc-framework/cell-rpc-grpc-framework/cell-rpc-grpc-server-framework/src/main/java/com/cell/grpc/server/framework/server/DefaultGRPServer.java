@@ -65,7 +65,6 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
         GRPCServerConfiguration o = cfg.get();
         GRPCServerConfiguration configuration = o;
         String address = configuration.getAddress();
-        int port = configuration.getPort();
         NettyServerBuilder nettyServerBuilder = null;
         if (address.startsWith(GRPCConstants.DOMAIN_SOCKET_ADDRESS_PREFIX))
         {
@@ -76,10 +75,10 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
                     .workerEventLoopGroup(new EpollEventLoopGroup());
         } else if (GRPCConstants.ANY_IP_ADDRESS.equals(address))
         {
-            nettyServerBuilder = NettyServerBuilder.forPort(port);
+            nettyServerBuilder = NettyServerBuilder.forPort(this.getPort());
         } else
         {
-            nettyServerBuilder = NettyServerBuilder.forAddress(new InetSocketAddress(InetAddresses.forString(address), port));
+            nettyServerBuilder = NettyServerBuilder.forAddress(new InetSocketAddress(InetAddresses.forString(address), this.getPort()));
         }
         this.configure(nettyServerBuilder);
 
@@ -92,7 +91,7 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
         {
             throw new RuntimeException(e);
         }
-        LOG.info(Module.GRPC, "grpc 启动, port:{}", configuration.getPort());
+        LOG.info(Module.GRPC, "grpc 启动, port:{}", this.getPort());
         final Thread awaitThread = new Thread(() ->
         {
             try

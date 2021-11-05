@@ -7,8 +7,9 @@ import com.cell.config.GatewayConfiguration;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
+import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
-import com.cell.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
@@ -28,13 +29,13 @@ import java.util.Map;
  */
 public class NacosHttpGateExtension extends AbstractSpringNodeExtension implements WebServerFactoryCustomizer<ConfigurableWebServerFactory>
 {
-    private ServiceDiscovery serviceDiscovery;
+    private IServiceDiscovery serviceDiscovery;
     private IScheduleCounter schedualCaculateErrorCount;
 
     private int port = 9999;
 
     @Plugin
-    public ServiceDiscovery serviceDiscovery()
+    public IServiceDiscovery serviceDiscovery()
     {
         return this.serviceDiscovery;
     }

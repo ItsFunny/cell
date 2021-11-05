@@ -1,4 +1,4 @@
-package com.cell.discovery.services;
+package com.cell.discovery.nacos.discovery;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 

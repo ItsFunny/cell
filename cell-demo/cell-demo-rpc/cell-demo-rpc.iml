@@ -30,8 +30,6 @@
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
     <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-node-spring" />
-    <orderEntry type="module" module-name="cell-node-core" />
-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="module" module-name="cell-base-framework" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:2.3.5.RELEASE" level="project" />
@@ -43,9 +41,6 @@
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.26" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.3.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.3" level="project" />
@@ -73,36 +68,6 @@
     <orderEntry type="module" module-name="cell-sdk-eventdriven" />
     <orderEntry type="module" module-name="cell-base-core" />
     <orderEntry type="module" module-name="cell-plugin-pipeline" />
-    <orderEntry type="module" module-name="cell-base-common" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-ext-jdk15on:1.60" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: cn.jnta:hsmGeneralFinance:2.1.2">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/cn/jnta/hsmGeneralFinance/2.1.2/hsmGeneralFinance-2.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.8" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.0.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.rholder:guava-retrying:2.0.0" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: cn.sanwei:bxcrypto:3.0.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/cn/sanwei/bxcrypto/3.0.0/bxcrypto-3.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.1" level="project" />
@@ -141,6 +106,53 @@
     <orderEntry type="library" name="Maven: com.google.api.grpc:proto-google-common-protos:1.17.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.29.0" level="project" />
+    <orderEntry type="module" module-name="cell-discovery-nacos-grpc-server-extension" />
+    <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-transport" />
+    <orderEntry type="module" module-name="cell-base-common" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
+    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-ext-jdk15on:1.60" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: cn.jnta:hsmGeneralFinance:2.1.2">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/cn/jnta/hsmGeneralFinance/2.1.2/hsmGeneralFinance-2.1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: commons-configuration:commons-configuration:1.8" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.0.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.rholder:guava-retrying:2.0.0" level="project" />
+    <orderEntry type="module-library">
+      <library name="Maven: cn.sanwei:bxcrypto:3.0.0">
+        <CLASSES>
+          <root url="jar://$MAVEN_REPOSITORY$/cn/sanwei/bxcrypto/3.0.0/bxcrypto-3.0.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="module" module-name="cell-node-discovery-nacos" />
+    <orderEntry type="module" module-name="cell-node-core" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.4.1" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.5.0" level="project" />
+    <orderEntry type="module" module-name="cell-node-discovery" />
+    <orderEntry type="module" module-name="cell-bee-keyresolver" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance" />
+    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
+    <orderEntry type="module" module-name="cell-extension-common" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />

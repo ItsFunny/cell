@@ -17,7 +17,6 @@ import java.util.Objects;
 public class ServerCmdMetaInfo extends ServerMetaInfo
 {
     private String module;
-    private int id;
 
     public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String module)
     {
@@ -28,12 +27,4 @@ public class ServerCmdMetaInfo extends ServerMetaInfo
         return ret;
     }
 
-    public int ID()
-    {
-        if (this.id == 0)
-        {
-            this.id = this.hashCode();
-        }
-        return this.id;
-    }
 }

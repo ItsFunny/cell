@@ -41,7 +41,7 @@ public class GRPCReactorNacosExtension extends AbstractSpringNodeExtension
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-
+        NacosNodeDiscoveryImpl.setupDiscovery();
     }
 
     @Override

@@ -5,8 +5,9 @@ import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.context.InitCTX;
+import com.cell.discovery.nacos.discovery.IInstanceOnChange;
+import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
-import com.cell.discovery.services.IInstanceOnChange;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.root.Root;
@@ -31,7 +32,7 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
         super(group);
     }
 
-    private GRPCClientServiceDiscovery grpcClientServiceDiscovery;
+    private IServiceDiscovery grpcClientServiceDiscovery;
 
 
     @AutoPlugin
@@ -44,7 +45,7 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
     @Override
     protected BaseGrpcGrpc.BaseGrpcFutureStub getStub(String protocol)
     {
-        ServerCmdMetaInfo serverCmdMetaInfo = this.grpcClientServiceDiscovery.choseServer(protocol);
+        ServerCmdMetaInfo serverCmdMetaInfo = this.grpcClientServiceDiscovery.choseServer(null, protocol);
         if (serverCmdMetaInfo == null)
         {
             return null;
@@ -52,9 +53,6 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
         return this.stubs.get(serverCmdMetaInfo.ID());
     }
 
-    private void transferIfNeed()
-    {
-    }
 
     private Map<Integer, BaseGrpcGrpc.BaseGrpcFutureStub> stubs = new HashMap<>();
 

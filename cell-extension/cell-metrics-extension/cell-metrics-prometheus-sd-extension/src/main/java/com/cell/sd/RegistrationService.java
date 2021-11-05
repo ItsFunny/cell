@@ -41,6 +41,9 @@ public class RegistrationService extends AbstractInitOnce
     private final Map<String, List<Instance>> delta = new HashMap<>();
     private final List<Instance> down = new ArrayList<>();
 
+    // TODO
+    private String cluster;
+
 
     public Mono<ChangeItem<Map<String, String[]>>> getServiceNames(long waitMillis, Long index)
     {
@@ -213,7 +216,8 @@ public class RegistrationService extends AbstractInitOnce
             // FIXME , 处理nacos 的cluster
             String clusters = event.getClusters();
 
-            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts();
+            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
+                    e.getClusterName().equalsIgnoreCase(RegistrationService.this.cluster)).collect(Collectors.toList());
             synchronized (RegistrationService.this.delta)
             {
                 RegistrationService.this.delta.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));

@@ -17,7 +17,6 @@ public class GRPCServerConfiguration
 {
 
     private String address;
-    private int port;
     private long keepAliveTime = TimeUnit.HOURS.toNanos(2);
     private long keepAliveTimeOut = TimeUnit.SECONDS.toNanos(20);
     private long permitKeepAliveTime = TimeUnit.MINUTES.toNanos(5);
@@ -34,7 +33,6 @@ public class GRPCServerConfiguration
     {
         GRPCServerConfiguration ret = new GRPCServerConfiguration();
         ret.setAddress("0.0.0.0");
-        ret.setPort(12000);
         return ret;
     }
 }
