@@ -1,2 +1,2 @@
 com.cell.initializer.CellSpringInitializer=\
-com.cell.grpc.client.base.framework.inilizer.GRPCClientInilizer
+com.cell.rpc.grpc.client.framework.inilizer.GRPCClientInilizer

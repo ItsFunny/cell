@@ -3,7 +3,7 @@ package com.cell.context;
 import com.cell.app.SpringNodeAPP;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.constants.CommandLineConstants;
-import com.cell.extension.INodeExtension;
+import com.cell.discovery.nacos.http.extension.INodeExtension;
 import com.cell.postprocessors.extension.SpringExtensionManager;
 import lombok.Data;
 import org.apache.commons.cli.CommandLine;

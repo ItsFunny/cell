@@ -21,5 +21,6 @@
         <module>cell-runnable-gateway</module>
         <module>cell-runnable-nacos-prometheus-sd</module>
         <module>cell-runnable-spring-application</module>
+        <module>cell-runnable-spring-framework-all</module>
     </modules>
 </project>

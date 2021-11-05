@@ -1,6 +1,6 @@
 package com.cell.bridge;
 
-import com.cell.extension.INodeExtension;
+import com.cell.discovery.nacos.http.extension.INodeExtension;
 
 /**
  * @author Charlie

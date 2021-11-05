@@ -5,7 +5,7 @@ import com.cell.constants.CommandLineConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.SpringNodeContext;
-import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.StringUtils;
 import org.apache.commons.cli.CommandLine;

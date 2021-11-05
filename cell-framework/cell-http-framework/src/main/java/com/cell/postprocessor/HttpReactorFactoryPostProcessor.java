@@ -1,6 +1,6 @@
 package com.cell.postprocessor;
 
-import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.LifeCycle;
 import com.cell.enums.EnumLifeCycle;
 

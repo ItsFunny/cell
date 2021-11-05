@@ -14,7 +14,7 @@ import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.config.ConfigFactory;
 import com.cell.discovery.nacos.config.NacosConfiguration;
-import com.cell.discovery.nacos.util.DiscoveryUtils;
+import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;

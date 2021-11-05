@@ -1,7 +1,7 @@
 package com.cell.inilizer;
 
-import com.cell.grpc.client.base.framework.annotation.RPCServerReactorAnno;
-import com.cell.grpc.client.base.framework.annotation.RPCService;
+import com.cell.rpc.grpc.client.framework.annotation.RPCServerReactorAnno;
+import com.cell.rpc.grpc.client.framework.annotation.RPCService;
 import com.cell.initializer.CellSpringInitializer;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 

@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.grpc.client.base.framework.annotation.ProxyAnno;
+import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
 import com.cell.log.LOG;

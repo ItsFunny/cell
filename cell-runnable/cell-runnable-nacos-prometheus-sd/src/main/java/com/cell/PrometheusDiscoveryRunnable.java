@@ -1,6 +1,6 @@
 package com.cell;
 
-import com.cell.grpc.client.base.framework.annotation.CellSpringHttpApplication;
+import com.cell.rpc.grpc.client.framework.annotation.CellSpringHttpApplication;
 
 /**
  * Hello world!

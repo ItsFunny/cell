@@ -1,6 +1,6 @@
 package com.cell.bo;
 
-import com.cell.grpc.client.base.framework.command.IHttpCommand;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.protocol.ContextResponseWrapper;

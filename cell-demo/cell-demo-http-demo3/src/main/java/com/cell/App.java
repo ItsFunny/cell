@@ -1,20 +1,18 @@
 package com.cell;
 
-import com.cell.discovery.nacos.grpc.client.server.IGRPCNacosClientServer;
-import com.cell.discovery.services.IDiscoveryClientService;
-import com.cell.grpc.client.base.framework.annotation.CellSpringHttpApplication;
-import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
-import com.cell.grpc.client.base.framework.annotation.RPCServerReactorAnno;
+import com.cell.discovery.nacos.grpc.client.extension.server.IGRPCNacosClientServer;
+import com.cell.rpc.grpc.client.framework.annotation.CellSpringHttpApplication;
+import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.grpc.client.framework.annotation.RPCServerReactorAnno;
 import com.cell.annotations.*;
-import com.cell.grpc.client.base.framework.command.impl.AbstractHttpCommand;
+import com.cell.rpc.grpc.client.framework.command.impl.AbstractHttpCommand;
 import com.cell.concurrent.base.Future;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.dispatcher.IHttpDispatcher;
 import com.cell.enums.EnumHttpRequestType;
-import com.cell.grpc.client.base.framework.server.IGRPCClientServer;
-import com.cell.grpc.client.base.framework.server.ILocalGRPCClientServer;
+import com.cell.rpc.grpc.client.framework.server.ILocalGRPCClientServer;
 import com.cell.grpc.server.framework.command.AbstractGRPCServerCommand;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.reactor.abs.AbstractRPCServerReactor;
@@ -22,6 +20,7 @@ import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.rpc.client.ClientRequestDemo;
 import com.cell.rpc.client.ServerRPCResponse;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
+import com.cell.runnable.spring.framework.all.CellSpringFrameworkApplication;
 import com.cell.utils.RandomUtils;
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
@@ -130,7 +129,8 @@ public class App
         @Override
         protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
         {
-            System.out.println(bo);
+            Cmd3Buz c = (Cmd3Buz) bo;
+            ctx.response(this.createResponseWp().ret(123).build());
         }
     }
 
@@ -167,8 +167,6 @@ public class App
 
         @AutoPlugin
         private ILocalGRPCClientServer im;
-
-
         @AutoPlugin
         private IGRPCNacosClientServer nacosClientServer;
     }
@@ -236,7 +234,7 @@ public class App
 
     public static void main(String[] args)
     {
-        CellApplication.builder(App.class)
+        CellSpringFrameworkApplication.builder(App.class)
                 .withReactor(new Reactor2())
                 .newReactor()
                 .withBean(CC1.class)

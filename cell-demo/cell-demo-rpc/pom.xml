@@ -18,7 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-rpc-grpc-server-framework</artifactId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-grpc-server-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
     </dependencies>

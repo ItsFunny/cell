@@ -1,6 +1,6 @@
 package com.cell.manager;
 
-import com.cell.grpc.client.base.framework.annotation.ProxyAnno;
+import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 import com.cell.concurrent.BaseDefaultEventLoopGroup;
 import com.cell.concurrent.base.BasePromise;
 import com.cell.concurrent.base.EventExecutor;

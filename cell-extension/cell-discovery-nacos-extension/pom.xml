@@ -21,6 +21,7 @@
         <module>cell-discovery-nacos-grpc-extension</module>
         <module>cell-discovery-nacos-base</module>
         <module>cell-discovery-nacos-grpc-client-extension</module>
+        <module>cell-discovery-nacos-grpc-server-extension</module>
     </modules>
     <dependencies>
         <dependency>

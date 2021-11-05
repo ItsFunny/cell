@@ -1,12 +1,12 @@
 package com.cell.initializer;
 
-import com.cell.grpc.client.base.framework.annotation.CellSpringHttpApplication;
+import com.cell.rpc.grpc.client.framework.annotation.CellSpringHttpApplication;
 import com.cell.annotations.ActiveConfiguration;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
-import com.cell.extension.AbstractSpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.boot.SpringApplication;

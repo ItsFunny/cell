@@ -6,7 +6,6 @@ import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.server.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.constants.GRPCConstants;
-import com.cell.grpc.server.framework.extension.GRPCServerExtension;
 import com.cell.grpc.server.framework.interceptor.GlobalServerInterceptorRegistry;
 import com.cell.grpc.server.framework.serverfactory.GrpcServerConfigurer;
 import com.cell.log.LOG;
@@ -57,14 +56,14 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
         {
             this.serverConfigurers.add((GrpcServerConfigurer) Root.getBean(s));
         }
-        Optional<Object> cfg = RootConfiguration.getInstance().getExtensionConfiguration(GRPCServerExtension.class);
+        Optional<GRPCServerConfiguration> cfg = RootConfiguration.getInstance().getConfigurationByType(GRPCServerConfiguration.class);
         boolean present = cfg.isPresent();
         if (!present)
         {
             throw new ProgramaException("asd");
         }
-        Object o = cfg.get();
-        GRPCServerConfiguration configuration = (GRPCServerConfiguration) o;
+        GRPCServerConfiguration o = cfg.get();
+        GRPCServerConfiguration configuration = o;
         String address = configuration.getAddress();
         int port = configuration.getPort();
         NettyServerBuilder nettyServerBuilder = null;
@@ -111,8 +110,8 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
 
     private void configure(NettyServerBuilder nettyServerBuilder)
     {
-        Optional<Object> configurationOb = RootConfiguration.getInstance().getExtensionConfiguration(GRPCServerExtension.class);
-        GRPCServerConfiguration configuration = (GRPCServerConfiguration) configurationOb.get();
+        Optional<GRPCServerConfiguration> configurationOb = RootConfiguration.getInstance().getConfigurationByType(GRPCServerConfiguration.class);
+        GRPCServerConfiguration configuration = configurationOb.get();
 
         this.configureServices(nettyServerBuilder);
         this.configureKeepAlive(nettyServerBuilder);
@@ -159,8 +158,8 @@ public class DefaultGRPServer extends AbstractBaseRPCServer implements IGRPCServ
 
     protected void configureKeepAlive(final NettyServerBuilder builder)
     {
-        Optional<Object> configurationOb = RootConfiguration.getInstance().getExtensionConfiguration(GRPCServerExtension.class);
-        GRPCServerConfiguration configuration = (GRPCServerConfiguration) configurationOb.get();
+        Optional<GRPCServerConfiguration> configurationOb = RootConfiguration.getInstance().getConfigurationByType(GRPCServerConfiguration.class);
+        GRPCServerConfiguration configuration = configurationOb.get();
         long keepAliveTime = configuration.getKeepAliveTime();
         if (keepAliveTime > 0)
         {

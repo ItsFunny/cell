@@ -15,7 +15,7 @@ import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.enums.EnumHttpRequestType;
-import com.cell.discovery.nacos.util.DiscoveryUtils;
+import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;

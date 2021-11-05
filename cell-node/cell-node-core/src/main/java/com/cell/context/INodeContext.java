@@ -6,7 +6,7 @@ import com.cell.concurrent.base.EventExecutor;
 import java.util.List;
 import java.util.Map;
 
-import com.cell.extension.INodeExtension;
+import com.cell.discovery.nacos.http.extension.INodeExtension;
 import org.apache.commons.cli.CommandLine;
 
 /**

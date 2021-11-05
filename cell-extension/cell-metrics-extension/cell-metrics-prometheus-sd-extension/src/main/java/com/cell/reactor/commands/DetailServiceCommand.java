@@ -1,8 +1,8 @@
 package com.cell.reactor.commands;
 
-import com.cell.grpc.client.base.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.Optional;
-import com.cell.grpc.client.base.framework.command.impl.AbstractHttpCommand;
+import com.cell.rpc.grpc.client.framework.command.impl.AbstractHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.model.ChangeItem;
