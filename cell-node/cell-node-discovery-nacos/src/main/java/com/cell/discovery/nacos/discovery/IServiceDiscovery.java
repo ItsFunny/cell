@@ -5,6 +5,7 @@ import com.cell.config.IInitOnce;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 public interface IServiceDiscovery extends IInitOnce
 {
-    Map<String, List<ServerCmdMetaInfo>> getServerMetas();
+    Map<String, Set<ServerCmdMetaInfo>> getServerMetas();
 
     void setCluster(String cluster);
 

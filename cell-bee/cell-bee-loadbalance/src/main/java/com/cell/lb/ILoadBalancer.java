@@ -2,6 +2,7 @@ package com.cell.lb;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ import java.util.List;
  */
 public interface ILoadBalancer
 {
-    ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String method, String protocol);
+    ServerCmdMetaInfo choseServer(Collection<ServerCmdMetaInfo> servers, String method, String protocol);
 }

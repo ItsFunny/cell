@@ -112,7 +112,7 @@ public abstract class AbstractCommand implements ICommand
             this.doExecute(ctx, bo);
         } catch (Exception e)
         {
-            ctx.response(this.createResponseWp().exception(e).status(ContextConstants.FAIL).build());
+            ctx.response(this.createResponseWp().exception(e).ret(e.getMessage()).status(ContextConstants.FAIL).build());
         }
     }
 

@@ -55,12 +55,12 @@ public class ServiceDiscovery extends AbstractServiceDiscovery<DefaultStringKeyR
 
     public ServiceDiscovery()
     {
-        this.setCallBack(metas -> ServiceDiscovery.this.refreshUriRules(ServiceDiscovery.this.getRulesFromMeta(metas)));
+        this.setCallBack(snap -> ServiceDiscovery.this.refreshUriRules(ServiceDiscovery.this.getRulesFromMeta(this.serverMetas)));
     }
 
 
     @Override
-    protected List<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol)
+    protected Set<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol)
     {
         return this.serverMetas.get(this.resolver.resolve(DefaultStringKeyResolver.StringKeyResolver.builder().method(method).uri(protocol).build()));
     }
@@ -84,14 +84,14 @@ public class ServiceDiscovery extends AbstractServiceDiscovery<DefaultStringKeyR
     }
 
 
-    private Set<RuleWp> getRulesFromMeta(Map<String, List<ServerCmdMetaInfo>> serverMetas)
+    private Set<RuleWp> getRulesFromMeta(Map<String, Set<ServerCmdMetaInfo>> serverMetas)
     {
         Set<String> protocols = serverMetas.keySet();
         Set<RuleWp> ruleWps = new HashSet<>();
 
         for (String protocol : protocols)
         {
-            List<ServerCmdMetaInfo> serverCmdMetaInfos = serverMetas.get(protocol);
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = serverMetas.get(protocol);
             serverCmdMetaInfos.stream().forEach(s ->
             {
                 List<ServerMetaData.ServerMetaReactor> reactors = s.getMetaData().getReactors();

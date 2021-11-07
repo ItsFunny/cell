@@ -1,9 +1,11 @@
 package com.cell.discovery.nacos.discovery;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
+import com.cell.discovery.nacos.discovery.abs.Snap;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Charlie
@@ -16,5 +18,5 @@ import java.util.Map;
 @FunctionalInterface
 public interface IInstanceOnChange
 {
-    void onChange(Map<String, List<ServerCmdMetaInfo>> metas);
+    void onChange(Snap snap);
 }

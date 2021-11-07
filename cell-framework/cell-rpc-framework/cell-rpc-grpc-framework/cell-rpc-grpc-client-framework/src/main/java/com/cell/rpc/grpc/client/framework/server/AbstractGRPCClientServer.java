@@ -179,6 +179,4 @@ public abstract class AbstractGRPCClientServer extends AbstractRPCClientServer i
     {
         return this.group.next();
     }
-
-
 }

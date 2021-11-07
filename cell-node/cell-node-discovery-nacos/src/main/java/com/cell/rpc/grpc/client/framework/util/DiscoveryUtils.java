@@ -1,5 +1,6 @@
 package com.cell.rpc.grpc.client.framework.util;
 
+import com.cell.filters.ISimpleFilter;
 import com.cell.model.Instance;
 import com.cell.utils.CollectionUtils;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  */
 public class DiscoveryUtils
 {
-    public static Map<String, List<Instance>> convNacosMapInstanceToCellInstance(Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> m)
+    public static Map<String, List<Instance>> convNacosMapInstanceToCellInstance(Map<String, List<com.alibaba.nacos.api.naming.pojo.Instance>> m, ISimpleFilter<Instance>... filters)
     {
         Map<String, List<Instance>> ret = new HashMap<>();
         Set<String> names = m.keySet();
@@ -30,14 +31,15 @@ public class DiscoveryUtils
             {
                 return;
             }
-            List<Instance> instances = convNaocsInstance2CellInstance(allInstances);
+            List<Instance> instances = convNaocsInstance2CellInstance(allInstances, filters);
             ret.put(n, instances);
         });
 
         return ret;
     }
-
-    public static List<Instance>convNaocsInstance2CellInstance(List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances){
+    // TODO: 这里
+    public static List<Instance> convNaocsInstance2CellInstance(List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances, ISimpleFilter<Instance>... filters)
+    {
         return allInstances.stream().map(p ->
                 Instance.builder()
                         .serviceName(p.getServiceName())
@@ -47,7 +49,17 @@ public class DiscoveryUtils
                         .enable(p.isEnabled())
                         .healthy(p.isHealthy())
                         .metaData(p.getMetadata())
-                        .weight((byte) p.getWeight()).build()).collect(Collectors.toList());
+                        .weight((byte) p.getWeight()).build()).filter(p ->
+        {
+            for (ISimpleFilter filter : filters)
+            {
+                if (filter.filter(p))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
 
 }

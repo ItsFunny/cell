@@ -3,6 +3,7 @@ package com.cell.bee.loadbalance.model;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -16,15 +17,54 @@ import java.util.Objects;
 @Data
 public class ServerCmdMetaInfo extends ServerMetaInfo
 {
-    private String module;
+    private int id;
+    private String protocol;
 
-    public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String module)
+    public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String protocol)
     {
         ServerCmdMetaInfo ret = new ServerCmdMetaInfo();
         // FIXME
         BeanUtils.copyProperties(info, ret);
-        ret.module = module;
+        ret.protocol = protocol;
         return ret;
     }
 
+    @Override
+    public boolean equals(Object object)
+    {
+        if (this == object) return true;
+        if (!(object instanceof ServerCmdMetaInfo)) return false;
+        ServerCmdMetaInfo that = (ServerCmdMetaInfo) object;
+        return this.ID() - that.ID() == 0;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.ID();
+    }
+
+    public int ID()
+    {
+        if (this.id == 0)
+        {
+            this.id = Objects.hash(getServiceName(), getProtocol(), getIp(), getPort(), getModule(), getMetaData());
+        }
+        return this.id;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ServerCmdMetaInfo{" +
+                "protocol='" + protocol + '\'' +
+                ", serviceName='" + serviceName + '\'' +
+                ", ip='" + ip + '\'' +
+                ", port=" + port +
+                ", module='" + module + '\'' +
+                ", metaData=" + metaData +
+                ", enable=" + enable +
+                ", healthy=" + healthy +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package com.cell.discovery.nacos.discovery.abs;
 
 import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
 import com.alibaba.nacos.common.notify.Event;
+import com.alibaba.nacos.common.notify.listener.SmartSubscriber;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
@@ -9,6 +10,7 @@ import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.bee.loadbalance.utils.LBUtils;
+import com.cell.concurrent.base.EventExecutor;
 import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.IInstanceOnChange;
@@ -16,11 +18,15 @@ import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.exceptions.ConfigException;
+import com.cell.filters.ISimpleFilter;
 import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
 import com.cell.model.Instance;
+import com.cell.models.Couple;
 import com.cell.models.Module;
+import com.cell.models.Quadruple;
+import com.cell.models.Triple;
 import com.cell.resolver.IKeyResolver;
 import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 import com.cell.transport.model.ServerMetaData;
@@ -28,6 +34,7 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 /**
@@ -49,9 +56,15 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     protected ILoadBalancer loadBalancer;
     protected IInstanceOnChange callBack;
 
-    protected Map<String, List<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
-    protected final Map<String, List<Instance>> delta = new HashMap<>();
+    protected Map<String, Set<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
+
+    protected Snap delta;
     protected volatile boolean onChange = false;
+    private AtomicLong changeSeq = new AtomicLong();
+    // FOR LOCK LESS
+    private Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = new HashMap<>(1);
+
+    private ISimpleFilter<Instance> filter = instance -> instance.isHealthy();
 
 
     @AutoPlugin
@@ -61,7 +74,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     }
 
     @Override
-    public Map<String, List<ServerCmdMetaInfo>> getServerMetas()
+    public Map<String, Set<ServerCmdMetaInfo>> getServerMetas()
     {
         return this.serverMetas;
     }
@@ -72,66 +85,156 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         return this.loadBalancer.choseServer(this.doGetServerByProtocol(method, protocol), method, protocol);
     }
 
-    protected abstract List<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol);
+    protected abstract Collection<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol);
+
+    private Map<String, Set<ServerCmdMetaInfo>> deepCopy()
+    {
+        final Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = this.lastUpdateServerMetas;
+        Map<String, Set<ServerCmdMetaInfo>> ret = new HashMap<>();
+        Set<String> strings = lastUpdateServerMetas.keySet();
+        for (String string : strings)
+        {
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = lastUpdateServerMetas.get(string);
+            ret.put(string, new HashSet<>(serverCmdMetaInfos));
+        }
+        return ret;
+    }
 
     private void transferIfNeed()
     {
         if (!this.onChange) return;
-        Map<String, List<List<ServerCmdMetaInfo>>> compareChanges = new HashMap<>();
-        final List<List<ServerCmdMetaInfo>> dels = new ArrayList<>();
-        synchronized (this.delta)
+        Map<String, List<Set<ServerCmdMetaInfo>>> compareChanges = new HashMap<>();
+        final List<ServerCmdMetaInfo> dels = new ArrayList<>();
+        synchronized (this)
         {
             if (!this.onChange) return;
-            Set<String> serviceNames = this.delta.keySet();
-            Iterator<String> iterator = serviceNames.iterator();
-            while (iterator.hasNext())
+            try
             {
-                String n = iterator.next();
-                List<Instance> instances = this.delta.get(n);
-                if (CollectionUtils.isEmpty(instances))
-                {
-                    dels.add(this.serverMetas.remove(n));
-                    this.delta.remove(n);
-                    this.serverMetas.remove(n);
-                    return;
-                }
-                Map<String, List<ServerCmdMetaInfo>> conv = this.conv();
-                Set<String> changes = conv.keySet();
-                changes.stream().forEach(name ->
-                {
-                    List<ServerCmdMetaInfo> metas = conv.get(name);
-                    List<ServerCmdMetaInfo> origin = this.serverMetas.get(name);
-                    this.serverMetas.put(name, metas);
-                    List<List<ServerCmdMetaInfo>> r = new ArrayList<>();
-                    r.add(origin);
-                    r.add(metas);
-                    compareChanges.put(name, r);
-                });
+                this.serverMetas = this.deepCopy();
+                LOG.info(Module.DISCOVERY, "更新serverMetas:{}", this.serverMetas);
+            } finally
+            {
+                // TODO EXCEPTION CATCH
+                this.callBack.onChange(this.delta);
+                this.delta = null;
+                this.onChange = false;
             }
-            // TODO EXCEPTION CATCH
-            this.callBack.onChange(this.serverMetas);
-            this.delta.clear();
-            this.onChange = false;
         }
         LOG.info(Module.HTTP_GATEWAY, "删除的router:{},变更的信息:{}", dels, compareChanges);
     }
 
-    private Map<String, List<ServerCmdMetaInfo>> conv()
+
+    /*
+        1. 计算新增的protocol:
+            1.1 可能是有新的服务启动,注册到了nacos中,
+        2. 计算减去的protocol:
+            2.1 可能是服务宕机,
+     */
+    private Set<String> protocols = new HashSet<>(1);
+
+    private Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare(Map<String, List<Instance>> serverInstanceList)
     {
-        Map<String, List<Instance>> cellInstance = this.delta;
-        return convCellInstanceToGateMeta(cellInstance);
+        long l = AbstractServiceDiscovery.this.changeSeq.get();
+        boolean b = AbstractServiceDiscovery.this.changeSeq.compareAndSet(l, l + 1);
+        if (!b)
+        {
+            return new Quadruple<>(null, null, null, false);
+        }
+        Snap ret = new Snap();
+        Map<String, Set<ServerCmdMetaInfo>> newProtocols = new HashMap<>();
+        Map<String, Set<ServerCmdMetaInfo>> deltaAddProtocols = new HashMap<>();
+
+        Map<String, Set<ServerCmdMetaInfo>> downProtocols = new HashMap<>();
+        Map<String, Set<ServerCmdMetaInfo>> deltaDownProtocols = new HashMap<>();
+
+        final Set<String> originAllProtocols = new HashSet<>(this.protocols);
+        final Map<String, Set<ServerCmdMetaInfo>> originAllMetas = new HashMap<>(this.lastUpdateServerMetas);
+        final Set<String> newAllProtocols = new HashSet<>();
+        ret.deltaAddProtocols = deltaAddProtocols;
+        ret.deltaDownProtocols = deltaDownProtocols;
+        ret.newProtocols = newProtocols;
+        ret.downProtocols = downProtocols;
+
+
+        Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> couple = this.convCellInstanceToGateMeta(serverInstanceList);
+        Map<String, Set<ServerCmdMetaInfo>> protoMetas = couple.getV1();
+        for (String s : protoMetas.keySet())
+        {
+            if (CollectionUtils.isEmpty(protoMetas.get(s)))
+            {
+                throw new RuntimeException("asd");
+            }
+        }
+        for (String protocol : protoMetas.keySet())
+        {
+            newAllProtocols.add(protocol);
+
+            Set<ServerCmdMetaInfo> cmds = protoMetas.get(protocol);
+            if (!originAllProtocols.contains(protocol))
+            {
+                newProtocols.put(protocol, cmds);
+                continue;
+            }
+            originAllProtocols.remove(protocol);
+
+            Set<ServerCmdMetaInfo> origins = originAllMetas.get(protocol);
+            // 1. 增量新增 : 既protocol 原先存在,有新的instance up
+            // 2. 增量宕机: 既protocol某几个instance 宕机,
+            for (ServerCmdMetaInfo cmd : cmds)
+            {
+                if (!CollectionUtils.isEmpty(origins))
+                {
+                    // 如果原先存在,则直接跳过
+                    if (origins.contains(cmd))
+                    {
+                        origins.remove(cmd);
+                        continue;
+                    }
+                }
+                // 表明是 增量新增 protocol
+                Set<ServerCmdMetaInfo> serverCmdMetaInfos = deltaAddProtocols.get(protocol);
+                if (CollectionUtils.isEmpty(serverCmdMetaInfos))
+                {
+                    serverCmdMetaInfos = new HashSet<>();
+                    deltaAddProtocols.put(protocol, serverCmdMetaInfos);
+                }
+                serverCmdMetaInfos.add(cmd);
+            }
+
+            if (CollectionUtils.isNotEmpty(origins))
+            {
+                // 剩下的则为增量 宕机的
+                deltaDownProtocols.put(protocol, origins);
+            }
+        }
+
+        // 剩下的则为全部宕机
+        for (String down : originAllProtocols)
+        {
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = originAllMetas.get(down);
+            if (CollectionUtils.isNotEmpty(serverCmdMetaInfos))
+            {
+                downProtocols.put(down, serverCmdMetaInfos);
+            }
+        }
+        return new Quadruple(ret, protoMetas, newAllProtocols, (newProtocols.size() > 0 || deltaAddProtocols.size() > 0 || downProtocols.size() > 0 || deltaDownProtocols.size() > 0));
     }
 
-    private Map<String, List<ServerCmdMetaInfo>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
+    private Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
     {
         Set<String> keys = m.keySet();
-        Map<String, List<ServerCmdMetaInfo>> metas = new HashMap<>();
-
+        Map<String, Set<ServerCmdMetaInfo>> metas = new HashMap<>();
+        Map<String, InstanceWrapper> instanceWrapperMap = new HashMap<>();
         keys.stream().forEach(k ->
         {
             List<Instance> instances = m.get(k);
             instances.stream().forEach(inst ->
                     {
+                        InstanceWrapper wrapper = new InstanceWrapper();
+                        wrapper.port = inst.getPort();
+                        wrapper.host = inst.getIp();
+                        instanceWrapperMap.put(createKeyByInstance(inst), wrapper);
+
                         ServerMetaInfo info = LBUtils.fromInstance(inst);
                         ServerMetaData metaData = info.getMetaData();
                         if (metaData.getExtraInfo() == null || (metaData.getExtraInfo().getType() & this.filterType()) < this.filterType())
@@ -148,22 +251,26 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
                             cmds.stream().forEach(c ->
                             {
                                 String key = this.resolve(this.resolver, c);
-                                List<ServerCmdMetaInfo> serverMetaInfos = metas.get(key);
+                                Set<ServerCmdMetaInfo> serverMetaInfos = metas.get(key);
                                 if (CollectionUtils.isEmpty(serverMetaInfos))
                                 {
-                                    serverMetaInfos = new ArrayList<>();
+                                    serverMetaInfos = new HashSet<>();
                                     metas.put(key, serverMetaInfos);
                                 }
-                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getModule());
+                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getProtocol());
                                 serverMetaInfos.add(serverCmdMetaInfo);
                             });
                         });
                     }
             );
         });
-        return metas;
+        return new Couple<>(metas, instanceWrapperMap);
     }
 
+    private String createKeyByInstance(Instance instance)
+    {
+        return instance.getIp() + "" + instance.getPort();
+    }
 
     @Override
     protected void onInit(InitCTX ctx)
@@ -172,8 +279,12 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         this.nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
 
         this.beforeInit(ctx);
-        Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
-        this.serverMetas = convCellInstanceToGateMeta(serverInstanceList);
+        Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster, this.filter);
+        Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> qudr = this.compare(serverInstanceList);
+
+        this.serverMetas = qudr.getV2();
+        this.protocols = qudr.getV3();
+
         this.schedualRefresh();
         if (this.callBack == null)
         {
@@ -184,8 +295,9 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             }
             this.setCallBack(c);
         }
-        this.callBack.onChange(this.serverMetas);
-        nodeDiscovery.registerListen(new InstanceHooker());
+        this.lastUpdateServerMetas = this.serverMetas;
+        this.callBack.onChange(qudr.getV1());
+//        nodeDiscovery.registerListen(new InstanceHooker());
         this.afterInit(ctx);
     }
 
@@ -193,26 +305,50 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 
     protected abstract void afterInit(InitCTX ctx);
 
-    private class InstanceHooker extends Subscriber<InstancesChangeEvent>
+    private class InstanceHooker extends SmartSubscriber
     {
         @Override
-        public void onEvent(InstancesChangeEvent event)
+        public List<Class<? extends Event>> subscribeTypes()
         {
-            LOG.info(Module.HTTP_GATEWAY, "收到event:{},hosts:{}", event);
-            // FIXME , 处理nacos 的cluster
-            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
-                    e.getClusterName().equalsIgnoreCase(AbstractServiceDiscovery.this.cluster)).collect(Collectors.toList());
-            synchronized (AbstractServiceDiscovery.this.delta)
-            {
-                AbstractServiceDiscovery.this.delta.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));
-                AbstractServiceDiscovery.this.onChange = true;
-            }
+            return Arrays.asList(InstancesChangeEvent.class);
         }
 
         @Override
-        public Class<? extends Event> subscribeType()
+        public void onEvent(Event eee)
         {
-            return InstancesChangeEvent.class;
+            LOG.info(Module.HTTP_GATEWAY, "收到event:{}", eee);
+            if (!(eee instanceof InstancesChangeEvent))
+            {
+                return;
+            }
+            InstancesChangeEvent event = (InstancesChangeEvent) eee;
+            // FIXME , 处理nacos 的cluster
+            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
+                    e.getClusterName().equalsIgnoreCase(AbstractServiceDiscovery.this.cluster)).collect(Collectors.toList());
+            Map<String, List<Instance>> serverInstanceList = new HashMap<>();
+            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));
+            Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare = AbstractServiceDiscovery.this.compare(serverInstanceList);
+            AbstractServiceDiscovery.this.updateIfNeeded(compare);
+        }
+    }
+
+    private void updateIfNeeded(Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare)
+    {
+        if (!compare.getV4())
+        {
+            return;
+        }
+        synchronized (AbstractServiceDiscovery.this)
+        {
+            AbstractServiceDiscovery.this.delta = compare.getV1();
+            AbstractServiceDiscovery.this.protocols = compare.getV3();
+            /*
+                存在间隔中缓存丢失的问题
+                这里不更新currentServerMetas, currentServerMetas,只会在请求到来的时候进行更新
+             */
+            AbstractServiceDiscovery.this.lastUpdateServerMetas = compare.getV2();
+            LOG.info(Module.DISCOVERY, "更新lastUpdateServerMetas:{}", this.lastUpdateServerMetas);
+            AbstractServiceDiscovery.this.onChange = true;
         }
     }
 
@@ -223,9 +359,9 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 
     private void schedualRefresh()
     {
-        Flux.interval(Duration.ofMinutes(5)).map(v ->
+        Flux.interval(Duration.ofMinutes(1)).map(v ->
         {
-            Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster);
+            Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster, this.filter);
             return serverInstanceList;
         }).subscribe(serverInstanceList ->
         {
@@ -233,17 +369,45 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             {
                 return;
             }
-            synchronized (this.delta)
-            {
-                for (String s : serverInstanceList.keySet())
-                {
-                    List<Instance> instances = serverInstanceList.get(s);
-                    this.delta.put(instances.get(0).getClusterName(), instances);
-                }
-                this.onChange = true;
-            }
+            Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare = this.compare(serverInstanceList);
+            this.updateIfNeeded(compare);
         });
     }
+
+    public class InstanceWrapper
+    {
+        String serviceName;
+        String host;
+        int port;
+    }
+
+
+//    private void filterWith(Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> couple)
+//    {
+//        Set<String> keys = this.lastServerMetas.keySet();
+//        Set<ServerCmdMetaInfo> newCmds = new HashSet<>();
+//
+//        /*
+//            需要校验的字段:
+//            1. 新增的instance
+//            2. 宕机的instance
+//            3. 新增的 protocol: 可能原先对应的instance
+//            4. 宕机的 protocol: 可能只是部分protocol 宕机,所以并不能释放全部的stub
+//         */
+//
+//        for (String key : keys)
+//        {
+//            Set<ServerCmdMetaInfo> update = conv.get(key);
+//            Set<ServerCmdMetaInfo> origin = this.lastServerMetas.get(key);
+//
+//
+//            for (ServerCmdMetaInfo serverCmdMetaInfo : origin)
+//            {
+//
+//            }
+//        }
+//        return null;
+//    }
 
     protected abstract IKeyResolver<K1, K2> newKeyResolver();
 
@@ -262,7 +426,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         }
 
         @Override
-        public ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String method, String protocol)
+        public ServerCmdMetaInfo choseServer(Collection<ServerCmdMetaInfo> servers, String method, String protocol)
         {
             return this.strategy.choseServer(servers, protocol);
         }

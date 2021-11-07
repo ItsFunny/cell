@@ -9,13 +9,18 @@ import com.cell.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.root.Root;
 import com.cell.util.GRPCUtil;
+import com.cell.utils.CollectionUtils;
+import io.grpc.Channel;
 import io.grpc.stub.AbstractStub;
 
 import java.net.URI;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * @author Charlie
@@ -50,38 +55,122 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
         {
             return null;
         }
-        return this.stubs.get(serverCmdMetaInfo.ID());
+        this.rwMtx.readLock().lock();
+        BaseGrpcGrpc.BaseGrpcFutureStub stub = this.stubs.get(serverCmdMetaInfo.ID());
+        this.rwMtx.readLock().unlock();
+        return stub;
     }
 
-
+    private ReentrantReadWriteLock rwMtx = new ReentrantReadWriteLock();
+    //    private Map<Integer, TargetWrapper> stubs = new HashMap<>();
     private Map<Integer, BaseGrpcGrpc.BaseGrpcFutureStub> stubs = new HashMap<>();
+    // 存储的是 instance -对应的stub ,一个instance 有多个 cmdInfo,但是只会有一个stub
+    private Map<String, BaseGrpcGrpc.BaseGrpcFutureStub> targetStubs = new HashMap<>();
+
+    class TargetWrapper
+    {
+        String key;
+        BaseGrpcGrpc.BaseGrpcFutureStub stub;
+
+        public TargetWrapper(String key, BaseGrpcGrpc.BaseGrpcFutureStub stub)
+        {
+            this.key = key;
+            this.stub = stub;
+        }
+    }
 
     @Override
     protected void onInit(InitCTX ctx)
     {
-        ctx.getData().put(GRPCClientServiceDiscovery.callBackStr, (IInstanceOnChange) serverMetas ->
+        ctx.getData().put(GRPCClientServiceDiscovery.callBackStr, (IInstanceOnChange) snap ->
         {
-            Collection<List<ServerCmdMetaInfo>> values = serverMetas.values();
-            for (List<ServerCmdMetaInfo> value : values)
+            Map<String, Set<ServerCmdMetaInfo>> newProtocols = snap.getNewProtocols();
+            Map<String, Set<ServerCmdMetaInfo>> deltaAddProtocols = snap.getDeltaAddProtocols();
+            Map<String, Set<ServerCmdMetaInfo>> downProtocols = snap.getDownProtocols();
+            Map<String, Set<ServerCmdMetaInfo>> deltaDownProtocols = snap.getDeltaDownProtocols();
+            try
             {
-                for (ServerCmdMetaInfo serverCmdMetaInfo : value)
-                {
-                    GRPCClientConfiguration.GRPCClientConfigurationNode node = new GRPCClientConfiguration.GRPCClientConfigurationNode();
-                    String ip = serverCmdMetaInfo.getIp();
-                    short port = serverCmdMetaInfo.getPort();
-                    node.setAddress(URI.create("static://" + ip + ":" + port));
-                    int code = serverCmdMetaInfo.ID();
-                    String stubName = code + "";
-                    GRPCClientConfiguration.getInstance().updateRuntime(stubName, node);
-                    AbstractStub<?> stub = GRPCUtil.createaaStub(Root.getApplicationContext(),
-                            (Class<? extends AbstractStub<?>>) BaseGrpcGrpc.BaseGrpcFutureStub.class.asSubclass(AbstractStub.class),
-                            stubName,
-                            new ArrayList<>(),
-                            false);
-                    this.stubs.put(code, (BaseGrpcGrpc.BaseGrpcFutureStub) stub);
-                }
+                this.rwMtx.writeLock().lock();
+                // 处理新增
+                LOG.info(Module.GRPC_SERVER, "开始处理新增:{}", newProtocols);
+                this.handleAdd(newProtocols);
+                LOG.info(Module.GRPC_SERVER, "开始处理增量新增:{}", deltaAddProtocols);
+                this.handleAdd(deltaAddProtocols);
+                LOG.info(Module.GRPC_SERVER, "开始处理宕机的protocol:{}", downProtocols);
+                this.handleDown(downProtocols, true);
+                this.handleDown(deltaDownProtocols, false);
+            } finally
+            {
+                this.rwMtx.writeLock().unlock();
             }
         });
         this.grpcClientServiceDiscovery.initOnce(ctx);
     }
+
+    private void handleAdd(Map<String, Set<ServerCmdMetaInfo>> protocols)
+    {
+        Set<String> protocolKeys = protocols.keySet();
+        for (String protocol : protocolKeys)
+        {
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = protocols.get(protocol);
+            for (ServerCmdMetaInfo serverCmdMetaInfo : serverCmdMetaInfos)
+            {
+                String staticByInfo = this.createStaticByInfo(serverCmdMetaInfo);
+                BaseGrpcGrpc.BaseGrpcFutureStub stub = this.targetStubs.get(staticByInfo);
+                if (stub == null)
+                {
+                    stub = this.createStub(staticByInfo);
+                    this.targetStubs.put(staticByInfo, stub);
+                }
+                int code = serverCmdMetaInfo.ID();
+                this.stubs.put(code, stub);
+                LOG.info(Module.GRPC_SERVER, "add stub,code={}", code);
+            }
+        }
+    }
+
+    // TODO optimize ,对于down的protocol,需要重新定义结构体,有哪些
+    private void handleDown(Map<String, Set<ServerCmdMetaInfo>> protocols, boolean closeStub)
+    {
+        Set<String> protocolKeys = protocols.keySet();
+        for (String protocolKey : protocolKeys)
+        {
+            // 1. 删除code
+            // 2. 断开protocol
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = protocols.get(protocolKey);
+            if (CollectionUtils.isEmpty(serverCmdMetaInfos)) continue;
+            String staticKey = "";
+            for (ServerCmdMetaInfo serverCmdMetaInfo : serverCmdMetaInfos)
+            {
+                staticKey = this.createStaticByInfo(serverCmdMetaInfo);
+                int code = serverCmdMetaInfo.ID();
+                this.stubs.remove(code);
+                LOG.info(Module.GRPC_SERVER, "remove stub:{}", code);
+            }
+            if (closeStub)
+            {
+                this.targetStubs.remove(staticKey);
+            }
+        }
+    }
+
+
+    private BaseGrpcGrpc.BaseGrpcFutureStub createStub(String staticUri)
+    {
+        GRPCClientConfiguration.GRPCClientConfigurationNode node = new GRPCClientConfiguration.GRPCClientConfigurationNode();
+        node.setAddress(URI.create(staticUri));
+        GRPCClientConfiguration.getInstance().updateRuntime(staticUri, node);
+        return (BaseGrpcGrpc.BaseGrpcFutureStub) GRPCUtil.createaaStub(Root.getApplicationContext(),
+                (Class<? extends AbstractStub<?>>) BaseGrpcGrpc.BaseGrpcFutureStub.class.asSubclass(AbstractStub.class),
+                staticUri,
+                new ArrayList<>(),
+                false);
+    }
+
+
+    private String createStaticByInfo(ServerCmdMetaInfo info)
+    {
+        return "static://" + info.getIp() + ":" + info.getPort();
+    }
+
 }

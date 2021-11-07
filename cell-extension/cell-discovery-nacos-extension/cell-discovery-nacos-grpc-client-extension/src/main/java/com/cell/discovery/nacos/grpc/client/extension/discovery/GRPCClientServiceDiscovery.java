@@ -9,7 +9,7 @@ import com.cell.discovery.nacos.grpc.client.extension.keyresolver.RPCKeyResolver
 import com.cell.resolver.IKeyResolver;
 import com.cell.transport.model.ServerMetaData;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author Charlie
@@ -31,7 +31,7 @@ public class GRPCClientServiceDiscovery extends AbstractServiceDiscovery<String,
     }
 
     @Override
-    protected List<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol)
+    protected Collection<ServerCmdMetaInfo> doGetServerByProtocol(String method, String protocol)
     {
         return this.serverMetas.get(protocol);
     }

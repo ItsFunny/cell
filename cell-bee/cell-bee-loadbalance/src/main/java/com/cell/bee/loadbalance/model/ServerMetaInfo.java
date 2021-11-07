@@ -18,17 +18,15 @@ import java.util.Objects;
 @Data
 public class ServerMetaInfo
 {
-    private String serviceName;
-    private String ip;
-    private short port;
-    private String module;
+    protected String serviceName;
+    protected String ip;
+    protected short port;
+    protected String module;
 
-    private ServerMetaData metaData;
+    protected ServerMetaData metaData;
 
-    private boolean enable;
-    private boolean healthy;
-
-    private int id;
+    protected boolean enable;
+    protected boolean healthy;
 
 
     @Override
@@ -44,13 +42,17 @@ public class ServerMetaInfo
                 Objects.equals(getMetaData(), that.getMetaData());
     }
 
-    public int ID()
+    @Override
+    public String toString()
     {
-        if (this.id == 0)
-        {
-            this.id = Objects.hash(getServiceName(), getIp(), getPort(), getModule(), getMetaData());
-        }
-        return this.id;
+        return "ServerMetaInfo{" +
+                "serviceName='" + serviceName + '\'' +
+                ", ip='" + ip + '\'' +
+                ", port=" + port +
+                ", module='" + module + '\'' +
+                ", metaData=" + metaData +
+                ", enable=" + enable +
+                ", healthy=" + healthy +
+                '}';
     }
-
 }

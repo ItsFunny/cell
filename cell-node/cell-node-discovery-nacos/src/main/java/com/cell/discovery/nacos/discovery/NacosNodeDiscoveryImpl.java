@@ -14,6 +14,8 @@ import com.cell.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.config.ConfigFactory;
 import com.cell.discovery.nacos.config.NacosConfiguration;
+import com.cell.filters.IFilter;
+import com.cell.filters.ISimpleFilter;
 import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 import com.cell.exception.CellDiscoveryException;
 import com.cell.exceptions.ProgramaException;
@@ -26,6 +28,7 @@ import com.cell.utils.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -84,7 +87,7 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
 
 
     @Override
-    public Map<String, List<Instance>> getServerInstanceList(String cluster)
+    public Map<String, List<Instance>> getServerInstanceList(String cluster, ISimpleFilter<Instance>... filters)
     {
         try
         {
@@ -101,20 +104,21 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
                             {
                                 allInstances = new ArrayList<>();
                             }
-                            return StringUtils.isEmpty(cluster) ? allInstances : allInstances.stream().filter(p -> p.getClusterName().equalsIgnoreCase(cluster)).collect(Collectors.toList());
+                            return StringUtils.isEmpty(cluster)
+                                    ? allInstances : allInstances.stream().filter(p -> p.getClusterName().equalsIgnoreCase(cluster)).collect(Collectors.toList());
                         } catch (NacosException e)
                         {
                             throw new ProgramaException(e);
                         }
                     }));
-            return DiscoveryUtils.convNacosMapInstanceToCellInstance(serviceMap);
+            return DiscoveryUtils.convNacosMapInstanceToCellInstance(serviceMap, filters);
         } catch (NacosException e)
         {
             throw new CellDiscoveryException(e);
         }
     }
 
-    public List<Instance> getServiceAllInstance(String serviceName)
+    public List<Instance> getServiceAllInstance(String serviceName, ISimpleFilter<Instance>... filters)
     {
         try
         {
@@ -124,6 +128,26 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
         {
             throw new CellDiscoveryException(e);
         }
+    }
+
+    private List<Instance> filter(List<Instance> instances, ISimpleFilter<Instance>... filters)
+    {
+        if (filters.length == 0)
+        {
+            return instances;
+        }
+
+        return instances.stream().filter(p ->
+        {
+            for (ISimpleFilter<Instance> f : filters)
+            {
+                if (f.filter(p))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
     }
 
     public List<String> getAllServices()

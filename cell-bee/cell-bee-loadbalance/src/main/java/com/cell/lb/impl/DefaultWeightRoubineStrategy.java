@@ -3,9 +3,10 @@ package com.cell.lb.impl;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.lb.ILoadBalancerStrategy;
+import com.cell.utils.CollectionUtils;
+import org.apache.lucene.util.CollectionUtil;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Charlie
@@ -19,11 +20,11 @@ import java.util.List;
 public class DefaultWeightRoubineStrategy implements ILoadBalancerStrategy
 {
     @Override
-    public ServerCmdMetaInfo choseServer(List<ServerCmdMetaInfo> servers, String protocol)
+    public ServerCmdMetaInfo choseServer(Collection<ServerCmdMetaInfo> servers, String protocol)
     {
         if (servers == null || servers.size() == 0) return null;
-
-        Collections.shuffle(servers);
+        // FIXME
+        Collections.shuffle(new ArrayList<>(servers));
         for (ServerCmdMetaInfo server : servers)
         {
             if (server.isEnable() && server.isHealthy())

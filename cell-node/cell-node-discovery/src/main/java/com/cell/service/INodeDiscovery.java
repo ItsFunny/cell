@@ -1,6 +1,8 @@
 package com.cell.service;
 
 import com.cell.config.IInitOnce;
+import com.cell.filters.IFilter;
+import com.cell.filters.ISimpleFilter;
 import com.cell.model.Instance;
 
 import java.util.List;
@@ -17,8 +19,11 @@ import java.util.Map;
 public interface INodeDiscovery extends IInitOnce
 {
     // key: serviceName
-    Map<String, List<Instance>> getServerInstanceList(String cluster);
-    List<String>getAllServices();
-    List<Instance> getServiceAllInstance(String serviceName);
+    Map<String, List<Instance>> getServerInstanceList(String cluster, ISimpleFilter<Instance>... filters);
+
+    List<String> getAllServices();
+
+    List<Instance> getServiceAllInstance(String serviceName, ISimpleFilter<Instance>... filters);
+
     void registerServerInstance(Instance instance);
 }
