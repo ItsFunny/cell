@@ -25,7 +25,8 @@ public class CustomizeMetricsFilter implements GlobalFilter, Ordered
     {
         MetricsContext context = new MetricsContext();
         context.setExchange(exchange);
-        return chain.filter(exchange).then(MetricsManager.getInstance().execute(MetricsManager.postFilterHook, context));
+        return chain.filter(exchange)
+                .then(MetricsManager.getInstance().execute(MetricsManager.postFilterHook, context));
     }
 
 

@@ -9,8 +9,8 @@ import com.cell.context.INodeContext;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.discovery.nacos.grpc.client.extension.server.DefaultGrpcNacosClientServer;
 import com.cell.discovery.nacos.grpc.client.extension.server.IGRPCNacosClientServer;
-import com.cell.http.gate.extension.AbstractSpringNodeExtension;
-import com.cell.http.gate.extension.ConcurrentExtension;
+import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.ConcurrentExtension;
 import com.cell.utils.StringUtils;
 
 /**

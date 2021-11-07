@@ -1,9 +1,12 @@
 package com.cell.filter;
 
 import com.cell.annotations.ActivePlugin;
+import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.constants.GatewayConstants;
 import com.cell.http.gate.discovery.ServiceDiscovery;
+import com.cell.log.LOG;
+import com.cell.models.Module;
 import com.cell.utils.GatewayUtils;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -33,18 +36,20 @@ public class FirstFilter implements GlobalFilter, Ordered
         ServiceDiscovery serviceDiscovery = ServiceDiscovery.getInstance();
         ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
-        ServerMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
-        ServerMetaInfoWrapper wrapper = new ServerMetaInfoWrapper();
-        wrapper.fillWithMeta(metaInfo);
-        wrapper.setUri(uri);
-        wrapper.setMethod(request.getMethod().name());
+        ServerCmdMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
         // FIXME ,定制化信息
         if (metaInfo == null)
         {
             return GatewayUtils.fastFinish(exchange, "command not exists");
         }
+        ServerMetaInfoWrapper wrapper = new ServerMetaInfoWrapper();
+        wrapper.fillWithMeta(metaInfo);
+        wrapper.setUri(uri);
+        wrapper.setMethod(request.getMethod().name());
         exchange.getAttributes().put(GatewayConstants.attributeCmdInfo, wrapper);
-        return chain.filter(exchange);
+        return chain.filter(exchange).onErrorResume(e ->
+                Mono.fromRunnable(() ->
+                        LOG.error(Module.HTTP_GATEWAY, e, "fail")));
     }
 
     @Override

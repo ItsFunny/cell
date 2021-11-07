@@ -10,7 +10,7 @@ import com.cell.context.SpringNodeContext;
 import com.cell.exception.ContainerException;
 import com.cell.exception.ExtensionImportException;
 import com.cell.exceptions.ConfigException;
-import com.cell.http.gate.extension.INodeExtension;
+import com.cell.discovery.nacos.http.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.models.Module;

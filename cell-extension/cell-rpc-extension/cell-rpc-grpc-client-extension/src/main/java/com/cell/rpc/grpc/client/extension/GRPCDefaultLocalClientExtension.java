@@ -5,8 +5,8 @@ import com.cell.annotations.Plugin;
 import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
-import com.cell.http.gate.extension.AbstractSpringNodeExtension;
-import com.cell.http.gate.extension.ConcurrentExtension;
+import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.ConcurrentExtension;
 import com.cell.rpc.grpc.client.framework.server.GRPCLocalClientServer;
 import com.cell.rpc.grpc.client.framework.server.ILocalGRPCClientServer;
 

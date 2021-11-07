@@ -21,7 +21,6 @@ public class ServerMetaInfo
     protected String serviceName;
     protected String ip;
     protected short port;
-    protected String module;
 
     protected ServerMetaData metaData;
 
@@ -38,7 +37,6 @@ public class ServerMetaInfo
         return getPort() == that.getPort() &&
                 Objects.equals(getServiceName(), that.getServiceName()) &&
                 Objects.equals(getIp(), that.getIp()) &&
-                Objects.equals(getModule(), that.getModule()) &&
                 Objects.equals(getMetaData(), that.getMetaData());
     }
 
@@ -49,7 +47,6 @@ public class ServerMetaInfo
                 "serviceName='" + serviceName + '\'' +
                 ", ip='" + ip + '\'' +
                 ", port=" + port +
-                ", module='" + module + '\'' +
                 ", metaData=" + metaData +
                 ", enable=" + enable +
                 ", healthy=" + healthy +

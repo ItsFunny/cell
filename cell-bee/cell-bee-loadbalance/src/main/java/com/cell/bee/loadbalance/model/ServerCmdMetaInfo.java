@@ -19,13 +19,15 @@ public class ServerCmdMetaInfo extends ServerMetaInfo
 {
     private int id;
     private String protocol;
+    protected String module;
 
-    public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String protocol)
+    public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String protocol, String module)
     {
         ServerCmdMetaInfo ret = new ServerCmdMetaInfo();
         // FIXME
         BeanUtils.copyProperties(info, ret);
         ret.protocol = protocol;
+        ret.module = module;
         return ret;
     }
 

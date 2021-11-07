@@ -253,7 +253,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
                                     serverMetaInfos = new HashSet<>();
                                     metas.put(key, serverMetaInfos);
                                 }
-                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getProtocol());
+                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getProtocol(),c.getModule());
                                 serverMetaInfos.add(serverCmdMetaInfo);
                             });
                         });

@@ -10,7 +10,7 @@ import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.dispatcher.impl.DefaultRPCServerCommandDispatcher;
-import com.cell.http.gate.extension.AbstractSpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.grpc.server.framework.server.DefaultGRPServer;
 import com.cell.grpc.server.framework.server.IGRPCServer;
 import com.cell.log.LOG;
