@@ -1,6 +1,6 @@
 package com.cell.adapter;
 
-import com.cell.config.IInitOnce;
+import com.cell.http.gate.config.IInitOnce;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 

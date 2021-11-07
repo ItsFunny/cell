@@ -5,7 +5,7 @@ import com.cell.annotations.CellOrder;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.exception.ConfigurationException;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.apache.commons.cli.CommandLine;

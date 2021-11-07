@@ -11,7 +11,7 @@ import com.cell.exceptions.IHttpExceptionResolver;
 import com.cell.executor.IBaseChainExecutor;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.impl.AbstractHttpHandler;
-import com.cell.hook.CommandHookManager;
+import com.cell.http.gate.hook.CommandHookManager;
 import com.cell.services.IHandlerSuit;
 import reactor.core.publisher.Mono;
 

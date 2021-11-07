@@ -12,7 +12,13 @@ public class Gateway
 {
     public static void main(String[] args)
     {
-        ConfigurableApplicationContext run = SpringApplication.run(Gateway.class, args);
+        try
+        {
+            ConfigurableApplicationContext run = SpringApplication.run(Gateway.class, args);
+        } catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
     }
 
 }

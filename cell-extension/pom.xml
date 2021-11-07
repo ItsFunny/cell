@@ -22,7 +22,6 @@
         <module>cell-discovery-nacos-extension</module>
         <module>cell-rpc-extension</module>
         <module>cell-http-extension</module>
-        <module>cell-rpc-extension</module>
     </modules>
 
 </project>

@@ -1,15 +1,10 @@
 package com.cell.utils;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.bee.loadbalance.model.ServerMetaInfo;
-import com.cell.bee.loadbalance.utils.LBUtils;
-import com.cell.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.log.LOG;
-import com.cell.model.Instance;
-import com.cell.models.Couple;
 import com.cell.models.Module;
 import com.cell.services.IStatContextService;
-import com.cell.transport.model.ServerMetaData;
 
 /**
  * @author Charlie

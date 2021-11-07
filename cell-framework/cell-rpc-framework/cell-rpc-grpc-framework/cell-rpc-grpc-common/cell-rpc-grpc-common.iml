@@ -72,7 +72,6 @@
     <orderEntry type="library" name="Maven: io.grpc:grpc-protobuf-lite:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.29.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat:annotations-api:6.0.53" level="project" />
-    <orderEntry type="module" module-name="cell-rpc-base-framework" />
     <orderEntry type="module" module-name="cell-sdk-eventdriven" />
     <orderEntry type="module" module-name="cell-base-core" />
     <orderEntry type="module" module-name="cell-plugin-pipeline" />

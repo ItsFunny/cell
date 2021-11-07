@@ -1,7 +1,7 @@
 package com.cell.collector;
 
 import com.cell.comparators.OrderComparator;
-import com.cell.config.AbstractInitOnce;
+import com.cell.http.gate.config.AbstractInitOnce;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import lombok.Data;

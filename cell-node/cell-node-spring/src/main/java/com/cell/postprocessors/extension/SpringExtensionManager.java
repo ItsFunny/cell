@@ -2,7 +2,7 @@ package com.cell.postprocessors.extension;
 
 import com.cell.bridge.ISpringNodeExtension;
 import com.cell.constants.DebugConstants;
-import com.cell.config.AbstractInitOnce;
+import com.cell.http.gate.config.AbstractInitOnce;
 import com.cell.configuration.RootConfiguration;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
@@ -10,7 +10,7 @@ import com.cell.context.SpringNodeContext;
 import com.cell.exception.ContainerException;
 import com.cell.exception.ExtensionImportException;
 import com.cell.exceptions.ConfigException;
-import com.cell.discovery.nacos.http.extension.INodeExtension;
+import com.cell.http.gate.extension.INodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.models.Module;

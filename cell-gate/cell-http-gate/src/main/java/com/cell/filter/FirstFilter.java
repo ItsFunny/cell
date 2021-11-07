@@ -3,7 +3,7 @@ package com.cell.filter;
 import com.cell.annotations.ActivePlugin;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.constants.GatewayConstants;
-import com.cell.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.utils.GatewayUtils;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

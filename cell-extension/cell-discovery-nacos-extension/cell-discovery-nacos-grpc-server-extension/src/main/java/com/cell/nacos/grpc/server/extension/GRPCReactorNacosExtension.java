@@ -6,7 +6,7 @@ import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.IRPCServerCommandDispatcher;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 import com.cell.grpc.server.framework.server.IGRPCServer;
 import com.cell.model.Instance;
 import com.cell.protocol.ICommand;

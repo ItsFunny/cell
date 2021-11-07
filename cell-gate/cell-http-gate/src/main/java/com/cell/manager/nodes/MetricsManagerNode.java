@@ -11,6 +11,7 @@ import com.cell.manager.MetricsManager;
 import com.cell.prometheus.HistogramStator;
 import com.cell.services.IStatContextService;
 import com.cell.wrapper.ServerMetaInfoWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -25,7 +26,7 @@ import reactor.core.publisher.Mono;
 @ManagerNode(group = MetricsManager.gatewayMetricsManager, name = "gateway_metrics1")
 public class MetricsManagerNode
 {
-    @AutoPlugin
+    @Autowired
     private HistogramStator exceedDelayThresoldCount;
 
     @AutoPlugin

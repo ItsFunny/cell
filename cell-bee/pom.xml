@@ -25,6 +25,5 @@
         <module>cell-bee-rate</module>
         <module>cell-bee-keyresolver</module>
         <module>cell-bee-event</module>
-        <module>cell-bee-discovery-client</module>
     </modules>
 </project>

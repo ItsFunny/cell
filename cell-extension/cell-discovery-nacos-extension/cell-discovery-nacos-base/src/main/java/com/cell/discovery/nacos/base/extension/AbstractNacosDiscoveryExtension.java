@@ -2,7 +2,7 @@ package com.cell.discovery.nacos.base.extension;
 
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 import com.cell.proxy.IFrameworkProxy;
 import com.cell.root.Root;
 import com.cell.server.IServer;

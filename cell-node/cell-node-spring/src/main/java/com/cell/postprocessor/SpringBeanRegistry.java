@@ -5,7 +5,7 @@ import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.LifeCycle;
-import com.cell.config.ConfigConstants;
+import com.cell.http.gate.config.ConfigConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;

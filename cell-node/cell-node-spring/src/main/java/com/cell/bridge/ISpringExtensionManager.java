@@ -1,6 +1,6 @@
 package com.cell.bridge;
 
-import com.cell.discovery.nacos.http.extension.IExtensionManager;
+import com.cell.http.gate.extension.IExtensionManager;
 
 /**
  * @author Charlie

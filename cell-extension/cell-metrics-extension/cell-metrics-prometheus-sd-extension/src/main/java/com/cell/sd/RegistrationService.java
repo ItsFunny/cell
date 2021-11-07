@@ -3,7 +3,7 @@ package com.cell.sd;
 import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
 import com.alibaba.nacos.common.notify.Event;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
-import com.cell.config.AbstractInitOnce;
+import com.cell.http.gate.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.log.LOG;

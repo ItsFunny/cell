@@ -1,7 +1,7 @@
 package com.cell.filters;
 
 import com.cell.comparators.CompareSatisfiedFunc;
-import com.cell.config.AbsReflectAbleInitOnce;
+import com.cell.http.gate.config.AbsReflectAbleInitOnce;
 import com.cell.decorators.TypeStateful;
 import com.cell.enums.BeeEnums;
 import com.cell.enums.TypeEnums;

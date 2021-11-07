@@ -8,7 +8,7 @@ import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.dispatcher.DefaultHttpDispatcher;
 import com.cell.dispatcher.IHttpDispatcher;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.WebHandlerManager;

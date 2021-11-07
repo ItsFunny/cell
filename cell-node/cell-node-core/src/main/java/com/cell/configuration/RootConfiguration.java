@@ -1,7 +1,7 @@
 package com.cell.configuration;
 
-import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;
-import com.cell.discovery.nacos.http.extension.INodeExtension;
+import com.cell.http.gate.extension.AbstractNodeExtension;
+import com.cell.http.gate.extension.INodeExtension;
 
 import java.util.HashMap;
 import java.util.Map;

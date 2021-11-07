@@ -1,6 +1,6 @@
 package com.cell.bridge;
 
-import com.cell.discovery.nacos.http.extension.INodeExtension;
+import com.cell.http.gate.extension.INodeExtension;
 
 /**
  * @author Charlie

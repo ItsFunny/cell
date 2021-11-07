@@ -6,7 +6,7 @@ import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import org.springframework.boot.SpringApplication;

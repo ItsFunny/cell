@@ -1,7 +1,6 @@
 package com.cell.service;
 
-import com.cell.config.IInitOnce;
-import com.cell.filters.IFilter;
+import com.cell.http.gate.config.IInitOnce;
 import com.cell.filters.ISimpleFilter;
 import com.cell.model.Instance;
 

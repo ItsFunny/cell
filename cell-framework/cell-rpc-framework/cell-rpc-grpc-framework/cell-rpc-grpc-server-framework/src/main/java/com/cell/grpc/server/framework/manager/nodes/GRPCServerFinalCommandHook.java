@@ -2,7 +2,7 @@ package com.cell.grpc.server.framework.manager.nodes;
 
 import com.cell.annotations.ManagerNode;
 import com.cell.constants.RPCHookConstants;
-import com.cell.hook.AbstractRPCHook;
+import com.cell.http.gate.hook.AbstractRPCHook;
 
 /**
  * @author Charlie

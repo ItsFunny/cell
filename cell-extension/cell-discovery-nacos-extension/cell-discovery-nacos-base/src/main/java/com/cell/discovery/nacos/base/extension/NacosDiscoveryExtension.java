@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.base.extension;
 
 import com.cell.context.INodeContext;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
+import com.cell.http.gate.extension.AbstractSpringNodeExtension;
 
 /**
  * @author Charlie

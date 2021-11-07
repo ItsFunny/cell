@@ -1,6 +1,6 @@
 package com.cell.log.impl;
 
-import com.cell.config.AbstractInitOnce;
+import com.cell.http.gate.config.AbstractInitOnce;
 import com.cell.decorators.DefaultStatefulDecoratorManager;
 import com.cell.enums.TypeEnums;
 import com.cell.log.*;

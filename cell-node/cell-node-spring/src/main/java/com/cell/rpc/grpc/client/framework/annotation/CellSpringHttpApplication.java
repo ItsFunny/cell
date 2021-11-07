@@ -1,7 +1,7 @@
 package com.cell.rpc.grpc.client.framework.annotation;
 
 import com.cell.annotations.CellApplication;
-import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;
+import com.cell.http.gate.extension.AbstractNodeExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.annotation.AliasFor;
 
