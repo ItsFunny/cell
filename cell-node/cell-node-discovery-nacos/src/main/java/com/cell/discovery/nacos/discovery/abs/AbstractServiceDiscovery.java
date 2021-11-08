@@ -5,10 +5,11 @@ import com.alibaba.nacos.common.notify.Event;
 import com.alibaba.nacos.common.notify.listener.SmartSubscriber;
 import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.annotations.AutoPlugin;
+import com.cell.bee.event.simple.SimpleJobCenter;
+import com.cell.bee.event.simple.SimpleJobCenterFactory;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.bee.loadbalance.utils.LBUtils;
-import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
@@ -16,6 +17,7 @@ import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.exceptions.ConfigException;
 import com.cell.filters.ISimpleFilter;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.lb.ILoadBalancer;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.log.LOG;
@@ -31,6 +33,7 @@ import reactor.core.publisher.Flux;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
@@ -47,11 +50,16 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     public static final String callBackStr = "callback";
     protected String cluster;
 
+    private static final SimpleJobCenter JOB_CENTER = SimpleJobCenterFactory.NewSimpleJobCenter();
+    private static final List<IInstanceOnChange> hooks = new ArrayList<>();
+
     protected INacosNodeDiscovery nodeDiscovery;
 
     protected IKeyResolver<K1, K2> resolver;
     protected ILoadBalancer loadBalancer;
-    protected IInstanceOnChange callBack;
+    // TODO: 所有callBack都需要汇总
+//    protected IInstanceOnChange callBack;
+    private CountDownLatch latch = new CountDownLatch(1);
 
     protected Map<String, Set<ServerCmdMetaInfo>> serverMetas = new HashMap<>();
 
@@ -62,6 +70,13 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     private Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = new HashMap<>(1);
 
     private ISimpleFilter<Instance> filter = instance -> instance.isHealthy();
+
+    private ServiceDiscoverySchedual serviceDiscoverySchedual;
+
+    public AbstractServiceDiscovery()
+    {
+        serviceDiscoverySchedual = ServiceDiscoverySchedual.getInstance();
+    }
 
 
     @AutoPlugin
@@ -100,8 +115,6 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     private void transferIfNeed()
     {
         if (!this.onChange) return;
-        Map<String, List<Set<ServerCmdMetaInfo>>> compareChanges = new HashMap<>();
-        final List<ServerCmdMetaInfo> dels = new ArrayList<>();
         synchronized (this)
         {
             if (!this.onChange) return;
@@ -112,21 +125,19 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             } finally
             {
                 // TODO EXCEPTION CATCH
-                this.callBack.onChange(this.delta);
-                this.delta = null;
-                this.onChange = false;
+//                this.callBack.onChange(this.delta);
+                try
+                {
+                    this.latch.wait();
+                } catch (InterruptedException e)
+                {
+                    throw new RuntimeException(e);
+                }
             }
         }
-        LOG.info(Module.HTTP_GATEWAY, "删除的router:{},变更的信息:{}", dels, compareChanges);
     }
 
 
-    /*
-        1. 计算新增的protocol:
-            1.1 可能是有新的服务启动,注册到了nacos中,
-        2. 计算减去的protocol:
-            2.1 可能是服务宕机,
-     */
     private Set<String> protocols = new HashSet<>(1);
 
     private Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare(Map<String, List<Instance>> serverInstanceList)
@@ -284,17 +295,14 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         this.protocols = qudr.getV3();
 
         this.schedualRefresh();
-        if (this.callBack == null)
+        IInstanceOnChange c = (IInstanceOnChange) ctx.getData().get(callBackStr);
+        if (c == null)
         {
-            IInstanceOnChange c = (IInstanceOnChange) ctx.getData().get(callBackStr);
-            if (c == null)
-            {
-                throw new ConfigException("asd");
-            }
-            this.setCallBack(c);
+            throw new ConfigException("asd");
         }
+        this.setCallBack(c);
         this.lastUpdateServerMetas = this.serverMetas;
-        this.callBack.onChange(qudr.getV1());
+        c.onChange(qudr.getV1());
 //        nodeDiscovery.registerListen(new InstanceHooker());
         this.afterInit(ctx);
     }
@@ -303,32 +311,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 
     protected abstract void afterInit(InitCTX ctx);
 
-    private class InstanceHooker extends SmartSubscriber
-    {
-        @Override
-        public List<Class<? extends Event>> subscribeTypes()
-        {
-            return Arrays.asList(InstancesChangeEvent.class);
-        }
 
-        @Override
-        public void onEvent(Event eee)
-        {
-            LOG.info(Module.HTTP_GATEWAY, "收到event:{}", eee);
-            if (!(eee instanceof InstancesChangeEvent))
-            {
-                return;
-            }
-            InstancesChangeEvent event = (InstancesChangeEvent) eee;
-            // FIXME , 处理nacos 的cluster
-            List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
-                    e.getClusterName().equalsIgnoreCase(AbstractServiceDiscovery.this.cluster)).collect(Collectors.toList());
-            Map<String, List<Instance>> serverInstanceList = new HashMap<>();
-            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));
-            Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare = AbstractServiceDiscovery.this.compare(serverInstanceList);
-            AbstractServiceDiscovery.this.updateIfNeeded(compare);
-        }
-    }
 
     private void updateIfNeeded(Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare)
     {
@@ -352,7 +335,15 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 
     public void setCallBack(IInstanceOnChange callBack)
     {
-        this.callBack = callBack;
+        this.serviceDiscoverySchedual.addHook(snap ->
+        {
+            callBack.onChange(snap);
+            final CountDownLatch l = this.latch;
+            this.delta = null;
+            this.latch = new CountDownLatch(1);
+            this.onChange = false;
+            l.countDown();
+        });
     }
 
     private void schedualRefresh()
@@ -439,4 +430,45 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     {
         this.cluster = cluster;
     }
+
+//    private static  AbstractServiceDiscovery.ServiceDiscoverySchedual instance = new AbstractServiceDiscovery.ServiceDiscoverySchedual();
+//    public static class ServiceDiscoverySchedual extends AbstractInitOnce
+//    {
+//
+//        private final SimpleJobCenter simpleJobCenter = SimpleJobCenterFactory.NewSimpleJobCenter();
+//
+//        public void addHook(IInstanceOnChange iInstanceOnChange)
+//        {
+//            simpleJobCenter.registerEventHook(new InternalHook(iInstanceOnChange));
+//        }
+//
+//        class InternalHook implements ISimpleEventHook
+//        {
+//            final IInstanceOnChange change;
+//
+//            InternalHook(IInstanceOnChange change) {this.change = change;}
+//
+//            @Override
+//            public Mono<Void> execute(IEvent event, IChainExecutor<IEvent> executor)
+//            {
+//                this.change.onChange((Snap) event);
+//                return executor.execute(event);
+//            }
+//        }
+//
+//        public ServiceDiscoverySchedual getInstance()
+//        {
+//            return instance;
+//        }
+//
+//        private Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = new HashMap<>(1);
+//        protected Snap delta;
+//
+//
+//        @Override
+//        protected void onInit(InitCTX ctx)
+//        {
+//
+//        }
+//    }
 }

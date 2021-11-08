@@ -25,6 +25,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
+    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-node-core" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
@@ -73,7 +74,6 @@
     <orderEntry type="module" module-name="cell-rpc-common" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-autoconfigure" />
     <orderEntry type="module" module-name="cell-rpc-grpc-common" />
-    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-netty-shaded:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: io.grpc:grpc-core:1.29.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.android:annotations:4.1.1.4" level="project" />

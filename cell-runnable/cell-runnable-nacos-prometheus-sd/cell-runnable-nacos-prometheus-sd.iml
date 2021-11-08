@@ -54,6 +54,7 @@
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
+    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.4.1" level="project" />
@@ -75,7 +76,6 @@
     <orderEntry type="module" module-name="cell-monitor-prometheus" />
     <orderEntry type="module" module-name="cell-monitor-base" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
-    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-base-framework" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-web:2.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-json:2.3.5.RELEASE" level="project" />

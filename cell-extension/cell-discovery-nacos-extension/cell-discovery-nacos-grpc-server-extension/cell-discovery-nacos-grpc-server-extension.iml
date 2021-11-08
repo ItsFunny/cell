@@ -101,6 +101,7 @@
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
+    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-node-core" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
@@ -136,7 +137,6 @@
     <orderEntry type="module" module-name="cell-monitor-prometheus" />
     <orderEntry type="module" module-name="cell-monitor-base" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
-    <orderEntry type="module" module-name="cell-bee-event" />
     <orderEntry type="module" module-name="cell-base-framework" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:2.3.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:2.3.5.RELEASE" level="project" />
