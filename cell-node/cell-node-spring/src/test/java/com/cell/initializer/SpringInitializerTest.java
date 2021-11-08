@@ -5,7 +5,7 @@ import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.base.common.models.Module;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.annotation.CellSpringHttpApplication;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;

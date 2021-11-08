@@ -13,7 +13,7 @@ import com.cell.dispatcher.impl.DefaultRPCServerCommandDispatcher;
 import com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.server.DefaultGRPServer;
 import com.cell.grpc.server.framework.server.IGRPCServer;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.manager.RPCHandlerManager;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;

@@ -1,6 +1,6 @@
 package com.cell.base.core.reactor;
 
-import com.cell.base.core.config.IInitOnce;
+import com.cell.base.common.context.IInitOnce;
 import com.cell.base.core.protocol.ICommand;
 import com.cell.base.core.protocol.IContext;
 

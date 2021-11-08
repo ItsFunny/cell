@@ -6,7 +6,7 @@ import com.alibaba.nacos.common.utils.CollectionUtils;
 import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.model.Instance;

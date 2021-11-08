@@ -2,8 +2,8 @@ package com.cell.node.spring.postprocessor;
 
 import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.models.Module;
-import com.cell.base.core.context.InitCTX;
-import com.cell.base.core.log.LOG;
+import com.cell.base.common.context.InitCTX;
+import com.cell.sdk.log.LOG;
 import com.cell.node.core.collector.AbstractPluginCollector;
 import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;

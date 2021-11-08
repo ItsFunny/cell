@@ -6,7 +6,7 @@ import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.CollectionUtils;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.base.core.protocol.ICommand;
 import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.reactor.IDynamicHttpReactor;

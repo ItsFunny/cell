@@ -1,6 +1,6 @@
 package com.cell.node.spring.adapter;
 
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

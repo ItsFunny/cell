@@ -1,6 +1,6 @@
 package com.cell.discovery.nacos.discovery;
 
-import com.cell.base.core.events.IEvent;
+import com.cell.base.common.events.IEvent;
 import com.cell.model.Instance;
 import lombok.Data;
 

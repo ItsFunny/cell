@@ -1,6 +1,6 @@
 package com.cell.base.core.reactor;
 
-import com.cell.base.core.config.AbstractInitOnce;
+import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.core.constants.ContextConstants;
 import com.cell.base.core.protocol.ContextResponseWrapper;
 import com.cell.base.core.protocol.IBuzzContext;

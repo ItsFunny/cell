@@ -1,6 +1,6 @@
 package com.cell.dispatcher;
 
-import com.cell.base.core.config.IInitOnce;
+import com.cell.base.common.context.IInitOnce;
 import com.cell.base.core.channel.IChannel;
 import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.context.DispatchContext;

@@ -4,7 +4,7 @@ import com.cell.base.core.annotations.ReactorAnno;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.common.utils.UriUtils;
 import com.cell.constant.HttpConstants;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.base.core.protocol.ICommand;
 import com.cell.base.core.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IHttpReactor;

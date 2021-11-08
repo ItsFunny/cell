@@ -4,7 +4,7 @@ import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.common.models.Module;
 import com.cell.base.core.constants.ContextConstants;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.base.core.concurrent.base.EventExecutor;
 import com.cell.base.core.concurrent.base.Promise;

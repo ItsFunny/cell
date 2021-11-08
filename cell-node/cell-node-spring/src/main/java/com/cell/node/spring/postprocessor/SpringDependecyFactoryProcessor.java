@@ -1,7 +1,7 @@
 package com.cell.node.spring.postprocessor;
 
-import com.cell.base.core.config.AbstractInitOnce;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.AbstractInitOnce;
+import com.cell.base.common.context.InitCTX;
 import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
 import com.cell.node.spring.constants.SpringBridge;

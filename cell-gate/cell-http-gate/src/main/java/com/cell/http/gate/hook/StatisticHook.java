@@ -4,7 +4,7 @@ import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.core.annotations.ManagerNode;
 import com.cell.base.core.center.EventCenter;
 import com.cell.event.StasticEvent;
-import com.cell.base.core.events.IEvent;
+import com.cell.base.common.events.IEvent;
 import com.cell.base.core.hooks.IChainHook;
 import com.cell.base.core.hooks.IEventHook;
 import com.cell.hooks.abs.AbstractEventHook;

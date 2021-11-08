@@ -54,6 +54,8 @@
     <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.12" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
     <orderEntry type="module" module-name="cell-base-core" />
+    <orderEntry type="module" module-name="cell-sdk-log" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-plugin-pipeline" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.1" level="project" />
     <orderEntry type="library" name="Maven: org.dom4j:dom4j:2.1.1" level="project" />

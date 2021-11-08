@@ -3,7 +3,7 @@ package com.cell.reactor.abs;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.cmd.IRPCServerCommand;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.base.core.protocol.ICommand;
 import com.cell.base.core.reactor.AbstractBaseCommandReactor;
 import com.cell.reactor.IRPCServerReactor;

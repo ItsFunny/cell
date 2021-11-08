@@ -1,6 +1,7 @@
 package com.cell.base.core.center;
 
-import com.cell.base.core.events.IEvent;
+
+import com.cell.base.common.events.IEvent;
 import com.google.common.eventbus.EventBus;
 
 /**

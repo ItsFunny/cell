@@ -1,6 +1,6 @@
 package com.cell.discovery.nacos.discovery;
 
-import com.cell.base.core.config.IInitOnce;
+import com.cell.base.common.context.IInitOnce;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 
 import java.util.Map;

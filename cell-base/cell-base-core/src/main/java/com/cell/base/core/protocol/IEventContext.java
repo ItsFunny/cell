@@ -1,6 +1,6 @@
 package com.cell.base.core.protocol;
 
-import com.cell.base.core.events.IEvent;
+import com.cell.base.common.events.IEvent;
 
 /**
  * @author Charlie

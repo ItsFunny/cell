@@ -9,7 +9,7 @@ import com.cell.base.common.utils.StringUtils;
 import com.cell.channel.DefaultHttpChannel;
 import com.cell.dispatcher.DefaultHttpDispatcher;
 import com.cell.dispatcher.IHttpDispatcher;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.WebHandlerManager;
 

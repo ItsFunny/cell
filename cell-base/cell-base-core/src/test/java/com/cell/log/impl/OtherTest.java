@@ -1,6 +1,6 @@
 package com.cell.log.impl;
 
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

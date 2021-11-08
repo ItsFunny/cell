@@ -1,7 +1,7 @@
 package com.cell.base.core.cache;
 
+import com.cell.base.common.services.TypeFul;
 import com.cell.base.core.enums.CacheTypeEnums;
-import com.cell.base.core.services.TypeFul;
 import com.google.common.cache.Cache;
 
 /**

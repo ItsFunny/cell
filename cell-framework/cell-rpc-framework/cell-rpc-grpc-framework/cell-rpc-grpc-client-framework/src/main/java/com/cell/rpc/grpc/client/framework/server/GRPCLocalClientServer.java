@@ -1,7 +1,7 @@
 package com.cell.rpc.grpc.client.framework.server;
 
 import com.cell.base.core.concurrent.base.EventLoopGroup;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.grpc.common.constants.GRPCConstants;

@@ -1,7 +1,7 @@
 package com.cell.dispatcher;
 
 import com.cell.base.core.channel.IChannel;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.dispatcher.impl.DefaultRPCClientCommandDispatcher;
 import com.cell.base.core.handler.IChainHandler;
 import com.cell.base.core.handler.IHandler;

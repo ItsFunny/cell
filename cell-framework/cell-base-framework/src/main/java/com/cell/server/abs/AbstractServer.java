@@ -1,6 +1,6 @@
 package com.cell.server.abs;
 
-import com.cell.base.core.config.AbstractInitOnce;
+import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.core.concurrent.base.Promise;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;

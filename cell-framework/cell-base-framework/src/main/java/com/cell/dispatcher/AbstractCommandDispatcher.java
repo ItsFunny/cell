@@ -3,7 +3,7 @@ package com.cell.dispatcher;
 import com.cell.base.core.annotations.Command;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ProgramaException;
-import com.cell.base.core.config.AbstractInitOnce;
+import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.core.channel.IChannel;
 import com.cell.base.core.concurrent.DummyExecutor;
 import com.cell.base.core.concurrent.base.EventExecutor;

@@ -137,5 +137,6 @@
     <modules>
         <module>cell-sdk-eventdriven</module>
         <module>cell-sdk-timewheel</module>
+        <module>cell-sdk-log</module>
     </modules>
 </project>

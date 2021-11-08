@@ -28,7 +28,6 @@
     <orderEntry type="module" module-name="cell-rpc-server-base-framework" />
     <orderEntry type="module" module-name="cell-rpc-common" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-rpc-grpc-common" />
     <orderEntry type="module" module-name="cell-rpc-client-base-framework" />
@@ -55,6 +54,8 @@
     <orderEntry type="library" name="Maven: io.grpc:grpc-stub:1.29.0" level="project" />
     <orderEntry type="module" module-name="cell-sdk-eventdriven" />
     <orderEntry type="module" module-name="cell-base-core" />
+    <orderEntry type="module" module-name="cell-sdk-log" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-plugin-pipeline" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />

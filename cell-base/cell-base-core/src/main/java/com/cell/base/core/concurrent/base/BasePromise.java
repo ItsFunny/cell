@@ -3,7 +3,7 @@ package com.cell.base.core.concurrent.base;
 
 import com.cell.base.core.concurrent.exception.BlockingOperationException;
 import com.cell.base.core.concurrent.internal.InternalThreadLocalMap;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import io.netty.util.internal.StringUtil;
 
 import java.util.concurrent.CancellationException;

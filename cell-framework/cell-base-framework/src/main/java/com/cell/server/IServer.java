@@ -1,6 +1,6 @@
 package com.cell.server;
 
-import com.cell.base.core.config.IInitOnce;
+import com.cell.base.common.context.IInitOnce;
 import com.cell.manager.ProcessManager;
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;

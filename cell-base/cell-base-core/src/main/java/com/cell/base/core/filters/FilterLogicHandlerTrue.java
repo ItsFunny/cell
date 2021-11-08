@@ -1,6 +1,6 @@
 package com.cell.base.core.filters;
 
-import com.cell.base.core.enums.TypeEnums;
+import com.cell.base.common.enums.TypeEnums;
 
 /**
  * @author Charlie

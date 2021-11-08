@@ -1,6 +1,6 @@
 package com.cell.base.core.center;
 
-import com.cell.base.core.events.IEvent;
+import com.cell.base.common.events.IEvent;
 import com.cell.executor.ChainExecutorFactory;
 import com.cell.executor.IListChainExecutor;
 import com.cell.base.core.hooks.IChainHook;

@@ -3,7 +3,7 @@ package com.cell.proxy;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.core.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 
 /**
  * @author Charlie

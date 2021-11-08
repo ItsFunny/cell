@@ -7,7 +7,7 @@ import com.cell.base.core.config.GatewayConfiguration;
 import com.cell.base.core.config.GatewayMetricsConfigFactory;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.http.gate.discovery.ServiceDiscovery;

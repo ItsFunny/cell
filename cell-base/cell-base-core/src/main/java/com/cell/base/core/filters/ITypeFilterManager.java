@@ -1,8 +1,8 @@
 package com.cell.base.core.filters;
 
-import com.cell.base.core.decorators.TypeStateful;
-import com.cell.base.core.manager.IManager;
-import com.cell.base.core.comparators.CompareSatisfiedFunc;
+import com.cell.base.common.comparators.CompareSatisfiedFunc;
+import com.cell.base.common.decorators.TypeStateful;
+import com.cell.base.common.services.IManager;
 
 /**
  * @author Charlie

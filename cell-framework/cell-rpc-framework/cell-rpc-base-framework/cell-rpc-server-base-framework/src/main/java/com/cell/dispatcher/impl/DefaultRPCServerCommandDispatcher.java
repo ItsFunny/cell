@@ -3,7 +3,7 @@ package com.cell.dispatcher.impl;
 import com.cell.base.core.channel.IChannel;
 import com.cell.base.core.protocol.*;
 import com.cell.cmd.IRPCServerCommand;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.context.RPCServerCommandContext;
 import com.cell.couple.IRPCServerRequest;
 import com.cell.dispatcher.IRPCServerCommandDispatcher;

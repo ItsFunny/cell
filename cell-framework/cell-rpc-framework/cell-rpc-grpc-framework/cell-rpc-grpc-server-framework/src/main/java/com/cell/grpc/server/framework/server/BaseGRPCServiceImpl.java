@@ -15,7 +15,7 @@ import com.cell.grpc.common.cluster.GrpcRequest;
 import com.cell.grpc.common.cluster.GrpcResponse;
 import com.cell.grpc.server.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.couple.GRPCServerResponse;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.cell.base.core.serialize.ISerializable;
 import com.google.protobuf.ByteString;
 import io.grpc.stub.StreamObserver;

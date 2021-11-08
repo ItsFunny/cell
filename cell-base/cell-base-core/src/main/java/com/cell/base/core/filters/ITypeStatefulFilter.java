@@ -1,7 +1,7 @@
 package com.cell.base.core.filters;
 
-import com.cell.base.core.decorators.TypeStateful;
-import com.cell.base.core.services.TypeFul;
+import com.cell.base.common.decorators.TypeStateful;
+import com.cell.base.common.services.TypeFul;
 
 /**
  * @author Charlie

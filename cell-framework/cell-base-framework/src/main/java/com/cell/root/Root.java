@@ -5,7 +5,7 @@ import com.cell.base.core.annotations.Command;
 import com.cell.base.core.annotations.ReactorAnno;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ProgramaException;
-import com.cell.base.core.context.InitCTX;
+import com.cell.base.common.context.InitCTX;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.node.core.context.INodeContext;
 import com.cell.base.core.protocol.ICommand;

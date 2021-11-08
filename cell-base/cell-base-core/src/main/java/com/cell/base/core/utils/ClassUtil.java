@@ -8,7 +8,7 @@ import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.concurrent.base.DefaultThreadFactory;
 import com.cell.base.core.constants.Constants;
-import com.cell.base.core.log.LOG;
+import com.cell.sdk.log.LOG;
 import com.google.common.base.Stopwatch;
 import io.netty.channel.DefaultEventLoopGroup;
 import org.springframework.core.annotation.AnnotatedElementUtils;

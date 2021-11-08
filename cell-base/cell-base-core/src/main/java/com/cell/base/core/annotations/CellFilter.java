@@ -1,6 +1,8 @@
 package com.cell.base.core.annotations;
 
 
+import com.cell.base.common.annotation.CellAutoAble;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
