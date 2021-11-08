@@ -1,6 +1,6 @@
 package com.cell.rpc.client;
 
-import com.cell.serialize.DefaultSelfJsonSerialize;
+import com.cell.base.core.serialize.DefaultSelfJsonSerialize;
 import lombok.Data;
 
 /**
