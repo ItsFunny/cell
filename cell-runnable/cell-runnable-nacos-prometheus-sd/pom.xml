@@ -23,9 +23,21 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-runnable-spring-application</artifactId>
+            <artifactId>cell-runnable-spring-framework-all</artifactId>
             <version>${cell.version}</version>
             <exclusions>
+                <exclusion>
+                    <groupId>com.cell</groupId>
+                    <artifactId>cell-discovery-nacos-http-extension</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.cell</groupId>
+                    <artifactId>cell-discovery-nacos-grpc-client-extension</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.cell</groupId>
+                    <artifactId>cell-discovery-nacos-grpc-server-extension</artifactId>
+                </exclusion>
                 <exclusion>
                     <groupId>com.cell</groupId>
                     <artifactId>cell-rpc-grpc-server-framework</artifactId>

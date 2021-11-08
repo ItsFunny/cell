@@ -139,7 +139,9 @@
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="module" module-name="cell-extension-common" />
     <orderEntry type="module" module-name="cell-node-spring" />
-    <orderEntry type="library" name="Maven: com.cell:cell-runnable-spring-application:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="cell-runnable-spring-framework-all" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-client-extension" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-server-extension" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.7" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.30" level="project" />

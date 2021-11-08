@@ -4,6 +4,7 @@ package com.cell.lb.impl;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.utils.CollectionUtils;
+import com.cell.utils.RandomUtils;
 import org.apache.lucene.util.CollectionUtil;
 
 import java.util.*;
@@ -24,7 +25,8 @@ public class DefaultWeightRoubineStrategy implements ILoadBalancerStrategy
     {
         if (servers == null || servers.size() == 0) return null;
         // FIXME
-        Collections.shuffle(new ArrayList<>(servers));
+//        Collections.shuffle(new ArrayList<>(servers));
+        int i = RandomUtils.randomInt(0, servers.size());
         for (ServerCmdMetaInfo server : servers)
         {
             if (server.isEnable() && server.isHealthy())
