@@ -1,11 +1,11 @@
 package com.cell.log.impl;
 
+import com.cell.base.common.models.ModuleInterface;
+import com.cell.base.common.utils.DebugUtil;
 import com.cell.log.ILogHook;
 import com.cell.log.LogEntry;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
-import com.cell.models.ModuleInterface;
-import com.cell.utils.DebugUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

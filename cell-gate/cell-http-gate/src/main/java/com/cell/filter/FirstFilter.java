@@ -5,7 +5,7 @@ import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.constants.GatewayConstants;
 import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import com.cell.utils.GatewayUtils;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

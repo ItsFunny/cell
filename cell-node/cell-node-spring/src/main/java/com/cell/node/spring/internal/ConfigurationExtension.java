@@ -2,10 +2,10 @@ package com.cell.node.spring.internal;
 
 import com.cell.Configuration;
 import com.cell.annotations.CellOrder;
-import com.cell.constants.OrderConstants;
+import com.cell.base.common.constants.OrderConstants;
+import com.cell.base.common.models.Module;
 import com.cell.exception.ConfigurationException;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import org.apache.commons.cli.CommandLine;

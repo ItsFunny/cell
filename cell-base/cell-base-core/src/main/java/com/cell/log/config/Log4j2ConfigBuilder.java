@@ -1,9 +1,9 @@
 package com.cell.log.config;
 
+import com.cell.base.common.utils.StringUtils;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
 import com.cell.log.internal.LogTypeInfo;
-import com.cell.utils.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.dom4j.Document;

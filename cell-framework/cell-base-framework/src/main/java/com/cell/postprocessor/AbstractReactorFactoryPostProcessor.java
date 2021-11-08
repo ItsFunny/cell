@@ -4,11 +4,11 @@ import com.cell.context.InitCTX;
 import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
 import com.cell.root.Root;
-import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

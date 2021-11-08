@@ -1,11 +1,11 @@
 package com.cell.node.spring.adapter;
 
 import com.cell.context.InitCTX;
-import com.cell.utils.CollectionUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.util.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.util.*;

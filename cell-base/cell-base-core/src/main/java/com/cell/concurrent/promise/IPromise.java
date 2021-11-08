@@ -1,10 +1,10 @@
 package com.cell.concurrent.promise;
 
 
+import com.cell.base.common.enums.CellError;
 import com.cell.concurrent.base.Future;
 import com.cell.concurrent.base.GenericFutureListener;
 import com.cell.concurrent.base.Promise;
-import com.cell.enums.CellError;
 
 import java.util.concurrent.TimeUnit;
 

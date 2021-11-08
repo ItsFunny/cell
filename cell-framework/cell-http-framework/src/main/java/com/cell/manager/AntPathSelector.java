@@ -1,10 +1,10 @@
 package com.cell.manager;
 
 import com.cell.annotations.ManagerNode;
+import com.cell.base.common.models.Couple;
 import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;
-import com.cell.models.Couple;
 import com.cell.protocol.CommandWrapper;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;

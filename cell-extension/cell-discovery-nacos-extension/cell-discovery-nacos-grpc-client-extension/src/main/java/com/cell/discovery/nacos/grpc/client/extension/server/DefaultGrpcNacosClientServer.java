@@ -1,6 +1,7 @@
 package com.cell.discovery.nacos.grpc.client.extension.server;
 
 import com.cell.annotations.AutoPlugin;
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.context.InitCTX;
@@ -10,11 +11,10 @@ import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServic
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import com.cell.root.Root;
 import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.util.GRPCUtil;
-import com.cell.utils.CollectionUtils;
 import io.grpc.stub.AbstractStub;
 
 import java.net.URI;

@@ -2,7 +2,7 @@ package com.cell.discovery.nacos.http.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
-import com.cell.constants.OrderConstants;
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.sd.RegistrationService;
 

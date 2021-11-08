@@ -18,7 +18,7 @@ import com.cell.event.StasticEvent;
 import com.cell.exception.RateBlockException;
 import com.cell.handler.IGatewayBlockHandler;
 import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import com.cell.rate.SentinelRateServiceImpl;
 import com.cell.utils.GatewayUtils;
 import com.cell.utils.RateUtils;

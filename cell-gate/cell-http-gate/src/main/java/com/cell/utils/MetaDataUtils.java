@@ -3,7 +3,7 @@ package com.cell.utils;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.log.LOG;
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import com.cell.services.IStatContextService;
 
 /**

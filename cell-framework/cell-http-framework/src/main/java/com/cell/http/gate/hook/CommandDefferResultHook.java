@@ -1,12 +1,12 @@
 package com.cell.http.gate.hook;
 
 import com.cell.annotations.ManagerNode;
+import com.cell.base.common.models.Module;
 import com.cell.constant.HookConstants;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.hooks.IChainHook;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.protocol.ContextResponseWrapper;
 import org.springframework.web.context.request.async.DeferredResult;
 import reactor.core.publisher.Mono;

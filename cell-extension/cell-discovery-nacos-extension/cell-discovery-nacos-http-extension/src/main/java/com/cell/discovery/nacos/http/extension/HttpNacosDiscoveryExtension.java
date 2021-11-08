@@ -2,7 +2,7 @@ package com.cell.discovery.nacos.http.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.base.common.constants.ProtocolConstants;
-import com.cell.constants.OrderConstants;
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.model.Instance;

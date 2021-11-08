@@ -1,6 +1,7 @@
 package com.cell.exception;
 
-import com.cell.exceptions.AbstractRuntimeException;
+
+import com.cell.base.common.exceptions.AbstractRuntimeException;
 
 /**
  * @author Charlie

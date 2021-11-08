@@ -2,8 +2,8 @@ package com.cell.rpc.grpc.client.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.concurrent.base.EventLoopGroup;
-import com.cell.constants.OrderConstants;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.node.spring.exntension.ConcurrentExtension;

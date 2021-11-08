@@ -1,8 +1,8 @@
 package com.cell.proxy;
 
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
-import com.cell.exceptions.ProgramaException;
 import com.cell.log.LOG;
 
 /**

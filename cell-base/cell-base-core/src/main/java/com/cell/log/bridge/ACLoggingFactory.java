@@ -1,6 +1,6 @@
 package com.cell.log.bridge;
 
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogConfigurationException;
 import org.apache.commons.logging.LogFactory;

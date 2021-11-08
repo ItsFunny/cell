@@ -1,6 +1,6 @@
 package com.cell.base.core.config;
 
-import com.cell.utils.CollectionUtils;
+import com.cell.base.common.utils.CollectionUtils;
 import lombok.Data;
 
 import java.util.Arrays;

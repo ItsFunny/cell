@@ -2,8 +2,8 @@ package com.cell.base.core.config;
 
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
+import com.cell.base.common.models.Module;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.server.IHttpServer;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;

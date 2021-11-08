@@ -8,7 +8,7 @@
 //import com.cell.exception.HttpFramkeworkException;
 //import com.cell.handler.IHttpExceptionHandler;
 //import com.cell.log.LOG;
-//import com.cell.models.Module;
+//import com.cell.base.common.models.Module;
 //import com.cell.protocol.CommandContext;
 //import org.springframework.http.HttpStatus;
 //import org.springframework.web.bind.annotation.PathVariable;

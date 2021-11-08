@@ -1,7 +1,7 @@
 package com.cell.decorators;
 
 
-import com.cell.enums.BeeEnums;
+import com.cell.base.common.enums.BeeEnums;
 import com.cell.services.TypeFul;
 
 /**

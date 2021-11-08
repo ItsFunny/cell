@@ -1,9 +1,9 @@
 package com.cell.log;
 
+import com.cell.base.common.enums.BeeEnums;
+import com.cell.base.common.models.ModuleInterface;
 import com.cell.decorators.TypeStateful;
-import com.cell.enums.BeeEnums;
 import com.cell.enums.TypeEnums;
-import com.cell.models.ModuleInterface;
 import lombok.Builder;
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.cell.serialize;
 
-import com.cell.utils.JSONUtil;
+import com.cell.base.common.utils.JSONUtil;
 import org.springframework.beans.BeanUtils;
 
 import java.io.IOException;

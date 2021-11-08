@@ -1,11 +1,11 @@
 package com.cell.hooks.abs;
 
 
+import com.cell.base.common.models.Module;
 import com.cell.executor.IChainExecutor;
 import com.cell.hooks.IChainHook;
 import com.cell.hooks.ICommandHook;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.protocol.IContext;
 import reactor.core.publisher.Mono;
 

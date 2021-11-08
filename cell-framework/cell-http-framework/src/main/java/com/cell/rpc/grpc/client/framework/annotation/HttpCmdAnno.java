@@ -1,8 +1,8 @@
 package com.cell.rpc.grpc.client.framework.annotation;
 
 import com.cell.annotations.Command;
-import com.cell.enums.EnumHttpRequestType;
-import com.cell.enums.EnumHttpResponseType;
+import com.cell.base.common.enums.EnumHttpRequestType;
+import com.cell.base.common.enums.EnumHttpResponseType;
 import com.cell.reactor.IHttpReactor;
 import com.cell.reactor.impl.DefaultHttpReactor;
 import org.springframework.core.annotation.AliasFor;

@@ -1,6 +1,6 @@
 package com.cell.manager.context;
 
-import com.cell.models.Couple;
+import com.cell.base.common.models.Couple;
 import com.cell.protocol.IContext;
 import com.cell.reactor.IHttpReactor;
 import com.cell.rpc.grpc.client.framework.command.IHttpCommand;

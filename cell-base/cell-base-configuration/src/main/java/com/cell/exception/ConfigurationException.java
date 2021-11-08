@@ -1,7 +1,7 @@
 package com.cell.exception;
 
-import com.cell.enums.CellError;
-import com.cell.exceptions.AbstractZZException;
+import com.cell.base.common.enums.CellError;
+import com.cell.base.common.exceptions.AbstractZZException;
 
 public class ConfigurationException extends AbstractZZException
 {

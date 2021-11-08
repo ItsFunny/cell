@@ -2,7 +2,7 @@
 //
 //import com.cell.annotations.ForceOverride;
 //import com.cell.annotations.ReactorAnno;
-//import com.cell.enums.EnumHttpRequestType;
+//import com.cell.base.common.enums.EnumHttpRequestType;
 //import com.cell.enums.EnumHttpResponseType;
 //import com.cell.exceptions.ProgramaException;
 //import com.cell.protocol.ICommand;

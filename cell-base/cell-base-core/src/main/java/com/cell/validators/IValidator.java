@@ -1,6 +1,7 @@
 package com.cell.validators;
 
-import com.cell.exceptions.ValidateException;
+
+import com.cell.base.common.exceptions.ValidateException;
 
 /**
  * @author Charlie

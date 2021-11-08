@@ -1,9 +1,9 @@
 package com.cell.transport.model;
 
 import com.cell.base.common.constants.ProtocolConstants;
-import com.cell.exceptions.ProgramaException;
-import com.cell.utils.JSONUtil;
-import com.cell.utils.StringUtils;
+import com.cell.base.common.exceptions.ProgramaException;
+import com.cell.base.common.utils.JSONUtil;
+import com.cell.base.common.utils.StringUtils;
 import lombok.Data;
 
 import java.util.ArrayList;

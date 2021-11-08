@@ -1,12 +1,12 @@
 package com.cell.manager;
 
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.executor.ChainExecutorFactory;
 import com.cell.executor.IChainExecutor;
 import com.cell.executor.IListChainExecutor;
 import com.cell.executor.IReactorExecutor;
 import com.cell.pipeline.DefaultPipeline;
 import com.cell.pipeline.Pipeline;
-import com.cell.utils.CollectionUtils;
 import lombok.Data;
 import reactor.core.publisher.Mono;
 

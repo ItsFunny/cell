@@ -1,7 +1,7 @@
 package com.cell.utils;
 
 import com.cell.annotations.Optional;
-import com.cell.exceptions.ProgramaException;
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.ISerializable;
 import org.springframework.beans.BeanWrapper;

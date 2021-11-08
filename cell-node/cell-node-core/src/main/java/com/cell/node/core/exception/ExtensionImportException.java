@@ -1,6 +1,7 @@
 package com.cell.node.core.exception;
 
-import com.cell.exceptions.AbstractRuntimeException;
+
+import com.cell.base.common.exceptions.AbstractRuntimeException;
 
 public class ExtensionImportException extends AbstractRuntimeException
 {

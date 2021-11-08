@@ -1,13 +1,13 @@
 package com.cell.concurrent.promise;
 
 
+import com.cell.base.common.enums.CellError;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.BasePromise;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.Future;
 import com.cell.concurrent.base.GenericFutureListener;
 import com.cell.concurrent.exception.ErrorWrapperException;
-import com.cell.enums.CellError;
 
 public class DefaultErrorablePromise<T> extends BasePromise<T> implements IPromise<T>
 {

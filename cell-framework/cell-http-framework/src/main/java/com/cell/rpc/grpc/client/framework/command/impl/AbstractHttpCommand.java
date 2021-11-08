@@ -1,8 +1,8 @@
 package com.cell.rpc.grpc.client.framework.command.impl;
 
+import com.cell.base.common.enums.EnumHttpRequestType;
+import com.cell.base.common.enums.EnumHttpResponseType;
 import com.cell.context.IHttpCommandContext;
-import com.cell.enums.EnumHttpRequestType;
-import com.cell.enums.EnumHttpResponseType;
 import com.cell.protocol.AbstractCommand;
 import com.cell.protocol.IBuzzContext;
 import com.cell.protocol.ICommand;

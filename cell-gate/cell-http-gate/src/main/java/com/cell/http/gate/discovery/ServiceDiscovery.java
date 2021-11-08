@@ -8,7 +8,7 @@ import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
-import com.cell.enums.EnumHttpRequestType;
+import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.model.Instance;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;

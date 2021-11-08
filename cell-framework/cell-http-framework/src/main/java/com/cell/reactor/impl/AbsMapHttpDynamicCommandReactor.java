@@ -1,6 +1,6 @@
 package com.cell.reactor.impl;
 
-import com.cell.exceptions.ProgramaException;
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.reactor.IMapDynamicHttpReactor;
 
 import java.util.HashMap;

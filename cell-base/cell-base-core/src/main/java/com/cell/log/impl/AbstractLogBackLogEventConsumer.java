@@ -1,8 +1,8 @@
 package com.cell.log.impl;
 
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.log.*;
-import com.cell.utils.CollectionUtils;
 import org.slf4j.Logger;
 
 import java.util.List;

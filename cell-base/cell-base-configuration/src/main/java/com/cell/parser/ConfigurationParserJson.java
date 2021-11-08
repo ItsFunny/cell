@@ -2,8 +2,8 @@ package com.cell.parser;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cell.Configuration;
+import com.cell.base.common.utils.JSONUtil;
 import com.cell.model.ConfigValueJson;
-import com.cell.utils.JSONUtil;
 
 import java.io.IOException;
 import java.util.Iterator;

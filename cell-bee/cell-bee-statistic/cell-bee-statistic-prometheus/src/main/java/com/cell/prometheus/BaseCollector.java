@@ -1,9 +1,9 @@
 package com.cell.prometheus;
 
+import com.cell.base.common.utils.BigDecimalUtils;
 import com.cell.constants.StatConstants;
 import com.cell.enums.EnumStatOperateMask;
 import com.cell.enums.EnumStatisticType;
-import com.cell.utils.BigDecimalUtils;
 import com.cell.utils.PromethuesUtils;
 import io.prometheus.client.SimpleCollector;
 

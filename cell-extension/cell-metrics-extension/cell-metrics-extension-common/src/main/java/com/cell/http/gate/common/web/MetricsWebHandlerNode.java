@@ -4,7 +4,7 @@ import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.ManagerNode;
 import com.cell.constants.ManagerConstants;
-import com.cell.constants.OrderConstants;
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IHttpHandlerSuit;
 import com.cell.executor.IBaseChainExecutor;

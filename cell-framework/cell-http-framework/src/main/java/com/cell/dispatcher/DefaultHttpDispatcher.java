@@ -1,10 +1,11 @@
 package com.cell.dispatcher;
 
 import com.cell.annotations.ReactorAnno;
+import com.cell.base.common.exceptions.ProgramaException;
+import com.cell.base.common.models.Module;
 import com.cell.channel.IChannel;
 import com.cell.context.InitCTX;
 import com.cell.couple.IHttpServerRequest;
-import com.cell.exceptions.ProgramaException;
 import com.cell.executor.IChainExecutor;
 import com.cell.executor.IReactorExecutor;
 import com.cell.handler.IChainHandler;
@@ -14,7 +15,6 @@ import com.cell.manager.IReflectManager;
 import com.cell.manager.ReactorSelectorManager;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;
-import com.cell.models.Module;
 import com.cell.protocol.*;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;

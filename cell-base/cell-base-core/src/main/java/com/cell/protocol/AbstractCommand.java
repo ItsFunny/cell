@@ -1,14 +1,14 @@
 package com.cell.protocol;
 
 import com.cell.annotations.Command;
+import com.cell.base.common.models.Module;
+import com.cell.base.common.utils.JSONUtil;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.constants.ContextConstants;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.IOutputArchive;
 import com.cell.utils.CommandUtils;
-import com.cell.utils.JSONUtil;
 import com.cell.utils.ReflectUtil;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;

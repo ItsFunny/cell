@@ -1,8 +1,8 @@
 package com.cell.serialize;
 
+import com.cell.base.common.utils.NetworkUtil;
+import com.cell.base.common.utils.StringUtils;
 import com.cell.json.PacketJSON;
-import com.cell.utils.NetworkUtil;
-import com.cell.utils.StringUtils;
 
 import java.io.IOException;
 import java.util.*;

@@ -1,7 +1,7 @@
 package com.cell.decorators;
 
+import com.cell.base.common.models.Couple;
 import com.cell.enums.TypeEnums;
-import com.cell.models.Couple;
 
 /**
  * @author Charlie

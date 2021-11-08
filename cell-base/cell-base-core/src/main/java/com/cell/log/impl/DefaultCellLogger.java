@@ -1,12 +1,12 @@
 package com.cell.log.impl;
 
+import com.cell.base.common.models.ModuleInterface;
 import com.cell.context.InitCTX;
 import com.cell.log.ILogConsumer;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
 import com.cell.log.internal.LogCache;
 import com.cell.log.internal.LogPolicy;
-import com.cell.models.ModuleInterface;
 
 import java.io.Serializable;
 import java.util.*;

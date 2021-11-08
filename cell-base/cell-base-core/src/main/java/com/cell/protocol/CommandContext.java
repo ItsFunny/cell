@@ -1,11 +1,11 @@
 package com.cell.protocol;
 
+import com.cell.base.common.utils.StringUtils;
 import com.cell.channel.IChannel;
 import com.cell.concurrent.base.Future;
 import com.cell.constants.NetworkConstants;
 import com.cell.handler.IChainHandler;
 import com.cell.handler.IHandler;
-import com.cell.utils.StringUtils;
 import lombok.Data;
 
 /**

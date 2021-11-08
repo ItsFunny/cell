@@ -1,7 +1,7 @@
 package com.cell.log.bridge;
 
 
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 
 import java.util.HashMap;
 import java.util.Map;

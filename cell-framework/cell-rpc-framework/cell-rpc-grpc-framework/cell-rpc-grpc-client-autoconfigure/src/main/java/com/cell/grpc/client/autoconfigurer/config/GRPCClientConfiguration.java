@@ -1,7 +1,7 @@
 package com.cell.grpc.client.autoconfigurer.config;
 
 import com.cell.Configuration;
-import com.cell.exceptions.ProgramaException;
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.grpc.common.constants.GRPCConstants;
 import io.grpc.netty.shaded.io.grpc.netty.NegotiationType;
 import lombok.Data;

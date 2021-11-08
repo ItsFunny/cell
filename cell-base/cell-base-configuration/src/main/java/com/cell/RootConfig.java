@@ -2,7 +2,7 @@ package com.cell;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.cell.utils.FileUtils;
+import com.cell.base.common.utils.FileUtils;
 
 import java.util.*;
 import java.util.Map.Entry;

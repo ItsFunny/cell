@@ -1,7 +1,7 @@
 package com.cell.services;
 
 
-import com.cell.exceptions.SerializeException;
+import com.cell.base.common.exceptions.SerializeException;
 
 /**
  * @author Charlie

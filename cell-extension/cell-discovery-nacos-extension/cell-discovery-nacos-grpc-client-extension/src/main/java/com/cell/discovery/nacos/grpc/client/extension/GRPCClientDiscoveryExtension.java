@@ -2,16 +2,16 @@ package com.cell.discovery.nacos.grpc.client.extension;
 
 import com.cell.annotations.CellOrder;
 import com.cell.annotations.Plugin;
+import com.cell.base.common.constants.CommandLineConstants;
+import com.cell.base.common.utils.StringUtils;
 import com.cell.concurrent.base.EventLoopGroup;
-import com.cell.constants.CommandLineConstants;
-import com.cell.constants.OrderConstants;
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.discovery.nacos.grpc.client.extension.server.DefaultGrpcNacosClientServer;
 import com.cell.discovery.nacos.grpc.client.extension.server.IGRPCNacosClientServer;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.node.spring.exntension.ConcurrentExtension;
-import com.cell.utils.StringUtils;
 
 /**
  * @author Charlie

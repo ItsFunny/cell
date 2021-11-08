@@ -1,13 +1,14 @@
 package com.cell;
 
 import com.cell.annotations.*;
+import com.cell.base.common.enums.EnumHttpRequestType;
+import com.cell.base.common.utils.RandomUtils;
 import com.cell.concurrent.base.Future;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.discovery.nacos.grpc.client.extension.server.IGRPCNacosClientServer;
 import com.cell.dispatcher.IHttpDispatcher;
-import com.cell.enums.EnumHttpRequestType;
 import com.cell.grpc.server.framework.command.AbstractGRPCServerCommand;
 import com.cell.node.spring.annotation.CellSpringHttpApplication;
 import com.cell.reactor.IMapDynamicHttpReactor;
@@ -21,7 +22,7 @@ import com.cell.rpc.grpc.client.framework.command.impl.AbstractHttpCommand;
 import com.cell.rpc.grpc.client.framework.server.ILocalGRPCClientServer;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 import com.cell.runnable.spring.framework.all.CellSpringFrameworkApplication;
-import com.cell.utils.RandomUtils;
+
 import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.Assert;

@@ -20,7 +20,7 @@
 //import com.cell.lb.ILoadBalancerStrategy;
 //import com.cell.log.LOG;
 //import com.cell.model.Instance;
-//import com.cell.models.Module;
+//import com.cell.base.common.models.Module;
 //import com.cell.resolver.IKeyResolver;
 //import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 //import com.cell.transport.model.ServerMetaData;

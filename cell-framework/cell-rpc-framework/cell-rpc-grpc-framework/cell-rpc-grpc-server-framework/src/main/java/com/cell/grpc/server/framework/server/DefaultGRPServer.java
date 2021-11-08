@@ -1,7 +1,8 @@
 package com.cell.grpc.server.framework.server;
 
+import com.cell.base.common.exceptions.ProgramaException;
+import com.cell.base.common.models.Module;
 import com.cell.context.InitCTX;
-import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.grpc.common.constants.GRPCConstants;
 import com.cell.grpc.common.utils.GrpcUtils;
@@ -9,7 +10,6 @@ import com.cell.grpc.server.framework.annotation.GRPCService;
 import com.cell.grpc.server.framework.interceptor.GlobalServerInterceptorRegistry;
 import com.cell.grpc.server.framework.serverfactory.GrpcServerConfigurer;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.cell.node.core.configuration.RootConfiguration;
 import com.cell.proxy.IRPCServerProxy;
 import com.cell.root.Root;

@@ -1,11 +1,11 @@
 package com.cell.channelfactory.impl;
 
+import com.cell.base.common.models.Module;
 import com.cell.channelfactory.GRPCChannelFactory;
 import com.cell.channelfactory.GrpcChannelConfigurer;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.log.LOG;
-import com.cell.models.Module;
 import com.google.common.collect.Lists;
 import io.grpc.*;
 

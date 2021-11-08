@@ -1,7 +1,7 @@
 package com.cell.log;
 
 import ch.qos.logback.classic.Level;
-import com.cell.utils.StringUtils;
+import com.cell.base.common.utils.StringUtils;
 
 import java.io.File;
 import java.io.IOException;

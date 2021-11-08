@@ -1,12 +1,12 @@
 package com.cell.log;
 
+import com.cell.base.common.models.Module;
+import com.cell.base.common.models.ModuleInterface;
 import com.cell.context.InitCTX;
 import com.cell.log.bridge.ACLoggingFactory;
 import com.cell.log.config.Log4j2ConfigBuilder;
 import com.cell.log.factory.DefaultSlf4jLoggerFactory;
 import com.cell.log.impl.DefaultCellLogger;
-import com.cell.models.Module;
-import com.cell.models.ModuleInterface;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;

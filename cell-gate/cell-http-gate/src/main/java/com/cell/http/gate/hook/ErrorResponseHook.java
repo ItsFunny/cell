@@ -8,7 +8,7 @@ import com.cell.hooks.IEventHook;
 import com.cell.hooks.abs.AbstractEventHook;
 import com.cell.log.LOG;
 import com.cell.model.ErrorResponseEvent;
-import com.cell.models.Module;
+import com.cell.base.common.models.Module;
 import com.cell.protocol.IEventContext;
 import reactor.core.publisher.Mono;
 

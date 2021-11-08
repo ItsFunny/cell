@@ -1,7 +1,8 @@
 package com.cell.serialize;
 
-import com.cell.utils.NetworkUtil;
-import com.cell.utils.StringUtils;
+
+import com.cell.base.common.utils.NetworkUtil;
+import com.cell.base.common.utils.StringUtils;
 
 import java.io.*;
 import java.util.Collection;

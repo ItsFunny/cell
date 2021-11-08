@@ -2,7 +2,7 @@ package com.cell.rpc.grpc.client.framework.util;
 
 import com.cell.filters.ISimpleFilter;
 import com.cell.model.Instance;
-import com.cell.utils.CollectionUtils;
+import org.springframework.util.CollectionUtils;
 
 import java.util.HashMap;
 import java.util.List;

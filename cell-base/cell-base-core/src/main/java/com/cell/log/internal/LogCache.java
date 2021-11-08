@@ -1,9 +1,9 @@
 package com.cell.log.internal;
 
+import com.cell.base.common.models.ModuleInterface;
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.log.ILogConsumer;
 import com.cell.log.LogLevel;
-import com.cell.models.ModuleInterface;
-import com.cell.utils.CollectionUtils;
 import lombok.Data;
 
 import java.util.*;

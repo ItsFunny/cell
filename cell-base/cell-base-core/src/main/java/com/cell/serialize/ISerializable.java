@@ -1,6 +1,7 @@
 package com.cell.serialize;
 
-import com.cell.exceptions.MessageNotDoneException;
+
+import com.cell.base.common.exceptions.MessageNotDoneException;
 
 import java.io.IOException;
 

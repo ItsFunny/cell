@@ -1,6 +1,7 @@
 package com.cell.model;
 
-import com.cell.exceptions.DuplicatedEnumIdException;
+
+import com.cell.base.common.exceptions.DuplicatedEnumIdException;
 
 import java.util.HashMap;
 import java.util.Map;

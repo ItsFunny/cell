@@ -14,14 +14,14 @@
 //import com.cell.context.InitCTX;
 //import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 //import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
-//import com.cell.enums.EnumHttpRequestType;
+//import com.cell.base.common.enums.EnumHttpRequestType;
 //import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 //import com.cell.lb.ILoadBalancer;
 //import com.cell.lb.ILoadBalancerStrategy;
 //import com.cell.log.LOG;
 //import com.cell.model.Instance;
 //import com.cell.models.Couple;
-//import com.cell.models.Module;
+//import com.cell.base.common.models.Module;
 //import com.cell.resolver.IKeyResolver;
 //import com.cell.resolver.impl.DefaultStringKeyResolver;
 //import com.cell.transport.model.ServerMetaData;

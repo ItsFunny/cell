@@ -1,11 +1,11 @@
 package com.cell.log.bridge;
 
+import com.cell.base.common.models.Module;
 import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
-import com.cell.models.Module;
 import io.netty.util.internal.logging.InternalLogLevel;
 import io.netty.util.internal.logging.InternalLogger;
 import org.slf4j.Logger;

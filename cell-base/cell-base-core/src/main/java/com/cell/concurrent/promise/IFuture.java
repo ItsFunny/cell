@@ -1,9 +1,9 @@
 package com.cell.concurrent.promise;
 
+import com.cell.base.common.enums.CellError;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.Future;
 import com.cell.concurrent.base.GenericFutureListener;
-import com.cell.enums.CellError;
 
 public interface IFuture<T> extends Future<T>
 {

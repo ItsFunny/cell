@@ -1,8 +1,8 @@
 package com.cell.log.impl;
 
+import com.cell.base.common.models.Module;
 import com.cell.log.LOG;
 import com.cell.log.LogTypeEnums;
-import com.cell.models.Module;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

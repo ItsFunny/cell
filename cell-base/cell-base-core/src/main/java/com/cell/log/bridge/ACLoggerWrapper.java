@@ -1,9 +1,9 @@
 package com.cell.log.bridge;
 
+import com.cell.base.common.models.Module;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
-import com.cell.models.Module;
 import org.apache.commons.logging.Log;
 
 public class ACLoggerWrapper implements Log
