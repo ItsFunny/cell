@@ -1,6 +1,6 @@
 package com.cell.model;
 
-import com.cell.events.IEvent;
+import com.cell.base.core.events.IEvent;
 import lombok.Builder;
 
 /**

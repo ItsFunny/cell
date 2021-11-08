@@ -1,9 +1,9 @@
 package com.cell.discovery.nacos.grpc.client.extension.discovery;
 
-import com.cell.annotations.AutoPlugin;
+import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.context.InitCTX;
+import com.cell.base.core.context.InitCTX;
 import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultPureStringKeyResolver;

@@ -1,6 +1,6 @@
 package com.cell.reacotr;
 
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.reactor.ICommandReactor;
 
 /**
  * @author Charlie

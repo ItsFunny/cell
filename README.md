@@ -6,6 +6,16 @@
 - event
 - db
 
+- 相关内部概念
+  - @Plugin=@Bean
+  - @ActivePlugin=@Component ...
+  - @AutoPlugin=@Autowired
+  - @ActiveConfiguration=@Configuration
+  - extension 约等于 starter (可插拔,按需加载)
+
+- http模块总的来说基于reactor-cmd 模型
+    - ![imgs](../imgs/logic.png)
+    
 
 # 使用方法
 

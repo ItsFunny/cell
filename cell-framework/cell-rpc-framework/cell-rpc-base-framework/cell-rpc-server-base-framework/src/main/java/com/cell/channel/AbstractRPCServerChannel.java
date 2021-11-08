@@ -1,6 +1,7 @@
 package com.cell.channel;
 
-import com.cell.channel.abs.AbsHandlerChannel;
+
+import com.cell.base.core.channel.abs.AbsHandlerChannel;
 
 /**
  * @author Charlie

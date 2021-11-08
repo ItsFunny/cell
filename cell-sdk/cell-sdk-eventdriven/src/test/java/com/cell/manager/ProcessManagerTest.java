@@ -1,8 +1,8 @@
 package com.cell.manager;
 
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.proxy.IProxy;
 import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 import org.junit.Test;

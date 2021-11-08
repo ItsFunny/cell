@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.discovery.abs;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.events.IEvent;
+import com.cell.base.core.events.IEvent;
 import lombok.Data;
 
 import java.util.Map;

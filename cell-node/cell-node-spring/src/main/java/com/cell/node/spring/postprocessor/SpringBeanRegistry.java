@@ -1,13 +1,14 @@
 package com.cell.node.spring.postprocessor;
 
-import com.cell.annotations.CellOrder;
-import com.cell.annotations.LifeCycle;
+import com.cell.base.core.annotations.CellOrder;
+import com.cell.base.core.annotations.LifeCycle;
 import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.StringUtils;
-import com.cell.context.InitCTX;
-import com.cell.enums.EnumLifeCycle;
-import com.cell.log.LOG;
+import com.cell.base.core.context.InitCTX;
+import com.cell.base.core.enums.EnumLifeCycle;
+import com.cell.base.core.log.LOG;
+import com.cell.base.core.utils.ClassUtil;
 import com.cell.node.core.utils.ExtensionClassUtil;
 import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
@@ -17,7 +18,6 @@ import com.cell.node.spring.constants.SpringBridge;
 import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
 import com.cell.node.spring.utils.FrameworkUtil;
 import com.cell.node.spring.wrapper.AnnotaionManagerWrapper;
-import com.cell.utils.ClassUtil;
 import lombok.Data;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanDefinition;

@@ -1,6 +1,6 @@
 package com.cell.updator.impl;
 
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.executor.IMetricsExecutor;
 import com.cell.updator.IPrometheusUpdator;
 import com.cell.updator.UpdatorManager;

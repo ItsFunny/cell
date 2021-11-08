@@ -1,7 +1,7 @@
 package com.cell.event;
 
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
 
 /**
  * @author Charlie

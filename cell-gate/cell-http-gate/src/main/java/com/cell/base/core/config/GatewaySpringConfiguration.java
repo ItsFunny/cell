@@ -1,7 +1,7 @@
 package com.cell.base.core.config;
 
-import com.cell.annotations.ActiveConfiguration;
-import com.cell.annotations.Plugin;
+import com.cell.base.core.annotations.ActiveConfiguration;
+import com.cell.base.core.annotations.Plugin;
 import com.cell.constants.GatewayConstants;
 import com.cell.enums.EnumStatOperateMask;
 import com.cell.enums.EnumStatisticType;

@@ -1,9 +1,9 @@
 package com.cell.context;
 
-import com.cell.concurrent.base.Future;
-import com.cell.concurrent.base.GenericFutureListener;
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
+import com.cell.base.core.concurrent.base.Future;
+import com.cell.base.core.concurrent.base.GenericFutureListener;
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
 import lombok.Data;
 
 /**

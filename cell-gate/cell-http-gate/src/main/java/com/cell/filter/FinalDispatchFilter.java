@@ -1,9 +1,9 @@
 package com.cell.filter;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.constants.GatewayConstants;
 import com.cell.base.common.constants.OrderConstants;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.base.common.models.Module;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

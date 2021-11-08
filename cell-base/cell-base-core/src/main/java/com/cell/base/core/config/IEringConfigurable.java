@@ -1,7 +1,7 @@
 package com.cell.base.core.config;
 
 import com.cell.base.common.exceptions.ConfigException;
-import com.cell.enums.ConfigurableEnums;
+import com.cell.base.core.enums.ConfigurableEnums;
 
 /**
  * @author Charlie

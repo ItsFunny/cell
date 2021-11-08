@@ -1,10 +1,10 @@
 package com.cell.dispatcher;
 
+import com.cell.base.core.protocol.impl.AbstractCommandSuit;
 import com.cell.context.DefaultHttpCommandContext;
 import com.cell.context.IHttpHandlerSuit;
-import com.cell.protocol.CommandContext;
-import com.cell.protocol.IBuzzContext;
-import com.cell.protocol.impl.AbstractCommandSuit;
+import com.cell.base.core.protocol.CommandContext;
+import com.cell.base.core.protocol.IBuzzContext;
 import com.cell.reactor.IHttpReactor;
 import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 

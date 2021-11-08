@@ -1,6 +1,6 @@
 package com.cell.rpc.grpc.client.framework.annotation;
 
-import com.cell.annotations.Command;
+import com.cell.base.core.annotations.Command;
 import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.enums.EnumHttpResponseType;
 import com.cell.reactor.IHttpReactor;

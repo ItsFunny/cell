@@ -1,8 +1,11 @@
 package com.cell.log.impl;
 
 import com.cell.base.common.models.Module;
-import com.cell.log.LOG;
-import com.cell.log.LogTypeEnums;
+import com.cell.base.core.log.LOG;
+import com.cell.base.core.log.LogTypeEnums;
+import com.cell.base.core.log.impl.DefaultCellLogger;
+import com.cell.base.core.log.impl.DefaultConsoleLogBackConsumer;
+import com.cell.base.core.log.impl.DefaultFileLogBackEventConsumer;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

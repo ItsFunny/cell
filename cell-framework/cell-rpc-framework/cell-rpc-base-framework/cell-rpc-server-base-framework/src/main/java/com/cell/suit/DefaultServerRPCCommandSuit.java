@@ -1,10 +1,10 @@
 package com.cell.suit;
 
+import com.cell.base.core.protocol.impl.AbstractCommandSuit;
 import com.cell.cmd.IRPCServerCommand;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.context.RPCServerCommandContext;
 import com.cell.context.impl.DefaultRPCServerCommandContext;
-import com.cell.protocol.impl.AbstractCommandSuit;
 import com.cell.reactor.IRPCServerReactor;
 import lombok.Data;
 

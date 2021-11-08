@@ -1,12 +1,12 @@
 package com.cell.manager;
 
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.base.common.models.Couple;
-import com.cell.executor.IBaseReactorExecutor;
+import com.cell.base.core.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;
-import com.cell.protocol.CommandWrapper;
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.protocol.CommandWrapper;
+import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
 import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;

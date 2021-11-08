@@ -4,13 +4,13 @@
 //import com.alibaba.nacos.common.notify.Event;
 //import com.alibaba.nacos.common.notify.listener.Subscriber;
 //import com.alibaba.nacos.common.utils.CollectionUtils;
-//import com.cell.annotations.AutoPlugin;
+//import com.cell.base.core.annotations.AutoPlugin;
 //import com.cell.base.common.constants.ProtocolConstants;
 //import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 //import com.cell.bee.loadbalance.model.ServerMetaInfo;
 //import com.cell.bee.loadbalance.utils.LBUtils;
 //import com.cell.config.AbstractInitOnce;
-//import com.cell.context.InitCTX;
+//import com.cell.base.core.context.InitCTX;
 //import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
 //import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 //import com.cell.discovery.nacos.grpc.client.extension.keyresolver.RPCKeyResolver;
@@ -18,7 +18,7 @@
 //import com.cell.exceptions.ConfigException;
 //import com.cell.lb.ILoadBalancer;
 //import com.cell.lb.ILoadBalancerStrategy;
-//import com.cell.log.LOG;
+//import com.cell.base.core.log.LOG;
 //import com.cell.model.Instance;
 //import com.cell.base.common.models.Module;
 //import com.cell.resolver.IKeyResolver;

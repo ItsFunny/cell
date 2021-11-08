@@ -1,7 +1,7 @@
 package com.cell.monitor.impl;
 
-import com.cell.annotations.Manager;
-import com.cell.executor.BaseAutoSelectReflectManager;
+import com.cell.base.core.annotations.Manager;
+import com.cell.base.core.executor.BaseAutoSelectReflectManager;
 import com.cell.manager.IReflectManager;
 import com.cell.monitor.IMonitor;
 

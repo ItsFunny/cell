@@ -1,6 +1,6 @@
 package com.cell.base.core.center;
 
-import com.cell.annotations.Manager;
+import com.cell.base.core.annotations.Manager;
 import com.cell.manager.IReflectManager;
 
 /**

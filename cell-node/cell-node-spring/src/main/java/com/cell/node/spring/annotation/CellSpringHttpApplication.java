@@ -1,6 +1,6 @@
 package com.cell.node.spring.annotation;
 
-import com.cell.annotations.CellApplication;
+import com.cell.base.core.annotations.CellApplication;
 import com.cell.node.core.extension.AbstractNodeExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.annotation.AliasFor;

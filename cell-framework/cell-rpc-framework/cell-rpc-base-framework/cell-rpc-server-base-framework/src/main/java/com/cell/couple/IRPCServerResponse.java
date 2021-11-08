@@ -1,6 +1,6 @@
 package com.cell.couple;
 
-import com.cell.protocol.IServerResponse;
+import com.cell.base.core.protocol.IServerResponse;
 
 /**
  * @author Charlie

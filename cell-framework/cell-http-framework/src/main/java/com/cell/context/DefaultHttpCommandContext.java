@@ -1,6 +1,6 @@
 package com.cell.context;
 
-import com.cell.protocol.CommandContext;
+import com.cell.base.core.protocol.CommandContext;
 import lombok.Data;
 
 /**

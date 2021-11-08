@@ -1,7 +1,7 @@
 package com.cell.rpc.grpc.client.framework.annotation;
 
-import com.cell.annotations.ForceOverride;
-import com.cell.annotations.ReactorAnno;
+import com.cell.base.core.annotations.ForceOverride;
+import com.cell.base.core.annotations.ReactorAnno;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.cmd.IRPCServerCommand;
 import org.springframework.core.annotation.AliasFor;

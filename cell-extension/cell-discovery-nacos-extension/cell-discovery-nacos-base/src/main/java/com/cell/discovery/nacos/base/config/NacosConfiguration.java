@@ -1,7 +1,8 @@
 package com.cell.discovery.nacos.base.config;
 
-import com.cell.annotations.ActiveConfiguration;
-import com.cell.annotations.Plugin;
+
+import com.cell.base.core.annotations.ActiveConfiguration;
+import com.cell.base.core.annotations.Plugin;
 import com.cell.lb.ILoadBalancerStrategy;
 import com.cell.lb.impl.DefaultWeightRoubineStrategy;
 

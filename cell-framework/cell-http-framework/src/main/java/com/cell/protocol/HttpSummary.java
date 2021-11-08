@@ -1,6 +1,7 @@
 package com.cell.protocol;
 
-import com.cell.protocol.impl.BaseSummary;
+import com.cell.base.core.protocol.Summary;
+import com.cell.base.core.protocol.impl.BaseSummary;
 import lombok.Data;
 
 /**

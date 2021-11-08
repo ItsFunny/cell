@@ -1,8 +1,8 @@
 package com.cell.bo;
 
-import com.cell.constants.ContextConstants;
+import com.cell.base.core.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
-import com.cell.protocol.ContextResponseWrapper;
+import com.cell.base.core.protocol.ContextResponseWrapper;
 import com.cell.reactor.IMapDynamicHttpReactor;
 import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import lombok.Data;

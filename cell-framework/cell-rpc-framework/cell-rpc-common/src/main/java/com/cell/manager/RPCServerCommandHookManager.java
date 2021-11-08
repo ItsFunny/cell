@@ -1,9 +1,9 @@
 package com.cell.manager;
 
-import com.cell.annotations.Manager;
+import com.cell.base.core.annotations.Manager;
 import com.cell.base.core.center.AbstractHookCenter;
 import com.cell.constants.RPCHookConstants;
-import com.cell.hooks.IChainHook;
+import com.cell.base.core.hooks.IChainHook;
 
 /**
  * @author Charlie

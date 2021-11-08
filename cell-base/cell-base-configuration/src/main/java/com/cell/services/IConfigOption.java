@@ -1,6 +1,6 @@
 package com.cell.services;
 
-import com.cell.options.IOption;
+import com.cell.base.core.options.IOption;
 
 /**
  * @author Charlie

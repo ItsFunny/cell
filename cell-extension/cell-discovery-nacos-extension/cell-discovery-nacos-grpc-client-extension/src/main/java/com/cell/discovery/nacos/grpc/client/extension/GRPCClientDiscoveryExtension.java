@@ -1,10 +1,10 @@
 package com.cell.discovery.nacos.grpc.client.extension;
 
-import com.cell.annotations.CellOrder;
-import com.cell.annotations.Plugin;
+import com.cell.base.core.annotations.CellOrder;
+import com.cell.base.core.annotations.Plugin;
 import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.common.utils.StringUtils;
-import com.cell.concurrent.base.EventLoopGroup;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.base.common.constants.OrderConstants;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.discovery.nacos.grpc.client.extension.server.DefaultGrpcNacosClientServer;

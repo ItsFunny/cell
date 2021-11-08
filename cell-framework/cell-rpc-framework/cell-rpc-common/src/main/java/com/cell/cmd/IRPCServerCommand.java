@@ -1,6 +1,6 @@
 package com.cell.cmd;
 
-import com.cell.protocol.ICommand;
+import com.cell.base.core.protocol.ICommand;
 
 /**
  * @author Charlie

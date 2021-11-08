@@ -1,6 +1,6 @@
 package com.cell.anno;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ActivePlugin;
 
 import java.lang.annotation.*;
 

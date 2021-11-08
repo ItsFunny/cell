@@ -1,6 +1,6 @@
 package com.cell.http.gate.impl;
 
-import com.cell.constants.CommandLineConstants;
+import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.node.core.context.INodeContext;
 import com.cell.services.IStatContextService;
 

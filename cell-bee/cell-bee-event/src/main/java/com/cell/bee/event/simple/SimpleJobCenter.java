@@ -1,6 +1,6 @@
 package com.cell.bee.event.simple;
 
-import com.cell.events.IEvent;
+import com.cell.base.core.events.IEvent;
 import com.cell.manager.IReflectManager;
 import com.google.common.eventbus.EventBus;
 

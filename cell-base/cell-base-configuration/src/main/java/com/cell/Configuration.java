@@ -5,7 +5,7 @@ import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.FileUtils;
 import com.cell.base.common.utils.JSONUtil;
 import com.cell.exception.ConfigurationException;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.model.ConfigValueJson;
 import com.cell.model.IConfigValue;
 import com.cell.parser.ConfigurationParserJson;

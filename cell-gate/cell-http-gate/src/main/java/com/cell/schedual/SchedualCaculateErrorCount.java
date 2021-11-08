@@ -1,7 +1,7 @@
 package com.cell.schedual;
 
 import com.cell.base.IScheduleCounter;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.base.common.models.Module;
 
 import java.util.concurrent.Executors;

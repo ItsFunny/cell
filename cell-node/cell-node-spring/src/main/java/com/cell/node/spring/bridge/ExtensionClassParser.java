@@ -1,8 +1,8 @@
 package com.cell.node.spring.bridge;
 
-import com.cell.annotations.Plugin;
+import com.cell.base.core.annotations.Plugin;
 import com.cell.base.common.models.Module;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.node.core.utils.ExtensionClassUtil;
 import com.cell.node.spring.postprocessors.extension.PluginMethod;
 import org.springframework.beans.factory.BeanDefinitionStoreException;

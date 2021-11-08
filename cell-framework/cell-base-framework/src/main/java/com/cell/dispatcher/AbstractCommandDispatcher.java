@@ -1,24 +1,24 @@
 package com.cell.dispatcher;
 
-import com.cell.annotations.Command;
+import com.cell.base.core.annotations.Command;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.core.config.AbstractInitOnce;
-import com.cell.channel.IChannel;
-import com.cell.concurrent.DummyExecutor;
-import com.cell.concurrent.base.EventExecutor;
-import com.cell.concurrent.base.EventLoopGroup;
-import com.cell.concurrent.base.Promise;
-import com.cell.concurrent.promise.BaseDefaultPromise;
-import com.cell.constants.ContextConstants;
+import com.cell.base.core.channel.IChannel;
+import com.cell.base.core.concurrent.DummyExecutor;
+import com.cell.base.core.concurrent.base.EventExecutor;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
+import com.cell.base.core.concurrent.base.Promise;
+import com.cell.base.core.concurrent.promise.BaseDefaultPromise;
+import com.cell.base.core.constants.ContextConstants;
 import com.cell.context.DispatchContext;
-import com.cell.handler.IChainHandler;
-import com.cell.handler.IHandler;
-import com.cell.protocol.CommandWrapper;
-import com.cell.protocol.ICommandSuit;
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.handler.IChainHandler;
+import com.cell.base.core.handler.IHandler;
+import com.cell.base.core.protocol.CommandWrapper;
+import com.cell.base.core.protocol.ICommandSuit;
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
+import com.cell.base.core.reactor.ICommandReactor;
 
 import java.util.*;
 

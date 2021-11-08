@@ -1,7 +1,7 @@
 package com.cell.context;
 
-import com.cell.protocol.CommandProtocolID;
-import com.cell.protocol.IContext;
+import com.cell.base.core.protocol.CommandProtocolID;
+import com.cell.base.core.protocol.IContext;
 
 /**
  * @author Charlie

@@ -1,6 +1,6 @@
 package com.cell.reactor.impl;
 
-import com.cell.annotations.ReactorAnno;
+import com.cell.base.core.annotations.ReactorAnno;
 
 
 /**

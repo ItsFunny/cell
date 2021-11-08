@@ -1,7 +1,7 @@
 //package com.cell.dispatcher;
 //
 //import com.cell.exception.HttpFramkeworkException;
-//import com.cell.protocol.CommandContext;
+//import com.cell.base.core.protocol.CommandContext;
 //import com.cell.reactor.IHttpReactor;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.context.request.async.DeferredResult;

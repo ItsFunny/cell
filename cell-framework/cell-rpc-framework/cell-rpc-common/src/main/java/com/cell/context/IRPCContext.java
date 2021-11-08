@@ -1,6 +1,6 @@
 package com.cell.context;
 
-import com.cell.protocol.IBuzzContext;
+import com.cell.base.core.protocol.IBuzzContext;
 
 /**
  * @author Charlie

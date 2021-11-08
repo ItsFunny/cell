@@ -1,7 +1,7 @@
 package com.cell.manager.nodes;
 
-import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.AutoPlugin;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.constants.GatewayConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.MetricsContext;

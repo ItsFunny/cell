@@ -1,8 +1,8 @@
 package com.cell.utils;
 
 import com.cell.base.common.models.Module;
-import com.cell.log.LOG;
-import com.cell.protocol.IServerRequest;
+import com.cell.base.core.log.LOG;
+import com.cell.base.core.protocol.IServerRequest;
 import org.springframework.util.StreamUtils;
 
 import java.io.ByteArrayOutputStream;

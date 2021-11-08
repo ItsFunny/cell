@@ -1,9 +1,9 @@
 package com.cell.proxy;
 
 import com.cell.base.common.exceptions.ProgramaException;
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 
 /**
  * @author Charlie

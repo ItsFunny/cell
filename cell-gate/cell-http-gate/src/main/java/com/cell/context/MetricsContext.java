@@ -1,6 +1,6 @@
 package com.cell.context;
 
-import com.cell.protocol.IContext;
+import com.cell.base.core.protocol.IContext;
 import lombok.Data;
 import org.springframework.web.server.ServerWebExchange;
 

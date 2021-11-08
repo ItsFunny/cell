@@ -1,7 +1,7 @@
 package com.cell.promise;
 
-import com.cell.concurrent.base.BasePromise;
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.BasePromise;
+import com.cell.base.core.concurrent.base.Promise;
 import lombok.Data;
 import org.springframework.web.context.request.async.DeferredResult;
 

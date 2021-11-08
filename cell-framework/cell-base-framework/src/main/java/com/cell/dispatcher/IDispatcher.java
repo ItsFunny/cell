@@ -1,12 +1,12 @@
 package com.cell.dispatcher;
 
 import com.cell.base.core.config.IInitOnce;
-import com.cell.channel.IChannel;
-import com.cell.concurrent.base.EventLoopGroup;
+import com.cell.base.core.channel.IChannel;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.context.DispatchContext;
-import com.cell.handler.IChainHandler;
-import com.cell.handler.IHandler;
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.handler.IChainHandler;
+import com.cell.base.core.handler.IHandler;
+import com.cell.base.core.reactor.ICommandReactor;
 
 import java.util.List;
 

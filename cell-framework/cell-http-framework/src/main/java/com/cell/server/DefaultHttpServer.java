@@ -1,6 +1,6 @@
 package com.cell.server;
 
-import com.cell.context.InitCTX;
+import com.cell.base.core.context.InitCTX;
 import com.cell.couple.HttpRequestWrapper;
 import com.cell.couple.HttpResponseWrapper;
 import com.cell.proxy.IFrameworkProxy;

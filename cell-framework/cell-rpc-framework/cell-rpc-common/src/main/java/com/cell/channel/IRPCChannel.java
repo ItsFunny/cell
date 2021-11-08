@@ -1,7 +1,8 @@
 package com.cell.channel;
 
-import com.cell.handler.IChainHandler;
-import com.cell.handler.IHandler;
+import com.cell.base.core.channel.IChannel;
+import com.cell.base.core.handler.IChainHandler;
+import com.cell.base.core.handler.IHandler;
 
 /**
  * @author Charlie

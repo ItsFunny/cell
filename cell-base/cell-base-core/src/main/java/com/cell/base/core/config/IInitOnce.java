@@ -1,6 +1,6 @@
 package com.cell.base.core.config;
 
-import com.cell.context.InitCTX;
+import com.cell.base.core.context.InitCTX;
 
 /**
  * @author Charlie

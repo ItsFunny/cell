@@ -2,7 +2,7 @@ package com.cell.rpc.grpc.client.framework.command;
 
 import com.cell.bo.BuzzContextBO;
 import com.cell.context.IHttpCommandContext;
-import com.cell.serialize.ISerializable;
+import com.cell.base.core.serialize.ISerializable;
 
 /**
  * @author Charlie

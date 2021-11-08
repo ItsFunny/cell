@@ -1,6 +1,6 @@
 package com.cell.couple;
 
-import com.cell.protocol.impl.AbstractBaseResponse;
+import com.cell.base.core.protocol.impl.AbstractBaseResponse;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.servlet.http.HttpServletResponse;

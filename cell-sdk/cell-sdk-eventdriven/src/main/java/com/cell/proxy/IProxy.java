@@ -1,6 +1,6 @@
 package com.cell.proxy;
 
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import com.cell.event.IProcessEvent;
 
 /**

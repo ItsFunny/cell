@@ -1,7 +1,7 @@
 package com.cell.filter;
 
-import com.cell.annotations.ActivePlugin;
-import com.cell.log.LOG;
+import com.cell.base.core.annotations.ActivePlugin;
+import com.cell.base.core.log.LOG;
 import com.cell.base.common.models.Module;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;

@@ -1,6 +1,6 @@
 package com.cell.rpc.grpc.client.framework.annotation;
 
-import com.cell.serialize.ISerializable;
+import com.cell.base.core.serialize.ISerializable;
 
 import java.lang.annotation.*;
 

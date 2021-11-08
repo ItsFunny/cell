@@ -1,5 +1,6 @@
 package com.cell.serialize;
 
+import com.cell.base.core.serialize.DefaultSelfJsonSerialize;
 import lombok.Data;
 import org.junit.Test;
 

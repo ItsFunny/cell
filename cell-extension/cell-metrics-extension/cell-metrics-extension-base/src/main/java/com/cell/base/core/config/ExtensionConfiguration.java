@@ -1,6 +1,6 @@
 package com.cell.base.core.config;
 
-import com.cell.annotations.ActiveConfiguration;
+import com.cell.base.core.annotations.ActiveConfiguration;
 import io.prometheus.client.CollectorRegistry;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

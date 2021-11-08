@@ -1,6 +1,6 @@
 package com.cell.couple;
 
-import com.cell.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerRequest;
 
 import java.io.IOException;
 import java.io.InputStream;

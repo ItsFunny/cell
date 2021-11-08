@@ -1,8 +1,8 @@
 package com.cell;
 
-import com.cell.concurrent.DummyExecutor;
-import com.cell.concurrent.base.Promise;
-import com.cell.concurrent.promise.BaseDefaultPromise;
+import com.cell.base.core.concurrent.DummyExecutor;
+import com.cell.base.core.concurrent.base.Promise;
+import com.cell.base.core.concurrent.promise.BaseDefaultPromise;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;

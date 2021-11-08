@@ -1,6 +1,6 @@
 package com.cell.initializer;
 
-import com.cell.annotations.AutoPlugin;
+import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.utils.ReflectionUtils;
 import org.junit.Assert;
 import org.junit.Test;

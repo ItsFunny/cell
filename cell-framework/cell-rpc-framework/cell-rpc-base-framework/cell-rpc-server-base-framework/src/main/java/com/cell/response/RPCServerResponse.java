@@ -1,7 +1,7 @@
 package com.cell.response;
 
-import com.cell.protocol.IServerResponse;
-import com.cell.protocol.impl.AbstractBaseResponse;
+import com.cell.base.core.protocol.IServerResponse;
+import com.cell.base.core.protocol.impl.AbstractBaseResponse;
 
 import java.util.HashMap;
 import java.util.Map;

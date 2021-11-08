@@ -1,7 +1,7 @@
 package com.cell.node.spring.postprocessors.dependency;
 
 import com.cell.base.common.models.Module;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;

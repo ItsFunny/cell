@@ -1,6 +1,6 @@
 package com.cell.rpc.grpc.client.framework.util;
 
-import com.cell.filters.ISimpleFilter;
+import com.cell.base.core.filters.ISimpleFilter;
 import com.cell.model.Instance;
 import org.springframework.util.CollectionUtils;
 

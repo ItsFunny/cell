@@ -1,6 +1,6 @@
 package com.cell.context;
 
-import com.cell.protocol.ICommandSuit;
+import com.cell.base.core.protocol.ICommandSuit;
 
 /**
  * @author Charlie

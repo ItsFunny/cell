@@ -1,7 +1,7 @@
 package com.cell.rpc.server.base.annotation;
 
-import com.cell.annotations.Command;
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.annotations.Command;
+import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.reactor.abs.DefaultRPCServerReactor;
 import org.springframework.core.annotation.AliasFor;
 

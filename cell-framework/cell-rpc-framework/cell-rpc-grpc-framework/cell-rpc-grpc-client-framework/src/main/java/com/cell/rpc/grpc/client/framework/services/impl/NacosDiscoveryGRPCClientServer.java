@@ -1,6 +1,6 @@
 package com.cell.rpc.grpc.client.framework.services.impl;
 
-import com.cell.context.InitCTX;
+import com.cell.base.core.context.InitCTX;
 import com.cell.proxy.IFrameworkProxy;
 import com.cell.server.abs.AbstractServer;
 

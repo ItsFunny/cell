@@ -1,7 +1,7 @@
 package com.cell.rpc.grpc.client.framework.services.impl;
 
-import com.cell.concurrent.base.BasePromise;
-import com.cell.protocol.ICommand;
+import com.cell.base.core.concurrent.base.BasePromise;
+import com.cell.base.core.protocol.ICommand;
 
 /**
  * @author Charlie

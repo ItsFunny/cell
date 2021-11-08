@@ -1,7 +1,7 @@
 package com.cell.manager.context;
 
 import com.cell.base.common.models.Couple;
-import com.cell.protocol.IContext;
+import com.cell.base.core.protocol.IContext;
 import com.cell.reactor.IHttpReactor;
 import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import lombok.Builder;

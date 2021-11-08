@@ -1,6 +1,6 @@
 package com.cell.filter;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.context.MetricsContext;
 import com.cell.manager.MetricsManager;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;

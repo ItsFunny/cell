@@ -1,6 +1,6 @@
 package com.cell.event;
 
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import lombok.Data;
 
 /**

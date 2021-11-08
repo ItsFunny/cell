@@ -1,5 +1,7 @@
 package com.cell.reactor;
 
+import com.cell.base.core.reactor.ICommandReactor;
+
 /**
  * @author Charlie
  * @When

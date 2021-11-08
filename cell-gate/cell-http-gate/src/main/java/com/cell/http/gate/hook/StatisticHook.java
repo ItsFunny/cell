@@ -1,15 +1,15 @@
 package com.cell.http.gate.hook;
 
-import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.AutoPlugin;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.base.core.center.EventCenter;
 import com.cell.event.StasticEvent;
-import com.cell.events.IEvent;
-import com.cell.hooks.IChainHook;
-import com.cell.hooks.IEventHook;
+import com.cell.base.core.events.IEvent;
+import com.cell.base.core.hooks.IChainHook;
+import com.cell.base.core.hooks.IEventHook;
 import com.cell.hooks.abs.AbstractEventHook;
 import com.cell.prometheus.HistogramStator;
-import com.cell.protocol.IEventContext;
+import com.cell.base.core.protocol.IEventContext;
 import com.cell.services.IStatContextService;
 import com.cell.utils.MetaDataUtils;
 import org.springframework.beans.factory.annotation.Autowired;

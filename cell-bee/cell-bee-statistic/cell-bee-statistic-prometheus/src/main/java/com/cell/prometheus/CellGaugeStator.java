@@ -2,7 +2,7 @@ package com.cell.prometheus;
 
 import com.cell.base.common.models.Module;
 import com.cell.enums.EnumStatisticType;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import io.prometheus.client.Collector;
 import io.prometheus.client.DoubleAdder;
 import io.prometheus.client.GaugeMetricFamily;

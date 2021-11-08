@@ -1,10 +1,10 @@
 package com.cell.manager;
 
-import com.cell.annotations.Manager;
-import com.cell.constants.ManagerConstants;
+import com.cell.base.core.annotations.Manager;
+import com.cell.base.core.constants.ManagerConstants;
 import com.cell.executor.ChainExecutorFactory;
 import com.cell.executor.IListChainExecutor;
-import com.cell.services.impl.DefaultHandlerMutableChainExecutor;
+import com.cell.base.core.services.impl.DefaultHandlerMutableChainExecutor;
 
 /**
  * @author Charlie

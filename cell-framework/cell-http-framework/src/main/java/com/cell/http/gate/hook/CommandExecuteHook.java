@@ -1,9 +1,9 @@
 package com.cell.http.gate.hook;
 
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.constant.HookConstants;
 import com.cell.context.IHttpCommandContext;
-import com.cell.hooks.IChainHook;
+import com.cell.base.core.hooks.IChainHook;
 import com.cell.reactor.IHttpReactor;
 import reactor.core.publisher.Mono;
 

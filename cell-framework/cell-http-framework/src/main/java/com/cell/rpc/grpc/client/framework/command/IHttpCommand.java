@@ -2,7 +2,7 @@ package com.cell.rpc.grpc.client.framework.command;
 
 import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.enums.EnumHttpResponseType;
-import com.cell.protocol.ICommand;
+import com.cell.base.core.protocol.ICommand;
 
 /**
  * @author Charlie

@@ -17,7 +17,7 @@
 
 package com.cell.grpc.common.codec;
 
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.google.common.collect.ImmutableList;
 import io.grpc.Codec;
 import org.springframework.context.ApplicationContext;

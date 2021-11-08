@@ -1,7 +1,7 @@
 package com.cell.node.core.extension;
 
-import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.Required;
+import com.cell.base.core.annotations.ActivePlugin;
+import com.cell.base.core.annotations.Required;
 import com.cell.node.core.context.INodeContext;
 
 /**

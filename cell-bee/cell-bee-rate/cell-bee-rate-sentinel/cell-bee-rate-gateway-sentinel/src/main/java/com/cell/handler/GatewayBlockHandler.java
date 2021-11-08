@@ -1,6 +1,6 @@
 package com.cell.handler;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.utils.GatewayUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;

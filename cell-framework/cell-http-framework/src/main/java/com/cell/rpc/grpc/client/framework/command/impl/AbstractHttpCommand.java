@@ -2,17 +2,17 @@ package com.cell.rpc.grpc.client.framework.command.impl;
 
 import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.enums.EnumHttpResponseType;
+import com.cell.base.core.protocol.AbstractCommand;
+import com.cell.base.core.protocol.IHead;
 import com.cell.context.IHttpCommandContext;
-import com.cell.protocol.AbstractCommand;
-import com.cell.protocol.IBuzzContext;
-import com.cell.protocol.ICommand;
-import com.cell.protocol.IHead;
+import com.cell.base.core.protocol.IBuzzContext;
+import com.cell.base.core.protocol.ICommand;
 import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.rpc.grpc.client.framework.util.HttpUtils;
-import com.cell.serialize.IInputArchive;
-import com.cell.serialize.JsonInput;
-import com.cell.utils.ClassUtil;
+import com.cell.base.core.serialize.IInputArchive;
+import com.cell.base.core.serialize.JsonInput;
+import com.cell.base.core.utils.ClassUtil;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;

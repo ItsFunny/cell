@@ -1,11 +1,11 @@
 package com.cell.exceptions.impl;
 
-import com.cell.annotations.ActivePlugin;
-import com.cell.constants.ContextConstants;
+import com.cell.base.core.annotations.ActivePlugin;
+import com.cell.base.core.constants.ContextConstants;
 import com.cell.context.HttpContextResponseBody;
 import com.cell.context.IHttpCommandContext;
 import com.cell.exceptions.IHttpExceptionResolver;
-import com.cell.protocol.ContextResponseWrapper;
+import com.cell.base.core.protocol.ContextResponseWrapper;
 import org.springframework.http.HttpStatus;
 
 /**

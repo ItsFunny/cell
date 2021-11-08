@@ -1,7 +1,7 @@
 package com.cell.couple;
 
-import com.cell.constants.ContextConstants;
-import com.cell.protocol.impl.AbstractBaseResponse;
+import com.cell.base.core.constants.ContextConstants;
+import com.cell.base.core.protocol.impl.AbstractBaseResponse;
 
 import java.util.HashMap;
 import java.util.Map;

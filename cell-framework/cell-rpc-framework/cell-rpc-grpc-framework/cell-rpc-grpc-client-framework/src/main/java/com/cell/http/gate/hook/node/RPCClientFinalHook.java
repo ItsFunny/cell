@@ -1,6 +1,6 @@
 package com.cell.http.gate.hook.node;
 
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.constants.RPCHookConstants;
 import com.cell.http.gate.hook.AbstractRPCHook;
 

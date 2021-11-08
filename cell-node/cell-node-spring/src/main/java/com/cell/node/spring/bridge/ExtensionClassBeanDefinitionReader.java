@@ -1,6 +1,6 @@
 package com.cell.node.spring.bridge;
 
-import com.cell.annotations.Plugin;
+import com.cell.base.core.annotations.Plugin;
 import com.cell.node.core.utils.ExtensionClassUtil;
 import com.cell.node.spring.postprocessors.extension.PluginMethod;
 import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;

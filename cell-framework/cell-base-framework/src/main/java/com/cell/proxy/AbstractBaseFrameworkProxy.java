@@ -1,12 +1,12 @@
 package com.cell.proxy;
 
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import com.cell.context.DispatchContext;
 import com.cell.dispatcher.IDispatcher;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
 
 /**
  * @author Charlie

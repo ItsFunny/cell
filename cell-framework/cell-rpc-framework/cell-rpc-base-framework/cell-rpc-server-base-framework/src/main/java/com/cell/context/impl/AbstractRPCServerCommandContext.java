@@ -1,11 +1,11 @@
 package com.cell.context.impl;
 
-import com.cell.constants.ContextConstants;
+import com.cell.base.core.constants.ContextConstants;
 import com.cell.context.IRPCServerCommandContext;
 import com.cell.context.RPCServerCommandContext;
-import com.cell.protocol.AbstractBaseContext;
-import com.cell.protocol.CommandProtocolID;
-import com.cell.protocol.ContextResponseWrapper;
+import com.cell.base.core.protocol.AbstractBaseContext;
+import com.cell.base.core.protocol.CommandProtocolID;
+import com.cell.base.core.protocol.ContextResponseWrapper;
 
 /**
  * @author Charlie

@@ -1,6 +1,6 @@
 //package com.cell.context;
 //
-//import com.cell.protocol.ContextResponseWrapper;
+//import com.cell.base.core.protocol.ContextResponseWrapper;
 //import lombok.Builder;
 //import lombok.Data;
 //import org.springframework.http.HttpStatus;

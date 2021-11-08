@@ -1,6 +1,6 @@
 package com.cell.couple;
 
-import com.cell.protocol.CommandProtocolID;
+import com.cell.base.core.protocol.CommandProtocolID;
 import lombok.Data;
 
 import javax.servlet.http.HttpServletRequest;

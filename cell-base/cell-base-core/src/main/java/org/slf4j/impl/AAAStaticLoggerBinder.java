@@ -1,7 +1,7 @@
 //package org.slf4j.impl;
 //
 //import ch.qos.logback.classic.LoggerContext;
-//import com.cell.hooks.IHook;
+//import com.cell.base.core.hooks.IHook;
 //import com.cell.log.factory.DefaultSlf4jLoggerFactory;
 //import lombok.Data;
 //import org.slf4j.ILoggerFactory;

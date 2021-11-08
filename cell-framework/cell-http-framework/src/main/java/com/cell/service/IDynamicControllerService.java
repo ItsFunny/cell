@@ -1,6 +1,6 @@
 package com.cell.service;
 
-import com.cell.reactor.ICommandReactor;
+import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
 
 import java.util.Collection;

@@ -1,8 +1,8 @@
 package com.cell.base.core.center;
 
-import com.cell.events.IEvent;
-import com.cell.hooks.IEventHook;
-import com.cell.protocol.IEventContext;
+import com.cell.base.core.events.IEvent;
+import com.cell.base.core.hooks.IEventHook;
+import com.cell.base.core.protocol.IEventContext;
 import lombok.Builder;
 import lombok.Data;
 import org.junit.Test;

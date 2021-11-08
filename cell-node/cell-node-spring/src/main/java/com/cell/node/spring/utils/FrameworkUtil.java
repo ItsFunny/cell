@@ -1,7 +1,7 @@
 package com.cell.node.spring.utils;
 
 import com.cell.node.spring.bridge.ISpringNodeExtension;
-import com.cell.utils.ClassUtil;
+import com.cell.base.core.utils.ClassUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.core.io.DefaultResourceLoader;

@@ -1,6 +1,6 @@
 package com.cell.base.core.config;
 
-import com.cell.annotations.ActiveConfiguration;
+import com.cell.base.core.annotations.ActiveConfiguration;
 import com.cell.enums.EnumStatOperateMask;
 import com.cell.enums.EnumStatisticType;
 import com.cell.prometheus.CellGaugeStator;

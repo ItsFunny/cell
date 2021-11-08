@@ -1,7 +1,7 @@
 package com.cell.http.gate.hook;
 
 
-import com.cell.hooks.ICommandHook;
+import com.cell.base.core.hooks.ICommandHook;
 
 /**
  * @author Charlie

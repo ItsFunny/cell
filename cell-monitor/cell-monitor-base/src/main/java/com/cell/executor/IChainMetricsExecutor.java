@@ -1,6 +1,6 @@
 package com.cell.executor;
 
-import com.cell.protocol.IContext;
+import com.cell.base.core.protocol.IContext;
 
 /**
  * @author Charlie

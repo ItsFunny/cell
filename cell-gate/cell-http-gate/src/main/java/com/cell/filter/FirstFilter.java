@@ -1,10 +1,10 @@
 package com.cell.filter;
 
-import com.cell.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.constants.GatewayConstants;
 import com.cell.http.gate.discovery.ServiceDiscovery;
-import com.cell.log.LOG;
+import com.cell.base.core.log.LOG;
 import com.cell.base.common.models.Module;
 import com.cell.utils.GatewayUtils;
 import com.cell.wrapper.ServerMetaInfoWrapper;

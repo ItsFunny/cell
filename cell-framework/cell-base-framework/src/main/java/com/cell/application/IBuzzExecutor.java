@@ -1,7 +1,7 @@
 //package com.cell.application;
 //
-//import com.cell.protocol.IBuzzContext;
-//import com.cell.serialize.ISerializable;
+//import com.cell.base.core.protocol.IBuzzContext;
+//import com.cell.base.core.serialize.ISerializable;
 //
 ///**
 // * @author Charlie

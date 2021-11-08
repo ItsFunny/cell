@@ -1,5 +1,7 @@
 package com.cell.protocol;
 
+import com.cell.base.core.protocol.CommandProtocolID;
+
 /**
  * @author Charlie
  * @When

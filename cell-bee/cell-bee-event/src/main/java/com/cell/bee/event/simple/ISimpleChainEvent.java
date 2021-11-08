@@ -1,6 +1,6 @@
 package com.cell.bee.event.simple;
 
-import com.cell.events.IEvent;
+import com.cell.base.core.events.IEvent;
 import com.cell.executor.IChainExecutor;
 
 /**

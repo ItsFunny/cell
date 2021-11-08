@@ -1,5 +1,7 @@
 package com.cell.handler;
 
+import com.cell.base.core.handler.IHandler;
+
 /**
  * @author Charlie
  * @When

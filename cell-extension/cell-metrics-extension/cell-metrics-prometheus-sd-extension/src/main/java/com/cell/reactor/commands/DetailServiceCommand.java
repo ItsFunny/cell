@@ -1,6 +1,6 @@
 package com.cell.reactor.commands;
 
-import com.cell.annotations.Optional;
+import com.cell.base.core.annotations.Optional;
 import com.cell.context.IHttpCommandContext;
 import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.model.ChangeItem;

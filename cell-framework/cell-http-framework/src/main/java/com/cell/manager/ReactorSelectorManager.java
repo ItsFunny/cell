@@ -1,7 +1,7 @@
 package com.cell.manager;
 
-import com.cell.annotations.Manager;
-import com.cell.executor.BaseAutoSelectReflectManager;
+import com.cell.base.core.annotations.Manager;
+import com.cell.base.core.executor.BaseAutoSelectReflectManager;
 
 /**
  * @author Charlie

@@ -1,7 +1,7 @@
 package com.cell.manager;
 
-import com.cell.annotations.ManagerNode;
-import com.cell.executor.IBaseReactorExecutor;
+import com.cell.base.core.annotations.ManagerNode;
+import com.cell.base.core.executor.IBaseReactorExecutor;
 import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 
 /**

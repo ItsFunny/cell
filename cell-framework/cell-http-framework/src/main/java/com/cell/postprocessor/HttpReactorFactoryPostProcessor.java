@@ -1,7 +1,7 @@
 package com.cell.postprocessor;
 
-import com.cell.annotations.LifeCycle;
-import com.cell.enums.EnumLifeCycle;
+import com.cell.base.core.annotations.LifeCycle;
+import com.cell.base.core.enums.EnumLifeCycle;
 import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 
 import java.lang.annotation.Annotation;

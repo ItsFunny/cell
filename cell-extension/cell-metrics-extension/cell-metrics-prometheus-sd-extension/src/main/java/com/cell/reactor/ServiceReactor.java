@@ -1,7 +1,7 @@
 package com.cell.reactor;
 
-import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.ReactorAnno;
+import com.cell.base.core.annotations.AutoPlugin;
+import com.cell.base.core.annotations.ReactorAnno;
 import com.cell.model.ChangeItem;
 import com.cell.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.sd.RegistrationService;

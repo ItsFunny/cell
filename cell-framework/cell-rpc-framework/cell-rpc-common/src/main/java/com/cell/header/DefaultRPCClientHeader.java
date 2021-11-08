@@ -1,7 +1,7 @@
 package com.cell.header;
 
-import com.cell.protocol.ICommand;
-import com.cell.protocol.impl.AbstractBaseHeader;
+import com.cell.base.core.protocol.ICommand;
+import com.cell.base.core.protocol.impl.AbstractBaseHeader;
 import lombok.Data;
 
 /**

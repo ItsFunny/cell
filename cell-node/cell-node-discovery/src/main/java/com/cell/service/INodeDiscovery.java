@@ -1,7 +1,7 @@
 package com.cell.service;
 
 import com.cell.base.core.config.IInitOnce;
-import com.cell.filters.ISimpleFilter;
+import com.cell.base.core.filters.ISimpleFilter;
 import com.cell.model.Instance;
 
 import java.util.List;

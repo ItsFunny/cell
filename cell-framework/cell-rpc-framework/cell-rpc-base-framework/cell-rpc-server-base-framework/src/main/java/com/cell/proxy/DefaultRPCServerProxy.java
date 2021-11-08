@@ -1,9 +1,9 @@
 package com.cell.proxy;
 
-import com.cell.concurrent.base.Promise;
+import com.cell.base.core.concurrent.base.Promise;
 import com.cell.dispatcher.IDispatcher;
-import com.cell.protocol.IServerRequest;
-import com.cell.protocol.IServerResponse;
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
 import com.cell.proxy.abs.AbstractRPCProxy;
 import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 

@@ -1,7 +1,7 @@
 package com.cell.manager;
 
-import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.ManagerNode;
+import com.cell.base.core.annotations.ActivePlugin;
+import com.cell.base.core.annotations.ManagerNode;
 import com.cell.initializer.SpringInitializerTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
