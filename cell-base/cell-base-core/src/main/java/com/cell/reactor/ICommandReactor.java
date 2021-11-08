@@ -1,6 +1,6 @@
 package com.cell.reactor;
 
-import com.cell.http.gate.config.IInitOnce;
+import com.cell.grpc.common.config.IInitOnce;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 

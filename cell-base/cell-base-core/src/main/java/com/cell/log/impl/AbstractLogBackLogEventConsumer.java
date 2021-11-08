@@ -1,6 +1,6 @@
 package com.cell.log.impl;
 
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.log.*;
 import com.cell.log.LogLevel;
 import com.cell.utils.CollectionUtils;

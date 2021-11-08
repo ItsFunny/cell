@@ -34,8 +34,6 @@ import java.util.Map;
         buzzClz = AllServiceCommand.AllServiceCommandBO.class)
 public class AllServiceCommand extends AbstractHttpCommand
 {
-
-
     @Data
     public static class AllServiceCommandBO implements ISerializable
     {

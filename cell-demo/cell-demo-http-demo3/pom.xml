@@ -16,6 +16,11 @@
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <dependencies>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-metrics-prometheus-sd-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
         <!--通用指标-->
         <dependency>
             <groupId>com.cell</groupId>

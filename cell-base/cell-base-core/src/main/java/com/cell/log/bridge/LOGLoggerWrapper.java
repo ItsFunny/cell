@@ -1,6 +1,6 @@
 package com.cell.log.bridge;
 
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;

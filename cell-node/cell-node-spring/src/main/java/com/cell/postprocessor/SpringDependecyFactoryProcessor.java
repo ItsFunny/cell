@@ -2,7 +2,7 @@ package com.cell.postprocessor;
 
 import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;

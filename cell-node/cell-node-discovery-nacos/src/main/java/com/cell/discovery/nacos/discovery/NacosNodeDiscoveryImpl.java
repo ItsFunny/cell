@@ -10,7 +10,7 @@ import com.alibaba.nacos.common.notify.Event;
 import com.alibaba.nacos.common.notify.NotifyCenter;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.config.ConfigFactory;
 import com.cell.discovery.nacos.config.NacosConfiguration;

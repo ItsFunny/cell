@@ -1,6 +1,6 @@
 package com.cell.service;
 
-import com.cell.http.gate.config.IInitOnce;
+import com.cell.grpc.common.config.IInitOnce;
 import com.cell.filters.ISimpleFilter;
 import com.cell.model.Instance;
 

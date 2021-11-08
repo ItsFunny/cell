@@ -11,7 +11,7 @@ import com.cell.IRateService;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.AutoPlugin;
 import com.cell.base.IScheduleCounter;
-import com.cell.center.JobCenter;
+import com.cell.bee.event.center.JobCenter;
 import com.cell.constants.DebugConstants;
 import com.cell.constants.SentinelConstants;
 import com.cell.event.StasticEvent;

@@ -3,6 +3,7 @@ package com.cell.discovery.nacos.discovery.abs;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -21,5 +22,5 @@ public class Snap
     Map<String, Set<ServerCmdMetaInfo>> deltaAddProtocols;
     Map<String, Set<ServerCmdMetaInfo>> downProtocols;
     Map<String, Set<ServerCmdMetaInfo>> deltaDownProtocols;
-
+    Map<String, AbstractServiceDiscovery.InstanceWrapper> instances;
 }

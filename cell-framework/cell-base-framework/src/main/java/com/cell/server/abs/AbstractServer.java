@@ -2,7 +2,7 @@ package com.cell.server.abs;
 
 import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 import com.cell.concurrent.base.Promise;
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
 import com.cell.manager.ProcessManager;

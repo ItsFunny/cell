@@ -1,6 +1,6 @@
 package com.cell.server;
 
-import com.cell.http.gate.config.IInitOnce;
+import com.cell.grpc.common.config.IInitOnce;
 import com.cell.manager.ProcessManager;
 import com.cell.protocol.IServerRequest;
 import com.cell.protocol.IServerResponse;

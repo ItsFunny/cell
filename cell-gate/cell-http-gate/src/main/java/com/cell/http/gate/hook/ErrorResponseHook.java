@@ -1,7 +1,7 @@
 package com.cell.http.gate.hook;
 
 import com.cell.annotations.ManagerNode;
-import com.cell.center.EventCenter;
+import com.cell.bee.event.center.EventCenter;
 import com.cell.events.IEvent;
 import com.cell.hooks.IChainHook;
 import com.cell.hooks.IEventHook;

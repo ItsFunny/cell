@@ -1,7 +1,7 @@
 package com.cell.decorators;
 
 import com.cell.comparators.CompareSatisfiedFunc;
-import com.cell.http.gate.config.AbsReflectAbleInitOnce;
+import com.cell.grpc.common.config.AbsReflectAbleInitOnce;
 import com.cell.enums.BeeEnums;
 import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;

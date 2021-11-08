@@ -1,7 +1,7 @@
 package com.cell.manager;
 
 import com.cell.annotations.Manager;
-import com.cell.center.AbstractHookCenter;
+import com.cell.bee.event.center.AbstractHookCenter;
 import com.cell.constants.RPCHookConstants;
 import com.cell.hooks.IChainHook;
 

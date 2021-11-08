@@ -1,14 +1,12 @@
 package com.cell.util;
 
 import com.cell.channelfactory.GRPCChannelFactory;
-import com.cell.cluster.BaseGrpcGrpc;
 import com.cell.com.cell.grpc.common.annotation.GRPCClient;
 import com.cell.inject.StubTransformer;
 import com.cell.stub.IStubFactory;
 import com.google.common.collect.Lists;
 import io.grpc.Channel;
 import io.grpc.ClientInterceptor;
-import io.grpc.stub.AbstractFutureStub;
 import io.grpc.stub.AbstractStub;
 import lombok.Data;
 import org.springframework.beans.BeanInstantiationException;

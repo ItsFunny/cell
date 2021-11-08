@@ -8,7 +8,7 @@ import com.cell.annotations.AutoPlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.bee.loadbalance.utils.LBUtils;
-import com.cell.http.gate.config.AbstractInitOnce;
+import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.discovery.nacos.discovery.INacosNodeDiscovery;
@@ -26,6 +26,7 @@ import com.cell.models.Quadruple;
 import com.cell.resolver.IKeyResolver;
 import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
 import com.cell.transport.model.ServerMetaData;
+import lombok.Data;
 import reactor.core.publisher.Flux;
 
 import java.time.Duration;
@@ -151,8 +152,10 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         ret.newProtocols = newProtocols;
         ret.downProtocols = downProtocols;
 
-
         Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> couple = this.convCellInstanceToGateMeta(serverInstanceList);
+        Map<String, InstanceWrapper> v2 = couple.getV2();
+        ret.instances = v2;
+
         Map<String, Set<ServerCmdMetaInfo>> protoMetas = couple.getV1();
         for (String s : protoMetas.keySet())
         {
@@ -227,8 +230,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             instances.stream().forEach(inst ->
                     {
                         InstanceWrapper wrapper = new InstanceWrapper();
-                        wrapper.port = inst.getPort();
-                        wrapper.host = inst.getIp();
+                        wrapper.instance = inst;
                         instanceWrapperMap.put(createKeyByInstance(inst), wrapper);
 
                         ServerMetaInfo info = LBUtils.fromInstance(inst);
@@ -253,7 +255,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
                                     serverMetaInfos = new HashSet<>();
                                     metas.put(key, serverMetaInfos);
                                 }
-                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getProtocol(),c.getModule());
+                                ServerCmdMetaInfo serverCmdMetaInfo = ServerCmdMetaInfo.fromServerMetaInfo(info, c.getProtocol(), c.getModule());
                                 serverMetaInfos.add(serverCmdMetaInfo);
                             });
                         });
@@ -370,11 +372,10 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         });
     }
 
-    public class InstanceWrapper
+    @Data
+    public static class InstanceWrapper
     {
-        String serviceName;
-        String host;
-        int port;
+        private Instance instance;
     }
 
 

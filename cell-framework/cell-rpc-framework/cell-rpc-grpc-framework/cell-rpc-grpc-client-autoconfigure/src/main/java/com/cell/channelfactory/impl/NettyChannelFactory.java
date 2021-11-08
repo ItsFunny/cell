@@ -1,10 +1,10 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GrpcChannelConfigurer;
+import com.cell.com.cell.grpc.common.utils.GrpcUtils;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.nameresolver.StaticNameResolverProvider;
-import com.cell.utils.GrpcUtils;
 import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
 import io.grpc.netty.shaded.io.netty.channel.epoll.EpollDomainSocketChannel;
 import io.grpc.netty.shaded.io.netty.channel.epoll.EpollEventLoopGroup;
