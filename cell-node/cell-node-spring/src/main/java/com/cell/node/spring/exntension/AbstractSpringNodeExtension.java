@@ -1,6 +1,6 @@
 package com.cell.node.spring.exntension;
 
-import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;
+import com.cell.node.core.extension.AbstractNodeExtension;
 import com.cell.node.spring.bridge.ISpringNodeExtension;
 
 /**

@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.base.extension;
 
-import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
+import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.proxy.IFrameworkProxy;
 import com.cell.root.Root;

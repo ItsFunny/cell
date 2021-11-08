@@ -1,7 +1,7 @@
 package com.cell.node.spring.annotation;
 
 import com.cell.annotations.CellApplication;
-import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;
+import com.cell.node.core.extension.AbstractNodeExtension;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.annotation.AliasFor;
 

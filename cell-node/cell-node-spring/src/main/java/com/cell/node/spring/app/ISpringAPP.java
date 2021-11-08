@@ -1,6 +1,7 @@
 package com.cell.node.spring.app;
 
-import com.cell.app.IApp;
+
+import com.cell.node.core.app.IApp;
 
 /**
  * @author Charlie

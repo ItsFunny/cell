@@ -1,6 +1,6 @@
 package com.cell.node.spring.app;
 
-import com.cell.app.DefaultApp;
+import com.cell.node.core.app.DefaultApp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;

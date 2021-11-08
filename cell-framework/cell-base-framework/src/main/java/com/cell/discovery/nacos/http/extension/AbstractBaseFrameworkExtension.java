@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.http.extension;
 
-import com.cell.context.INodeContext;
 import com.cell.dispatcher.IDispatcher;
+import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.proxy.IProxy;
 import com.cell.server.IServer;

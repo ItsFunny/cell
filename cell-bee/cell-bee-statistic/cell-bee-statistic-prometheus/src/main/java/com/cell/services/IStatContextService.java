@@ -1,6 +1,7 @@
 package com.cell.services;
 
-import com.cell.context.INodeContext;
+
+import com.cell.node.core.context.INodeContext;
 
 /**
  * @author Charlie

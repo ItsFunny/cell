@@ -1,6 +1,6 @@
 package com.cell.discovery.nacos.base.extension;
 
-import com.cell.context.INodeContext;
+import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 
 /**

@@ -4,8 +4,8 @@ import com.cell.Configuration;
 import com.cell.annotations.CellOrder;
 import com.cell.concurrent.BaseDefaultEventLoopGroup;
 import com.cell.concurrent.base.EventLoopGroup;
-import com.cell.configuration.RootConfiguration;
-import com.cell.context.INodeContext;
+import com.cell.node.core.configuration.RootConfiguration;
+import com.cell.node.core.context.INodeContext;
 import lombok.Data;
 
 import java.util.Optional;

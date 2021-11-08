@@ -1,6 +1,5 @@
 package com.cell.grpc.server.framework.server;
 
-import com.cell.configuration.RootConfiguration;
 import com.cell.context.InitCTX;
 import com.cell.exceptions.ProgramaException;
 import com.cell.grpc.common.config.GRPCServerConfiguration;
@@ -11,6 +10,7 @@ import com.cell.grpc.server.framework.interceptor.GlobalServerInterceptorRegistr
 import com.cell.grpc.server.framework.serverfactory.GrpcServerConfigurer;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.node.core.configuration.RootConfiguration;
 import com.cell.proxy.IRPCServerProxy;
 import com.cell.root.Root;
 import com.cell.server.AbstractBaseRPCServer;

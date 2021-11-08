@@ -3,7 +3,7 @@ package com.cell.node.spring.internal;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.CommandLineConstants;
 import com.cell.constants.OrderConstants;
-import com.cell.context.INodeContext;
+import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.context.SpringNodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.utils.ClassUtil;

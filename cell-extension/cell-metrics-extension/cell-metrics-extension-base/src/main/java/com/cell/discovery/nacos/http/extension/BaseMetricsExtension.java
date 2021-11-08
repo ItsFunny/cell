@@ -2,9 +2,9 @@ package com.cell.discovery.nacos.http.extension;
 
 import com.cell.annotations.LifeCycle;
 import com.cell.annotations.Plugin;
-import com.cell.context.INodeContext;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.http.gate.impl.StatContextImpl;
+import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.services.IStatContextService;
 

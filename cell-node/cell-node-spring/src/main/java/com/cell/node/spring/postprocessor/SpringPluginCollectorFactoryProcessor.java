@@ -1,10 +1,10 @@
 package com.cell.node.spring.postprocessor;
 
 import com.cell.annotations.AutoPlugin;
-import com.cell.collector.AbstractPluginCollector;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.node.core.collector.AbstractPluginCollector;
 import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
 import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
 import com.cell.node.spring.postprocessors.dependency.SpringBeanDependenciesPostProcessor;

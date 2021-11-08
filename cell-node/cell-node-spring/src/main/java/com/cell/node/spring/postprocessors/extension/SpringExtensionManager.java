@@ -1,16 +1,16 @@
 package com.cell.node.spring.postprocessors.extension;
 
 import com.cell.base.core.config.AbstractInitOnce;
-import com.cell.configuration.RootConfiguration;
 import com.cell.constants.DebugConstants;
-import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
-import com.cell.discovery.nacos.http.extension.INodeExtension;
-import com.cell.exception.ExtensionImportException;
 import com.cell.exceptions.ConfigException;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import com.cell.models.Module;
+import com.cell.node.core.configuration.RootConfiguration;
+import com.cell.node.core.context.INodeContext;
+import com.cell.node.core.exception.ExtensionImportException;
+import com.cell.node.core.extension.INodeExtension;
 import com.cell.node.spring.bridge.ISpringNodeExtension;
 import com.cell.node.spring.context.SpringNodeContext;
 import com.cell.node.spring.exception.ContainerException;

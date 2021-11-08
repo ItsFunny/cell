@@ -1,6 +1,7 @@
 package com.cell.node.spring.bridge;
 
-import com.cell.discovery.nacos.http.extension.IExtensionManager;
+
+import com.cell.node.core.extension.IExtensionManager;
 
 /**
  * @author Charlie

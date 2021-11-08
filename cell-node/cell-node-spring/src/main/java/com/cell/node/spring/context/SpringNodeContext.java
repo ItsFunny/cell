@@ -2,7 +2,7 @@ package com.cell.node.spring.context;
 
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.constants.CommandLineConstants;
-import com.cell.discovery.nacos.http.extension.INodeExtension;
+import com.cell.node.core.extension.INodeExtension;
 import com.cell.node.spring.app.SpringNodeAPP;
 import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
 import lombok.Data;
