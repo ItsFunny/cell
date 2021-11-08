@@ -2,8 +2,8 @@ package com.cell.base.core.channel;
 
 import com.cell.base.core.protocol.ICommandSuit;
 import com.cell.base.core.protocol.IContext;
-import com.cell.executor.IChainExecutor;
-import com.cell.pipeline.Pipeline;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
+import com.cell.plugin.pipeline.pipeline.Pipeline;
 import reactor.core.publisher.Mono;
 
 /**

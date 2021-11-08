@@ -1,6 +1,6 @@
 package com.cell.grpc.server.framework.couple;
 
-import com.cell.couple.RPCServerResponseWrapper;
+import com.cell.rpc.server.base.framework.couple.RPCServerResponseWrapper;
 import lombok.Data;
 
 /**

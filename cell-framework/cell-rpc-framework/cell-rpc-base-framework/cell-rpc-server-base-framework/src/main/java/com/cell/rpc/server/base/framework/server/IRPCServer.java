@@ -1,0 +1,15 @@
+package com.cell.rpc.server.base.framework.server;
+
+import com.cell.base.framework.server.IServer;
+
+/**
+ * @author Charlie
+ * @When
+ * @Description
+ * @Detail
+ * @Attention:
+ * @Date 创建时间：2021-10-23 22:23
+ */
+public interface IRPCServer extends IServer
+{
+}

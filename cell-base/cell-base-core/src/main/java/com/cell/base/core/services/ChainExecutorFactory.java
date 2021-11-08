@@ -1,6 +1,6 @@
 package com.cell.base.core.services;
 
-import com.cell.executor.IListChainExecutor;
+import com.cell.plugin.pipeline.executor.IListChainExecutor;
 
 /**
  * @author Charlie

@@ -7,13 +7,13 @@ import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.base.common.context.InitCTX;
+import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.base.common.enums.EnumHttpRequestType;
-import com.cell.model.Instance;
+import com.cell.gate.common.utils.GatewayUtils;
+import com.cell.node.discovery.model.Instance;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;
-import com.cell.transport.model.ServerMetaData;
-import com.cell.utils.GatewayUtils;
 import lombok.Data;
 
 import java.util.HashSet;

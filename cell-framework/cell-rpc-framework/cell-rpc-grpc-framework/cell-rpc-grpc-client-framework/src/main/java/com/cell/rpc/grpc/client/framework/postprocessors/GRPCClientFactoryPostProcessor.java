@@ -2,7 +2,7 @@ package com.cell.rpc.grpc.client.framework.postprocessors;
 
 import com.cell.base.common.context.InitCTX;
 import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
-import com.cell.root.Root;
+import com.cell.base.framework.root.Root;
 import com.cell.rpc.grpc.client.framework.annotation.GRPCClientRequestAnno;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

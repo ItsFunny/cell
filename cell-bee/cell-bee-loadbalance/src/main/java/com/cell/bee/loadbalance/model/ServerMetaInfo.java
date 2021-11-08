@@ -1,6 +1,6 @@
 package com.cell.bee.loadbalance.model;
 
-import com.cell.transport.model.ServerMetaData;
+import com.cell.bee.transport.model.ServerMetaData;
 import lombok.Data;
 
 import java.util.Objects;

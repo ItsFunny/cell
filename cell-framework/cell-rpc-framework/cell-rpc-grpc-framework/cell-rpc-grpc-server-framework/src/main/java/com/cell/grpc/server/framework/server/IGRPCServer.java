@@ -1,6 +1,6 @@
 package com.cell.grpc.server.framework.server;
 
-import com.cell.server.IRPCServer;
+import com.cell.rpc.server.base.framework.server.IRPCServer;
 
 /**
  * @author Charlie

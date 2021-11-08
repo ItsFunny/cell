@@ -10,7 +10,7 @@ import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.grpc.common.cluster.GrpcRequest;
 import com.cell.grpc.common.cluster.GrpcResponse;
 import com.cell.base.core.protocol.IBuzzContext;
-import com.cell.rpc.client.base.server.AbstractRPCClientServer;
+import com.cell.rpc.client.base.framework.server.AbstractRPCClientServer;
 import com.cell.rpc.grpc.client.framework.annotation.GRPCClientRequestAnno;
 import com.cell.base.core.serialize.ISerializable;
 import com.cell.timewheel.DefaultHashedTimeWheel;

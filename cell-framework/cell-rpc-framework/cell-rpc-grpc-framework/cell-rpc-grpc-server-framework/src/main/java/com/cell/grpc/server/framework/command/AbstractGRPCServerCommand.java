@@ -1,6 +1,6 @@
 package com.cell.grpc.server.framework.command;
 
-import com.cell.cmd.impl.AbstractRPCServerCommand;
+import com.cell.rpc.common.cmd.impl.AbstractRPCServerCommand;
 
 /**
  * @author Charlie

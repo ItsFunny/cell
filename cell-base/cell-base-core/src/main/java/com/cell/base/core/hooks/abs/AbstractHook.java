@@ -2,7 +2,7 @@ package com.cell.base.core.hooks.abs;
 
 import com.cell.base.core.hooks.IHook;
 import com.cell.base.core.protocol.IContext;
-import com.cell.executor.IChainExecutor;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
 import reactor.core.publisher.Mono;
 
 /**

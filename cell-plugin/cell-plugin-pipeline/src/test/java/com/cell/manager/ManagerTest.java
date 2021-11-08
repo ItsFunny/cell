@@ -1,7 +1,10 @@
 package com.cell.manager;
 
-import com.cell.executor.IReactorExecutor;
-import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
+import com.cell.plugin.pipeline.annotation.ActiveMethod;
+import com.cell.plugin.pipeline.executor.IReactorExecutor;
+import com.cell.plugin.pipeline.manager.AbstractAutoSelectReflectManager;
+import com.cell.plugin.pipeline.manager.IReflectManager;
 import org.junit.Test;
 
 import java.util.Arrays;

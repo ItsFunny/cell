@@ -12,7 +12,7 @@ import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.sdk.log.LOG;
 import com.cell.base.common.models.Module;
-import com.cell.root.Root;
+import com.cell.base.framework.root.Root;
 import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.util.GRPCUtil;
 import io.grpc.stub.AbstractStub;

@@ -1,8 +1,8 @@
 package com.cell.grpc.server.framework.manager.nodes;
 
 import com.cell.base.core.annotations.ManagerNode;
-import com.cell.constants.RPCHookConstants;
-import com.cell.http.gate.hook.AbstractRPCHook;
+import com.cell.rpc.common.constants.RPCHookConstants;
+import com.cell.rpc.common.gate.hook.AbstractRPCHook;
 
 /**
  * @author Charlie

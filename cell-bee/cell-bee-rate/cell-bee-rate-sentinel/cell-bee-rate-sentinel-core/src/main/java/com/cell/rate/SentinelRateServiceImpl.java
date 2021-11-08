@@ -5,11 +5,11 @@ import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.ResourceTypeConstants;
 import com.alibaba.csp.sentinel.SphU;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.cell.IRateAcquireBody;
-import com.cell.IRateEntry;
-import com.cell.IRateService;
 import com.cell.base.core.annotations.ActivePlugin;
-import com.cell.exception.RateBlockException;
+import com.cell.bee.rate.base.IRateAcquireBody;
+import com.cell.bee.rate.base.IRateEntry;
+import com.cell.bee.rate.base.IRateService;
+import com.cell.bee.rate.base.exception.RateBlockException;
 import lombok.Builder;
 import lombok.Data;
 

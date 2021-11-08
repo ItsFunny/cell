@@ -9,9 +9,10 @@ import com.cell.base.common.utils.ReflectionUtils;
 import com.cell.base.common.wrapper.MonoWrapper;
 import com.cell.base.core.comparators.InstanceOrderComparator;
 
+import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.cell.sdk.log.LOG;
 import com.cell.base.core.utils.ClassUtil;
-import com.cell.manager.IReflectManager;
+
 import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.node.spring.config.ConfigConstants;
 import com.cell.node.spring.wrapper.AnnotaionManagerWrapper;

@@ -1,7 +1,7 @@
 package com.cell.bee.event.simple;
 
 import com.cell.base.common.events.IEvent;
-import com.cell.executor.IChainExecutor;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
 
 /**
  * @author Charlie

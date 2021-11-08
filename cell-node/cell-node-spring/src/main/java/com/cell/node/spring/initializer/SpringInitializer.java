@@ -9,7 +9,7 @@ import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.core.enums.EnumLifeCycle;
 import com.cell.sdk.log.LOG;
-import com.cell.manager.IReflectManager;
+import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.cell.node.core.constants.Constants;
 import com.cell.node.core.extension.AbstractNodeExtension;
 import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;

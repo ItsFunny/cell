@@ -1,6 +1,6 @@
 package com.cell.bee.event.simple;
 
-import com.cell.manager.IReflectManager;
+import com.cell.plugin.pipeline.manager.IReflectManager;
 
 /**
  * @author Charlie

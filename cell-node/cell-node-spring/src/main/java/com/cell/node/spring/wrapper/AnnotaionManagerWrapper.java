@@ -1,6 +1,6 @@
 package com.cell.node.spring.wrapper;
 
-import com.cell.manager.IReflectManager;
+import com.cell.plugin.pipeline.manager.IReflectManager;
 import lombok.Data;
 
 import java.util.Map;

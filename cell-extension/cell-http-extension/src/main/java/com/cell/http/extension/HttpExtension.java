@@ -18,7 +18,7 @@ import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.proxy.DefaultHttpProxy;
 import com.cell.proxy.IHttpProxy;
 import com.cell.base.core.reactor.ICommandReactor;
-import com.cell.root.Root;
+import com.cell.base.framework.root.Root;
 import com.cell.server.DefaultHttpServer;
 import com.cell.server.IHttpServer;
 import com.cell.service.IDynamicControllerService;

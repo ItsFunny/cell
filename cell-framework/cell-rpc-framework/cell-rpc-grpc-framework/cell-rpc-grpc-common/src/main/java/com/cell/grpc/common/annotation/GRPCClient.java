@@ -1,6 +1,6 @@
 package com.cell.grpc.common.annotation;
 
-import com.cell.rpc.client.base.annotation.RPCClient;
+import com.cell.rpc.client.base.framework.annotation.RPCClient;
 import io.grpc.ClientInterceptor;
 
 import java.lang.annotation.*;

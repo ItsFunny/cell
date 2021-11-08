@@ -1,7 +1,7 @@
 package com.cell.bee.event.simple;
 
 import com.cell.base.common.events.IEvent;
-import com.cell.manager.IReflectManager;
+import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.google.common.eventbus.EventBus;
 
 /**

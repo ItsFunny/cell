@@ -7,7 +7,7 @@ import com.cell.base.common.context.InitCTX;
 import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultPureStringKeyResolver;
-import com.cell.transport.model.ServerMetaData;
+import com.cell.bee.transport.model.ServerMetaData;
 
 import java.util.Collection;
 

@@ -1,7 +1,7 @@
 package com.cell.discovery;
 
-import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
-import com.cell.model.Instance;
+import com.cell.node.discovery.model.Instance;
+import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import org.junit.Test;
 
 import java.util.HashMap;

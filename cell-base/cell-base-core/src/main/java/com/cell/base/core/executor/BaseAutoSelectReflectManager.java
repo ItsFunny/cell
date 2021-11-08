@@ -1,7 +1,7 @@
 package com.cell.base.core.executor;
 
 import com.cell.base.core.protocol.IContext;
-import com.cell.manager.AbstractAutoSelectReflectManager;
+import com.cell.plugin.pipeline.manager.AbstractAutoSelectReflectManager;
 
 /**
  * @author Charlie

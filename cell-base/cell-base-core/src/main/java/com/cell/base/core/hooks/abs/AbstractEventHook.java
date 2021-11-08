@@ -5,7 +5,7 @@ import com.cell.base.core.hooks.IChainHook;
 import com.cell.base.core.hooks.IEventHook;
 import com.cell.base.core.protocol.IContext;
 import com.cell.base.core.protocol.IEventContext;
-import com.cell.executor.IChainExecutor;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
 import reactor.core.publisher.Mono;
 
 /**

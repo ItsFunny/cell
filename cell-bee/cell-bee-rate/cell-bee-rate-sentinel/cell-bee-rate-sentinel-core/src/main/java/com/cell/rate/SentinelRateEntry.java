@@ -1,7 +1,7 @@
 package com.cell.rate;
 
 import com.alibaba.csp.sentinel.AsyncEntry;
-import com.cell.IRateEntry;
+import com.cell.bee.rate.base.IRateEntry;
 import lombok.Builder;
 import lombok.Data;
 

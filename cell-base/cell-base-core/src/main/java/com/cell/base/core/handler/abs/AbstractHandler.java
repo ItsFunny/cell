@@ -4,7 +4,7 @@ import com.cell.base.core.handler.IChainHandler;
 import com.cell.base.core.handler.IHandler;
 import com.cell.base.core.protocol.IContext;
 import com.cell.base.core.services.IHandlerSuit;
-import com.cell.executor.IChainExecutor;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
 import reactor.core.publisher.Mono;
 
 /**
