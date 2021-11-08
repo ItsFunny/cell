@@ -1,6 +1,6 @@
 package com.cell.discovery.nacos.config;
 
-import com.cell.Configuration;
+import com.cell.sdk.configuration.Configuration;
 import lombok.Data;
 
 /**

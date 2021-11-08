@@ -1,11 +1,11 @@
 package com.cell.node.spring.exntension;
 
-import com.cell.Configuration;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.concurrent.BaseDefaultEventLoopGroup;
 import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.node.core.configuration.RootConfiguration;
 import com.cell.node.core.context.INodeContext;
+import com.cell.sdk.configuration.Configuration;
 import lombok.Data;
 
 import java.util.Optional;
