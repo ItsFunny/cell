@@ -1,7 +1,7 @@
 package com.cell.discovery.nacos.discovery;
 
+import com.cell.base.core.config.IInitOnce;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.grpc.common.config.IInitOnce;
 
 import java.util.Map;
 import java.util.Set;

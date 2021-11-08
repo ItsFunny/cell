@@ -1,4 +1,4 @@
-package com.cell.base.core.config;
+package com.cell.node.spring.config;
 
 import io.netty.util.internal.ConcurrentSet;
 
@@ -35,7 +35,7 @@ public class Config
         return interestClasses;
     }
 
-    public static Set<Class<? extends  Annotation>> getInterestAnnotations()
+    public static Set<Class<? extends Annotation>> getInterestAnnotations()
     {
         return interestAnnotations;
     }

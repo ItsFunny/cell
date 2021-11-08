@@ -1,4 +1,4 @@
-package com.cell.com.cell.grpc.common.annotation;
+package com.cell.grpc.common.annotation;
 
 import com.cell.rpc.client.base.annotation.RPCClient;
 import io.grpc.ClientInterceptor;

@@ -1,5 +1,8 @@
 {
-  "delayTimes": [2000, 5000],
+  "delayTimes": [
+    2000,
+    5000
+  ],
   "type": 1,
   "typeValue": 1
 }

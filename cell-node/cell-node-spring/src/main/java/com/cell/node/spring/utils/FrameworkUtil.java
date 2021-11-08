@@ -1,6 +1,6 @@
-package com.cell.rpc.grpc.client.framework.util;
+package com.cell.node.spring.utils;
 
-import com.cell.bridge.ISpringNodeExtension;
+import com.cell.node.spring.bridge.ISpringNodeExtension;
 import com.cell.utils.ClassUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;

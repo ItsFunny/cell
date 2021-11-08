@@ -1,9 +1,5 @@
 package com.cell.cache;
 
-import com.cell.decorators.Stateful;
-import com.cell.enums.CacheTypeEnums;
-import com.cell.services.TypeFul;
-
 /**
  * @author Charlie
  * @When

@@ -15,11 +15,18 @@ import com.cell.reactor.ICommandReactor;
 public interface IBuzzContext extends IContext
 {
     CommandContext getCommandContext();
+
     void setEventExecutor(EventExecutor executor);
+
     EventExecutor getEventExecutor();
+
     void response(ContextResponseWrapper wp);
+
     long getRequestTimestamp();
+
     Summary getSummary();
+
     Promise<Object> getPromise();
+
     ICommandReactor getReactor();
 }

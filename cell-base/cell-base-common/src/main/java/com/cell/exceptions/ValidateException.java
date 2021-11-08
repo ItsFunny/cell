@@ -1,8 +1,5 @@
 package com.cell.exceptions;
 
-import com.cell.enums.CellError;
-import com.cell.enums.ExceptionEnums;
-
 /**
  * @author Charlie
  * @When

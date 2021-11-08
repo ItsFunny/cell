@@ -1,2 +1,2 @@
-com.cell.initializer.CellSpringInitializer=\
-com.cell.inilizer.RPCServerInilizer
+com.cell.node.spring.initializer.CellSpringInitializer=\
+com.cell.rpc.server.base.inilizer.RPCServerInilizer

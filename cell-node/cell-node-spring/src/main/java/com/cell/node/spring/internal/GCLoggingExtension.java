@@ -1,12 +1,12 @@
-package com.cell.internal;
+package com.cell.node.spring.internal;
 
 import com.cell.annotations.CellOrder;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.log.LogTypeEnums;
 import com.cell.models.Module;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 
 import javax.management.Notification;
 import javax.management.NotificationEmitter;

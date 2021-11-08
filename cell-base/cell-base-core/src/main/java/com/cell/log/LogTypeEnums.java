@@ -30,7 +30,9 @@ public enum LogTypeEnums
     {
         return code;
     }
-    public long getValue() {
+
+    public long getValue()
+    {
         return code;
     }
 

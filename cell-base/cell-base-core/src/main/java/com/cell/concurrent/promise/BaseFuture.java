@@ -31,19 +31,19 @@ public interface BaseFuture extends Future<Object>
 
     @Override
     BaseFuture awaitUninterruptibly();
-    
+
     EventExecutor executor();
 
     /**
      * following methods:
      * <ul>
-     *     <li>{@link #addListener(GenericFutureListener)}</li>
-     *     <li>{@link #addListeners(GenericFutureListener[])}</li>
-     *     <li>{@link #await()}</li>
-     *     <li>{@link #await(long)} ()}</li>
-     *     <li>{@link #awaitUninterruptibly()}</li>
-     *     <li>{@link #sync()}</li>
-     *     <li>{@link #syncUninterruptibly()}</li>
+     * <li>{@link #addListener(GenericFutureListener)}</li>
+     * <li>{@link #addListeners(GenericFutureListener[])}</li>
+     * <li>{@link #await()}</li>
+     * <li>{@link #await(long)} ()}</li>
+     * <li>{@link #awaitUninterruptibly()}</li>
+     * <li>{@link #sync()}</li>
+     * <li>{@link #syncUninterruptibly()}</li>
      * </ul>
      */
     boolean isNull();

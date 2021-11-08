@@ -1,6 +1,5 @@
 package com.cell.manager.nodes;
 
-import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.constants.GatewayConstants;
@@ -9,6 +8,7 @@ import com.cell.context.MetricsContext;
 import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.MetricsManager;
 import com.cell.prometheus.HistogramStator;
+import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 import com.cell.services.IStatContextService;
 import com.cell.wrapper.ServerMetaInfoWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

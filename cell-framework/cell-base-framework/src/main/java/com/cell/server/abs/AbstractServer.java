@@ -1,8 +1,7 @@
 package com.cell.server.abs;
 
-import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.concurrent.base.Promise;
-import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.event.IFrameworkEvent;
 import com.cell.event.IProcessEvent;
 import com.cell.manager.ProcessManager;
@@ -10,6 +9,7 @@ import com.cell.protocol.IServerRequest;
 import com.cell.protocol.IServerResponse;
 import com.cell.proxy.IFrameworkProxy;
 import com.cell.proxy.IProxy;
+import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 import com.cell.server.IServer;
 import com.cell.utils.ClassUtil;
 import lombok.Data;

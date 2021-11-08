@@ -3,7 +3,6 @@ package com.cell.bee.loadbalance.model;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
-import java.util.HashMap;
 import java.util.Objects;
 
 /**

@@ -16,7 +16,7 @@ public class SimpleJobCenter extends AbstractSimpleEventCenter
 {
     private final EventBus bus = new EventBus();
 
-     SimpleJobCenter()
+    SimpleJobCenter()
     {
         this.bus.register(this);
     }

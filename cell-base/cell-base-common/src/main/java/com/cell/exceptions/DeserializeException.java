@@ -8,7 +8,7 @@ package com.cell.exceptions;
  * @Attention:
  * @Date 创建时间：2020-12-17 21:53
  */
-public class DeserializeException extends  RuntimeException
+public class DeserializeException extends RuntimeException
 {
     /**
      * Constructs a new runtime exception with {@code null} as its

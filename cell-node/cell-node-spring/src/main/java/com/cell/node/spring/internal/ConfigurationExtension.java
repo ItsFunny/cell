@@ -1,13 +1,13 @@
-package com.cell.internal;
+package com.cell.node.spring.internal;
 
 import com.cell.Configuration;
 import com.cell.annotations.CellOrder;
 import com.cell.constants.OrderConstants;
 import com.cell.context.INodeContext;
 import com.cell.exception.ConfigurationException;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.log.LOG;
 import com.cell.models.Module;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
@@ -27,6 +27,7 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;
     private String DEFAULT_PATH = "/Users/joker/Java/cell";
+
     public ConfigurationExtension()
     {
         options = new Options();

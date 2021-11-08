@@ -1,4 +1,4 @@
-package com.cell.com.cell.grpc.common.constants;
+package com.cell.grpc.common.constants;
 
 /**
  * @author Charlie

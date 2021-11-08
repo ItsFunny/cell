@@ -1,10 +1,10 @@
 package com.cell.decorators;
 
+import com.cell.base.core.config.AbsReflectAbleInitOnce;
 import com.cell.comparators.CompareSatisfiedFunc;
-import com.cell.grpc.common.config.AbsReflectAbleInitOnce;
 import com.cell.enums.BeeEnums;
-import com.cell.enums.TypeEnums;
 import com.cell.enums.GroupEnums;
+import com.cell.enums.TypeEnums;
 import com.cell.utils.CollectionUtils;
 
 import java.util.ArrayList;
@@ -23,16 +23,18 @@ import java.util.Map;
 public class DefaultStatefulDecoratorManager extends AbsReflectAbleInitOnce implements ITypeDecoratorManager<TypeEnums, TypeEnums, GroupEnums>
 {
     private Map<BeeEnums, List<ITypeStatefulDecorator<TypeEnums>>> stateFulDecorators = new HashMap<>();
-    private static final  DefaultStatefulDecoratorManager INSTANCE=new DefaultStatefulDecoratorManager();
+    private static final DefaultStatefulDecoratorManager INSTANCE = new DefaultStatefulDecoratorManager();
+
     public static DefaultStatefulDecoratorManager getInstance()
     {
         return INSTANCE;
     }
+
     @Override
     public TypeStateful<TypeEnums> decorate(TypeStateful<TypeEnums> t, CompareSatisfiedFunc<TypeEnums> compareFunc)
     {
         List<ITypeStatefulDecorator<TypeEnums>> decorators = stateFulDecorators.get(t.getBee());
-        if (CollectionUtils.isEmpty(decorators))return t;
+        if (CollectionUtils.isEmpty(decorators)) return t;
         for (ITypeStatefulDecorator<TypeEnums> decorator : decorators)
         {
             if (!compareFunc.satisfied(decorator.getType()))

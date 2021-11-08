@@ -19,13 +19,17 @@ import java.util.Map;
 public interface IHttpCommandContext extends IBuzzContext
 {
     IHttpReactor getHttpReactor();
+
     HttpServletRequest getHttpRequest();
+
     HttpServletResponse getHttpResponse();
+
     Map<String, String> getUriRegexValue();
 
     DeferredResult<Object> getResult();
 
     String getURI();
+
     Map<String, String> getPathUri();
 
     Object getParameter(String key);

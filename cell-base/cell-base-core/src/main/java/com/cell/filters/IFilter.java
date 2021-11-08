@@ -1,6 +1,5 @@
 package com.cell.filters;
 
-import com.cell.enums.TypeEnums;
 import com.cell.enums.FilterEnums;
 
 /**

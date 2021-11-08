@@ -27,7 +27,8 @@ import java.util.List;
  * @author Daniel Theuke (daniel.theuke@heuboe.de)
  */
 @FunctionalInterface
-public interface GlobalServerInterceptorConfigurer {
+public interface GlobalServerInterceptorConfigurer
+{
 
     /**
      * Configures the given list of server interceptors, possibly adding new elements, removing unwanted elements, or

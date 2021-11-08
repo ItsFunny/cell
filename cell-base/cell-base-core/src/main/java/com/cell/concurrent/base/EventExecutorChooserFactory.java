@@ -1,6 +1,7 @@
 package com.cell.concurrent.base;
 
-public interface EventExecutorChooserFactory {
+public interface EventExecutorChooserFactory
+{
 
     /**
      * Returns a new {@link EventExecutorChooser}.
@@ -10,7 +11,8 @@ public interface EventExecutorChooserFactory {
     /**
      * Chooses the next {@link EventExecutor} to use.
      */
-    interface EventExecutorChooser {
+    interface EventExecutorChooser
+    {
 
         /**
          * Returns the new {@link EventExecutor} to use.

@@ -1,44 +1,53 @@
 package com.cell.shell;
 
-public class Result {
+public class Result
+{
     private int code;
 
     private Exception exception;
 
     private String message;
 
-    public Result(int code, Exception exception, String message) {
+    public Result(int code, Exception exception, String message)
+    {
         this.code = code;
         this.exception = exception;
         this.message = message;
     }
 
-    public int getCode() {
+    public int getCode()
+    {
         return code;
     }
 
-    public Exception getException() {
+    public Exception getException()
+    {
         return exception;
     }
 
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
-    public void setCode(int code) {
+    public void setCode(int code)
+    {
         this.code = code;
     }
 
-    public void setException(Exception exception) {
+    public void setException(Exception exception)
+    {
         this.exception = exception;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(String message)
+    {
         this.message = message;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "Result{" +
                 "code=" + code +
                 ", exception=" + exception +

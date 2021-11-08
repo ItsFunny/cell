@@ -39,8 +39,8 @@ public abstract class AbstractHandler implements IHandler
     @Override
     public Mono<Void> execute(IContext context, IChainExecutor executor)
     {
-        return this.handle(context,executor);
+        return this.handle(context, executor);
     }
 
-    protected abstract Mono<Void> handle(IContext ctx,IChainExecutor executor);
+    protected abstract Mono<Void> handle(IContext ctx, IChainExecutor executor);
 }

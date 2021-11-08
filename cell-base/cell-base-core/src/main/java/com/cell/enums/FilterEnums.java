@@ -8,7 +8,7 @@ package com.cell.enums;
  * @Attention:
  * @Date 创建时间：2021-01-24 08:17
  */
-public enum  FilterEnums
+public enum FilterEnums
 {
     SATISFIED(100),
     UN_SATISFIED(101),

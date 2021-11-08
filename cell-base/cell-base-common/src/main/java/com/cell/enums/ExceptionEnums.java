@@ -1,7 +1,5 @@
 package com.cell.enums;
 
-import lombok.Data;
-
 /**
  * @author Charlie
  * @When

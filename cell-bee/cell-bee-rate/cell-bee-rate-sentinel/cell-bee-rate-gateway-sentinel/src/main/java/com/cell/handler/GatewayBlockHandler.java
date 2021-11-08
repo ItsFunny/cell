@@ -1,8 +1,6 @@
 package com.cell.handler;
 
-import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.BlockRequestHandler;
 import com.cell.annotations.ActivePlugin;
-import com.cell.annotations.AutoPlugin;
 import com.cell.utils.GatewayUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;

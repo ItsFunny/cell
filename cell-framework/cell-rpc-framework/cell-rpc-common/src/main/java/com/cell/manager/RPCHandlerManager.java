@@ -18,9 +18,12 @@ import com.cell.services.impl.DefaultHandlerMutableChainExecutor;
 public class RPCHandlerManager extends AbstractReflectManager
 {
     private static final RPCHandlerManager instance = new RPCHandlerManager();
-    public static RPCHandlerManager getInstance(){
+
+    public static RPCHandlerManager getInstance()
+    {
         return instance;
     }
+
     @Override
     protected ChainExecutorFactory<? extends IListChainExecutor> factory()
     {

@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.channelfactory.GRPCChannelFactory;
 import com.cell.channelfactory.GrpcChannelConfigurer;
@@ -80,13 +80,13 @@ public class SpringClientConfiguration implements InitializingBean
 
     @Bean
     public GRPCChannelFactory nettyChannelFactory(
-                                                  final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
-                                                  final List<GrpcChannelConfigurer> channelConfigurers)
+            final GlobalClientInterceptorRegistry globalClientInterceptorRegistry,
+            final List<GrpcChannelConfigurer> channelConfigurers)
     {
         final NettyChannelFactory channelFactory =
                 new NettyChannelFactory(globalClientInterceptorRegistry, channelConfigurers);
         final InProcessChannelFactory inProcessChannelFactory =
-                new InProcessChannelFactory( globalClientInterceptorRegistry, channelConfigurers);
+                new InProcessChannelFactory(globalClientInterceptorRegistry, channelConfigurers);
         return new InProcessOrAlternativeChannelFactory(inProcessChannelFactory, channelFactory);
     }
 

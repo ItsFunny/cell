@@ -1,20 +1,20 @@
-package com.cell.postprocessor;
+package com.cell.node.spring.postprocessor;
 
-import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
 import com.cell.comparators.InstanceOrderComparator;
-import com.cell.base.core.config.ConfigConstants;
 import com.cell.constants.BitConstants;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.manager.IReflectManager;
 import com.cell.models.Module;
+import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
+import com.cell.node.spring.config.ConfigConstants;
+import com.cell.node.spring.wrapper.AnnotaionManagerWrapper;
+import com.cell.node.spring.wrapper.AnnotationNodeWrapper;
 import com.cell.utils.ClassUtil;
 import com.cell.utils.CollectionUtils;
 import com.cell.utils.ReflectionUtils;
-import com.cell.wrapper.AnnotaionManagerWrapper;
-import com.cell.wrapper.AnnotationNodeWrapper;
 import com.cell.wrapper.MonoWrapper;
 import lombok.Data;
 import org.springframework.beans.BeansException;

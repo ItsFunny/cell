@@ -2,8 +2,8 @@ package com.cell.bee.event.extension;
 
 import com.cell.annotations.LifeCycle;
 import com.cell.context.INodeContext;
-import com.cell.discovery.nacos.http.extension.AbstractSpringNodeExtension;
 import com.cell.enums.EnumLifeCycle;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 
 /**
  * @author Charlie

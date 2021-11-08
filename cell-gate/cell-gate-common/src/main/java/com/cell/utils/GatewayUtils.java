@@ -1,8 +1,8 @@
 package com.cell.utils;
 
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
-import com.cell.grpc.common.config.GatewayConfiguration;
-import com.cell.grpc.common.config.RateRulePropertyNode;
+import com.cell.base.core.config.GatewayConfiguration;
+import com.cell.base.core.config.RateRulePropertyNode;
 import com.cell.constants.DebugConstants;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;

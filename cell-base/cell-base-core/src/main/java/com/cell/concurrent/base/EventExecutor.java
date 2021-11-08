@@ -1,6 +1,7 @@
 package com.cell.concurrent.base;
 
-public interface EventExecutor extends EventExecutorGroup {
+public interface EventExecutor extends EventExecutorGroup
+{
 
     /**
      * Returns a reference to itself.
@@ -17,7 +18,7 @@ public interface EventExecutor extends EventExecutorGroup {
      * Calls {@link #inEventLoop(Thread)} with {@link Thread#currentThread()} as argument
      */
     boolean inEventLoop();
-    
+
     Thread getThread();
 
     /**
@@ -25,10 +26,10 @@ public interface EventExecutor extends EventExecutorGroup {
      * {@code false} otherwise.
      */
     boolean inEventLoop(Thread thread);
-    
 
-    
-    int pendingTasks(); 
+
+    int pendingTasks();
+
     /**
      * Return a new {@link Promise}.
      */

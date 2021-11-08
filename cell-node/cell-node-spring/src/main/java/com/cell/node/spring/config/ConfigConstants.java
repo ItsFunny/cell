@@ -1,4 +1,4 @@
-package com.cell.base.core.config;
+package com.cell.node.spring.config;
 
 /**
  * @author Charlie
@@ -13,7 +13,7 @@ public interface ConfigConstants
     String ACTIVE_PLUGINS = "ACTIVE_PLUGINS";
     String FACTORIES = "FACTORIES";
     String MANAGERS = "MANAGERS";
-    String annotationNodes="annotationNodes";
+    String annotationNodes = "annotationNodes";
     String interestAnnotationsClazzs = "interestAnnotationsClazzs";
     String toRegistryPostProcessor = "toRegistryPostProcessor";
     String configurationClasses = "configurationClasses";

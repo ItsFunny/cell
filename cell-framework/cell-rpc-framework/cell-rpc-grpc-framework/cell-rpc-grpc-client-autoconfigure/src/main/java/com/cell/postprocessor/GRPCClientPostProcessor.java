@@ -1,10 +1,10 @@
 package com.cell.postprocessor;
 
-import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.com.cell.grpc.common.annotation.GRPCClient;
-import com.cell.rpc.grpc.client.framework.annotation.GrpcClientBean;
 import com.cell.channelfactory.GRPCChannelFactory;
+import com.cell.grpc.common.annotation.GRPCClient;
 import com.cell.inject.StubTransformer;
+import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
+import com.cell.rpc.grpc.client.framework.annotation.GrpcClientBean;
 import com.cell.stub.IStubFactory;
 import com.google.common.collect.Lists;
 import io.grpc.Channel;

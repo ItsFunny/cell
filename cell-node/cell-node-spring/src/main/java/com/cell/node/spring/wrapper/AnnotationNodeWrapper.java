@@ -1,4 +1,4 @@
-package com.cell.wrapper;
+package com.cell.node.spring.wrapper;
 
 import lombok.Data;
 

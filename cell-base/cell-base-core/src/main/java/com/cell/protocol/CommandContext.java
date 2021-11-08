@@ -32,11 +32,11 @@ public abstract class CommandContext
     public CommandContext(IChannel<IHandler, IChainHandler> channel, IServerRequest request, IServerResponse httpResponse,
                           CommandWrapper wrapper)
     {
-        this.channel=channel;
+        this.channel = channel;
         this.request = request;
         this.response = httpResponse;
         this.summary = collecSummary(request, wrapper);
-        this.wrapper=wrapper;
+        this.wrapper = wrapper;
         sessionKey = getHeaderData(NetworkConstants.SESSION_KEY);
         httpResponse.getPromise().addListener(this::onComplete);
     }

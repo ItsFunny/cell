@@ -1,5 +1,6 @@
 package com.cell.rate;
 
+import com.alibaba.csp.sentinel.AsyncEntry;
 import com.alibaba.csp.sentinel.EntryType;
 import com.alibaba.csp.sentinel.ResourceTypeConstants;
 import com.alibaba.csp.sentinel.SphU;
@@ -7,7 +8,6 @@ import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cell.IRateAcquireBody;
 import com.cell.IRateEntry;
 import com.cell.IRateService;
-import com.alibaba.csp.sentinel.AsyncEntry;
 import com.cell.annotations.ActivePlugin;
 import com.cell.exception.RateBlockException;
 import lombok.Builder;

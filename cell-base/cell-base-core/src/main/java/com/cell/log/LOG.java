@@ -101,7 +101,7 @@ public class LOG
         info(null, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
-    public static void info(ModuleInterface module,String msg, LogTypeEnums en, Object... data)
+    public static void info(ModuleInterface module, String msg, LogTypeEnums en, Object... data)
     {
         info(module, null, en, msg, data);
     }

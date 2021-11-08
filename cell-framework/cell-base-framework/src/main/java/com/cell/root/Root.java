@@ -1,6 +1,5 @@
 package com.cell.root;
 
-import com.cell.App;
 import com.cell.annotations.ActivePlugin;
 import com.cell.annotations.Command;
 import com.cell.annotations.ReactorAnno;

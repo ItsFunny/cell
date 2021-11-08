@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 public interface IHttpServer extends IServer
 {
     IHttpProxy getHttpProxy();
+
     DeferredResult<Object> request(HttpServletRequest request, HttpServletResponse response);
 
     boolean ready();

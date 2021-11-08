@@ -16,6 +16,7 @@ public enum TimeWheelDeleyLevel
     ;
 
     byte index;
+
     TimeWheelDeleyLevel(byte index)
     {
         this.index = index;

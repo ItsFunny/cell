@@ -1,6 +1,5 @@
 package com.cell.reactor;
 
-import com.cell.dispatcher.IDispatcher;
 import com.cell.proxy.IProxy;
 
 /**

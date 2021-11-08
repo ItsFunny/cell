@@ -21,24 +21,28 @@ public class DebugUtil
 
     public static void infoPrint(String msg, Object obj)
     {
-        StringBuilder sb=new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         sb.append("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< \n");
-        sb.append( "当前线程:" + Thread.currentThread().getId() + "," );
-        if (msg!=null){
+        sb.append("当前线程:" + Thread.currentThread().getId() + ",");
+        if (msg != null)
+        {
             sb.append(msg);
         }
-        if (obj instanceof String){
+        if (obj instanceof String)
+        {
             sb.append(obj);
-        }else {
+        } else
+        {
             sb.append(JSONUtil.toFormattedJson(obj));
         }
         sb.append("\n");
         sb.append(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         log.info(sb.toString());
     }
+
     public static void infoPrint(Object obj)
     {
-        infoPrint(null,obj);
+        infoPrint(null, obj);
     }
 
 

@@ -1,4 +1,4 @@
-package com.cell.adapter;
+package com.cell.node.spring.adapter;
 
 import com.cell.base.core.config.IInitOnce;
 import org.springframework.beans.factory.config.BeanPostProcessor;

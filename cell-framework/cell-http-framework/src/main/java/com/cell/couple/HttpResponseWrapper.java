@@ -58,6 +58,6 @@ public class HttpResponseWrapper extends AbstractBaseResponse implements IHttpSe
     @Override
     public void setDeferredResponse(DeferredResult<Object> response)
     {
-        this.responseResult=response;
+        this.responseResult = response;
     }
 }

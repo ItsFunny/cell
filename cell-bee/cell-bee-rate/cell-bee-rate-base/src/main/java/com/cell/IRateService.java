@@ -12,7 +12,7 @@ import com.cell.exception.RateBlockException;
  */
 public interface IRateService
 {
-    IRateEntry acquire(IRateAcquireBody body)throws RateBlockException;
+    IRateEntry acquire(IRateAcquireBody body) throws RateBlockException;
 
     void release(IRateEntry entry);
 }

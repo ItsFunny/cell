@@ -7,5 +7,5 @@ import java.lang.annotation.*;
 @Inherited
 public @interface Required
 {
-	boolean necessary() default true;
+    boolean necessary() default true;
 }

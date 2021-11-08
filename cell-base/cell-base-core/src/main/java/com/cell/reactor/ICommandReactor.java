@@ -1,6 +1,6 @@
 package com.cell.reactor;
 
-import com.cell.grpc.common.config.IInitOnce;
+import com.cell.base.core.config.IInitOnce;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IContext;
 

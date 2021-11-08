@@ -7,7 +7,7 @@ import com.cell.services.TypeFul;
 /**
  * @author Charlie
  * @When
- * @Description  有状态 & 有归属的成员
+ * @Description 有状态 & 有归属的成员
  * @Detail
  * @Attention:
  * @Date 创建时间：2021-01-07 17:04

@@ -1,4 +1,5 @@
 package com.cell.concurrent.exception;
+
 /**
  * An {@link IllegalStateException} which is raised when a user performed a blocking operation
  * when the user is in an event loop thread.  If a blocking operation is performed in an event loop
@@ -12,15 +13,18 @@ public class BlockingOperationException extends IllegalStateException
 
     public BlockingOperationException() { }
 
-    public BlockingOperationException(String s) {
+    public BlockingOperationException(String s)
+    {
         super(s);
     }
 
-    public BlockingOperationException(Throwable cause) {
+    public BlockingOperationException(Throwable cause)
+    {
         super(cause);
     }
 
-    public BlockingOperationException(String message, Throwable cause) {
+    public BlockingOperationException(String message, Throwable cause)
+    {
         super(message, cause);
     }
 }

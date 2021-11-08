@@ -1,9 +1,10 @@
 package com.cell.postprocessor;
 
-import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
-import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.Exclude;
 import com.cell.context.InitCTX;
+import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
+import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
+import com.cell.node.spring.postprocessor.SpringBeanRegistry;
 import org.junit.Test;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

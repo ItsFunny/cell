@@ -1,16 +1,16 @@
-package com.cell.postprocessor;
+package com.cell.node.spring.postprocessor;
 
-import com.cell.adapter.AbstractBeanDefiinitionRegistry;
-import com.cell.adapter.IBeanPostProcessortAdapter;
-import com.cell.bridge.ExtensionClass;
-import com.cell.bridge.ExtensionClassBeanDefinitionReader;
-import com.cell.bridge.ExtensionClassParser;
 import com.cell.base.core.config.AbstractInitOnce;
-import com.cell.constants.SpringBridge;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import com.cell.postprocessors.extension.SpringExtensionManager;
+import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
+import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
+import com.cell.node.spring.bridge.ExtensionClass;
+import com.cell.node.spring.bridge.ExtensionClassBeanDefinitionReader;
+import com.cell.node.spring.bridge.ExtensionClassParser;
+import com.cell.node.spring.constants.SpringBridge;
+import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
 import com.cell.utils.ExtensionClassUtil;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;

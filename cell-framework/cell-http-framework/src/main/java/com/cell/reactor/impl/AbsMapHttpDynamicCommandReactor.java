@@ -1,14 +1,10 @@
 package com.cell.reactor.impl;
 
 import com.cell.exceptions.ProgramaException;
-import com.cell.reactor.IDynamicHttpReactor;
 import com.cell.reactor.IMapDynamicHttpReactor;
-import com.cell.utils.CollectionUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Charlie

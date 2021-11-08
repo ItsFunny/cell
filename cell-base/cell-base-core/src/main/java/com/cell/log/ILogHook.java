@@ -1,7 +1,5 @@
 package com.cell.log;
 
-import com.cell.hooks.IHook;
-
 /**
  * @author Charlie
  * @When

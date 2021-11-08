@@ -18,8 +18,7 @@ public enum LogLevel
     DEBUG((short) (1)),
     INFO((short) (2)),
     WARN((short) (3)),
-    ERROR((short) (4))
-    ;
+    ERROR((short) (4));
 
     private short value;
 

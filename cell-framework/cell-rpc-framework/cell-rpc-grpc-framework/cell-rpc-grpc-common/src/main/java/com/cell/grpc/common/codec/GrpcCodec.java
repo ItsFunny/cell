@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.com.cell.grpc.common.codec;
+package com.cell.grpc.common.codec;
 
 import io.grpc.Codec;
 import org.springframework.stereotype.Component;
@@ -33,7 +33,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Component
-public @interface GrpcCodec {
+public @interface GrpcCodec
+{
 
     /**
      * Advertised codecs will be listed in the {@code Accept-Encoding} header. Defaults to false.

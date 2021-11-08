@@ -6,7 +6,8 @@ import com.cell.exceptions.AbstractZZException;
 
 public class ErrorWrapperException extends AbstractZZException
 {
-    public ErrorWrapperException(CellError errorCode) {
-    	super(errorCode, "", null);
+    public ErrorWrapperException(CellError errorCode)
+    {
+        super(errorCode, "", null);
     }
 }

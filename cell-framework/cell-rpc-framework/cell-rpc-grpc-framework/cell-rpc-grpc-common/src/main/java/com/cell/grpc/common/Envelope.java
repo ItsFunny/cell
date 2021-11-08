@@ -6,784 +6,1011 @@ package com.cell.grpc.common;
 /**
  * Protobuf type {@code common.Envelope}
  */
-public  final class Envelope extends
-    com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:common.Envelope)
-    EnvelopeOrBuilder {
-private static final long serialVersionUID = 0L;
-  // Use Envelope.newBuilder() to construct.
-  private Envelope(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-    super(builder);
-  }
-  private Envelope() {
-  }
+public final class Envelope extends
+        com.google.protobuf.GeneratedMessageV3 implements
+        // @@protoc_insertion_point(message_implements:common.Envelope)
+        EnvelopeOrBuilder
+{
+    private static final long serialVersionUID = 0L;
 
-  @Override
-  @SuppressWarnings({"unused"})
-  protected Object newInstance(
-      UnusedPrivateParameter unused) {
-    return new Envelope();
-  }
-
-  @Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private Envelope(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new NullPointerException();
+    // Use Envelope.newBuilder() to construct.
+    private Envelope(com.google.protobuf.GeneratedMessageV3.Builder<?> builder)
+    {
+        super(builder);
     }
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            EnvelopeHeader.Builder subBuilder = null;
-            if (header_ != null) {
-              subBuilder = header_.toBuilder();
-            }
-            header_ = input.readMessage(EnvelopeHeader.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(header_);
-              header_ = subBuilder.buildPartial();
-            }
 
-            break;
-          }
-          case 18: {
-            Payload.Builder subBuilder = null;
-            if (payload_ != null) {
-              subBuilder = payload_.toBuilder();
-            }
-            payload_ = input.readMessage(Payload.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(payload_);
-              payload_ = subBuilder.buildPartial();
-            }
+    private Envelope()
+    {
+    }
 
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
+    @Override
+    @SuppressWarnings({"unused"})
+    protected Object newInstance(
+            UnusedPrivateParameter unused)
+    {
+        return new Envelope();
+    }
+
+    @Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields()
+    {
+        return this.unknownFields;
+    }
+
+    private Envelope(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        this();
+        if (extensionRegistry == null)
+        {
+            throw new NullPointerException();
         }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+                com.google.protobuf.UnknownFieldSet.newBuilder();
+        try
+        {
+            boolean done = false;
+            while (!done)
+            {
+                int tag = input.readTag();
+                switch (tag)
+                {
+                    case 0:
+                        done = true;
+                        break;
+                    case 10:
+                    {
+                        EnvelopeHeader.Builder subBuilder = null;
+                        if (header_ != null)
+                        {
+                            subBuilder = header_.toBuilder();
+                        }
+                        header_ = input.readMessage(EnvelopeHeader.parser(), extensionRegistry);
+                        if (subBuilder != null)
+                        {
+                            subBuilder.mergeFrom(header_);
+                            header_ = subBuilder.buildPartial();
+                        }
+
+                        break;
+                    }
+                    case 18:
+                    {
+                        Payload.Builder subBuilder = null;
+                        if (payload_ != null)
+                        {
+                            subBuilder = payload_.toBuilder();
+                        }
+                        payload_ = input.readMessage(Payload.parser(), extensionRegistry);
+                        if (subBuilder != null)
+                        {
+                            subBuilder.mergeFrom(payload_);
+                            payload_ = subBuilder.buildPartial();
+                        }
+
+                        break;
+                    }
+                    default:
+                    {
+                        if (!parseUnknownField(
+                                input, unknownFields, extensionRegistry, tag))
+                        {
+                            done = true;
+                        }
+                        break;
+                    }
+                }
+            }
+        } catch (com.google.protobuf.InvalidProtocolBufferException e)
+        {
+            throw e.setUnfinishedMessage(this);
+        } catch (java.io.IOException e)
+        {
+            throw new com.google.protobuf.InvalidProtocolBufferException(
+                    e).setUnfinishedMessage(this);
+        } finally
+        {
+            this.unknownFields = unknownFields.build();
+            makeExtensionsImmutable();
+        }
     }
-  }
-  public static final com.google.protobuf.Descriptors.Descriptor
-      getDescriptor() {
-    return EvelopeProto.internal_static_common_Envelope_descriptor;
-  }
 
-  @Override
-  protected FieldAccessorTable
-      internalGetFieldAccessorTable() {
-    return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
-        .ensureFieldAccessorsInitialized(
-            Envelope.class, Envelope.Builder.class);
-  }
-
-  public static final int HEADER_FIELD_NUMBER = 1;
-  private EnvelopeHeader header_;
-  /**
-   * <code>.common.EnvelopeHeader header = 1;</code>
-   * @return Whether the header field is set.
-   */
-  public boolean hasHeader() {
-    return header_ != null;
-  }
-  /**
-   * <code>.common.EnvelopeHeader header = 1;</code>
-   * @return The header.
-   */
-  public EnvelopeHeader getHeader() {
-    return header_ == null ? EnvelopeHeader.getDefaultInstance() : header_;
-  }
-  /**
-   * <code>.common.EnvelopeHeader header = 1;</code>
-   */
-  public EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
-    return getHeader();
-  }
-
-  public static final int PAYLOAD_FIELD_NUMBER = 2;
-  private Payload payload_;
-  /**
-   * <code>.common.Payload payload = 2;</code>
-   * @return Whether the payload field is set.
-   */
-  public boolean hasPayload() {
-    return payload_ != null;
-  }
-  /**
-   * <code>.common.Payload payload = 2;</code>
-   * @return The payload.
-   */
-  public Payload getPayload() {
-    return payload_ == null ? Payload.getDefaultInstance() : payload_;
-  }
-  /**
-   * <code>.common.Payload payload = 2;</code>
-   */
-  public PayloadOrBuilder getPayloadOrBuilder() {
-    return getPayload();
-  }
-
-  private byte memoizedIsInitialized = -1;
-  @Override
-  public final boolean isInitialized() {
-    byte isInitialized = memoizedIsInitialized;
-    if (isInitialized == 1) return true;
-    if (isInitialized == 0) return false;
-
-    memoizedIsInitialized = 1;
-    return true;
-  }
-
-  @Override
-  public void writeTo(com.google.protobuf.CodedOutputStream output)
-                      throws java.io.IOException {
-    if (header_ != null) {
-      output.writeMessage(1, getHeader());
-    }
-    if (payload_ != null) {
-      output.writeMessage(2, getPayload());
-    }
-    unknownFields.writeTo(output);
-  }
-
-  @Override
-  public int getSerializedSize() {
-    int size = memoizedSize;
-    if (size != -1) return size;
-
-    size = 0;
-    if (header_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getHeader());
-    }
-    if (payload_ != null) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(2, getPayload());
-    }
-    size += unknownFields.getSerializedSize();
-    memoizedSize = size;
-    return size;
-  }
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (obj == this) {
-     return true;
-    }
-    if (!(obj instanceof Envelope)) {
-      return super.equals(obj);
-    }
-    Envelope other = (Envelope) obj;
-
-    if (hasHeader() != other.hasHeader()) return false;
-    if (hasHeader()) {
-      if (!getHeader()
-          .equals(other.getHeader())) return false;
-    }
-    if (hasPayload() != other.hasPayload()) return false;
-    if (hasPayload()) {
-      if (!getPayload()
-          .equals(other.getPayload())) return false;
-    }
-    if (!unknownFields.equals(other.unknownFields)) return false;
-    return true;
-  }
-
-  @Override
-  public int hashCode() {
-    if (memoizedHashCode != 0) {
-      return memoizedHashCode;
-    }
-    int hash = 41;
-    hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasHeader()) {
-      hash = (37 * hash) + HEADER_FIELD_NUMBER;
-      hash = (53 * hash) + getHeader().hashCode();
-    }
-    if (hasPayload()) {
-      hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
-      hash = (53 * hash) + getPayload().hashCode();
-    }
-    hash = (29 * hash) + unknownFields.hashCode();
-    memoizedHashCode = hash;
-    return hash;
-  }
-
-  public static Envelope parseFrom(
-      java.nio.ByteBuffer data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static Envelope parseFrom(
-      java.nio.ByteBuffer data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static Envelope parseFrom(
-      com.google.protobuf.ByteString data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static Envelope parseFrom(
-      com.google.protobuf.ByteString data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static Envelope parseFrom(byte[] data)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data);
-  }
-  public static Envelope parseFrom(
-      byte[] data,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    return PARSER.parseFrom(data, extensionRegistry);
-  }
-  public static Envelope parseFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static Envelope parseFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static Envelope parseDelimitedFrom(java.io.InputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input);
-  }
-  public static Envelope parseDelimitedFrom(
-      java.io.InputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-  }
-  public static Envelope parseFrom(
-      com.google.protobuf.CodedInputStream input)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input);
-  }
-  public static Envelope parseFrom(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws java.io.IOException {
-    return com.google.protobuf.GeneratedMessageV3
-        .parseWithIOException(PARSER, input, extensionRegistry);
-  }
-
-  @Override
-  public Builder newBuilderForType() { return newBuilder(); }
-  public static Builder newBuilder() {
-    return DEFAULT_INSTANCE.toBuilder();
-  }
-  public static Builder newBuilder(Envelope prototype) {
-    return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-  }
-  @Override
-  public Builder toBuilder() {
-    return this == DEFAULT_INSTANCE
-        ? new Builder() : new Builder().mergeFrom(this);
-  }
-
-  @Override
-  protected Builder newBuilderForType(
-      BuilderParent parent) {
-    Builder builder = new Builder(parent);
-    return builder;
-  }
-  /**
-   * Protobuf type {@code common.Envelope}
-   */
-  public static final class Builder extends
-      com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:common.Envelope)
-      EnvelopeOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return EvelopeProto.internal_static_common_Envelope_descriptor;
+    getDescriptor()
+    {
+        return EvelopeProto.internal_static_common_Envelope_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              Envelope.class, Envelope.Builder.class);
+    internalGetFieldAccessorTable()
+    {
+        return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
+                .ensureFieldAccessorsInitialized(
+                        Envelope.class, Envelope.Builder.class);
     }
 
-    // Construct using com.cell.grpc.common.Envelope.newBuilder()
-    private Builder() {
-      maybeForceBuilderInitialization();
-    }
-
-    private Builder(
-        BuilderParent parent) {
-      super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
-    }
-    @Override
-    public Builder clear() {
-      super.clear();
-      if (headerBuilder_ == null) {
-        header_ = null;
-      } else {
-        header_ = null;
-        headerBuilder_ = null;
-      }
-      if (payloadBuilder_ == null) {
-        payload_ = null;
-      } else {
-        payload_ = null;
-        payloadBuilder_ = null;
-      }
-      return this;
-    }
-
-    @Override
-    public com.google.protobuf.Descriptors.Descriptor
-        getDescriptorForType() {
-      return EvelopeProto.internal_static_common_Envelope_descriptor;
-    }
-
-    @Override
-    public Envelope getDefaultInstanceForType() {
-      return Envelope.getDefaultInstance();
-    }
-
-    @Override
-    public Envelope build() {
-      Envelope result = buildPartial();
-      if (!result.isInitialized()) {
-        throw newUninitializedMessageException(result);
-      }
-      return result;
-    }
-
-    @Override
-    public Envelope buildPartial() {
-      Envelope result = new Envelope(this);
-      if (headerBuilder_ == null) {
-        result.header_ = header_;
-      } else {
-        result.header_ = headerBuilder_.build();
-      }
-      if (payloadBuilder_ == null) {
-        result.payload_ = payload_;
-      } else {
-        result.payload_ = payloadBuilder_.build();
-      }
-      onBuilt();
-      return result;
-    }
-
-    @Override
-    public Builder clone() {
-      return super.clone();
-    }
-    @Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return super.setField(field, value);
-    }
-    @Override
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-    @Override
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-    @Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-    @Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        Object value) {
-      return super.addRepeatedField(field, value);
-    }
-    @Override
-    public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof Envelope) {
-        return mergeFrom((Envelope)other);
-      } else {
-        super.mergeFrom(other);
-        return this;
-      }
-    }
-
-    public Builder mergeFrom(Envelope other) {
-      if (other == Envelope.getDefaultInstance()) return this;
-      if (other.hasHeader()) {
-        mergeHeader(other.getHeader());
-      }
-      if (other.hasPayload()) {
-        mergePayload(other.getPayload());
-      }
-      this.mergeUnknownFields(other.unknownFields);
-      onChanged();
-      return this;
-    }
-
-    @Override
-    public final boolean isInitialized() {
-      return true;
-    }
-
-    @Override
-    public Builder mergeFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      Envelope parsedMessage = null;
-      try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (Envelope) e.getUnfinishedMessage();
-        throw e.unwrapIOException();
-      } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
-      return this;
-    }
-
+    public static final int HEADER_FIELD_NUMBER = 1;
     private EnvelopeHeader header_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder> headerBuilder_;
+
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
+     *
      * @return Whether the header field is set.
      */
-    public boolean hasHeader() {
-      return headerBuilder_ != null || header_ != null;
+    public boolean hasHeader()
+    {
+        return header_ != null;
     }
+
     /**
      * <code>.common.EnvelopeHeader header = 1;</code>
+     *
      * @return The header.
      */
-    public EnvelopeHeader getHeader() {
-      if (headerBuilder_ == null) {
+    public EnvelopeHeader getHeader()
+    {
         return header_ == null ? EnvelopeHeader.getDefaultInstance() : header_;
-      } else {
-        return headerBuilder_.getMessage();
-      }
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public Builder setHeader(EnvelopeHeader value) {
-      if (headerBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
-        }
-        header_ = value;
-        onChanged();
-      } else {
-        headerBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public Builder setHeader(
-        EnvelopeHeader.Builder builderForValue) {
-      if (headerBuilder_ == null) {
-        header_ = builderForValue.build();
-        onChanged();
-      } else {
-        headerBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public Builder mergeHeader(EnvelopeHeader value) {
-      if (headerBuilder_ == null) {
-        if (header_ != null) {
-          header_ =
-            EnvelopeHeader.newBuilder(header_).mergeFrom(value).buildPartial();
-        } else {
-          header_ = value;
-        }
-        onChanged();
-      } else {
-        headerBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public Builder clearHeader() {
-      if (headerBuilder_ == null) {
-        header_ = null;
-        onChanged();
-      } else {
-        header_ = null;
-        headerBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public EnvelopeHeader.Builder getHeaderBuilder() {
-
-      onChanged();
-      return getHeaderFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    public EnvelopeHeaderOrBuilder getHeaderOrBuilder() {
-      if (headerBuilder_ != null) {
-        return headerBuilder_.getMessageOrBuilder();
-      } else {
-        return header_ == null ?
-            EnvelopeHeader.getDefaultInstance() : header_;
-      }
-    }
-    /**
-     * <code>.common.EnvelopeHeader header = 1;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>
-        getHeaderFieldBuilder() {
-      if (headerBuilder_ == null) {
-        headerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>(
-                getHeader(),
-                getParentForChildren(),
-                isClean());
-        header_ = null;
-      }
-      return headerBuilder_;
     }
 
+    /**
+     * <code>.common.EnvelopeHeader header = 1;</code>
+     */
+    public EnvelopeHeaderOrBuilder getHeaderOrBuilder()
+    {
+        return getHeader();
+    }
+
+    public static final int PAYLOAD_FIELD_NUMBER = 2;
     private Payload payload_;
-    private com.google.protobuf.SingleFieldBuilderV3<
-        Payload, Payload.Builder, PayloadOrBuilder> payloadBuilder_;
+
     /**
      * <code>.common.Payload payload = 2;</code>
+     *
      * @return Whether the payload field is set.
      */
-    public boolean hasPayload() {
-      return payloadBuilder_ != null || payload_ != null;
+    public boolean hasPayload()
+    {
+        return payload_ != null;
     }
+
     /**
      * <code>.common.Payload payload = 2;</code>
+     *
      * @return The payload.
      */
-    public Payload getPayload() {
-      if (payloadBuilder_ == null) {
+    public Payload getPayload()
+    {
         return payload_ == null ? Payload.getDefaultInstance() : payload_;
-      } else {
-        return payloadBuilder_.getMessage();
-      }
     }
+
     /**
      * <code>.common.Payload payload = 2;</code>
      */
-    public Builder setPayload(Payload value) {
-      if (payloadBuilder_ == null) {
-        if (value == null) {
-          throw new NullPointerException();
+    public PayloadOrBuilder getPayloadOrBuilder()
+    {
+        return getPayload();
+    }
+
+    private byte memoizedIsInitialized = -1;
+
+    @Override
+    public final boolean isInitialized()
+    {
+        byte isInitialized = memoizedIsInitialized;
+        if (isInitialized == 1) return true;
+        if (isInitialized == 0) return false;
+
+        memoizedIsInitialized = 1;
+        return true;
+    }
+
+    @Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+            throws java.io.IOException
+    {
+        if (header_ != null)
+        {
+            output.writeMessage(1, getHeader());
         }
-        payload_ = value;
-        onChanged();
-      } else {
-        payloadBuilder_.setMessage(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    public Builder setPayload(
-        Payload.Builder builderForValue) {
-      if (payloadBuilder_ == null) {
-        payload_ = builderForValue.build();
-        onChanged();
-      } else {
-        payloadBuilder_.setMessage(builderForValue.build());
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    public Builder mergePayload(Payload value) {
-      if (payloadBuilder_ == null) {
-        if (payload_ != null) {
-          payload_ =
-            Payload.newBuilder(payload_).mergeFrom(value).buildPartial();
-        } else {
-          payload_ = value;
+        if (payload_ != null)
+        {
+            output.writeMessage(2, getPayload());
         }
-        onChanged();
-      } else {
-        payloadBuilder_.mergeFrom(value);
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    public Builder clearPayload() {
-      if (payloadBuilder_ == null) {
-        payload_ = null;
-        onChanged();
-      } else {
-        payload_ = null;
-        payloadBuilder_ = null;
-      }
-
-      return this;
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    public Payload.Builder getPayloadBuilder() {
-
-      onChanged();
-      return getPayloadFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    public PayloadOrBuilder getPayloadOrBuilder() {
-      if (payloadBuilder_ != null) {
-        return payloadBuilder_.getMessageOrBuilder();
-      } else {
-        return payload_ == null ?
-            Payload.getDefaultInstance() : payload_;
-      }
-    }
-    /**
-     * <code>.common.Payload payload = 2;</code>
-     */
-    private com.google.protobuf.SingleFieldBuilderV3<
-        Payload, Payload.Builder, PayloadOrBuilder>
-        getPayloadFieldBuilder() {
-      if (payloadBuilder_ == null) {
-        payloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            Payload, Payload.Builder, PayloadOrBuilder>(
-                getPayload(),
-                getParentForChildren(),
-                isClean());
-        payload_ = null;
-      }
-      return payloadBuilder_;
-    }
-    @Override
-    public final Builder setUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.setUnknownFields(unknownFields);
+        unknownFields.writeTo(output);
     }
 
     @Override
-    public final Builder mergeUnknownFields(
-        final com.google.protobuf.UnknownFieldSet unknownFields) {
-      return super.mergeUnknownFields(unknownFields);
+    public int getSerializedSize()
+    {
+        int size = memoizedSize;
+        if (size != -1) return size;
+
+        size = 0;
+        if (header_ != null)
+        {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeMessageSize(1, getHeader());
+        }
+        if (payload_ != null)
+        {
+            size += com.google.protobuf.CodedOutputStream
+                    .computeMessageSize(2, getPayload());
+        }
+        size += unknownFields.getSerializedSize();
+        memoizedSize = size;
+        return size;
     }
 
-
-    // @@protoc_insertion_point(builder_scope:common.Envelope)
-  }
-
-  // @@protoc_insertion_point(class_scope:common.Envelope)
-  private static final Envelope DEFAULT_INSTANCE;
-  static {
-    DEFAULT_INSTANCE = new Envelope();
-  }
-
-  public static Envelope getDefaultInstance() {
-    return DEFAULT_INSTANCE;
-  }
-
-  private static final com.google.protobuf.Parser<Envelope>
-      PARSER = new com.google.protobuf.AbstractParser<Envelope>() {
     @Override
-    public Envelope parsePartialFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return new Envelope(input, extensionRegistry);
+    public boolean equals(final Object obj)
+    {
+        if (obj == this)
+        {
+            return true;
+        }
+        if (!(obj instanceof Envelope))
+        {
+            return super.equals(obj);
+        }
+        Envelope other = (Envelope) obj;
+
+        if (hasHeader() != other.hasHeader()) return false;
+        if (hasHeader())
+        {
+            if (!getHeader()
+                    .equals(other.getHeader()))
+            {
+                return false;
+            }
+        }
+        if (hasPayload() != other.hasPayload()) return false;
+        if (hasPayload())
+        {
+            if (!getPayload()
+                    .equals(other.getPayload()))
+            {
+                return false;
+            }
+        }
+        if (!unknownFields.equals(other.unknownFields)) return false;
+        return true;
     }
-  };
 
-  public static com.google.protobuf.Parser<Envelope> parser() {
-    return PARSER;
-  }
+    @Override
+    public int hashCode()
+    {
+        if (memoizedHashCode != 0)
+        {
+            return memoizedHashCode;
+        }
+        int hash = 41;
+        hash = (19 * hash) + getDescriptor().hashCode();
+        if (hasHeader())
+        {
+            hash = (37 * hash) + HEADER_FIELD_NUMBER;
+            hash = (53 * hash) + getHeader().hashCode();
+        }
+        if (hasPayload())
+        {
+            hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
+            hash = (53 * hash) + getPayload().hashCode();
+        }
+        hash = (29 * hash) + unknownFields.hashCode();
+        memoizedHashCode = hash;
+        return hash;
+    }
 
-  @Override
-  public com.google.protobuf.Parser<Envelope> getParserForType() {
-    return PARSER;
-  }
+    public static Envelope parseFrom(
+            java.nio.ByteBuffer data)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data);
+    }
 
-  @Override
-  public Envelope getDefaultInstanceForType() {
-    return DEFAULT_INSTANCE;
-  }
+    public static Envelope parseFrom(
+            java.nio.ByteBuffer data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Envelope parseFrom(
+            com.google.protobuf.ByteString data)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data);
+    }
+
+    public static Envelope parseFrom(
+            com.google.protobuf.ByteString data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Envelope parseFrom(byte[] data)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data);
+    }
+
+    public static Envelope parseFrom(
+            byte[] data,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws com.google.protobuf.InvalidProtocolBufferException
+    {
+        return PARSER.parseFrom(data, extensionRegistry);
+    }
+
+    public static Envelope parseFrom(java.io.InputStream input)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static Envelope parseFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static Envelope parseDelimitedFrom(java.io.InputStream input)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static Envelope parseDelimitedFrom(
+            java.io.InputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static Envelope parseFrom(
+            com.google.protobuf.CodedInputStream input)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input);
+    }
+
+    public static Envelope parseFrom(
+            com.google.protobuf.CodedInputStream input,
+            com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+            throws java.io.IOException
+    {
+        return com.google.protobuf.GeneratedMessageV3
+                .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @Override
+    public Builder newBuilderForType() { return newBuilder(); }
+
+    public static Builder newBuilder()
+    {
+        return DEFAULT_INSTANCE.toBuilder();
+    }
+
+    public static Builder newBuilder(Envelope prototype)
+    {
+        return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+
+    @Override
+    public Builder toBuilder()
+    {
+        return this == DEFAULT_INSTANCE
+                ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @Override
+    protected Builder newBuilderForType(
+            BuilderParent parent)
+    {
+        Builder builder = new Builder(parent);
+        return builder;
+    }
+
+    /**
+     * Protobuf type {@code common.Envelope}
+     */
+    public static final class Builder extends
+            com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+            // @@protoc_insertion_point(builder_implements:common.Envelope)
+            EnvelopeOrBuilder
+    {
+        public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor()
+        {
+            return EvelopeProto.internal_static_common_Envelope_descriptor;
+        }
+
+        @Override
+        protected FieldAccessorTable
+        internalGetFieldAccessorTable()
+        {
+            return EvelopeProto.internal_static_common_Envelope_fieldAccessorTable
+                    .ensureFieldAccessorsInitialized(
+                            Envelope.class, Envelope.Builder.class);
+        }
+
+        // Construct using com.cell.grpc.common.Envelope.newBuilder()
+        private Builder()
+        {
+            maybeForceBuilderInitialization();
+        }
+
+        private Builder(
+                BuilderParent parent)
+        {
+            super(parent);
+            maybeForceBuilderInitialization();
+        }
+
+        private void maybeForceBuilderInitialization()
+        {
+            if (com.google.protobuf.GeneratedMessageV3
+                    .alwaysUseFieldBuilders)
+            {
+            }
+        }
+
+        @Override
+        public Builder clear()
+        {
+            super.clear();
+            if (headerBuilder_ == null)
+            {
+                header_ = null;
+            } else
+            {
+                header_ = null;
+                headerBuilder_ = null;
+            }
+            if (payloadBuilder_ == null)
+            {
+                payload_ = null;
+            } else
+            {
+                payload_ = null;
+                payloadBuilder_ = null;
+            }
+            return this;
+        }
+
+        @Override
+        public com.google.protobuf.Descriptors.Descriptor
+        getDescriptorForType()
+        {
+            return EvelopeProto.internal_static_common_Envelope_descriptor;
+        }
+
+        @Override
+        public Envelope getDefaultInstanceForType()
+        {
+            return Envelope.getDefaultInstance();
+        }
+
+        @Override
+        public Envelope build()
+        {
+            Envelope result = buildPartial();
+            if (!result.isInitialized())
+            {
+                throw newUninitializedMessageException(result);
+            }
+            return result;
+        }
+
+        @Override
+        public Envelope buildPartial()
+        {
+            Envelope result = new Envelope(this);
+            if (headerBuilder_ == null)
+            {
+                result.header_ = header_;
+            } else
+            {
+                result.header_ = headerBuilder_.build();
+            }
+            if (payloadBuilder_ == null)
+            {
+                result.payload_ = payload_;
+            } else
+            {
+                result.payload_ = payloadBuilder_.build();
+            }
+            onBuilt();
+            return result;
+        }
+
+        @Override
+        public Builder clone()
+        {
+            return super.clone();
+        }
+
+        @Override
+        public Builder setField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value)
+        {
+            return super.setField(field, value);
+        }
+
+        @Override
+        public Builder clearField(
+                com.google.protobuf.Descriptors.FieldDescriptor field)
+        {
+            return super.clearField(field);
+        }
+
+        @Override
+        public Builder clearOneof(
+                com.google.protobuf.Descriptors.OneofDescriptor oneof)
+        {
+            return super.clearOneof(oneof);
+        }
+
+        @Override
+        public Builder setRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                int index, Object value)
+        {
+            return super.setRepeatedField(field, index, value);
+        }
+
+        @Override
+        public Builder addRepeatedField(
+                com.google.protobuf.Descriptors.FieldDescriptor field,
+                Object value)
+        {
+            return super.addRepeatedField(field, value);
+        }
+
+        @Override
+        public Builder mergeFrom(com.google.protobuf.Message other)
+        {
+            if (other instanceof Envelope)
+            {
+                return mergeFrom((Envelope) other);
+            } else
+            {
+                super.mergeFrom(other);
+                return this;
+            }
+        }
+
+        public Builder mergeFrom(Envelope other)
+        {
+            if (other == Envelope.getDefaultInstance()) return this;
+            if (other.hasHeader())
+            {
+                mergeHeader(other.getHeader());
+            }
+            if (other.hasPayload())
+            {
+                mergePayload(other.getPayload());
+            }
+            this.mergeUnknownFields(other.unknownFields);
+            onChanged();
+            return this;
+        }
+
+        @Override
+        public final boolean isInitialized()
+        {
+            return true;
+        }
+
+        @Override
+        public Builder mergeFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws java.io.IOException
+        {
+            Envelope parsedMessage = null;
+            try
+            {
+                parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+            } catch (com.google.protobuf.InvalidProtocolBufferException e)
+            {
+                parsedMessage = (Envelope) e.getUnfinishedMessage();
+                throw e.unwrapIOException();
+            } finally
+            {
+                if (parsedMessage != null)
+                {
+                    mergeFrom(parsedMessage);
+                }
+            }
+            return this;
+        }
+
+        private EnvelopeHeader header_;
+        private com.google.protobuf.SingleFieldBuilderV3<
+                EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder> headerBuilder_;
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         *
+         * @return Whether the header field is set.
+         */
+        public boolean hasHeader()
+        {
+            return headerBuilder_ != null || header_ != null;
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         *
+         * @return The header.
+         */
+        public EnvelopeHeader getHeader()
+        {
+            if (headerBuilder_ == null)
+            {
+                return header_ == null ? EnvelopeHeader.getDefaultInstance() : header_;
+            } else
+            {
+                return headerBuilder_.getMessage();
+            }
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public Builder setHeader(EnvelopeHeader value)
+        {
+            if (headerBuilder_ == null)
+            {
+                if (value == null)
+                {
+                    throw new NullPointerException();
+                }
+                header_ = value;
+                onChanged();
+            } else
+            {
+                headerBuilder_.setMessage(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public Builder setHeader(
+                EnvelopeHeader.Builder builderForValue)
+        {
+            if (headerBuilder_ == null)
+            {
+                header_ = builderForValue.build();
+                onChanged();
+            } else
+            {
+                headerBuilder_.setMessage(builderForValue.build());
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public Builder mergeHeader(EnvelopeHeader value)
+        {
+            if (headerBuilder_ == null)
+            {
+                if (header_ != null)
+                {
+                    header_ =
+                            EnvelopeHeader.newBuilder(header_).mergeFrom(value).buildPartial();
+                } else
+                {
+                    header_ = value;
+                }
+                onChanged();
+            } else
+            {
+                headerBuilder_.mergeFrom(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public Builder clearHeader()
+        {
+            if (headerBuilder_ == null)
+            {
+                header_ = null;
+                onChanged();
+            } else
+            {
+                header_ = null;
+                headerBuilder_ = null;
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public EnvelopeHeader.Builder getHeaderBuilder()
+        {
+
+            onChanged();
+            return getHeaderFieldBuilder().getBuilder();
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        public EnvelopeHeaderOrBuilder getHeaderOrBuilder()
+        {
+            if (headerBuilder_ != null)
+            {
+                return headerBuilder_.getMessageOrBuilder();
+            } else
+            {
+                return header_ == null ?
+                        EnvelopeHeader.getDefaultInstance() : header_;
+            }
+        }
+
+        /**
+         * <code>.common.EnvelopeHeader header = 1;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+                EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>
+        getHeaderFieldBuilder()
+        {
+            if (headerBuilder_ == null)
+            {
+                headerBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                        EnvelopeHeader, EnvelopeHeader.Builder, EnvelopeHeaderOrBuilder>(
+                        getHeader(),
+                        getParentForChildren(),
+                        isClean());
+                header_ = null;
+            }
+            return headerBuilder_;
+        }
+
+        private Payload payload_;
+        private com.google.protobuf.SingleFieldBuilderV3<
+                Payload, Payload.Builder, PayloadOrBuilder> payloadBuilder_;
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         *
+         * @return Whether the payload field is set.
+         */
+        public boolean hasPayload()
+        {
+            return payloadBuilder_ != null || payload_ != null;
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         *
+         * @return The payload.
+         */
+        public Payload getPayload()
+        {
+            if (payloadBuilder_ == null)
+            {
+                return payload_ == null ? Payload.getDefaultInstance() : payload_;
+            } else
+            {
+                return payloadBuilder_.getMessage();
+            }
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public Builder setPayload(Payload value)
+        {
+            if (payloadBuilder_ == null)
+            {
+                if (value == null)
+                {
+                    throw new NullPointerException();
+                }
+                payload_ = value;
+                onChanged();
+            } else
+            {
+                payloadBuilder_.setMessage(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public Builder setPayload(
+                Payload.Builder builderForValue)
+        {
+            if (payloadBuilder_ == null)
+            {
+                payload_ = builderForValue.build();
+                onChanged();
+            } else
+            {
+                payloadBuilder_.setMessage(builderForValue.build());
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public Builder mergePayload(Payload value)
+        {
+            if (payloadBuilder_ == null)
+            {
+                if (payload_ != null)
+                {
+                    payload_ =
+                            Payload.newBuilder(payload_).mergeFrom(value).buildPartial();
+                } else
+                {
+                    payload_ = value;
+                }
+                onChanged();
+            } else
+            {
+                payloadBuilder_.mergeFrom(value);
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public Builder clearPayload()
+        {
+            if (payloadBuilder_ == null)
+            {
+                payload_ = null;
+                onChanged();
+            } else
+            {
+                payload_ = null;
+                payloadBuilder_ = null;
+            }
+
+            return this;
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public Payload.Builder getPayloadBuilder()
+        {
+
+            onChanged();
+            return getPayloadFieldBuilder().getBuilder();
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        public PayloadOrBuilder getPayloadOrBuilder()
+        {
+            if (payloadBuilder_ != null)
+            {
+                return payloadBuilder_.getMessageOrBuilder();
+            } else
+            {
+                return payload_ == null ?
+                        Payload.getDefaultInstance() : payload_;
+            }
+        }
+
+        /**
+         * <code>.common.Payload payload = 2;</code>
+         */
+        private com.google.protobuf.SingleFieldBuilderV3<
+                Payload, Payload.Builder, PayloadOrBuilder>
+        getPayloadFieldBuilder()
+        {
+            if (payloadBuilder_ == null)
+            {
+                payloadBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+                        Payload, Payload.Builder, PayloadOrBuilder>(
+                        getPayload(),
+                        getParentForChildren(),
+                        isClean());
+                payload_ = null;
+            }
+            return payloadBuilder_;
+        }
+
+        @Override
+        public final Builder setUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields)
+        {
+            return super.setUnknownFields(unknownFields);
+        }
+
+        @Override
+        public final Builder mergeUnknownFields(
+                final com.google.protobuf.UnknownFieldSet unknownFields)
+        {
+            return super.mergeUnknownFields(unknownFields);
+        }
+
+
+        // @@protoc_insertion_point(builder_scope:common.Envelope)
+    }
+
+    // @@protoc_insertion_point(class_scope:common.Envelope)
+    private static final Envelope DEFAULT_INSTANCE;
+
+    static
+    {
+        DEFAULT_INSTANCE = new Envelope();
+    }
+
+    public static Envelope getDefaultInstance()
+    {
+        return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Envelope>
+            PARSER = new com.google.protobuf.AbstractParser<Envelope>()
+    {
+        @Override
+        public Envelope parsePartialFrom(
+                com.google.protobuf.CodedInputStream input,
+                com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+                throws com.google.protobuf.InvalidProtocolBufferException
+        {
+            return new Envelope(input, extensionRegistry);
+        }
+    };
+
+    public static com.google.protobuf.Parser<Envelope> parser()
+    {
+        return PARSER;
+    }
+
+    @Override
+    public com.google.protobuf.Parser<Envelope> getParserForType()
+    {
+        return PARSER;
+    }
+
+    @Override
+    public Envelope getDefaultInstanceForType()
+    {
+        return DEFAULT_INSTANCE;
+    }
 
 }
 

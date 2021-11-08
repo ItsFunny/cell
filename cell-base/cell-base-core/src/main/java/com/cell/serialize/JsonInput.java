@@ -1,6 +1,5 @@
 package com.cell.serialize;
 
-import com.cell.exceptions.CellIllegalArgumentException;
 import com.cell.json.IJsonArray;
 import com.cell.json.IJsonObject;
 import com.cell.json.PacketJSON;

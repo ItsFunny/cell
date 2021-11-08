@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.enums.ConfigurableEnums;
 import com.cell.exceptions.ConfigException;
@@ -11,8 +11,9 @@ import com.cell.exceptions.ConfigException;
  * @Attention:
  * @Date 创建时间：2020-12-17 22:06
  */
-public interface IEringConfigurable extends  IInitOnce
+public interface IEringConfigurable extends IInitOnce
 {
     ConfigurableEnums configurable();
-    void config()throws ConfigException;
+
+    void config() throws ConfigException;
 }

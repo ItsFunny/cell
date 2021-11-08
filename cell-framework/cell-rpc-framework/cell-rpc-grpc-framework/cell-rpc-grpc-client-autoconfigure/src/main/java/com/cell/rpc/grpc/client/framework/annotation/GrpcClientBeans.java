@@ -24,7 +24,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GrpcClientBeans {
+public @interface GrpcClientBeans
+{
 
     /**
      * Helper field containing multiple {@link GrpcClientBean} definitions.

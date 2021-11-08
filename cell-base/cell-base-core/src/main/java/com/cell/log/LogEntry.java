@@ -22,14 +22,14 @@ import java.util.Map;
 @Builder
 public class LogEntry implements TypeStateful<TypeEnums>
 {
-    private Map<String,Object>fields;
+    private Map<String, Object> fields;
     private LogLevel logLevel;
     private Object[] objects;
     private Long logType;
     private String message;
     private ModuleInterface module;
 
-    private List<ILogHook>hooks;
+    private List<ILogHook> hooks;
     private BeeEnums beeEnums;
 
     @Override

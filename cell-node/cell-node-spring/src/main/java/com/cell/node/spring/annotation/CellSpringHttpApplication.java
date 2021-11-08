@@ -1,4 +1,4 @@
-package com.cell.rpc.grpc.client.framework.annotation;
+package com.cell.node.spring.annotation;
 
 import com.cell.annotations.CellApplication;
 import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;

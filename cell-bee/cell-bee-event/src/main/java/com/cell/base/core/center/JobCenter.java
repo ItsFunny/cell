@@ -1,4 +1,4 @@
-package com.cell.bee.event.center;
+package com.cell.base.core.center;
 
 import com.cell.events.IEvent;
 import com.google.common.eventbus.EventBus;

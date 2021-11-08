@@ -16,5 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 public interface IHttpServerResponse extends IServerResponse
 {
     HttpServletResponse getInternalResponse();
+
     void setDeferredResponse(DeferredResult<Object> response);
 }

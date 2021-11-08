@@ -11,70 +11,87 @@ import java.util.*;
  * Note that this class is for internal use only and is subject to change at any time.  Use {@link FastThreadLocal}
  * unless you know what you are doing.
  */
-public final class InternalThreadLocalMap extends UnpaddedInternalThreadLocalMap {
+public final class InternalThreadLocalMap extends UnpaddedInternalThreadLocalMap
+{
 
     private static final int DEFAULT_ARRAY_LIST_INITIAL_CAPACITY = 8;
 
     public static final Object UNSET = new Object();
 
-    public static InternalThreadLocalMap getIfSet() {
+    public static InternalThreadLocalMap getIfSet()
+    {
         Thread thread = Thread.currentThread();
-        if (thread instanceof FastThreadLocalThread) {
+        if (thread instanceof FastThreadLocalThread)
+        {
             return ((FastThreadLocalThread) thread).threadLocalMap();
         }
         return slowThreadLocalMap.get();
     }
 
-    public static InternalThreadLocalMap get() {
+    public static InternalThreadLocalMap get()
+    {
         Thread thread = Thread.currentThread();
-        if (thread instanceof FastThreadLocalThread) {
+        if (thread instanceof FastThreadLocalThread)
+        {
             return fastGet((FastThreadLocalThread) thread);
-        } else {
+        } else
+        {
             return slowGet();
         }
     }
 
-    private static InternalThreadLocalMap fastGet(FastThreadLocalThread thread) {
+    private static InternalThreadLocalMap fastGet(FastThreadLocalThread thread)
+    {
         InternalThreadLocalMap threadLocalMap = thread.threadLocalMap();
-        if (threadLocalMap == null) {
+        if (threadLocalMap == null)
+        {
             thread.setThreadLocalMap(threadLocalMap = new InternalThreadLocalMap());
         }
         return threadLocalMap;
     }
 
-    private static InternalThreadLocalMap slowGet() {
+    private static InternalThreadLocalMap slowGet()
+    {
         ThreadLocal<InternalThreadLocalMap> slowThreadLocalMap = UnpaddedInternalThreadLocalMap.slowThreadLocalMap;
         InternalThreadLocalMap ret = slowThreadLocalMap.get();
-        if (ret == null) {
+        if (ret == null)
+        {
             ret = new InternalThreadLocalMap();
             slowThreadLocalMap.set(ret);
         }
         return ret;
     }
 
-    public static void remove() {
+    public static void remove()
+    {
         Thread thread = Thread.currentThread();
-        if (thread instanceof FastThreadLocalThread) {
+        if (thread instanceof FastThreadLocalThread)
+        {
             ((FastThreadLocalThread) thread).setThreadLocalMap(null);
-        } else {
+        } else
+        {
             slowThreadLocalMap.remove();
         }
     }
 
-    public static void destroy() {
+    public static void destroy()
+    {
         slowThreadLocalMap.remove();
     }
 
-    public static int nextVariableIndex() {
+    public static int nextVariableIndex()
+    {
         int index = nextIndex.getAndIncrement();
-        if (index < 0) {
+        if (index < 0)
+        {
             nextIndex.decrementAndGet();
             throw new IllegalStateException("too many thread-local indexed variables");
         }
         return index;
     }
 
-    public static int lastVariableIndex() {
+    public static int lastVariableIndex()
+    {
         return nextIndex.get() - 1;
     }
 
@@ -82,56 +99,72 @@ public final class InternalThreadLocalMap extends UnpaddedInternalThreadLocalMap
     // With CompressedOops enabled, an instance of this class should occupy at least 128 bytes.
     public long rp1, rp2, rp3, rp4, rp5, rp6, rp7, rp8, rp9;
 
-    private InternalThreadLocalMap() {
+    private InternalThreadLocalMap()
+    {
         super(newIndexedVariableTable());
     }
 
-    private static Object[] newIndexedVariableTable() {
+    private static Object[] newIndexedVariableTable()
+    {
         Object[] array = new Object[32];
         Arrays.fill(array, UNSET);
         return array;
     }
 
-    public int size() {
+    public int size()
+    {
         int count = 0;
 
-        if (futureListenerStackDepth != 0) {
-            count ++;
+        if (futureListenerStackDepth != 0)
+        {
+            count++;
         }
-        if (localChannelReaderStackDepth != 0) {
-            count ++;
+        if (localChannelReaderStackDepth != 0)
+        {
+            count++;
         }
-        if (handlerSharableCache != null) {
-            count ++;
+        if (handlerSharableCache != null)
+        {
+            count++;
         }
-        if (counterHashCode != null) {
-            count ++;
+        if (counterHashCode != null)
+        {
+            count++;
         }
-        if (random != null) {
-            count ++;
+        if (random != null)
+        {
+            count++;
         }
-        if (typeParameterMatcherGetCache != null) {
-            count ++;
+        if (typeParameterMatcherGetCache != null)
+        {
+            count++;
         }
-        if (typeParameterMatcherFindCache != null) {
-            count ++;
+        if (typeParameterMatcherFindCache != null)
+        {
+            count++;
         }
-        if (stringBuilder != null) {
-            count ++;
+        if (stringBuilder != null)
+        {
+            count++;
         }
-        if (charsetEncoderCache != null) {
-            count ++;
+        if (charsetEncoderCache != null)
+        {
+            count++;
         }
-        if (charsetDecoderCache != null) {
-            count ++;
+        if (charsetDecoderCache != null)
+        {
+            count++;
         }
-        if (arrayList != null) {
-            count ++;
+        if (arrayList != null)
+        {
+            count++;
         }
 
-        for (Object o: indexedVariables) {
-            if (o != UNSET) {
-                count ++;
+        for (Object o : indexedVariables)
+        {
+            if (o != UNSET)
+            {
+                count++;
             }
         }
 
@@ -140,134 +173,164 @@ public final class InternalThreadLocalMap extends UnpaddedInternalThreadLocalMap
         return count - 1;
     }
 
-    public StringBuilder stringBuilder() {
+    public StringBuilder stringBuilder()
+    {
         StringBuilder builder = stringBuilder;
-        if (builder == null) {
+        if (builder == null)
+        {
             stringBuilder = builder = new StringBuilder(512);
-        } else {
+        } else
+        {
             builder.setLength(0);
         }
         return builder;
     }
 
-    public Map<Charset, CharsetEncoder> charsetEncoderCache() {
+    public Map<Charset, CharsetEncoder> charsetEncoderCache()
+    {
         Map<Charset, CharsetEncoder> cache = charsetEncoderCache;
-        if (cache == null) {
+        if (cache == null)
+        {
             charsetEncoderCache = cache = new IdentityHashMap<Charset, CharsetEncoder>();
         }
         return cache;
     }
 
-    public Map<Charset, CharsetDecoder> charsetDecoderCache() {
+    public Map<Charset, CharsetDecoder> charsetDecoderCache()
+    {
         Map<Charset, CharsetDecoder> cache = charsetDecoderCache;
-        if (cache == null) {
+        if (cache == null)
+        {
             charsetDecoderCache = cache = new IdentityHashMap<Charset, CharsetDecoder>();
         }
         return cache;
     }
 
-    public <E> ArrayList<E> arrayList() {
+    public <E> ArrayList<E> arrayList()
+    {
         return arrayList(DEFAULT_ARRAY_LIST_INITIAL_CAPACITY);
     }
 
-    public <E> ArrayList<E> arrayList(int minCapacity) {
+    public <E> ArrayList<E> arrayList(int minCapacity)
+    {
         ArrayList<E> list = (ArrayList<E>) arrayList;
-        if (list == null) {
+        if (list == null)
+        {
             list = (ArrayList<E>) new ArrayList<Object>(minCapacity);
-        } else {
+        } else
+        {
             list.clear();
             list.ensureCapacity(minCapacity);
         }
         return list;
     }
 
-    public int futureListenerStackDepth() {
+    public int futureListenerStackDepth()
+    {
         return futureListenerStackDepth;
     }
 
-    public void setFutureListenerStackDepth(int futureListenerStackDepth) {
+    public void setFutureListenerStackDepth(int futureListenerStackDepth)
+    {
         this.futureListenerStackDepth = futureListenerStackDepth;
     }
 
-    public ThreadLocalRandom random() {
+    public ThreadLocalRandom random()
+    {
         ThreadLocalRandom r = random;
-        if (r == null) {
+        if (r == null)
+        {
             random = r = new ThreadLocalRandom();
         }
         return r;
     }
 
-    public Map<Class<?>, TypeParameterMatcher> typeParameterMatcherGetCache() {
+    public Map<Class<?>, TypeParameterMatcher> typeParameterMatcherGetCache()
+    {
         Map<Class<?>, TypeParameterMatcher> cache = typeParameterMatcherGetCache;
-        if (cache == null) {
+        if (cache == null)
+        {
             typeParameterMatcherGetCache = cache = new IdentityHashMap<Class<?>, TypeParameterMatcher>();
         }
         return cache;
     }
 
-    public Map<Class<?>, Map<String, TypeParameterMatcher>> typeParameterMatcherFindCache() {
+    public Map<Class<?>, Map<String, TypeParameterMatcher>> typeParameterMatcherFindCache()
+    {
         Map<Class<?>, Map<String, TypeParameterMatcher>> cache = typeParameterMatcherFindCache;
-        if (cache == null) {
+        if (cache == null)
+        {
             typeParameterMatcherFindCache = cache = new IdentityHashMap<Class<?>, Map<String, TypeParameterMatcher>>();
         }
         return cache;
     }
 
-    public IntegerHolder counterHashCode() {
+    public IntegerHolder counterHashCode()
+    {
         return counterHashCode;
     }
 
-    public void setCounterHashCode(IntegerHolder counterHashCode) {
+    public void setCounterHashCode(IntegerHolder counterHashCode)
+    {
         this.counterHashCode = counterHashCode;
     }
 
-    public Map<Class<?>, Boolean> handlerSharableCache() {
+    public Map<Class<?>, Boolean> handlerSharableCache()
+    {
         Map<Class<?>, Boolean> cache = handlerSharableCache;
-        if (cache == null) {
+        if (cache == null)
+        {
             // Start with small capacity to keep memory overhead as low as possible.
             handlerSharableCache = cache = new WeakHashMap<Class<?>, Boolean>(4);
         }
         return cache;
     }
 
-    public int localChannelReaderStackDepth() {
+    public int localChannelReaderStackDepth()
+    {
         return localChannelReaderStackDepth;
     }
 
-    public void setLocalChannelReaderStackDepth(int localChannelReaderStackDepth) {
+    public void setLocalChannelReaderStackDepth(int localChannelReaderStackDepth)
+    {
         this.localChannelReaderStackDepth = localChannelReaderStackDepth;
     }
 
-    public Object indexedVariable(int index) {
+    public Object indexedVariable(int index)
+    {
         Object[] lookup = indexedVariables;
-        return index < lookup.length? lookup[index] : UNSET;
+        return index < lookup.length ? lookup[index] : UNSET;
     }
 
     /**
      * @return {@code true} if and only if a new thread-local variable has been created
      */
-    public boolean setIndexedVariable(int index, Object value) {
+    public boolean setIndexedVariable(int index, Object value)
+    {
         Object[] lookup = indexedVariables;
-        if (index < lookup.length) {
+        if (index < lookup.length)
+        {
             Object oldValue = lookup[index];
             lookup[index] = value;
             return oldValue == UNSET;
-        } else {
+        } else
+        {
             expandIndexedVariableTableAndSet(index, value);
             return true;
         }
     }
 
-    private void expandIndexedVariableTableAndSet(int index, Object value) {
+    private void expandIndexedVariableTableAndSet(int index, Object value)
+    {
         Object[] oldArray = indexedVariables;
         final int oldCapacity = oldArray.length;
         int newCapacity = index;
-        newCapacity |= newCapacity >>>  1;
-        newCapacity |= newCapacity >>>  2;
-        newCapacity |= newCapacity >>>  4;
-        newCapacity |= newCapacity >>>  8;
+        newCapacity |= newCapacity >>> 1;
+        newCapacity |= newCapacity >>> 2;
+        newCapacity |= newCapacity >>> 4;
+        newCapacity |= newCapacity >>> 8;
         newCapacity |= newCapacity >>> 16;
-        newCapacity ++;
+        newCapacity++;
 
         Object[] newArray = Arrays.copyOf(oldArray, newCapacity);
         Arrays.fill(newArray, oldCapacity, newArray.length, UNSET);
@@ -275,18 +338,22 @@ public final class InternalThreadLocalMap extends UnpaddedInternalThreadLocalMap
         indexedVariables = newArray;
     }
 
-    public Object removeIndexedVariable(int index) {
+    public Object removeIndexedVariable(int index)
+    {
         Object[] lookup = indexedVariables;
-        if (index < lookup.length) {
+        if (index < lookup.length)
+        {
             Object v = lookup[index];
             lookup[index] = UNSET;
             return v;
-        } else {
+        } else
+        {
             return UNSET;
         }
     }
 
-    public boolean isIndexedVariableSet(int index) {
+    public boolean isIndexedVariableSet(int index)
+    {
         Object[] lookup = indexedVariables;
         return index < lookup.length && lookup[index] != UNSET;
     }

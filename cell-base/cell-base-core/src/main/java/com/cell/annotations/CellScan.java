@@ -1,9 +1,6 @@
 package com.cell.annotations;
 
-import com.cell.utils.CollectionUtils;
-
 import java.lang.annotation.*;
-import java.util.Collections;
 
 /**
  * @author joker

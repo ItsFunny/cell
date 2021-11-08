@@ -396,16 +396,20 @@ public class FileUtils
         }
 
     }
-    public static String joinFilePath(String... path) {
+
+    public static String joinFilePath(String... path)
+    {
         return joinFilePathSep(File.separator, path);
     }
 
-    public static String joinFilePathSep(String separator, String... path) {
+    public static String joinFilePathSep(String separator, String... path)
+    {
         StringBuilder sb = new StringBuilder();
         String[] var3 = path;
         int var4 = path.length;
 
-        for(int var5 = 0; var5 < var4; ++var5) {
+        for (int var5 = 0; var5 < var4; ++var5)
+        {
             String string = var3[var5];
             sb.append(string).append(separator);
         }

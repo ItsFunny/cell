@@ -1,7 +1,6 @@
 package com.cell.filter;
 
 import com.cell.annotations.ActivePlugin;
-import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.constants.GatewayConstants;
 import com.cell.constants.OrderConstants;
 import com.cell.log.LOG;

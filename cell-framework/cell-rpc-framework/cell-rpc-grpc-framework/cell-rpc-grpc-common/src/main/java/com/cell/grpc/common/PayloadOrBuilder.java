@@ -4,27 +4,33 @@
 package com.cell.grpc.common;
 
 public interface PayloadOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:common.Payload)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:common.Payload)
+        com.google.protobuf.MessageOrBuilder
+{
 
-  /**
-   * <code>.common.Header header = 1;</code>
-   * @return Whether the header field is set.
-   */
-  boolean hasHeader();
-  /**
-   * <code>.common.Header header = 1;</code>
-   * @return The header.
-   */
-  Header getHeader();
-  /**
-   * <code>.common.Header header = 1;</code>
-   */
-  HeaderOrBuilder getHeaderOrBuilder();
+    /**
+     * <code>.common.Header header = 1;</code>
+     *
+     * @return Whether the header field is set.
+     */
+    boolean hasHeader();
 
-  /**
-   * <code>bytes data = 2;</code>
-   * @return The data.
-   */
-  com.google.protobuf.ByteString getData();
+    /**
+     * <code>.common.Header header = 1;</code>
+     *
+     * @return The header.
+     */
+    Header getHeader();
+
+    /**
+     * <code>.common.Header header = 1;</code>
+     */
+    HeaderOrBuilder getHeaderOrBuilder();
+
+    /**
+     * <code>bytes data = 2;</code>
+     *
+     * @return The data.
+     */
+    com.google.protobuf.ByteString getData();
 }

@@ -1,7 +1,7 @@
 package com.cell.collector;
 
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.comparators.OrderComparator;
-import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.log.LOG;
 import com.cell.models.Module;
 import lombok.Data;
@@ -89,7 +89,6 @@ public abstract class AbstractPluginCollector extends AbstractInitOnce implement
     {
         return null;
     }
-
 
 
 }

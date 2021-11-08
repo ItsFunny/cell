@@ -3,8 +3,6 @@ package com.cell.exceptions;
 
 import com.cell.enums.CellError;
 
-import java.security.PrivilegedActionException;
-
 @SuppressWarnings("serial")
 public abstract class AbstractZZException extends Exception
 {

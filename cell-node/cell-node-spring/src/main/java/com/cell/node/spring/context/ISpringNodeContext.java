@@ -1,4 +1,6 @@
-package com.cell.context;
+package com.cell.node.spring.context;
+
+import com.cell.context.INodeContext;
 
 /**
  * @author Charlie

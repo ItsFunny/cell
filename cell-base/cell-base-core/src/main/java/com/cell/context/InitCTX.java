@@ -13,7 +13,8 @@ import lombok.Data;
 @Data
 public class InitCTX extends CTX
 {
-    public InitCTX(){
+    public InitCTX()
+    {
         super();
     }
 

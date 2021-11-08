@@ -1,10 +1,9 @@
 package com.cell;
 
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import static org.junit.Assert.assertTrue;
 
 /**
  * Unit test for simple App.

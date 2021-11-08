@@ -1,8 +1,6 @@
 package com.cell.enums;
 
 
-import com.cell.models.Module;
-
 public enum CellError
 {
     NO_ERROR(0, "", "ALL"),

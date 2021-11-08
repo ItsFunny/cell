@@ -4,7 +4,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import com.cell.log.LoggerProxy;
 import lombok.Data;
-import org.slf4j.Logger;
 import org.slf4j.Marker;
 
 import java.util.Iterator;

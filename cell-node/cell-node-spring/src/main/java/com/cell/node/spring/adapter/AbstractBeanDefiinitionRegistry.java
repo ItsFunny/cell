@@ -1,4 +1,4 @@
-package com.cell.adapter;
+package com.cell.node.spring.adapter;
 
 import com.cell.base.core.config.AbstractInitOnce;
 import org.springframework.beans.BeansException;

@@ -31,7 +31,8 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Daniel Theuke (daniel.theuke@heuboe.de)
  */
-public class OrderedServerInterceptor implements ServerInterceptor, Ordered {
+public class OrderedServerInterceptor implements ServerInterceptor, Ordered
+{
 
     private final ServerInterceptor serverInterceptor;
     private final int order;
@@ -40,26 +41,30 @@ public class OrderedServerInterceptor implements ServerInterceptor, Ordered {
      * Creates a new OrderedServerInterceptor with the given server interceptor and order.
      *
      * @param serverInterceptor The server interceptor to delegate to.
-     * @param order The order of this interceptor.
+     * @param order             The order of this interceptor.
      */
-    public OrderedServerInterceptor(ServerInterceptor serverInterceptor, int order) {
+    public OrderedServerInterceptor(ServerInterceptor serverInterceptor, int order)
+    {
         this.serverInterceptor = requireNonNull(serverInterceptor, "serverInterceptor");
         this.order = order;
     }
 
     @Override
     public <ReqT, RespT> Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> call, Metadata headers,
-            ServerCallHandler<ReqT, RespT> next) {
+                                                      ServerCallHandler<ReqT, RespT> next)
+    {
         return this.serverInterceptor.interceptCall(call, headers, next);
     }
 
     @Override
-    public int getOrder() {
+    public int getOrder()
+    {
         return this.order;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "OrderedServerInterceptor [interceptor=" + this.serverInterceptor + ", order=" + this.order + "]";
     }
 

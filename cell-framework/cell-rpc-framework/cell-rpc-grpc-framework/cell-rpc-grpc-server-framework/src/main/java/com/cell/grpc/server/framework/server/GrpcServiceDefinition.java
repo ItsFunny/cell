@@ -19,7 +19,8 @@ package com.cell.grpc.server.framework.server;
 
 import io.grpc.ServerServiceDefinition;
 
-public class GrpcServiceDefinition {
+public class GrpcServiceDefinition
+{
 
     private final String beanName;
     private final Class<?> beanClazz;
@@ -28,12 +29,13 @@ public class GrpcServiceDefinition {
     /**
      * Creates a new GrpcServiceDefinition.
      *
-     * @param beanName The name of the grpc service bean in the spring context.
-     * @param beanClazz The class of the grpc service bean.
+     * @param beanName   The name of the grpc service bean in the spring context.
+     * @param beanClazz  The class of the grpc service bean.
      * @param definition The grpc service definition.
      */
     public GrpcServiceDefinition(final String beanName, final Class<?> beanClazz,
-            final ServerServiceDefinition definition) {
+                                 final ServerServiceDefinition definition)
+    {
         this.beanName = beanName;
         this.beanClazz = beanClazz;
         this.definition = definition;
@@ -44,7 +46,8 @@ public class GrpcServiceDefinition {
      *
      * @return The name of the bean.
      */
-    public String getBeanName() {
+    public String getBeanName()
+    {
         return this.beanName;
     }
 
@@ -53,7 +56,8 @@ public class GrpcServiceDefinition {
      *
      * @return The class of the grpc service bean.
      */
-    public Class<?> getBeanClazz() {
+    public Class<?> getBeanClazz()
+    {
         return this.beanClazz;
     }
 
@@ -62,7 +66,8 @@ public class GrpcServiceDefinition {
      *
      * @return The grpc service definition.
      */
-    public ServerServiceDefinition getDefinition() {
+    public ServerServiceDefinition getDefinition()
+    {
         return this.definition;
     }
 

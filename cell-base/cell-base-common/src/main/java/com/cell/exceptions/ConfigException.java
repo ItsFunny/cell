@@ -8,7 +8,7 @@ package com.cell.exceptions;
  * @Attention:
  * @Date 创建时间：2020-12-17 22:11
  */
-public class ConfigException extends  RuntimeException
+public class ConfigException extends RuntimeException
 {
     /**
      * Constructs a new runtime exception with {@code null} as its

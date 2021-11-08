@@ -1,9 +1,6 @@
 package com.cell.manager;
 
-import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
-import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 import com.cell.annotations.ManagerNode;
-import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.executor.IBaseReactorExecutor;
 import com.cell.manager.context.OnAddReactorContext;
 import com.cell.manager.context.SelectByUriContext;
@@ -11,6 +8,9 @@ import com.cell.models.Couple;
 import com.cell.protocol.CommandWrapper;
 import com.cell.reactor.ICommandReactor;
 import com.cell.reactor.IHttpReactor;
+import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
+import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import org.springframework.util.AntPathMatcher;
 import reactor.core.publisher.Mono;
 
@@ -45,7 +45,7 @@ public class AntPathSelector
             CommandWrapper wrapper = new CommandWrapper();
             wrapper.setCmd(cc.getCmd());
             wrapper.setReactor((ICommandReactor) cc.getReactor());
-            this.wrapperMap.put( uri, wrapper);
+            this.wrapperMap.put(uri, wrapper);
             cc.setSatisfy(true);
             return c.execute(ctx);
         };

@@ -1,4 +1,4 @@
-package com.cell.bridge;
+package com.cell.node.spring.bridge;
 
 import com.cell.discovery.nacos.http.extension.IExtensionManager;
 

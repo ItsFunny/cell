@@ -3,11 +3,9 @@ package com.cell.lb.impl;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.lb.ILoadBalancerStrategy;
-import com.cell.utils.CollectionUtils;
 import com.cell.utils.RandomUtils;
-import org.apache.lucene.util.CollectionUtil;
 
-import java.util.*;
+import java.util.Collection;
 
 /**
  * @author Charlie

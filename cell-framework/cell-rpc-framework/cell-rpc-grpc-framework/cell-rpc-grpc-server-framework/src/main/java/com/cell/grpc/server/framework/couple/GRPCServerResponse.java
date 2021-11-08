@@ -12,7 +12,7 @@ import lombok.Data;
  * @Date 创建时间：2021-10-23 22:59
  */
 @Data
-public class GRPCServerResponse extends  RPCServerResponseWrapper implements IGRPCServerResponse
+public class GRPCServerResponse extends RPCServerResponseWrapper implements IGRPCServerResponse
 {
 
 }

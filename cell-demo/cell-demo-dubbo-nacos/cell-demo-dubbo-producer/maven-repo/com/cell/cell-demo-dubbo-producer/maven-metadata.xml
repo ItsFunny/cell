@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>com.cell</groupId>
-  <artifactId>cell-demo-dubbo-producer</artifactId>
-  <versioning>
-    <versions>
-      <version>1.0-SNAPSHOT</version>
-    </versions>
-    <lastUpdated>20211020073923</lastUpdated>
-  </versioning>
+    <groupId>com.cell</groupId>
+    <artifactId>cell-demo-dubbo-producer</artifactId>
+    <versioning>
+        <versions>
+            <version>1.0-SNAPSHOT</version>
+        </versions>
+        <lastUpdated>20211020073923</lastUpdated>
+    </versioning>
 </metadata>

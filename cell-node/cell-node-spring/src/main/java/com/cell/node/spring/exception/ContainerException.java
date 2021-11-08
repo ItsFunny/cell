@@ -1,4 +1,4 @@
-package com.cell.exception;
+package com.cell.node.spring.exception;
 
 import com.cell.enums.CellError;
 import com.cell.exceptions.AbstractZZException;

@@ -43,9 +43,10 @@ public class AnnotationGlobalServerInterceptorConfigurer implements GlobalServer
      * Creates a new AnnotationGlobalServerInterceptorConfigurer.
      *
      * @param applicationContext The application context to fetch the {@link GrpcGlobalServerInterceptor} annotated
-     *        {@link ServerInterceptor} beans from.
+     *                           {@link ServerInterceptor} beans from.
      */
-    public AnnotationGlobalServerInterceptorConfigurer(final ApplicationContext applicationContext) {
+    public AnnotationGlobalServerInterceptorConfigurer(final ApplicationContext applicationContext)
+    {
         this.applicationContext = requireNonNull(applicationContext, "applicationContext");
     }
 
@@ -55,14 +56,17 @@ public class AnnotationGlobalServerInterceptorConfigurer implements GlobalServer
      *
      * @return A map containing the global interceptor beans.
      */
-    protected Map<String, ServerInterceptor> getServerInterceptorBeans() {
+    protected Map<String, ServerInterceptor> getServerInterceptorBeans()
+    {
         return transformValues(this.applicationContext.getBeansWithAnnotation(GrpcGlobalServerInterceptor.class),
                 ServerInterceptor.class::cast);
     }
 
     @Override
-    public void configureServerInterceptors(final List<ServerInterceptor> interceptors) {
-        for (final Entry<String, ServerInterceptor> entry : getServerInterceptorBeans().entrySet()) {
+    public void configureServerInterceptors(final List<ServerInterceptor> interceptors)
+    {
+        for (final Entry<String, ServerInterceptor> entry : getServerInterceptorBeans().entrySet())
+        {
             final ServerInterceptor interceptor = entry.getValue();
             log.debug("Registering GlobalServerInterceptor: {} ({})", entry.getKey(), interceptor);
             interceptors.add(interceptor);

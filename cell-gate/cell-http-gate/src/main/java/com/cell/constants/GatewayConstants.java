@@ -13,5 +13,5 @@ public interface GatewayConstants
     String[] HTTP_GATE_LABELS = new String[]{"nodeName", "cluster", "module", "uri", "method"};
 
 
-    String attributeCmdInfo="metadata";
+    String attributeCmdInfo = "metadata";
 }

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
-  <groupId>com.cell</groupId>
-  <artifactId>cell-bee-rate-sentinel-core</artifactId>
-  <versioning>
-    <versions>
-      <version>1.0-SNAPSHOT</version>
-    </versions>
-    <lastUpdated>20211020074939</lastUpdated>
-  </versioning>
+    <groupId>com.cell</groupId>
+    <artifactId>cell-bee-rate-sentinel-core</artifactId>
+    <versioning>
+        <versions>
+            <version>1.0-SNAPSHOT</version>
+        </versions>
+        <lastUpdated>20211020074939</lastUpdated>
+    </versioning>
 </metadata>

@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.Configuration;
 import lombok.Data;
@@ -17,8 +17,8 @@ public class GatewayConfiguration
     private static GatewayConfiguration instance = null;
     private static final String GATEWAY_CONFIG_MODULE = "gateway.properties";
 
-    private ServerRatePropertyNode serverRatePropertyNode=new ServerRatePropertyNode();
-    private GatePropertyNode gatePropertyNode=new GatePropertyNode();
+    private ServerRatePropertyNode serverRatePropertyNode = new ServerRatePropertyNode();
+    private GatePropertyNode gatePropertyNode = new GatePropertyNode();
 
     public static GatewayConfiguration getInstance()
     {
@@ -32,7 +32,7 @@ public class GatewayConfiguration
             instance = Configuration.getDefault().getConfigValue(GATEWAY_CONFIG_MODULE).asObject(GatewayConfiguration.class);
         } catch (Exception e)
         {
-            instance=new GatewayConfiguration();
+            instance = new GatewayConfiguration();
         }
     }
 

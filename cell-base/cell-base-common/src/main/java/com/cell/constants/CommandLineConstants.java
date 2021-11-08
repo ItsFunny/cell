@@ -10,7 +10,7 @@ package com.cell.constants;
  */
 public interface CommandLineConstants
 {
-    String CLUSTER="cluster";
-    String DEFAULT_CLSUTER_VALUE="DEFAULT_CLUSTER";
+    String CLUSTER = "cluster";
+    String DEFAULT_CLSUTER_VALUE = "DEFAULT_CLUSTER";
 
 }

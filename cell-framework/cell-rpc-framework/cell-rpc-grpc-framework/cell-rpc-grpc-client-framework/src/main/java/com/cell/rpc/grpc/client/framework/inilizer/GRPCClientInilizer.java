@@ -1,6 +1,6 @@
 package com.cell.rpc.grpc.client.framework.inilizer;
 
-import com.cell.initializer.CellSpringInitializer;
+import com.cell.node.spring.initializer.CellSpringInitializer;
 import com.cell.rpc.grpc.client.framework.annotation.GRPCClientRequestAnno;
 
 import java.lang.annotation.Annotation;

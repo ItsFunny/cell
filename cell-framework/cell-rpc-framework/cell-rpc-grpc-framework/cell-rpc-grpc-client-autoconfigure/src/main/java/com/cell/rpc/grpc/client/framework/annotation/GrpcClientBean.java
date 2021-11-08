@@ -17,14 +17,15 @@
 
 package com.cell.rpc.grpc.client.framework.annotation;
 
-import com.cell.com.cell.grpc.common.annotation.GRPCClient;
+import com.cell.grpc.common.annotation.GRPCClient;
 
 import java.lang.annotation.*;
 
 @Target(ElementType.TYPE)
 @Repeatable(GrpcClientBeans.class)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface GrpcClientBean {
+public @interface GrpcClientBean
+{
 
     /**
      * The type of the bean to create.

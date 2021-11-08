@@ -2,13 +2,11 @@ package com.cell.schedual;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class SchedualCaculateErrorCountTest
 {
 
     @Test
-    public void testNormal()throws Exception
+    public void testNormal() throws Exception
     {
         SchedualCaculateErrorCount counter = new SchedualCaculateErrorCount(10, 100L, 0.01D, "错误应答数超过限制");
         counter.start();

@@ -2,13 +2,13 @@ package com.cell.dispatcher;
 
 import com.cell.annotations.Command;
 import com.cell.base.common.constants.ProtocolConstants;
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.channel.IChannel;
 import com.cell.concurrent.DummyExecutor;
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.concurrent.base.EventLoopGroup;
 import com.cell.concurrent.base.Promise;
 import com.cell.concurrent.promise.BaseDefaultPromise;
-import com.cell.grpc.common.config.AbstractInitOnce;
 import com.cell.constants.ContextConstants;
 import com.cell.context.DispatchContext;
 import com.cell.exceptions.ProgramaException;

@@ -11,7 +11,7 @@ import com.cell.exceptions.AbstractZZException;
  * @Attention:
  * @Date 创建时间：2021-10-22 05:29
  */
-public class RPCFrameworkException  extends AbstractZZException
+public class RPCFrameworkException extends AbstractZZException
 {
 
     public RPCFrameworkException(String msg)

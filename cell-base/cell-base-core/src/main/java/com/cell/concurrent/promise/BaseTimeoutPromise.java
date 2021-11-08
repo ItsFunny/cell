@@ -1,7 +1,10 @@
 package com.cell.concurrent.promise;
 
 
-import com.cell.concurrent.base.*;
+import com.cell.concurrent.base.EventExecutor;
+import com.cell.concurrent.base.Future;
+import com.cell.concurrent.base.GenericFutureListener;
+import com.cell.concurrent.base.ScheduledFuture;
 import com.cell.concurrent.exception.PromiseTimeoutException;
 
 import java.util.concurrent.TimeUnit;

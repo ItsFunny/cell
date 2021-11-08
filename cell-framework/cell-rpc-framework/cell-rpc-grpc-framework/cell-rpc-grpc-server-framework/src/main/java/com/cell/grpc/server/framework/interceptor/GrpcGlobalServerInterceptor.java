@@ -33,5 +33,6 @@ import java.lang.annotation.*;
 @Documented
 @Component
 @Bean
-public @interface GrpcGlobalServerInterceptor {
+public @interface GrpcGlobalServerInterceptor
+{
 }

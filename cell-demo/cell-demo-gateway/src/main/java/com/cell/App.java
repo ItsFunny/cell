@@ -5,13 +5,12 @@ import org.springframework.boot.SpringApplication;
 
 /**
  * Hello world!
- *
  */
 @CellSpringHttpApplication
-public class App 
+public class App
 {
-    public static void main( String[] args )
+    public static void main(String[] args)
     {
-        SpringApplication.run(App.class,args);
+        SpringApplication.run(App.class, args);
     }
 }

@@ -3,7 +3,6 @@ package com.cell.serialize;
 import com.cell.json.PacketJSON;
 import com.cell.utils.NetworkUtil;
 import com.cell.utils.StringUtils;
-import io.netty.util.internal.StringUtil;
 
 import java.io.IOException;
 import java.util.*;

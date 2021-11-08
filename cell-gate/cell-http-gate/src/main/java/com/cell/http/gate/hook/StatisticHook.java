@@ -2,7 +2,7 @@ package com.cell.http.gate.hook;
 
 import com.cell.annotations.AutoPlugin;
 import com.cell.annotations.ManagerNode;
-import com.cell.bee.event.center.EventCenter;
+import com.cell.base.core.center.EventCenter;
 import com.cell.event.StasticEvent;
 import com.cell.events.IEvent;
 import com.cell.hooks.IChainHook;
@@ -24,13 +24,12 @@ import reactor.core.publisher.Mono;
  * @Date 创建时间：2021-09-15 05:37
  */
 @ManagerNode(group = EventCenter.GROUP_EVENT_CENTER, name = "STATISTIC_HOOK")
-public class StatisticHook  extends AbstractEventHook implements IEventHook
+public class StatisticHook extends AbstractEventHook implements IEventHook
 {
     @Autowired
     private HistogramStator exceedDelayThresoldCount;
     @AutoPlugin
     private IStatContextService statContextService;
-
 
 
     @Override

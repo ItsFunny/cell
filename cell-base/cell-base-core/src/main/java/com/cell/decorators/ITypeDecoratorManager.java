@@ -13,7 +13,7 @@ import com.cell.manager.IManager;
  */
 public interface ITypeDecoratorManager<T, TYPE, GROUP> extends IManager<TYPE, GROUP>
 {
-    TypeStateful<T> decorate(TypeStateful<T> t, CompareSatisfiedFunc<T> compareFunc );
+    TypeStateful<T> decorate(TypeStateful<T> t, CompareSatisfiedFunc<T> compareFunc);
 
     void registerDecorator(ITypeStatefulDecorator<T>... filter);
 }

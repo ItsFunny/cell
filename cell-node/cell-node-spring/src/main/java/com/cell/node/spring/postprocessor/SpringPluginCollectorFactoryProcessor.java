@@ -1,16 +1,14 @@
-package com.cell.postprocessor;
+package com.cell.node.spring.postprocessor;
 
-import com.cell.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
-import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.annotations.AutoPlugin;
-import com.cell.annotations.DependecyExtension;
-import com.cell.annotations.Plugin;
 import com.cell.collector.AbstractPluginCollector;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.models.Module;
-import com.cell.postprocessors.dependency.SpringBeanDependenciesPostProcessor;
-import com.cell.postprocessors.extension.SpringExtensionManager;
+import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
+import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
+import com.cell.node.spring.postprocessors.dependency.SpringBeanDependenciesPostProcessor;
+import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;

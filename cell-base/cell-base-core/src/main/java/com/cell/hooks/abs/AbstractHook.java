@@ -13,12 +13,13 @@ import reactor.core.publisher.Mono;
  * @Attention:
  * @Date 创建时间：2021-09-19 11:00
  */
-public abstract  class AbstractHook implements IHook
+public abstract class AbstractHook implements IHook
 {
     @Override
     public Mono<Void> execute(IContext context, IChainExecutor executor)
     {
-        return this.hook(context,executor);
+        return this.hook(context, executor);
     }
-    protected abstract  Mono<Void> hook(IContext context,IChainExecutor executor);
+
+    protected abstract Mono<Void> hook(IContext context, IChainExecutor executor);
 }

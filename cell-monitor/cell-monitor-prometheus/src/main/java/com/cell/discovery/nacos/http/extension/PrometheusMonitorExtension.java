@@ -2,6 +2,7 @@ package com.cell.discovery.nacos.http.extension;
 
 import com.cell.context.INodeContext;
 import com.cell.monitor.IMonitor;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 
 /**
  * @author Charlie

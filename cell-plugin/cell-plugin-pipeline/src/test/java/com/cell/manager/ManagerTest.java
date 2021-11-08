@@ -1,7 +1,7 @@
 package com.cell.manager;
 
-import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 import com.cell.executor.IReactorExecutor;
+import com.cell.rpc.grpc.client.framework.annotation.ActiveMethod;
 import org.junit.Test;
 
 import java.util.Arrays;

@@ -22,7 +22,7 @@ public abstract class AbstractHandlerSuit implements IHandlerSuit
 
     public AbstractHandlerSuit(CommandContext commandContext)
     {
-        this.commandContext=commandContext;
+        this.commandContext = commandContext;
     }
 
 

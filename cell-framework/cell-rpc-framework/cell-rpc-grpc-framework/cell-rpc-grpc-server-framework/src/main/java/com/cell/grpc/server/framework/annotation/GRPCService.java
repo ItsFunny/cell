@@ -21,6 +21,8 @@ import java.lang.annotation.*;
 public @interface GRPCService
 {
     Class<? extends ServerInterceptor>[] interceptors() default {};
+
     String[] interceptorNames() default {};
+
     boolean sortInterceptors() default false;
 }

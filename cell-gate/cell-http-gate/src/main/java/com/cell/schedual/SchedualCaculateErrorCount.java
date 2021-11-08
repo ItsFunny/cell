@@ -29,7 +29,6 @@ public class SchedualCaculateErrorCount implements IScheduleCounter
     private String template;
 
 
-
     public SchedualCaculateErrorCount(int limit, long counterInterval, double errorRateLimit, String template)
     {
         this.limit = limit;

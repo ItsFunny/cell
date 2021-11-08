@@ -1,8 +1,5 @@
 package com.cell.rpc.grpc.client.framework.command.impl;
 
-import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
-import com.cell.rpc.grpc.client.framework.util.HttpUtils;
-import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.context.IHttpCommandContext;
 import com.cell.enums.EnumHttpRequestType;
 import com.cell.enums.EnumHttpResponseType;
@@ -10,6 +7,9 @@ import com.cell.protocol.AbstractCommand;
 import com.cell.protocol.IBuzzContext;
 import com.cell.protocol.ICommand;
 import com.cell.protocol.IHead;
+import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
+import com.cell.rpc.grpc.client.framework.util.HttpUtils;
 import com.cell.serialize.IInputArchive;
 import com.cell.serialize.JsonInput;
 import com.cell.utils.ClassUtil;
@@ -75,7 +75,6 @@ public abstract class AbstractHttpCommand extends AbstractCommand implements IHt
     {
         return (IHttpCommandContext) this.getCtx();
     }
-
 
 
     @Override

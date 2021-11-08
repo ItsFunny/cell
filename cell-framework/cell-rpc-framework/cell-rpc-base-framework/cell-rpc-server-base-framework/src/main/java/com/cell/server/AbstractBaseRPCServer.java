@@ -13,7 +13,7 @@ import lombok.Data;
  * @Date 创建时间：2021-10-23 22:23
  */
 @Data
-public abstract  class AbstractBaseRPCServer extends AbstractServer implements IRPCServer
+public abstract class AbstractBaseRPCServer extends AbstractServer implements IRPCServer
 {
 
 

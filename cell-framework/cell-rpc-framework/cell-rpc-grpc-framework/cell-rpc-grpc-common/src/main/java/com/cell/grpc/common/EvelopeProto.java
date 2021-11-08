@@ -3,84 +3,93 @@
 
 package com.cell.grpc.common;
 
-public final class EvelopeProto {
-  private EvelopeProto() {}
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistryLite registry) {
-  }
+public final class EvelopeProto
+{
+    private EvelopeProto() {}
 
-  public static void registerAllExtensions(
-      com.google.protobuf.ExtensionRegistry registry) {
-    registerAllExtensions(
-        (com.google.protobuf.ExtensionRegistryLite) registry);
-  }
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_EnvelopeHeader_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_common_EnvelopeHeader_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_Envelope_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_common_Envelope_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_Payload_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_common_Payload_fieldAccessorTable;
-  static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_common_Header_descriptor;
-  static final 
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_common_Header_fieldAccessorTable;
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistryLite registry)
+    {
+    }
 
-  public static com.google.protobuf.Descriptors.FileDescriptor
-      getDescriptor() {
-    return descriptor;
-  }
-  private static  com.google.protobuf.Descriptors.FileDescriptor
-      descriptor;
-  static {
-    String[] descriptorData = {
-      "\n\025common/envelope.proto\022\006common\"T\n\016Envel" +
-      "opeHeader\022\014\n\004flag\030\001 \001(\003\022\016\n\006length\030\002 \001(\003\022" +
-      "\020\n\010protocol\030\003 \001(\t\022\022\n\nsequenceId\030\004 \001(\t\"T\n" +
-      "\010Envelope\022&\n\006header\030\001 \001(\0132\026.common.Envel" +
-      "opeHeader\022 \n\007payload\030\002 \001(\0132\017.common.Payl" +
-      "oad\"7\n\007Payload\022\036\n\006header\030\001 \001(\0132\016.common." +
-      "Header\022\014\n\004data\030\002 \001(\014\"\010\n\006HeaderB&\n\024com.ce" +
-      "ll.grpc.commonB\014EvelopeProtoP\001b\006proto3"
-    };
-    descriptor = com.google.protobuf.Descriptors.FileDescriptor
-      .internalBuildGeneratedFileFrom(descriptorData,
-        new com.google.protobuf.Descriptors.FileDescriptor[] {
-        });
-    internal_static_common_EnvelopeHeader_descriptor =
-      getDescriptor().getMessageTypes().get(0);
-    internal_static_common_EnvelopeHeader_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_common_EnvelopeHeader_descriptor,
-        new String[] { "Flag", "Length", "Protocol", "SequenceId", });
-    internal_static_common_Envelope_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_common_Envelope_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_common_Envelope_descriptor,
-        new String[] { "Header", "Payload", });
-    internal_static_common_Payload_descriptor =
-      getDescriptor().getMessageTypes().get(2);
-    internal_static_common_Payload_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_common_Payload_descriptor,
-        new String[] { "Header", "Data", });
-    internal_static_common_Header_descriptor =
-      getDescriptor().getMessageTypes().get(3);
-    internal_static_common_Header_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_common_Header_descriptor,
-        new String[] { });
-  }
+    public static void registerAllExtensions(
+            com.google.protobuf.ExtensionRegistry registry)
+    {
+        registerAllExtensions(
+                (com.google.protobuf.ExtensionRegistryLite) registry);
+    }
 
-  // @@protoc_insertion_point(outer_class_scope)
+    static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_common_EnvelopeHeader_descriptor;
+    static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_common_EnvelopeHeader_fieldAccessorTable;
+    static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_common_Envelope_descriptor;
+    static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_common_Envelope_fieldAccessorTable;
+    static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_common_Payload_descriptor;
+    static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_common_Payload_fieldAccessorTable;
+    static final com.google.protobuf.Descriptors.Descriptor
+            internal_static_common_Header_descriptor;
+    static final
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+            internal_static_common_Header_fieldAccessorTable;
+
+    public static com.google.protobuf.Descriptors.FileDescriptor
+    getDescriptor()
+    {
+        return descriptor;
+    }
+
+    private static com.google.protobuf.Descriptors.FileDescriptor
+            descriptor;
+
+    static
+    {
+        String[] descriptorData = {
+                "\n\025common/envelope.proto\022\006common\"T\n\016Envel" +
+                        "opeHeader\022\014\n\004flag\030\001 \001(\003\022\016\n\006length\030\002 \001(\003\022" +
+                        "\020\n\010protocol\030\003 \001(\t\022\022\n\nsequenceId\030\004 \001(\t\"T\n" +
+                        "\010Envelope\022&\n\006header\030\001 \001(\0132\026.common.Envel" +
+                        "opeHeader\022 \n\007payload\030\002 \001(\0132\017.common.Payl" +
+                        "oad\"7\n\007Payload\022\036\n\006header\030\001 \001(\0132\016.common." +
+                        "Header\022\014\n\004data\030\002 \001(\014\"\010\n\006HeaderB&\n\024com.ce" +
+                        "ll.grpc.commonB\014EvelopeProtoP\001b\006proto3"
+        };
+        descriptor = com.google.protobuf.Descriptors.FileDescriptor
+                .internalBuildGeneratedFileFrom(descriptorData,
+                        new com.google.protobuf.Descriptors.FileDescriptor[]{
+                        });
+        internal_static_common_EnvelopeHeader_descriptor =
+                getDescriptor().getMessageTypes().get(0);
+        internal_static_common_EnvelopeHeader_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+                internal_static_common_EnvelopeHeader_descriptor,
+                new String[]{"Flag", "Length", "Protocol", "SequenceId",});
+        internal_static_common_Envelope_descriptor =
+                getDescriptor().getMessageTypes().get(1);
+        internal_static_common_Envelope_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+                internal_static_common_Envelope_descriptor,
+                new String[]{"Header", "Payload",});
+        internal_static_common_Payload_descriptor =
+                getDescriptor().getMessageTypes().get(2);
+        internal_static_common_Payload_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+                internal_static_common_Payload_descriptor,
+                new String[]{"Header", "Data",});
+        internal_static_common_Header_descriptor =
+                getDescriptor().getMessageTypes().get(3);
+        internal_static_common_Header_fieldAccessorTable = new
+                com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+                internal_static_common_Header_descriptor,
+                new String[]{});
+    }
+
+    // @@protoc_insertion_point(outer_class_scope)
 }

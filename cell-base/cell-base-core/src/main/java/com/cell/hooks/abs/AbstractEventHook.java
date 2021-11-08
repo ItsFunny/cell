@@ -29,9 +29,10 @@ public abstract class AbstractEventHook extends AbstractHook implements IEventHo
     @Override
     protected Mono<Void> hook(IContext context, IChainExecutor executor)
     {
-        return this.onEventHook( (IEventContext) context, (IChainHook) executor);
+        return this.onEventHook((IEventContext) context, (IChainHook) executor);
     }
 
-    protected abstract  Mono<Void>onEventHook(IEventContext context, IChainHook hook);
+    protected abstract Mono<Void> onEventHook(IEventContext context, IChainHook hook);
+
     protected abstract boolean onPredict(IEvent event);
 }

@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Charlie
@@ -23,7 +22,7 @@ public class ContextResponseWrapper
     private Throwable exception;
     private ICommand cmd;
     private Object ret;
-    private Map<String,String>headers;
+    private Map<String, String> headers;
     // 从哪里调用了该 wp
     private String from;
 

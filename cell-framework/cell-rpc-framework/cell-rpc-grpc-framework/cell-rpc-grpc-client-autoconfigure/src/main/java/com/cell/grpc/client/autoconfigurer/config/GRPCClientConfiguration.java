@@ -1,8 +1,8 @@
 package com.cell.grpc.client.autoconfigurer.config;
 
 import com.cell.Configuration;
-import com.cell.com.cell.grpc.common.constants.GRPCConstants;
 import com.cell.exceptions.ProgramaException;
+import com.cell.grpc.common.constants.GRPCConstants;
 import io.grpc.netty.shaded.io.grpc.netty.NegotiationType;
 import lombok.Data;
 
@@ -33,8 +33,10 @@ public class GRPCClientConfiguration
     {
         return instance;
     }
-    public void updateRuntime(String key,GRPCClientConfigurationNode node){
-        this.runtimeChangeableClient.put(key,node);
+
+    public void updateRuntime(String key, GRPCClientConfigurationNode node)
+    {
+        this.runtimeChangeableClient.put(key, node);
     }
 
     private static final String DEFAULT_DEFAULT_LOAD_BALANCING_POLICY = "round_robin";

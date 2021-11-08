@@ -1,6 +1,7 @@
-package com.cell.discovery.nacos.http.extension;
+package com.cell.node.spring.exntension;
 
-import com.cell.bridge.ISpringNodeExtension;
+import com.cell.discovery.nacos.http.extension.AbstractNodeExtension;
+import com.cell.node.spring.bridge.ISpringNodeExtension;
 
 /**
  * @author Charlie

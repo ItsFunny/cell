@@ -11,7 +11,9 @@ package com.cell.protocol;
 public interface IContext
 {
     void discard();
-    default boolean done(){return false;}
+
+    default boolean done() {return false;}
+
     EmptyContext EMPTY_CONTEXT = new EmptyContext();
 
     class EmptyContext implements IContext

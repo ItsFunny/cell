@@ -1,4 +1,4 @@
-package com.cell.bee.event.center;
+package com.cell.base.core.center;
 
 import com.cell.annotations.Manager;
 import com.cell.manager.IReflectManager;

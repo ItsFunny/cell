@@ -22,7 +22,8 @@ public class CTX
         this.data = data;
     }
 
-    public CTX(){
-        this.data=new HashMap<>();
+    public CTX()
+    {
+        this.data = new HashMap<>();
     }
 }

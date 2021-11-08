@@ -1,15 +1,9 @@
 package com.cell.log.impl;
 
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.implementation.FixedValue;
-import net.bytebuddy.matcher.ElementMatchers;
 import org.junit.Test;
-import org.slf4j.ILoggerFactory;
 import org.slf4j.LoggerFactory;
 import org.slf4j.impl.StaticLoggerBinder;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 
 /**
@@ -45,7 +39,8 @@ public class ByteBuddyTest
     }
 
     @Test
-    public void testReplace(){
+    public void testReplace()
+    {
         LoggerFactory.getLogger("");
     }
 

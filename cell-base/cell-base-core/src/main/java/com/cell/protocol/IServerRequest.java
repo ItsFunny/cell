@@ -16,6 +16,7 @@ public interface IServerRequest
     int getContentLength();
 
     String getHeader(String name);
-//    CommandProtocolID getProtocolId();
+
+    //    CommandProtocolID getProtocolId();
     InputStream getInputStream() throws IOException;
 }

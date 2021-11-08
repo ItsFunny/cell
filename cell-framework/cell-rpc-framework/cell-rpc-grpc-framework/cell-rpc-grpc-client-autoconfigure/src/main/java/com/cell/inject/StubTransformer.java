@@ -20,7 +20,8 @@ package com.cell.inject;
 import io.grpc.stub.AbstractStub;
 
 @FunctionalInterface
-public interface StubTransformer {
+public interface StubTransformer
+{
 
     /**
      * Transform the given stub using {@code AbstractStub#with...} methods.

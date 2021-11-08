@@ -3,7 +3,8 @@ package com.cell.concurrent.base;
 /**
  * Expose details for a {@link Thread}.
  */
-public interface ThreadProperties {
+public interface ThreadProperties
+{
     /**
      * @see {@link Thread#getState()}.
      */

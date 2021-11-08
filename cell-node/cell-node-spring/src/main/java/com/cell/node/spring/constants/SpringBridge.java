@@ -1,4 +1,4 @@
-package com.cell.constants;
+package com.cell.node.spring.constants;
 
 import org.springframework.core.Ordered;
 
@@ -20,7 +20,7 @@ public interface SpringBridge
 
     String defaultPluginPrefixGroup = "activePlugin";
     String defaultExtensionGroup = "extensionGroup";
-    String defaultCfgGroup="defaultCfgGroup";
+    String defaultCfgGroup = "defaultCfgGroup";
     String factoryBeanPostPrefix = "factoryPost";
     String beanPostPrefix = "beanPostPrefix";
     String SPRING_BEAN_DEPANDENCIES = "SPRING_BEAN_DEPANDENCIES";

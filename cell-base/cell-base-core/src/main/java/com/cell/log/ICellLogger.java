@@ -1,9 +1,5 @@
 package com.cell.log;
 
-import com.cell.models.Module;
-
-import java.io.Serializable;
-
 /**
  * @author Charlie
  * @When
@@ -14,7 +10,9 @@ import java.io.Serializable;
  */
 public interface ICellLogger
 {
-    void info(LogTypeEnums logType,  Throwable err, String format, Object... data);
-    void warn(LogTypeEnums logType,  Throwable err, String format, Object... data);
-    void error(LogTypeEnums logType,  Throwable err, String format, Object... data);
+    void info(LogTypeEnums logType, Throwable err, String format, Object... data);
+
+    void warn(LogTypeEnums logType, Throwable err, String format, Object... data);
+
+    void error(LogTypeEnums logType, Throwable err, String format, Object... data);
 }

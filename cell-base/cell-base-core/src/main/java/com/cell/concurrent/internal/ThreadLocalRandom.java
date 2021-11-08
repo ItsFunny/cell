@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * <p>This class also provides additional commonly used bounded random
  * generation methods.
- *
+ * <p>
  * //since 1.7
  * //author Doug Lea
  */
@@ -49,73 +49,89 @@ public final class ThreadLocalRandom extends Random
     private static final long seedGeneratorStartTime;
     private static volatile long seedGeneratorEndTime;
 
-    static {
-        if (initialSeedUniquifier == 0) {
-            boolean secureRandom = AccessController.doPrivileged(new PrivilegedAction<Boolean>() {
+    static
+    {
+        if (initialSeedUniquifier == 0)
+        {
+            boolean secureRandom = AccessController.doPrivileged(new PrivilegedAction<Boolean>()
+            {
                 @Override
-                public Boolean run() {
+                public Boolean run()
+                {
                     return new Boolean(false);
                 }
             });
 
-            if (secureRandom) {
+            if (secureRandom)
+            {
                 seedQueue = new LinkedBlockingQueue<Long>();
                 seedGeneratorStartTime = System.nanoTime();
 
                 // Try to generate a real random number from /dev/random.
                 // Get from a different thread to avoid blocking indefinitely on a machine without much entropy.
-                seedGeneratorThread = new Thread("initialSeedUniquifierGenerator") {
+                seedGeneratorThread = new Thread("initialSeedUniquifierGenerator")
+                {
                     @Override
-                    public void run() {
+                    public void run()
+                    {
                         final SecureRandom random = new SecureRandom(); // Get the real random seed from /dev/random
                         final byte[] seed = random.generateSeed(8);
                         seedGeneratorEndTime = System.nanoTime();
                         long s = ((long) seed[0] & 0xff) << 56 |
-                                 ((long) seed[1] & 0xff) << 48 |
-                                 ((long) seed[2] & 0xff) << 40 |
-                                 ((long) seed[3] & 0xff) << 32 |
-                                 ((long) seed[4] & 0xff) << 24 |
-                                 ((long) seed[5] & 0xff) << 16 |
-                                 ((long) seed[6] & 0xff) <<  8 |
-                                 (long) seed[7] & 0xff;
+                                ((long) seed[1] & 0xff) << 48 |
+                                ((long) seed[2] & 0xff) << 40 |
+                                ((long) seed[3] & 0xff) << 32 |
+                                ((long) seed[4] & 0xff) << 24 |
+                                ((long) seed[5] & 0xff) << 16 |
+                                ((long) seed[6] & 0xff) << 8 |
+                                (long) seed[7] & 0xff;
                         seedQueue.add(s);
                     }
                 };
                 seedGeneratorThread.setDaemon(true);
-                seedGeneratorThread.setUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+                seedGeneratorThread.setUncaughtExceptionHandler(new UncaughtExceptionHandler()
+                {
                     @Override
-                    public void uncaughtException(Thread t, Throwable e) {
+                    public void uncaughtException(Thread t, Throwable e)
+                    {
 //                        LOG.debug(Module.COMMON, e, "An exception has been raised by thread name [%s]", t.getName());
                     }
                 });
                 seedGeneratorThread.start();
-            } else {
+            } else
+            {
                 initialSeedUniquifier = mix64(System.currentTimeMillis()) ^ mix64(System.nanoTime());
                 seedGeneratorThread = null;
                 seedQueue = null;
                 seedGeneratorStartTime = 0L;
             }
-        } else {
+        } else
+        {
             seedGeneratorThread = null;
             seedQueue = null;
             seedGeneratorStartTime = 0L;
         }
     }
 
-    public static void setInitialSeedUniquifier(long initialSeedUniquifier) {
+    public static void setInitialSeedUniquifier(long initialSeedUniquifier)
+    {
         ThreadLocalRandom.initialSeedUniquifier = initialSeedUniquifier;
     }
 
-    public static long getInitialSeedUniquifier() {
+    public static long getInitialSeedUniquifier()
+    {
         // Use the value set via the setter.
         long initialSeedUniquifier = ThreadLocalRandom.initialSeedUniquifier;
-        if (initialSeedUniquifier != 0) {
+        if (initialSeedUniquifier != 0)
+        {
             return initialSeedUniquifier;
         }
 
-        synchronized (ThreadLocalRandom.class) {
+        synchronized (ThreadLocalRandom.class)
+        {
             initialSeedUniquifier = ThreadLocalRandom.initialSeedUniquifier;
-            if (initialSeedUniquifier != 0) {
+            if (initialSeedUniquifier != 0)
+            {
                 return initialSeedUniquifier;
             }
 
@@ -123,27 +139,34 @@ public final class ThreadLocalRandom extends Random
             final long timeoutSeconds = 3;
             final long deadLine = seedGeneratorStartTime + TimeUnit.SECONDS.toNanos(timeoutSeconds);
             boolean interrupted = false;
-            for (;;) {
+            for (; ; )
+            {
                 final long waitTime = deadLine - System.nanoTime();
-                try {
+                try
+                {
                     final Long seed;
-                    if (waitTime <= 0) {
+                    if (waitTime <= 0)
+                    {
                         seed = seedQueue.poll();
-                    } else {
+                    } else
+                    {
                         seed = seedQueue.poll(waitTime, TimeUnit.NANOSECONDS);
                     }
 
-                    if (seed != null) {
+                    if (seed != null)
+                    {
                         initialSeedUniquifier = seed;
                         break;
                     }
-                } catch (InterruptedException e) {
+                } catch (InterruptedException e)
+                {
                     interrupted = true;
 //                    LOG.warning(Module.COMMON, e, "Failed to generate a seed from SecureRandom due to an InterruptedException.");
                     break;
                 }
 
-                if (waitTime <= 0) {
+                if (waitTime <= 0)
+                {
                     seedGeneratorThread.interrupt();
 //                    LOG.warning(Module.COMMON,
 //                            "Failed to generate a seed from SecureRandom within [%s] seconds. " +
@@ -158,7 +181,8 @@ public final class ThreadLocalRandom extends Random
 
             ThreadLocalRandom.initialSeedUniquifier = initialSeedUniquifier;
 
-            if (interrupted) {
+            if (interrupted)
+            {
                 // Restore the interrupt status because we don't know how to/don't need to handle it here.
                 Thread.currentThread().interrupt();
 
@@ -167,7 +191,8 @@ public final class ThreadLocalRandom extends Random
                 seedGeneratorThread.interrupt();
             }
 
-            if (seedGeneratorEndTime == 0) {
+            if (seedGeneratorEndTime == 0)
+            {
                 seedGeneratorEndTime = System.nanoTime();
             }
 
@@ -175,15 +200,18 @@ public final class ThreadLocalRandom extends Random
         }
     }
 
-    private static long newSeed() {
-        for (;;) {
+    private static long newSeed()
+    {
+        for (; ; )
+        {
             final long current = seedUniquifier.get();
-            final long actualCurrent = current != 0? current : getInitialSeedUniquifier();
+            final long actualCurrent = current != 0 ? current : getInitialSeedUniquifier();
 
             // L'Ecuyer, "Tables of Linear Congruential Generators of Different Sizes and Good Lattice Structure", 1999
             final long next = actualCurrent * 181783497276652981L;
 
-            if (seedUniquifier.compareAndSet(current, next)) {
+            if (seedUniquifier.compareAndSet(current, next))
+            {
                 return next ^ System.nanoTime();
             }
         }
@@ -191,7 +219,8 @@ public final class ThreadLocalRandom extends Random
 
     // Borrowed from
     // http://gee.cs.oswego.edu/cgi-bin/viewcvs.cgi/jsr166/src/main/java/util/concurrent/ThreadLocalRandom.java
-    private static long mix64(long z) {
+    private static long mix64(long z)
+    {
         z = (z ^ (z >>> 33)) * 0xff51afd7ed558ccdL;
         z = (z ^ (z >>> 33)) * 0xc4ceb9fe1a85ec53L;
         return z ^ (z >>> 33);
@@ -223,7 +252,8 @@ public final class ThreadLocalRandom extends Random
     /**
      * Constructor called only by localRandom.initialValue.
      */
-    ThreadLocalRandom() {
+    ThreadLocalRandom()
+    {
         super(newSeed());
         initialized = true;
     }
@@ -233,7 +263,8 @@ public final class ThreadLocalRandom extends Random
      *
      * @return the current thread's {@code ThreadLocalRandom}
      */
-    public static ThreadLocalRandom current() {
+    public static ThreadLocalRandom current()
+    {
         return InternalThreadLocalMap.get().random();
     }
 
@@ -243,14 +274,17 @@ public final class ThreadLocalRandom extends Random
      *
      * @throws UnsupportedOperationException always
      */
-    public void setSeed(long seed) {
-        if (initialized) {
+    public void setSeed(long seed)
+    {
+        if (initialized)
+        {
             throw new UnsupportedOperationException();
         }
         rnd = (seed ^ multiplier) & mask;
     }
 
-    protected int next(int bits) {
+    protected int next(int bits)
+    {
         rnd = (rnd * multiplier + addend) & mask;
         return (int) (rnd >>> (48 - bits));
     }
@@ -261,12 +295,14 @@ public final class ThreadLocalRandom extends Random
      *
      * @param least the least value returned
      * @param bound the upper bound (exclusive)
-     * @throws IllegalArgumentException if least greater than or equal
-     * to bound
      * @return the next value
+     * @throws IllegalArgumentException if least greater than or equal
+     *                                  to bound
      */
-    public int nextInt(int least, int bound) {
-        if (least >= bound) {
+    public int nextInt(int least, int bound)
+    {
+        if (least >= bound)
+        {
             throw new IllegalArgumentException();
         }
         return nextInt(bound - least) + least;
@@ -277,12 +313,14 @@ public final class ThreadLocalRandom extends Random
      * between 0 (inclusive) and the specified value (exclusive).
      *
      * @param n the bound on the random number to be returned.  Must be
-     *        positive.
+     *          positive.
      * @return the next value
      * @throws IllegalArgumentException if n is not positive
      */
-    public long nextLong(long n) {
-        if (n <= 0) {
+    public long nextLong(long n)
+    {
+        if (n <= 0)
+        {
             throw new IllegalArgumentException("n must be positive");
         }
 
@@ -292,11 +330,13 @@ public final class ThreadLocalRandom extends Random
         // (offset) and whether to continue with the lower vs upper
         // half (which makes a difference only if odd).
         long offset = 0;
-        while (n >= Integer.MAX_VALUE) {
+        while (n >= Integer.MAX_VALUE)
+        {
             int bits = next(2);
             long half = n >>> 1;
             long nextn = ((bits & 2) == 0) ? half : n - half;
-            if ((bits & 1) == 0) {
+            if ((bits & 1) == 0)
+            {
                 offset += n - nextn;
             }
             n = nextn;
@@ -312,10 +352,12 @@ public final class ThreadLocalRandom extends Random
      * @param bound the upper bound (exclusive)
      * @return the next value
      * @throws IllegalArgumentException if least greater than or equal
-     * to bound
+     *                                  to bound
      */
-    public long nextLong(long least, long bound) {
-        if (least >= bound) {
+    public long nextLong(long least, long bound)
+    {
+        if (least >= bound)
+        {
             throw new IllegalArgumentException();
         }
         return nextLong(bound - least) + least;
@@ -326,12 +368,14 @@ public final class ThreadLocalRandom extends Random
      * between 0 (inclusive) and the specified value (exclusive).
      *
      * @param n the bound on the random number to be returned.  Must be
-     *        positive.
+     *          positive.
      * @return the next value
      * @throws IllegalArgumentException if n is not positive
      */
-    public double nextDouble(double n) {
-        if (n <= 0) {
+    public double nextDouble(double n)
+    {
+        if (n <= 0)
+        {
             throw new IllegalArgumentException("n must be positive");
         }
         return nextDouble() * n;
@@ -345,10 +389,12 @@ public final class ThreadLocalRandom extends Random
      * @param bound the upper bound (exclusive)
      * @return the next value
      * @throws IllegalArgumentException if least greater than or equal
-     * to bound
+     *                                  to bound
      */
-    public double nextDouble(double least, double bound) {
-        if (least >= bound) {
+    public double nextDouble(double least, double bound)
+    {
+        if (least >= bound)
+        {
             throw new IllegalArgumentException();
         }
         return nextDouble() * (bound - least) + least;

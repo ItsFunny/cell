@@ -1,7 +1,5 @@
 package com.cell.serialize;
 
-import java.util.function.Predicate;
-
 /**
  * @author Charlie
  * @When

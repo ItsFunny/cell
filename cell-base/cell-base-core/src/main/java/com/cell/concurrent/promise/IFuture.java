@@ -9,16 +9,16 @@ public interface IFuture<T> extends Future<T>
 {
 
     CellError getError();
-	
-	@Deprecated
-	@Override
+
+    @Deprecated
+    @Override
     Throwable cause();
-	
-	EventExecutor executor();
-	
+
+    EventExecutor executor();
+
     @Override
     IFuture<T> addListener(GenericFutureListener<? extends Future<? super T>> listener);
-	    
+
     IFuture<T> addListener(IFutureListener<T> listener);
 
     @Override
@@ -45,13 +45,13 @@ public interface IFuture<T> extends Future<T>
     /**
      * following methods:
      * <ul>
-     *     <li>{@link #addListener(GenericFutureListener)}</li>
-     *     <li>{@link #addListeners(GenericFutureListener[])}</li>
-     *     <li>{@link #await()}</li>
-     *     <li>{@link #await(long)} ()}</li>
-     *     <li>{@link #awaitUninterruptibly()}</li>
-     *     <li>{@link #sync()}</li>
-     *     <li>{@link #syncUninterruptibly()}</li>
+     * <li>{@link #addListener(GenericFutureListener)}</li>
+     * <li>{@link #addListeners(GenericFutureListener[])}</li>
+     * <li>{@link #await()}</li>
+     * <li>{@link #await(long)} ()}</li>
+     * <li>{@link #awaitUninterruptibly()}</li>
+     * <li>{@link #sync()}</li>
+     * <li>{@link #syncUninterruptibly()}</li>
      * </ul>
      */
     boolean isNull();

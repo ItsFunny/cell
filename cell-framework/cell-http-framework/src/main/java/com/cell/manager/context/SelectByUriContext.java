@@ -1,9 +1,9 @@
 package com.cell.manager.context;
 
-import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.models.Couple;
 import com.cell.protocol.IContext;
 import com.cell.reactor.IHttpReactor;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import lombok.Builder;
 import lombok.Data;
 
@@ -20,11 +20,11 @@ import lombok.Data;
 public class SelectByUriContext extends IContext.EmptyContext
 {
     private String uri;
-    private Couple<Class<? extends IHttpCommand>, IHttpReactor>ret;
+    private Couple<Class<? extends IHttpCommand>, IHttpReactor> ret;
 
     @Override
     public boolean done()
     {
-        return ret!=null;
+        return ret != null;
     }
 }

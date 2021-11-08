@@ -5,7 +5,8 @@ package com.cell.concurrent.base;
  * recommended to use {@link EventExecutor#newFailedFuture(Throwable)}
  * instead of calling the constructor of this future.
  */
-public final class FailedFuture<V> extends CompleteFuture<V> {
+public final class FailedFuture<V> extends CompleteFuture<V>
+{
 
     private final Throwable cause;
 
@@ -13,45 +14,53 @@ public final class FailedFuture<V> extends CompleteFuture<V> {
      * Creates a new instance.
      *
      * @param executor the {@link EventExecutor} associated with this future
-     * @param cause   the cause of failure
+     * @param cause    the cause of failure
      */
-    public FailedFuture(EventExecutor executor, Throwable cause) {
+    public FailedFuture(EventExecutor executor, Throwable cause)
+    {
         super(executor);
-        if (cause == null) {
+        if (cause == null)
+        {
             throw new NullPointerException("cause");
         }
         this.cause = cause;
     }
 
     @Override
-    public Throwable cause() {
+    public Throwable cause()
+    {
         return cause;
     }
 
     @Override
-    public boolean isSuccess() {
+    public boolean isSuccess()
+    {
         return false;
     }
 
     @Override
-    public Future<V> sync() {
-    	FailedFuture.<RuntimeException>throwException0(cause);
+    public Future<V> sync()
+    {
+        FailedFuture.<RuntimeException>throwException0(cause);
         return this;
     }
 
     @Override
-    public Future<V> syncUninterruptibly() {
-    	FailedFuture.<RuntimeException>throwException0(cause);
+    public Future<V> syncUninterruptibly()
+    {
+        FailedFuture.<RuntimeException>throwException0(cause);
         return this;
     }
-    
+
     @SuppressWarnings("unchecked")
-    private static <E extends Throwable> void throwException0(Throwable t) throws E {
+    private static <E extends Throwable> void throwException0(Throwable t) throws E
+    {
         throw (E) t;
     }
 
     @Override
-    public V getNow() {
+    public V getNow()
+    {
         return null;
     }
 }

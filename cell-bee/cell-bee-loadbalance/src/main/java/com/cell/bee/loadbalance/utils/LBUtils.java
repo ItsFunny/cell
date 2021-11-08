@@ -2,7 +2,6 @@ package com.cell.bee.loadbalance.utils;
 
 import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import com.cell.model.Instance;
-import com.cell.models.Couple;
 import com.cell.transport.model.ServerMetaData;
 
 /**
@@ -15,7 +14,7 @@ import com.cell.transport.model.ServerMetaData;
  */
 public class LBUtils
 {
-    public static ServerMetaInfo  fromInstance(Instance inst)
+    public static ServerMetaInfo fromInstance(Instance inst)
     {
         final ServerMetaInfo info = new ServerMetaInfo();
         info.setIp(inst.getIp());

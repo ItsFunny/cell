@@ -11,5 +11,6 @@ package com.cell.models;
 public interface ModuleInterface
 {
     short getModuleId();
+
     String name();
 }

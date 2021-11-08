@@ -1,10 +1,10 @@
 package com.cell.bo;
 
-import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.constants.ContextConstants;
 import com.cell.context.IHttpCommandContext;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import lombok.Data;
 
 /**
@@ -22,9 +22,11 @@ public class BuzzContextBO
     private Object bo;
     private IHttpCommand cmd;
 
-    public IMapDynamicHttpReactor getReactor(){
+    public IMapDynamicHttpReactor getReactor()
+    {
         return (IMapDynamicHttpReactor) this.context.getReactor();
     }
+
     public BuzzContextBO(IHttpCommandContext context, Object bo, IHttpCommand cmd)
     {
         this.context = context;

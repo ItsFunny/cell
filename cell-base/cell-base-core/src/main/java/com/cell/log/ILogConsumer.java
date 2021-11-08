@@ -16,6 +16,7 @@ import java.util.Optional;
 public interface ILogConsumer extends IEventConsumer<ILogEvent, ILogEventResult>
 {
     boolean logAble(LogLevel logLevel);
+
     // 4. 通过logType+logLevel 获取自定义的hooks
-    Optional<List<ILogHook>>  grapHooks();
+    Optional<List<ILogHook>> grapHooks();
 }

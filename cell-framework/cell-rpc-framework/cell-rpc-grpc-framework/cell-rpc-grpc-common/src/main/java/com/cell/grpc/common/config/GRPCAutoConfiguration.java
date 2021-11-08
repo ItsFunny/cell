@@ -1,4 +1,4 @@
-package com.cell.base.core.config;
+package com.cell.grpc.common.config;
 
 import com.cell.grpc.common.codec.AnnotationGrpcCodecDiscoverer;
 import com.cell.grpc.common.codec.GrpcCodecDefinition;

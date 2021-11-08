@@ -13,12 +13,20 @@ import com.cell.concurrent.base.Promise;
 public interface IServerResponse
 {
     void setHeader(String name, String value);
+
     void setPromise(Promise<Object> promise);
-    Promise<Object>getPromise();
+
+    Promise<Object> getPromise();
+
     void setStatus(long sc);
+
     void addHeader(String name, String value);
+
     Object getResponse();
+
     void fireResult(Object o);
+
     void fireFailure(Exception e);
+
     boolean isSetOrExpired();
 }

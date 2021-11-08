@@ -3,7 +3,6 @@ package com.cell.lb;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * @author Charlie

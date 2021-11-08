@@ -12,44 +12,53 @@ import java.util.concurrent.TimeoutException;
 /**
  * Abstract base class for {@link EventExecutorGroup} implementations.
  */
-public abstract class AbstractEventExecutorGroup implements EventExecutorGroup {
+public abstract class AbstractEventExecutorGroup implements EventExecutorGroup
+{
     @Override
-    public Future<?> submit(Runnable task) {
+    public Future<?> submit(Runnable task)
+    {
         return next().submit(task);
     }
 
     @Override
-    public <T> Future<T> submit(Runnable task, T result) {
+    public <T> Future<T> submit(Runnable task, T result)
+    {
         return next().submit(task, result);
     }
 
     @Override
-    public <T> Future<T> submit(Callable<T> task) {
+    public <T> Future<T> submit(Callable<T> task)
+    {
         return next().submit(task);
     }
 
     @Override
-    public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit) {
+    public ScheduledFuture<?> schedule(Runnable command, long delay, TimeUnit unit)
+    {
         return next().schedule(command, delay, unit);
     }
 
     @Override
-    public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit) {
+    public <V> ScheduledFuture<V> schedule(Callable<V> callable, long delay, TimeUnit unit)
+    {
         return next().schedule(callable, delay, unit);
     }
 
     @Override
-    public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit) {
+    public ScheduledFuture<?> scheduleAtFixedRate(Runnable command, long initialDelay, long period, TimeUnit unit)
+    {
         return next().scheduleAtFixedRate(command, initialDelay, period, unit);
     }
 
     @Override
-    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit) {
+    public ScheduledFuture<?> scheduleWithFixedDelay(Runnable command, long initialDelay, long delay, TimeUnit unit)
+    {
         return next().scheduleWithFixedDelay(command, initialDelay, delay, unit);
     }
 
     @Override
-    public Future<?> shutdownGracefully() {
+    public Future<?> shutdownGracefully()
+    {
         return shutdownGracefully(AbstractEventExecutor.DEFAULT_SHUTDOWN_QUIET_PERIOD, AbstractEventExecutor.DEFAULT_SHUTDOWN_TIMEOUT, TimeUnit.SECONDS);
     }
 
@@ -65,7 +74,8 @@ public abstract class AbstractEventExecutorGroup implements EventExecutorGroup {
      */
     @Override
     @Deprecated
-    public List<Runnable> shutdownNow() {
+    public List<Runnable> shutdownNow()
+    {
         shutdown();
         return Collections.emptyList();
     }
@@ -98,7 +108,8 @@ public abstract class AbstractEventExecutorGroup implements EventExecutorGroup {
     }
 
     @Override
-    public void execute(Runnable command) {
+    public void execute(Runnable command)
+    {
         next().execute(command);
     }
 }

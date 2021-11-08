@@ -23,199 +23,247 @@ class FastJsonObject implements IJsonObject
 
     private JSONObject in;
 
-    public static IJsonObject parseObject(String jsonStr){
+    public static IJsonObject parseObject(String jsonStr)
+    {
         JSONObject jsonObject = JSON.parseObject(jsonStr);
         return new FastJsonObject(jsonObject);
     }
 
-    public FastJsonObject(String jsonStr){
+    public FastJsonObject(String jsonStr)
+    {
         this(JSON.parseObject(jsonStr));
     }
 
-    FastJsonObject(JSONObject jsonObject){
+    FastJsonObject(JSONObject jsonObject)
+    {
         this.in = jsonObject;
-        if (this.in == null){
+        if (this.in == null)
+        {
             this.in = new JSONObject();
         }
     }
 
     @Override
-    public IJsonArray getJsonArray(String tag) {
+    public IJsonArray getJsonArray(String tag)
+    {
         JSONArray jsonArray = in.getJSONArray(tag);
         return new FastJsonArray(jsonArray);
     }
 
     @Override
-    public IJsonObject getJsonObject(String tag){
+    public IJsonObject getJsonObject(String tag)
+    {
         JSONObject jsonObject = in.getJSONObject(tag);
-        if (jsonObject == null){
+        if (jsonObject == null)
+        {
             return null;
         }
         return new FastJsonObject(jsonObject);
     }
 
     @Override
-    public Set<String> keys() {
+    public Set<String> keys()
+    {
         return in.getInnerMap().keySet();
     }
 
     @Override
-    public Byte getByte(String tag) {
+    public Byte getByte(String tag)
+    {
         return in.getByte(tag);
     }
 
     @Override
-    public byte getByteValue(String tag) {
+    public byte getByteValue(String tag)
+    {
         return in.getByteValue(tag);
     }
 
     @Override
-    public List<Byte> getByteArray(String tag) {
+    public List<Byte> getByteArray(String tag)
+    {
         Byte[] arr = in.getObject(tag, Byte[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Boolean getBoolean(String tag) {
+    public Boolean getBoolean(String tag)
+    {
         return in.getBoolean(tag);
     }
 
     @Override
-    public boolean getBooleanValue(String tag) {
+    public boolean getBooleanValue(String tag)
+    {
         return in.getBooleanValue(tag);
     }
 
     @Override
-    public List<Boolean> getBooleanArray(String tag) {
+    public List<Boolean> getBooleanArray(String tag)
+    {
         Boolean[] arr = in.getObject(tag, Boolean[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Short getShort(String tag) {
+    public Short getShort(String tag)
+    {
         return in.getShort(tag);
     }
 
     @Override
-    public short getShortValue(String tag) {
+    public short getShortValue(String tag)
+    {
         return in.getShortValue(tag);
     }
 
     @Override
-    public List<Short> getShortArray(String tag) {
+    public List<Short> getShortArray(String tag)
+    {
         Short[] arr = in.getObject(tag, Short[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Integer getInt(String tag) {
+    public Integer getInt(String tag)
+    {
         return in.getInteger(tag);
     }
 
     @Override
-    public int getIntValue(String tag) {
+    public int getIntValue(String tag)
+    {
         return in.getIntValue(tag);
     }
 
     @Override
-    public List<Integer> getIntArray(String tag) {
+    public List<Integer> getIntArray(String tag)
+    {
         Integer[] arr = in.getObject(tag, Integer[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Long getLong(String tag) {
+    public Long getLong(String tag)
+    {
         return in.getLong(tag);
     }
 
     @Override
-    public long getLongValue(String tag) {
+    public long getLongValue(String tag)
+    {
         return in.getLongValue(tag);
     }
 
     @Override
-    public List<Long> getLongArray(String tag) {
+    public List<Long> getLongArray(String tag)
+    {
         Long[] arr = in.getObject(tag, Long[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Float getFloat(String tag) {
+    public Float getFloat(String tag)
+    {
         return in.getFloat(tag);
     }
 
     @Override
-    public float getFloatValue(String tag) {
+    public float getFloatValue(String tag)
+    {
         return in.getFloatValue(tag);
     }
 
     @Override
-    public List<Float> getFloatArray(String tag) {
+    public List<Float> getFloatArray(String tag)
+    {
         Float[] arr = in.getObject(tag, Float[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public Double getDouble(String tag) {
+    public Double getDouble(String tag)
+    {
         return in.getDouble(tag);
     }
 
     @Override
-    public double getDoubleValue(String tag) {
+    public double getDoubleValue(String tag)
+    {
         return in.getDoubleValue(tag);
     }
 
     @Override
-    public List<Double> getDoubleArray(String tag) {
+    public List<Double> getDoubleArray(String tag)
+    {
         Double[] arr = in.getObject(tag, Double[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public String getString(String tag) {
+    public String getString(String tag)
+    {
         return in.getString(tag);
     }
 
     @Override
-    public List<String> getStringArray(String tag) {
+    public List<String> getStringArray(String tag)
+    {
         String[] arr = in.getObject(tag, String[].class);
-        if (arr != null){
+        if (arr != null)
+        {
             return Arrays.asList(arr);
-        }else{
+        } else
+        {
             return null;
         }
     }
 
     @Override
-    public byte[] getBuffer(String tag) {
+    public byte[] getBuffer(String tag)
+    {
         return in.getObject(tag, byte[].class);
     }
 

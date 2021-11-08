@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.context.InitCTX;
 import com.cell.enums.ConfigurableEnums;
@@ -11,7 +11,7 @@ import com.cell.enums.ConfigurableEnums;
  * @Attention:
  * @Date 创建时间：2020-12-17 22:13
  */
-public abstract  class AbsSectionInitOnce extends AbstractInitOnce implements ISectionConfigurable
+public abstract class AbsSectionInitOnce extends AbstractInitOnce implements ISectionConfigurable
 {
     @Override
     public ConfigurableEnums configurable()

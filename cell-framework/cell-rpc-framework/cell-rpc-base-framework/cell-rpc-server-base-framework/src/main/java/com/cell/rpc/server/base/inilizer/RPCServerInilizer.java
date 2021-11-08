@@ -1,8 +1,8 @@
-package com.cell.inilizer;
+package com.cell.rpc.server.base.inilizer;
 
+import com.cell.node.spring.initializer.CellSpringInitializer;
 import com.cell.rpc.grpc.client.framework.annotation.RPCServerReactorAnno;
 import com.cell.rpc.grpc.client.framework.annotation.RPCService;
-import com.cell.initializer.CellSpringInitializer;
 import com.cell.rpc.server.base.annotation.RPCServerCmdAnno;
 
 import java.lang.annotation.Annotation;
@@ -17,8 +17,6 @@ import java.lang.annotation.Annotation;
  */
 public class RPCServerInilizer implements CellSpringInitializer
 {
-
-
     @Override
     public Class<? extends Annotation>[] getInterestAnnotation()
     {

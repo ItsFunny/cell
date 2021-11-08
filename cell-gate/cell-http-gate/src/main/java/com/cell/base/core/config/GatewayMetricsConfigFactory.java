@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.Configuration;
 import com.cell.exceptions.ProgramaException;

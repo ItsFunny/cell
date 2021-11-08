@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class UnpaddedInternalThreadLocalMap {
+class UnpaddedInternalThreadLocalMap
+{
     static final ThreadLocal<InternalThreadLocalMap> slowThreadLocalMap = new ThreadLocal<InternalThreadLocalMap>();
     static final AtomicInteger nextIndex = new AtomicInteger();
 
-    /** Used by {@link FastThreadLocal} */
+    /**
+     * Used by {@link FastThreadLocal}
+     */
     Object[] indexedVariables;
 
     // Core thread-locals
@@ -31,7 +34,8 @@ class UnpaddedInternalThreadLocalMap {
     // ArrayList-related thread-locals
     ArrayList<Object> arrayList;
 
-    UnpaddedInternalThreadLocalMap(Object[] indexedVariables) {
+    UnpaddedInternalThreadLocalMap(Object[] indexedVariables)
+    {
         this.indexedVariables = indexedVariables;
     }
 }

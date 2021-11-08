@@ -2,9 +2,7 @@ package com.cell.bee.loadbalance.model;
 
 import com.cell.transport.model.ServerMetaData;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
-import java.util.Map;
 import java.util.Objects;
 
 /**

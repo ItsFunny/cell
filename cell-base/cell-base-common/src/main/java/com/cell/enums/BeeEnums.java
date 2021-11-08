@@ -13,6 +13,7 @@ public enum BeeEnums
 {
 
     ;
+
     BeeEnums(Integer id, String desc)
     {
         this.id = id;

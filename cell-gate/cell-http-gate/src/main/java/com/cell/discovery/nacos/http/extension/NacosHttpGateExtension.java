@@ -2,14 +2,14 @@ package com.cell.discovery.nacos.http.extension;
 
 import com.cell.annotations.Plugin;
 import com.cell.base.IScheduleCounter;
+import com.cell.base.core.config.GatePropertyNode;
+import com.cell.base.core.config.GatewayConfiguration;
+import com.cell.base.core.config.GatewayMetricsConfigFactory;
 import com.cell.constants.CommandLineConstants;
 import com.cell.context.INodeContext;
 import com.cell.context.InitCTX;
 import com.cell.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
-import com.cell.grpc.common.config.GatePropertyNode;
-import com.cell.grpc.common.config.GatewayConfiguration;
-import com.cell.grpc.common.config.GatewayMetricsConfigFactory;
 import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.schedual.SchedualCaculateErrorCount;
 import com.cell.utils.StringUtils;

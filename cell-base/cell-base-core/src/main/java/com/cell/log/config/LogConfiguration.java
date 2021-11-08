@@ -1,6 +1,5 @@
 package com.cell.log.config;
 
-import com.cell.log.LOG;
 import com.cell.log.LogLevel;
 import lombok.Data;
 

@@ -1,8 +1,8 @@
 package com.cell.exception;
 
-import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import com.cell.enums.CellError;
 import com.cell.exceptions.AbstractZZException;
+import com.cell.rpc.grpc.client.framework.command.IHttpCommand;
 import lombok.Data;
 
 /**
@@ -17,10 +17,11 @@ import lombok.Data;
 public class HttpFramkeworkException extends AbstractZZException
 {
     private IHttpCommand command;
+
     public HttpFramkeworkException(IHttpCommand command, CellError error, String msg)
     {
-        super(error,msg);
-        this.command=command;
+        super(error, msg);
+        this.command = command;
     }
 
     public HttpFramkeworkException(String message, String message1)

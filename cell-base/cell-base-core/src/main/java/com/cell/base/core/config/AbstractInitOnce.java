@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 import com.cell.context.InitCTX;
 import lombok.Data;
@@ -18,9 +18,11 @@ public abstract class AbstractInitOnce implements IInitOnce
 {
     protected AtomicBoolean init = new AtomicBoolean();
 
-    public boolean inited(){
+    public boolean inited()
+    {
         return init.get();
     }
+
     public void initOnce(InitCTX ctx)
     {
         // FIXME

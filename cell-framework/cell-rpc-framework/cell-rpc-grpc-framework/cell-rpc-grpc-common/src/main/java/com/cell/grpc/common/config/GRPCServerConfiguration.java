@@ -1,4 +1,4 @@
-package com.cell.base.core.config;
+package com.cell.grpc.common.config;
 
 import lombok.Data;
 
@@ -25,7 +25,6 @@ public class GRPCServerConfiguration
     private Long maxConnectionAgeGrace = null;
     private Integer maxInboundMessageSize = null;
     private Integer maxInboundMetadataSize = null;
-
 
 
     public static GRPCServerConfiguration defaultConfiguration()

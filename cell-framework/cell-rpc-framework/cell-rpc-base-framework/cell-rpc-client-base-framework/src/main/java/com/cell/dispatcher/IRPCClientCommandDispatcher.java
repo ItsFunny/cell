@@ -8,6 +8,6 @@ package com.cell.dispatcher;
  * @Attention:
  * @Date 创建时间：2021-10-27 04:45
  */
-public interface IRPCClientCommandDispatcher extends  IRPCCommandDispatcher
+public interface IRPCClientCommandDispatcher extends IRPCCommandDispatcher
 {
 }

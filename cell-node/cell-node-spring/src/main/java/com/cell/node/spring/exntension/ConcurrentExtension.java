@@ -1,4 +1,4 @@
-package com.cell.discovery.nacos.http.extension;
+package com.cell.node.spring.exntension;
 
 import com.cell.Configuration;
 import com.cell.annotations.CellOrder;

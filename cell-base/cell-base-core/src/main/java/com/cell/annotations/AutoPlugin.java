@@ -7,6 +7,6 @@ import java.lang.annotation.*;
 @Documented
 public @interface AutoPlugin
 {
-	boolean required() default true;
+    boolean required() default true;
 }
 

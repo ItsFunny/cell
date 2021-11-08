@@ -10,6 +10,6 @@ import java.lang.annotation.*;
 @Inherited
 public @interface CellOrder
 {
-	int value() default  Constants.DEFAULT_ORDER;
+    int value() default Constants.DEFAULT_ORDER;
 }
 

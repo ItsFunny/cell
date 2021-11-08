@@ -2,9 +2,6 @@ package com.cell.reactor.impl;
 
 import com.cell.reactor.IDynamicHttpReactor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 /**
  * @author Charlie
  * @When

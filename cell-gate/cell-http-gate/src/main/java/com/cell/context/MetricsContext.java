@@ -1,6 +1,5 @@
 package com.cell.context;
 
-import com.cell.protocol.AbstractBaseContext;
 import com.cell.protocol.IContext;
 import lombok.Data;
 import org.springframework.web.server.ServerWebExchange;
@@ -18,10 +17,13 @@ public class MetricsContext implements IContext
 {
     private long startTime;
     private ServerWebExchange exchange;
+
     @Override
     public void discard() { }
-    public MetricsContext(){
-        this.startTime=System.currentTimeMillis();
+
+    public MetricsContext()
+    {
+        this.startTime = System.currentTimeMillis();
     }
 
 }

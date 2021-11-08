@@ -1,6 +1,6 @@
 package com.cell.log.bridge;
 
-import com.cell.grpc.common.config.AbstractInitOnce;
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.context.InitCTX;
 import com.cell.log.LOG;
 import com.cell.log.LogLevel;
@@ -128,13 +128,13 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void debug(String msg)
     {
-        LOG.debug(module,  LogTypeEnums.THIRD_PARTY, msg);
+        LOG.debug(module, LogTypeEnums.THIRD_PARTY, msg);
     }
 
     @Override
     public void debug(String format, Object arg)
     {
-        LOG.debug(module,  LogTypeEnums.THIRD_PARTY, format, arg);
+        LOG.debug(module, LogTypeEnums.THIRD_PARTY, format, arg);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void debug(String format, Object... argArray)
     {
-        LOG.debug(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.arrayFormat(format, argArray).getMessage());
+        LOG.debug(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.arrayFormat(format, argArray).getMessage());
     }
 
     @Override
@@ -176,13 +176,13 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void debug(Marker marker, String format, Object arg1, Object arg2)
     {
-        LOG.debug(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
+        LOG.debug(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
     }
 
     @Override
     public void debug(Marker marker, String format, Object... argArray)
     {
-        LOG.debug(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.arrayFormat(format, argArray).getMessage());
+        LOG.debug(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.arrayFormat(format, argArray).getMessage());
     }
 
     @Override
@@ -206,13 +206,13 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void info(String msg)
     {
-        LOG.info(module,  LogTypeEnums.THIRD_PARTY, msg);
+        LOG.info(module, LogTypeEnums.THIRD_PARTY, msg);
     }
 
     @Override
     public void info(String format, Object arg)
     {
-        LOG.info(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg).getMessage());
+        LOG.info(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg).getMessage());
     }
 
     @Override
@@ -243,7 +243,7 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void info(Marker marker, String msg)
     {
-        LOG.info(module,  LogTypeEnums.THIRD_PARTY, msg);
+        LOG.info(module, LogTypeEnums.THIRD_PARTY, msg);
     }
 
     @Override
@@ -255,7 +255,7 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void info(Marker marker, String format, Object arg1, Object arg2)
     {
-        LOG.info(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
+        LOG.info(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
     }
 
     @Override
@@ -297,7 +297,7 @@ public class LOGLoggerWrapper extends AbstractInitOnce implements Logger, Intern
     @Override
     public void warn(String format, Object arg1, Object arg2)
     {
-        LOG.warn(module,  LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
+        LOG.warn(module, LogTypeEnums.THIRD_PARTY, MessageFormatter.format(format, arg1, arg2).getMessage());
     }
 
     @Override

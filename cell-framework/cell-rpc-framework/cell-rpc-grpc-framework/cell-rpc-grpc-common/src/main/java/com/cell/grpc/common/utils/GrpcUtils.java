@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.com.cell.grpc.common.utils;
+package com.cell.grpc.common.utils;
 
 import io.grpc.MethodDescriptor;
 
@@ -55,12 +55,15 @@ public final class GrpcUtils
      * @return The extracted domain socket address specific path.
      * @throws IllegalArgumentException If the given address is not a valid address.
      */
-    public static String extractDomainSocketAddressPath(final String address) {
-        if (!address.startsWith(DOMAIN_SOCKET_ADDRESS_PREFIX)) {
+    public static String extractDomainSocketAddressPath(final String address)
+    {
+        if (!address.startsWith(DOMAIN_SOCKET_ADDRESS_PREFIX))
+        {
             throw new IllegalArgumentException(address + " is not a valid domain socket address.");
         }
         String path = address.substring(DOMAIN_SOCKET_ADDRESS_PREFIX.length());
-        if (path.startsWith("//")) {
+        if (path.startsWith("//"))
+        {
             path = path.substring(2);
             // We don't check this as there is no reliable way to check that it's an absolute path,
             // especially when Windows adds support for these in the future
@@ -79,7 +82,8 @@ public final class GrpcUtils
      * @see MethodDescriptor#extractFullServiceName(String)
      * @see #extractMethodName(MethodDescriptor)
      */
-    public static String extractServiceName(final MethodDescriptor<?, ?> method) {
+    public static String extractServiceName(final MethodDescriptor<?, ?> method)
+    {
         return MethodDescriptor.extractFullServiceName(method.getFullMethodName());
     }
 
@@ -90,11 +94,13 @@ public final class GrpcUtils
      * @return The extracted method name.
      * @see #extractServiceName(MethodDescriptor)
      */
-    public static String extractMethodName(final MethodDescriptor<?, ?> method) {
+    public static String extractMethodName(final MethodDescriptor<?, ?> method)
+    {
         // This method is the equivalent of MethodDescriptor.extractFullServiceName
         final String fullMethodName = method.getFullMethodName();
         final int index = fullMethodName.lastIndexOf('/');
-        if (index == -1) {
+        if (index == -1)
+        {
             return fullMethodName;
         }
         return fullMethodName.substring(index + 1);

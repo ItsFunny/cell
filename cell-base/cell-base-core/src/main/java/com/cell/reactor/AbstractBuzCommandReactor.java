@@ -11,7 +11,7 @@ import com.cell.protocol.ICommand;
  * @Attention:
  * @Date 创建时间：2021-10-21 22:21
  */
-public  abstract  class AbstractBuzCommandReactor extends AbstractBaseCommandReactor
+public abstract class AbstractBuzCommandReactor extends AbstractBaseCommandReactor
 {
     @Override
     protected void onInit(InitCTX ctx)

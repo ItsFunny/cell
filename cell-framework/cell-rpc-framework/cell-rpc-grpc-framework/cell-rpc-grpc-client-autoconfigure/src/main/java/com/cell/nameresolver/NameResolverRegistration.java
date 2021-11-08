@@ -32,7 +32,8 @@ import java.util.List;
  * @author Daniel Theuke (daniel.theuke@heuboe.de)
  */
 @Slf4j
-public class NameResolverRegistration implements DisposableBean {
+public class NameResolverRegistration implements DisposableBean
+{
 
     private final List<NameResolverRegistry> registries = new ArrayList<>(1);
     private final List<NameResolverProvider> providers;
@@ -42,7 +43,8 @@ public class NameResolverRegistration implements DisposableBean {
      *
      * @param providers The providers that should be managed.
      */
-    public NameResolverRegistration(List<NameResolverProvider> providers) {
+    public NameResolverRegistration(List<NameResolverProvider> providers)
+    {
         this.providers = providers == null ? ImmutableList.of() : ImmutableList.copyOf(providers);
     }
 
@@ -51,22 +53,29 @@ public class NameResolverRegistration implements DisposableBean {
      *
      * @param registry The registry to add the providers to.
      */
-    public void register(NameResolverRegistry registry) {
+    public void register(NameResolverRegistry registry)
+    {
         this.registries.add(registry);
-        for (NameResolverProvider provider : this.providers) {
-            try {
+        for (NameResolverProvider provider : this.providers)
+        {
+            try
+            {
                 registry.register(provider);
                 log.debug("{} is available -> Added to the NameResolverRegistry", provider);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException e)
+            {
                 log.debug("{} is not available -> Not added to the NameResolverRegistry", provider);
             }
         }
     }
 
     @Override
-    public void destroy() {
-        for (NameResolverRegistry registry : this.registries) {
-            for (NameResolverProvider provider : this.providers) {
+    public void destroy()
+    {
+        for (NameResolverRegistry registry : this.registries)
+        {
+            for (NameResolverProvider provider : this.providers)
+            {
                 registry.deregister(provider);
                 log.debug("{} was removed from the NameResolverRegistry", provider);
             }

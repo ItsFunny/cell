@@ -5,7 +5,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public abstract class AbstractFuture<V> implements Future<V> {
+public abstract class AbstractFuture<V> implements Future<V>
+{
 
     @Override
     public V get() throws InterruptedException, ExecutionException
@@ -13,10 +14,12 @@ public abstract class AbstractFuture<V> implements Future<V> {
         await();
 
         Throwable cause = cause();
-        if (cause == null) {
+        if (cause == null)
+        {
             return getNow();
         }
-        if (cause instanceof CancellationException) {
+        if (cause instanceof CancellationException)
+        {
             throw (CancellationException) cause;
         }
         throw new ExecutionException(cause);
@@ -25,12 +28,15 @@ public abstract class AbstractFuture<V> implements Future<V> {
     @Override
     public V get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException
     {
-        if (await(timeout, unit)) {
+        if (await(timeout, unit))
+        {
             Throwable cause = cause();
-            if (cause == null) {
+            if (cause == null)
+            {
                 return getNow();
             }
-            if (cause instanceof CancellationException) {
+            if (cause instanceof CancellationException)
+            {
                 throw (CancellationException) cause;
             }
             throw new ExecutionException(cause);

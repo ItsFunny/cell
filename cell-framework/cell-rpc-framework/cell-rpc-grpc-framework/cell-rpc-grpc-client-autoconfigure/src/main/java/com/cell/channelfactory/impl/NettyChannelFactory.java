@@ -1,8 +1,8 @@
 package com.cell.channelfactory.impl;
 
 import com.cell.channelfactory.GrpcChannelConfigurer;
-import com.cell.com.cell.grpc.common.utils.GrpcUtils;
 import com.cell.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
+import com.cell.grpc.common.utils.GrpcUtils;
 import com.cell.interceptor.GlobalClientInterceptorRegistry;
 import com.cell.nameresolver.StaticNameResolverProvider;
 import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;

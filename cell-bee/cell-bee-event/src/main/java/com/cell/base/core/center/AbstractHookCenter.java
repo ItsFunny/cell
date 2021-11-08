@@ -1,4 +1,4 @@
-package com.cell.bee.event.center;
+package com.cell.base.core.center;
 
 import com.cell.executor.ChainExecutorFactory;
 import com.cell.executor.IListChainExecutor;

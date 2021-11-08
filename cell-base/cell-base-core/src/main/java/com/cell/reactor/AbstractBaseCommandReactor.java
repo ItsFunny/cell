@@ -1,6 +1,6 @@
 package com.cell.reactor;
 
-import com.cell.grpc.common.config.AbstractInitOnce;
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.constants.ContextConstants;
 import com.cell.protocol.ContextResponseWrapper;
 import com.cell.protocol.IBuzzContext;

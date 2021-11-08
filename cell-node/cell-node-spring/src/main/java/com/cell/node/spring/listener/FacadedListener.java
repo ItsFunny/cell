@@ -1,6 +1,6 @@
-package com.cell.listener;
+package com.cell.node.spring.listener;
 
-import com.cell.postprocessors.extension.SpringExtensionManager;
+import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
 import org.springframework.boot.context.event.SpringApplicationEvent;
 import org.springframework.context.ApplicationListener;
 

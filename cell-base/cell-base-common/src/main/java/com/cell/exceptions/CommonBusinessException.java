@@ -1,7 +1,5 @@
 package com.cell.exceptions;
 
-import org.slf4j.helpers.MessageFormatter;
-
 public class CommonBusinessException extends RuntimeException
 {
 

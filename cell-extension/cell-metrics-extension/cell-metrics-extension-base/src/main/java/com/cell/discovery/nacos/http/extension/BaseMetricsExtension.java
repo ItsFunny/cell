@@ -5,6 +5,7 @@ import com.cell.annotations.Plugin;
 import com.cell.context.INodeContext;
 import com.cell.enums.EnumLifeCycle;
 import com.cell.http.gate.impl.StatContextImpl;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.services.IStatContextService;
 
 /**
@@ -16,7 +17,7 @@ import com.cell.services.IStatContextService;
  * @Date 创建时间：2021-09-15 21:27
  */
 @LifeCycle(lifeCycle = EnumLifeCycle.ONCE)
-public  class BaseMetricsExtension extends AbstractSpringNodeExtension
+public class BaseMetricsExtension extends AbstractSpringNodeExtension
 {
     private IStatContextService service;
 

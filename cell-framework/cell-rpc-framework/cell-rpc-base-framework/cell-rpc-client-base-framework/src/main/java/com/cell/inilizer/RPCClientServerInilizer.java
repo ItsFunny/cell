@@ -1,6 +1,6 @@
 package com.cell.inilizer;
 
-import com.cell.initializer.CellSpringInitializer;
+import com.cell.node.spring.initializer.CellSpringInitializer;
 import com.cell.rpc.client.base.annotation.RPCClient;
 
 import java.lang.annotation.Annotation;

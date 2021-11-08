@@ -14,7 +14,7 @@ import java.io.IOException;
  * @Attention:
  * @Date 创建时间：2021-08-28 11:03
  */
-public interface ICommand extends  ISerializable
+public interface ICommand extends ISerializable
 {
     void execute(IBuzzContext ctx);
 

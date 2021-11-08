@@ -15,10 +15,12 @@ import com.cell.executor.BaseAutoSelectReflectManager;
 public class ReactorSelectorManager extends BaseAutoSelectReflectManager
 {
     public static final String reacotrSelector = "reacotrSelector";
-    public static final String selectByUri="selectByUri";
-    public static final String onAddReactor="onAddReactor";
+    public static final String selectByUri = "selectByUri";
+    public static final String onAddReactor = "onAddReactor";
     private static final ReactorSelectorManager instance = new ReactorSelectorManager();
-    public static ReactorSelectorManager getInstance(){
+
+    public static ReactorSelectorManager getInstance()
+    {
         return instance;
     }
 

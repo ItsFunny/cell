@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.com.cell.grpc.common.codec;
+package com.cell.grpc.common.codec;
 
 /**
  * The type of the codec.
@@ -23,7 +23,8 @@ package com.cell.com.cell.grpc.common.codec;
  * @author Michael (yidongnan@gmail.com)
  * @author Daniel Theuke (daniel.theuke@heuboe.de)
  */
-public enum CodecType {
+public enum CodecType
+{
 
     /**
      * The codec should be used for compression only.
@@ -43,7 +44,8 @@ public enum CodecType {
     private final boolean forCompression;
     private final boolean forDecompression;
 
-    private CodecType(final boolean forCompression, final boolean forDecompression) {
+    private CodecType(final boolean forCompression, final boolean forDecompression)
+    {
         this.forCompression = forCompression;
         this.forDecompression = forDecompression;
     }
@@ -53,7 +55,8 @@ public enum CodecType {
      *
      * @return True, if the codec can be used for compression. False otherwise.
      */
-    public boolean isForCompression() {
+    public boolean isForCompression()
+    {
         return this.forCompression;
     }
 
@@ -62,7 +65,8 @@ public enum CodecType {
      *
      * @return True, if the codec can be used for decompression. False otherwise.
      */
-    public boolean isForDecompression() {
+    public boolean isForDecompression()
+    {
         return this.forDecompression;
     }
 

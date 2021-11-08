@@ -13,6 +13,7 @@ import com.cell.event.IProcessEvent;
  */
 public interface IProxy
 {
-    void proxy(IProcessEvent event, Promise<Object>promise);
+    void proxy(IProcessEvent event, Promise<Object> promise);
+
     void proxy(IProcessEvent event);
 }

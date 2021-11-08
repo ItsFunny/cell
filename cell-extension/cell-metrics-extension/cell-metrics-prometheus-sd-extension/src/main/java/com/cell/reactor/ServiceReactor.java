@@ -36,7 +36,7 @@ public class ServiceReactor extends AbstractHttpDymanicCommandReactor
         return headers;
     }
 
-    public static  <T> ResponseEntity createResponseEntity(ChangeItem result)
+    public static <T> ResponseEntity createResponseEntity(ChangeItem result)
     {
         return new ResponseEntity<>(result.getItem(), createHeaders(result.getChangeIndex()), HttpStatus.OK);
     }

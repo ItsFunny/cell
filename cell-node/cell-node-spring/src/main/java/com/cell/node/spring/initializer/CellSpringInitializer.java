@@ -1,4 +1,4 @@
-package com.cell.initializer;
+package com.cell.node.spring.initializer;
 
 import java.lang.annotation.Annotation;
 

@@ -1,6 +1,6 @@
 package com.cell.timewheel;
 
-import com.cell.grpc.common.config.WheelTimerConfigurableNode;
+import com.cell.base.core.config.WheelTimerConfigurableNode;
 import com.cell.enums.TimeWheelDeleyLevel;
 
 import java.util.Arrays;

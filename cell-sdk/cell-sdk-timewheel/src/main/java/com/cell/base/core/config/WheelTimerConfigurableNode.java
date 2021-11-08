@@ -1,4 +1,4 @@
-package com.cell.grpc.common.config;
+package com.cell.base.core.config;
 
 
 import com.cell.enums.TimeWheelDeleyLevel;
@@ -63,8 +63,8 @@ public class WheelTimerConfigurableNode
         private TimeUnit timeUnit;
         // wheel 中bucket容量
         private Integer wheelBucketTicks;
-        private boolean leakDetection=true;
-        private long maxPendingTimeouts=-1l;
+        private boolean leakDetection = true;
+        private long maxPendingTimeouts = -1l;
 
         public WheelTimerConfigurableNodeBuilder setLeakDetection(boolean leakDetection)
         {
@@ -137,9 +137,9 @@ public class WheelTimerConfigurableNode
             {
                 this.wheelBucketTicks = 512;
             }
-            node.wheelBucketTicks=this.wheelBucketTicks;
-            node.leakDetection=this.leakDetection;
-            node.maxPendingTimeouts=this.maxPendingTimeouts;
+            node.wheelBucketTicks = this.wheelBucketTicks;
+            node.leakDetection = this.leakDetection;
+            node.maxPendingTimeouts = this.maxPendingTimeouts;
 
             return node;
         }

@@ -1,4 +1,4 @@
 org.springframework.context.ApplicationListener=\
-com.cell.listener.FacadedListener
+com.cell.node.spring.listener.FacadedListener
 org.springframework.context.ApplicationContextInitializer=\
-com.cell.initializer.SpringInitializer
+com.cell.node.spring.initializer.SpringInitializer

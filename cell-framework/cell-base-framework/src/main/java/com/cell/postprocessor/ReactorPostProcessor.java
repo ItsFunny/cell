@@ -1,7 +1,7 @@
 package com.cell.postprocessor;
 
-import com.cell.adapter.IBeanPostProcessortAdapter;
 import com.cell.dispatcher.IDispatcher;
+import com.cell.node.spring.adapter.IBeanPostProcessortAdapter;
 import com.cell.reactor.ICommandReactor;
 import com.cell.root.Root;
 import com.cell.server.IServer;

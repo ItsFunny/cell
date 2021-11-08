@@ -41,7 +41,8 @@ import static java.util.Objects.requireNonNull;
  *
  * @author Michael (yidongnan@gmail.com)
  */
-public class GlobalServerInterceptorRegistry {
+public class GlobalServerInterceptorRegistry
+{
 
     private final ApplicationContext applicationContext;
 
@@ -51,9 +52,10 @@ public class GlobalServerInterceptorRegistry {
      * Creates a new GlobalServerInterceptorRegistry.
      *
      * @param applicationContext The application context to fetch the {@link GlobalServerInterceptorConfigurer} beans
-     *        from.
+     *                           from.
      */
-    public GlobalServerInterceptorRegistry(final ApplicationContext applicationContext) {
+    public GlobalServerInterceptorRegistry(final ApplicationContext applicationContext)
+    {
         this.applicationContext = requireNonNull(applicationContext, "applicationContext");
     }
 
@@ -62,8 +64,10 @@ public class GlobalServerInterceptorRegistry {
      *
      * @return The list of globally registered server interceptors.
      */
-    public ImmutableList<ServerInterceptor> getServerInterceptors() {
-        if (this.sortedServerInterceptors == null) {
+    public ImmutableList<ServerInterceptor> getServerInterceptors()
+    {
+        if (this.sortedServerInterceptors == null)
+        {
             this.sortedServerInterceptors = ImmutableList.copyOf(initServerInterceptors());
         }
         return this.sortedServerInterceptors;
@@ -74,10 +78,12 @@ public class GlobalServerInterceptorRegistry {
      *
      * @return The list of global server interceptors.
      */
-    protected List<ServerInterceptor> initServerInterceptors() {
+    protected List<ServerInterceptor> initServerInterceptors()
+    {
         final List<ServerInterceptor> interceptors = new ArrayList<>();
         for (final GlobalServerInterceptorConfigurer configurer : this.applicationContext
-                .getBeansOfType(GlobalServerInterceptorConfigurer.class).values()) {
+                .getBeansOfType(GlobalServerInterceptorConfigurer.class).values())
+        {
             configurer.configureServerInterceptors(interceptors);
         }
         sortInterceptors(interceptors);
@@ -90,7 +96,8 @@ public class GlobalServerInterceptorRegistry {
      *
      * @param interceptors The interceptors to sort.
      */
-    public void sortInterceptors(final List<? extends ServerInterceptor> interceptors) {
+    public void sortInterceptors(final List<? extends ServerInterceptor> interceptors)
+    {
         interceptors.sort(AnnotationAwareOrderComparator.INSTANCE);
     }
 

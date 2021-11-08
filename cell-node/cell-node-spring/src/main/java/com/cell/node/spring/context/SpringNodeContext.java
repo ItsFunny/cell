@@ -1,4 +1,4 @@
-package com.cell.context;
+package com.cell.node.spring.context;
 
 import com.cell.concurrent.base.EventExecutor;
 import com.cell.constants.CommandLineConstants;
@@ -24,7 +24,7 @@ public class SpringNodeContext implements ISpringNodeContext
     private EventExecutor executor;
     private CommandLine commandLine;
     private SpringExtensionManager manager;
-    private String cluster= CommandLineConstants.DEFAULT_CLSUTER_VALUE;
+    private String cluster = CommandLineConstants.DEFAULT_CLSUTER_VALUE;
     private Map<String, String> meta = new HashMap<>();
 
     private List<INodeExtension> extensions;

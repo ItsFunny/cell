@@ -1,7 +1,7 @@
 package com.cell.timewheel;
 
-import com.cell.grpc.common.config.AbstractInitOnce;
-import com.cell.grpc.common.config.WheelTimerConfigurableNode;
+import com.cell.base.core.config.AbstractInitOnce;
+import com.cell.base.core.config.WheelTimerConfigurableNode;
 import com.cell.context.InitCTX;
 import com.cell.enums.TimeWheelDeleyLevel;
 import com.cell.task.DefaultTimerTask;

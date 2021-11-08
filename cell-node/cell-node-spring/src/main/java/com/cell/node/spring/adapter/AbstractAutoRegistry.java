@@ -1,4 +1,4 @@
-package com.cell.adapter;
+package com.cell.node.spring.adapter;
 
 import com.cell.context.InitCTX;
 import com.cell.utils.CollectionUtils;

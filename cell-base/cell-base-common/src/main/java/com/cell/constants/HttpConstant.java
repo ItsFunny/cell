@@ -10,6 +10,6 @@ package com.cell.constants;
  */
 public interface HttpConstant
 {
-    String TOKEN="token";
+    String TOKEN = "token";
 
 }

@@ -1,7 +1,7 @@
 package com.cell.util;
 
 import com.cell.channelfactory.GRPCChannelFactory;
-import com.cell.com.cell.grpc.common.annotation.GRPCClient;
+import com.cell.grpc.common.annotation.GRPCClient;
 import com.cell.inject.StubTransformer;
 import com.cell.stub.IStubFactory;
 import com.google.common.collect.Lists;

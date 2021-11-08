@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.com.cell.grpc.common.codec;
+package com.cell.grpc.common.codec;
 
 import com.google.common.collect.ImmutableList;
 import io.grpc.Codec;
@@ -24,7 +24,8 @@ import lombok.Data;
 import java.util.Collection;
 
 @Data
-public class GrpcCodecDefinition {
+public class GrpcCodecDefinition
+{
 
     /**
      * The codec definition for gzip.
@@ -65,7 +66,8 @@ public class GrpcCodecDefinition {
         return advertised;
     }
 
-    public GrpcCodecDefinition(final Codec codec, final boolean advertised, final CodecType codecType) {
+    public GrpcCodecDefinition(final Codec codec, final boolean advertised, final CodecType codecType)
+    {
         this.codec = codec;
         this.advertised = advertised;
         this.codecType = codecType;

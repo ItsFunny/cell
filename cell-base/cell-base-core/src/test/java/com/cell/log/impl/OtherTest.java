@@ -15,10 +15,13 @@ import org.slf4j.LoggerFactory;
  */
 public class OtherTest
 {
-    static  Logger logger = LoggerFactory.getLogger("123");
-    static {
+    static Logger logger = LoggerFactory.getLogger("123");
+
+    static
+    {
         LOG.info("xxx");
     }
+
     @Test
     public void testOther()
     {

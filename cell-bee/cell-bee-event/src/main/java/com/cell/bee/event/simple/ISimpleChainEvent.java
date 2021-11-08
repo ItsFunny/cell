@@ -2,7 +2,6 @@ package com.cell.bee.event.simple;
 
 import com.cell.events.IEvent;
 import com.cell.executor.IChainExecutor;
-import com.cell.protocol.IContext;
 
 /**
  * @author Charlie

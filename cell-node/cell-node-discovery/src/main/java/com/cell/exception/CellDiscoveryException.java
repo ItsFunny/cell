@@ -1,6 +1,5 @@
 package com.cell.exception;
 
-import com.cell.enums.ExceptionEnums;
 import com.cell.exceptions.AbstractRuntimeException;
 
 /**

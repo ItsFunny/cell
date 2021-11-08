@@ -1,7 +1,6 @@
 package com.cell.wrapper;
 
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.bee.loadbalance.model.ServerMetaInfo;
 import lombok.Data;
 
 import java.net.URI;
@@ -27,9 +26,9 @@ public class ServerMetaInfoWrapper
     public void fillWithMeta(ServerCmdMetaInfo info)
     {
 //        this.ip = info.getIp();
-        this.ip=info.getMetaData().getExtraInfo().getDomain();
+        this.ip = info.getMetaData().getExtraInfo().getDomain();
         this.port = info.getPort();
         this.serviceName = info.getServiceName();
-        this.module=info.getModule();
+        this.module = info.getModule();
     }
 }

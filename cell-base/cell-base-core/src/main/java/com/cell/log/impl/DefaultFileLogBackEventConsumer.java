@@ -3,7 +3,6 @@ package com.cell.log.impl;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.core.OutputStreamAppender;
 import com.cell.context.InitCTX;
-import com.cell.exceptions.ConfigException;
 import com.cell.log.LogLevel;
 import com.cell.log.LogTypeEnums;
 import com.cell.log.Util;

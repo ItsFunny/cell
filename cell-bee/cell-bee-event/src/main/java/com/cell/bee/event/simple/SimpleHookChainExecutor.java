@@ -4,9 +4,6 @@ import com.cell.events.IEvent;
 import com.cell.executor.IChainExecutor;
 import com.cell.executor.IReactorExecutor;
 import com.cell.executor.impl.BaseMutableChainExecutor;
-import com.cell.hooks.IChainHook;
-import com.cell.protocol.IContext;
-import com.cell.services.impl.DefaultHookMutableChainExecutor;
 
 import java.util.List;
 
@@ -20,7 +17,8 @@ import java.util.List;
  */
 public class SimpleHookChainExecutor extends BaseMutableChainExecutor<IEvent> implements ISimpleChainEvent
 {
-    public SimpleHookChainExecutor(){
+    public SimpleHookChainExecutor()
+    {
 
     }
 

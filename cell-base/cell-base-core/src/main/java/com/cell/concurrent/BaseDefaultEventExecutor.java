@@ -8,54 +8,68 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ThreadFactory;
 
 
-public class BaseDefaultEventExecutor extends BaseSingleThreadEventLoop {
-	
-	static long TASK_LOOP_TIMES = 10L * 1000L * 1000L * 1000L;
-	
-	public BaseDefaultEventExecutor() {
-		this((EventLoopGroup) null);
-	}
+public class BaseDefaultEventExecutor extends BaseSingleThreadEventLoop
+{
 
-	public BaseDefaultEventExecutor(ThreadFactory threadFactory) {
-		this(null, threadFactory);
-	}
+    static long TASK_LOOP_TIMES = 10L * 1000L * 1000L * 1000L;
 
-	public BaseDefaultEventExecutor(Executor executor) {
-		this(null, executor);
-	}
+    public BaseDefaultEventExecutor()
+    {
+        this((EventLoopGroup) null);
+    }
 
-	public BaseDefaultEventExecutor(EventLoopGroup parent) {
-		this(parent, new DefaultThreadFactory(BaseDefaultEventLoop.class));
-	}
+    public BaseDefaultEventExecutor(ThreadFactory threadFactory)
+    {
+        this(null, threadFactory);
+    }
 
-	public BaseDefaultEventExecutor(EventLoopGroup parent, ThreadFactory threadFactory) {
-		super(parent, threadFactory, true);
-	}
+    public BaseDefaultEventExecutor(Executor executor)
+    {
+        this(null, executor);
+    }
 
-	public BaseDefaultEventExecutor(EventLoopGroup parent, Executor executor) {
-		super(parent, executor, true);
-	}
+    public BaseDefaultEventExecutor(EventLoopGroup parent)
+    {
+        this(parent, new DefaultThreadFactory(BaseDefaultEventLoop.class));
+    }
 
-	@Override
-	protected void run() {
-		for (;;) {
+    public BaseDefaultEventExecutor(EventLoopGroup parent, ThreadFactory threadFactory)
+    {
+        super(parent, threadFactory, true);
+    }
+
+    public BaseDefaultEventExecutor(EventLoopGroup parent, Executor executor)
+    {
+        super(parent, executor, true);
+    }
+
+    @Override
+    protected void run()
+    {
+        for (; ; )
+        {
             Runnable task = takeTask();
-            if (task != null) {
-            	try {
-            		task.run();
-            	} catch(Throwable t) {
-            		exceptionCaughtInTask(task, t);
-            	}
-            	updateLastExecutionTime();
+            if (task != null)
+            {
+                try
+                {
+                    task.run();
+                } catch (Throwable t)
+                {
+                    exceptionCaughtInTask(task, t);
+                }
+                updateLastExecutionTime();
             }
 
-            if (confirmShutdown()) {
+            if (confirmShutdown())
+            {
                 break;
             }
-		}
-	}
-	
-	protected void exceptionCaughtInTask(Runnable task, Throwable e) {
+        }
+    }
+
+    protected void exceptionCaughtInTask(Runnable task, Throwable e)
+    {
 //		LOG.warning(Module.COMMON, e, "exception caught in task: %s", task);
-	}
+    }
 }

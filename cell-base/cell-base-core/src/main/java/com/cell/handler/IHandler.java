@@ -20,5 +20,5 @@ public interface IHandler extends IBaseReactorExecutor
     void close(IHandlerSuit ctx);
 
 
-    Mono<Void> exceptionCaught(IHandlerSuit suit,Throwable e, IChainHandler executor);
+    Mono<Void> exceptionCaught(IHandlerSuit suit, Throwable e, IChainHandler executor);
 }

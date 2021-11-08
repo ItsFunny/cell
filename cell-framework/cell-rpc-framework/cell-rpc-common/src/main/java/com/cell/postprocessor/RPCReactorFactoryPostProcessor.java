@@ -1,7 +1,7 @@
 package com.cell.postprocessor;
 
-import com.cell.adapter.AbstractBeanDefiinitionRegistry;
 import com.cell.context.InitCTX;
+import com.cell.node.spring.adapter.AbstractBeanDefiinitionRegistry;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

@@ -29,7 +29,6 @@ public abstract class AbstractBaseContext implements IBuzzContext
     private EventExecutor eventExecutor;
 
 
-
     public AbstractBaseContext(CommandContext commandContext)
     {
         this.requestTimestamp = System.currentTimeMillis();

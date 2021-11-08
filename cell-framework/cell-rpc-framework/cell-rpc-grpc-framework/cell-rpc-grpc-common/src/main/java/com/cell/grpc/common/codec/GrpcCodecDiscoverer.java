@@ -15,7 +15,7 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-package com.cell.com.cell.grpc.common.codec;
+package com.cell.grpc.common.codec;
 
 import java.util.Collection;
 
@@ -25,7 +25,8 @@ import java.util.Collection;
  * @author Daniel Theuke (daniel.theuke@heuboe.de)
  */
 @FunctionalInterface
-public interface GrpcCodecDiscoverer {
+public interface GrpcCodecDiscoverer
+{
 
     /**
      * Find the grpc codecs that should uses by the client/server.

@@ -10,20 +10,21 @@ import java.util.concurrent.TimeUnit;
 
 public interface IPromise<T> extends IFuture<T>, Promise<T>
 {
-	IPromise<T> setFailure(CellError error);
-	boolean tryFailure(CellError error);
-	
-	@Deprecated
-	@Override
-	IPromise<T> setFailure(Throwable cause);
-	
-	@Deprecated
-	@Override
-	boolean tryFailure(Throwable cause);
-	
-	@Override
-	IPromise<T> setSuccess(T result);
-	
+    IPromise<T> setFailure(CellError error);
+
+    boolean tryFailure(CellError error);
+
+    @Deprecated
+    @Override
+    IPromise<T> setFailure(Throwable cause);
+
+    @Deprecated
+    @Override
+    boolean tryFailure(Throwable cause);
+
+    @Override
+    IPromise<T> setSuccess(T result);
+
     @Override
     IPromise<T> addListener(GenericFutureListener<? extends Future<? super T>> listener);
 
@@ -51,14 +52,14 @@ public interface IPromise<T> extends IFuture<T>, Promise<T>
     /**
      * following methods:
      * <ul>
-     *     <li>{@link #addListener(GenericFutureListener)}</li>
-     *     <li>{@link #addListeners(GenericFutureListener[])}</li>
-     *     <li>{@link #await()}</li>
-     *     <li>{@link #await(long, TimeUnit)} ()}</li>
-     *     <li>{@link #await(long)} ()}</li>
-     *     <li>{@link #awaitUninterruptibly()}</li>
-     *     <li>{@link #sync()}</li>
-     *     <li>{@link #syncUninterruptibly()}</li>
+     * <li>{@link #addListener(GenericFutureListener)}</li>
+     * <li>{@link #addListeners(GenericFutureListener[])}</li>
+     * <li>{@link #await()}</li>
+     * <li>{@link #await(long, TimeUnit)} ()}</li>
+     * <li>{@link #await(long)} ()}</li>
+     * <li>{@link #awaitUninterruptibly()}</li>
+     * <li>{@link #sync()}</li>
+     * <li>{@link #syncUninterruptibly()}</li>
      * </ul>
      */
     boolean isNull();

@@ -1,8 +1,7 @@
 package com.cell.log.impl;
 
-import com.cell.grpc.common.config.AbstractInitOnce;
+import com.cell.base.core.config.AbstractInitOnce;
 import com.cell.log.*;
-import com.cell.log.LogLevel;
 import com.cell.utils.CollectionUtils;
 import org.slf4j.Logger;
 

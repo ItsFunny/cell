@@ -1,8 +1,5 @@
 package com.cell.exceptions;
 
-import com.cell.enums.ExceptionEnums;
-import lombok.Data;
-
 /**
  * @author Charlie
  * @When

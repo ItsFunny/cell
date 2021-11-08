@@ -4,6 +4,7 @@
 package com.cell.grpc.common;
 
 public interface HeaderOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:common.Header)
-    com.google.protobuf.MessageOrBuilder {
+        // @@protoc_insertion_point(interface_extends:common.Header)
+        com.google.protobuf.MessageOrBuilder
+{
 }

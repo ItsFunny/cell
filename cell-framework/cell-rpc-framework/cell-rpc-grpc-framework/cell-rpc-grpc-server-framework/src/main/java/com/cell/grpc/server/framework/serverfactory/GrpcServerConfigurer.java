@@ -23,12 +23,15 @@ import java.util.Objects;
 import java.util.function.Consumer;
 
 @FunctionalInterface
-public interface GrpcServerConfigurer extends Consumer<ServerBuilder<?>> {
+public interface GrpcServerConfigurer extends Consumer<ServerBuilder<?>>
+{
 
     @Override
-    default GrpcServerConfigurer andThen(final Consumer<? super ServerBuilder<?>> after) {
+    default GrpcServerConfigurer andThen(final Consumer<? super ServerBuilder<?>> after)
+    {
         Objects.requireNonNull(after);
-        return t -> {
+        return t ->
+        {
             accept(t);
             after.accept(t);
         };

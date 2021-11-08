@@ -19,7 +19,9 @@ public class DefaultCellLoggerContext extends LoggerContext
     {
         return !this.set.contains(name);
     }
-    public void tag(String name){
+
+    public void tag(String name)
+    {
         this.set.add(name);
     }
 
