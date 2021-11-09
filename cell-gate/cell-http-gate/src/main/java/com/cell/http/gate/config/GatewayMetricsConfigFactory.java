@@ -1,7 +1,7 @@
 package com.cell.http.gate.config;
 
-import com.cell.Configuration;
-import com.cell.exceptions.ProgramaException;
+import com.cell.base.common.exceptions.ProgramaException;
+import com.cell.sdk.configuration.Configuration;
 import lombok.Data;
 
 /**

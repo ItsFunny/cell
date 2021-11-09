@@ -1,5 +1,7 @@
 package com.cell.http.framework.event;
 
+import com.cell.base.framework.event.IFrameworkEvent;
+
 /**
  * @author Charlie
  * @When

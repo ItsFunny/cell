@@ -2,7 +2,7 @@ package com.cell.bee.rate.gateway.sentinel.utils;
 
 import com.alibaba.csp.sentinel.context.ContextUtil;
 import com.cell.bee.rate.base.IRateEntry;
-import com.cell.constants.SentinelConstants;
+import com.cell.gate.common.constants.SentinelConstants;
 import org.springframework.web.server.ServerWebExchange;
 
 import java.util.Deque;

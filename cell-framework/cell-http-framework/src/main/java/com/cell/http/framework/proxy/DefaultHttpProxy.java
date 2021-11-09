@@ -3,7 +3,8 @@ package com.cell.http.framework.proxy;
 import com.cell.base.core.concurrent.base.Promise;
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;
-import com.cell.dispatcher.IHttpDispatcher;
+import com.cell.base.framework.proxy.AbstractBaseFrameworkProxy;
+import com.cell.http.framework.dispatcher.IHttpDispatcher;
 import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
 
 /**

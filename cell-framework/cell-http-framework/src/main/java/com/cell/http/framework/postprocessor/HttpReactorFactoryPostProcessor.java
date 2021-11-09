@@ -2,7 +2,8 @@ package com.cell.http.framework.postprocessor;
 
 import com.cell.base.core.annotations.LifeCycle;
 import com.cell.base.core.enums.EnumLifeCycle;
-import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
+import com.cell.base.framework.postprocessor.AbstractReactorFactoryPostProcessor;
+import com.cell.http.framework.annotation.HttpCmdAnno;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;

@@ -20,14 +20,10 @@
         <module>cell-demo-http-demo3</module>
         <module>cell-demo-nacos</module>
         <module>cell-extension-demo</module>
-        <module>cell-demo-gateway</module>
         <module>cell-demo-metrics</module>
         <module>cell-demo-mono</module>
         <module>cell-demo-microservice</module>
-        <module>cell-demo-dubbo-nacos</module>
-        <module>cell-demo-grpc</module>
         <module>cell-demo-rpc</module>
-        <module>cell-demo-rpc-client</module>
     </modules>
 
     <properties>

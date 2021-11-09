@@ -5,7 +5,7 @@ import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.bee.statistic.base.IScheduleCounter;
 import com.cell.base.common.context.InitCTX;
-import com.cell.discovery.nacos.discovery.IServiceDiscovery;
+import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.gate.common.config.GatePropertyNode;
 import com.cell.gate.common.config.GatewayConfiguration;

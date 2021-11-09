@@ -3,7 +3,7 @@ package com.cell.metrics.prometheus.sd.extension.sd;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.context.InitCTX;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
+import com.cell.node.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultPureStringKeyResolver;
 import com.cell.bee.transport.model.ServerMetaData;

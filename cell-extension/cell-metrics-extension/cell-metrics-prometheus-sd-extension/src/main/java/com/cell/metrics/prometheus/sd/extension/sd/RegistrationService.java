@@ -12,7 +12,7 @@ import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
 import com.cell.metrics.prometheus.sd.extension.model.ServiceInstanceHealth;
 import com.cell.node.discovery.model.Instance;
-import com.cell.rpc.grpc.client.framework.util.DiscoveryUtils;
+import com.cell.node.discovery.nacos.util.DiscoveryUtils;
 import com.cell.sdk.log.LOG;
 import com.cell.node.discovery.service.INodeDiscovery;
 import reactor.core.publisher.Flux;

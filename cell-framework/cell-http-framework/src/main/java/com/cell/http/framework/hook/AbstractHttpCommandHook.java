@@ -4,7 +4,7 @@ package com.cell.http.framework.hook;
 import com.cell.base.core.hooks.IChainHook;
 import com.cell.base.core.hooks.abs.AbstractCommandHook;
 import com.cell.base.core.protocol.IContext;
-import com.cell.context.IHttpCommandContext;
+import com.cell.http.framework.context.IHttpCommandContext;
 import reactor.core.publisher.Mono;
 
 /**

@@ -6,8 +6,8 @@
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
-    <output url="file://$MODULE_DIR$/../target/classes" />
-    <output-test url="file://$MODULE_DIR$/../target/test-classes" />
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
@@ -63,13 +63,7 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-webflux:5.2.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.synchronoss.cloud:nio-multipart-parser:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.synchronoss.cloud:nio-stream-storage:1.1.3" level="project" />
-    <orderEntry type="library" name="Maven: com.cell:cell-base-configuration:1.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.49" level="project" />
-    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
-    <orderEntry type="module" module-name="cell-base-core" />
-    <orderEntry type="module" module-name="cell-sdk-log" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
-    <orderEntry type="module" module-name="cell-plugin-pipeline" />
+    <orderEntry type="module" module-name="cell-sdk-configuration" />
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
@@ -108,6 +102,10 @@
     </orderEntry>
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="module" module-name="cell-sdk-log" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
+    <orderEntry type="module" module-name="cell-base-core" />
+    <orderEntry type="module" module-name="cell-plugin-pipeline" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />
     <orderEntry type="library" name="Maven: org.javassist:javassist:3.26.0-GA" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.1" level="project" />
@@ -117,6 +115,8 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.2.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy-agent:1.10.5" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.49" level="project" />
+    <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-spring-cloud-gateway-adapter:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-api-gateway-adapter-common:1.8.0" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.csp:sentinel-core:1.8.0" level="project" />

@@ -1,11 +1,11 @@
 package com.cell.http.framework.server;
 
 import com.cell.base.common.context.InitCTX;
-import com.cell.couple.HttpRequestWrapper;
-import com.cell.couple.HttpResponseWrapper;
-import com.cell.proxy.IFrameworkProxy;
-import com.cell.proxy.IHttpProxy;
-import com.cell.server.abs.AbstractServer;
+import com.cell.base.framework.proxy.IFrameworkProxy;
+import com.cell.base.framework.server.abs.AbstractServer;
+import com.cell.http.framework.couple.HttpRequestWrapper;
+import com.cell.http.framework.couple.HttpResponseWrapper;
+import com.cell.http.framework.proxy.IHttpProxy;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 

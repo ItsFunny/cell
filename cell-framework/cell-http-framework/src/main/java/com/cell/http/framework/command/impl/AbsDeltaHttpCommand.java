@@ -1,8 +1,8 @@
 package com.cell.http.framework.command.impl;
 
-import com.cell.bo.BuzzContextBO;
-import com.cell.context.IHttpCommandContext;
+import com.cell.http.framework.bo.BuzzContextBO;
 import com.cell.http.framework.command.IBuzzExecutor;
+import com.cell.http.framework.context.IHttpCommandContext;
 
 /**
  * @author Charlie

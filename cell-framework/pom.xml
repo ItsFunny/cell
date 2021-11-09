@@ -34,7 +34,7 @@
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-configuration</artifactId>
+            <artifactId>cell-sdk-configuration</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

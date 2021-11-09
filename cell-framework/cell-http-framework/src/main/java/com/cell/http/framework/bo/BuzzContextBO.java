@@ -3,7 +3,7 @@ package com.cell.http.framework.bo;
 import com.cell.base.core.constants.ContextConstants;
 import com.cell.base.core.protocol.ContextResponseWrapper;
 import com.cell.http.framework.context.IHttpCommandContext;
-import com.cell.reactor.IMapDynamicHttpReactor;
+import com.cell.http.framework.reactor.IMapDynamicHttpReactor;
 import com.cell.http.framework.command.IHttpCommand;
 import lombok.Data;
 

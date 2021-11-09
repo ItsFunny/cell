@@ -1,5 +1,6 @@
 package com.cell.schedual;
 
+import com.cell.http.gate.schedual.SchedualCaculateErrorCount;
 import org.junit.Test;
 
 public class SchedualCaculateErrorCountTest

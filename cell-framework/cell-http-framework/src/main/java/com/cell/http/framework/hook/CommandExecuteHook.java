@@ -2,8 +2,8 @@ package com.cell.http.framework.hook;
 
 import com.cell.base.core.annotations.ManagerNode;
 import com.cell.base.core.hooks.IChainHook;
-import com.cell.constant.HookConstants;
-import com.cell.context.IHttpCommandContext;
+import com.cell.http.framework.constant.HookConstants;
+import com.cell.http.framework.context.IHttpCommandContext;
 import com.cell.http.framework.reactor.IHttpReactor;
 import reactor.core.publisher.Mono;
 

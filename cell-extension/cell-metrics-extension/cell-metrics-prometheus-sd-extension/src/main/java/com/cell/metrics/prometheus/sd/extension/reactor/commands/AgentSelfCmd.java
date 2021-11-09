@@ -2,10 +2,10 @@ package com.cell.metrics.prometheus.sd.extension.reactor.commands;
 
 import com.alibaba.fastjson.JSONObject;
 import com.cell.base.common.enums.EnumHttpRequestType;
-import com.cell.context.IHttpCommandContext;
+import com.cell.http.framework.annotation.HttpCmdAnno;
+import com.cell.http.framework.command.impl.AbstractHttpCommand;
+import com.cell.http.framework.context.IHttpCommandContext;
 import com.cell.metrics.prometheus.sd.extension.reactor.ServiceReactor;
-import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
-import com.cell.rpc.grpc.client.framework.command.impl.AbstractHttpCommand;
 
 import java.io.IOException;
 

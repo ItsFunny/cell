@@ -1,5 +1,7 @@
 package com.cell.http.framework.proxy;
 
+import com.cell.base.framework.proxy.IFrameworkProxy;
+
 /**
  * @author Charlie
  * @When

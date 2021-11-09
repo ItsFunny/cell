@@ -1,8 +1,8 @@
 package com.cell.http.framework.manager.context;
 
 import com.cell.base.core.protocol.IContext;
+import com.cell.http.framework.annotation.HttpCmdAnno;
 import com.cell.http.framework.reactor.IHttpReactor;
-import com.cell.rpc.grpc.client.framework.annotation.HttpCmdAnno;
 import com.cell.http.framework.command.IHttpCommand;
 import lombok.Builder;
 import lombok.Data;

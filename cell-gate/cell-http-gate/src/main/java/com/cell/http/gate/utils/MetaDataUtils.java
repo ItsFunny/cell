@@ -2,9 +2,9 @@ package com.cell.http.gate.utils;
 
 import com.cell.base.common.models.Module;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
+import com.cell.bee.statistic.prometheus.services.IStatContextService;
 import com.cell.http.gate.discovery.ServiceDiscovery;
 import com.cell.sdk.log.LOG;
-import com.cell.services.IStatContextService;
 
 /**
  * @author Charlie

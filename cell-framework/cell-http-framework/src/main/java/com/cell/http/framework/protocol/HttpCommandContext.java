@@ -9,9 +9,9 @@ import com.cell.base.core.constants.NetworkConstants;
 import com.cell.base.core.handler.IChainHandler;
 import com.cell.base.core.handler.IHandler;
 import com.cell.base.core.protocol.*;
-import com.cell.couple.IHttpServerRequest;
-import com.cell.couple.IHttpServerResponse;
-import com.cell.rpc.grpc.client.framework.util.HttpUtils;
+import com.cell.http.framework.couple.IHttpServerRequest;
+import com.cell.http.framework.couple.IHttpServerResponse;
+import com.cell.http.framework.util.HttpUtils;
 import lombok.Data;
 import org.springframework.web.context.request.async.DeferredResult;
 

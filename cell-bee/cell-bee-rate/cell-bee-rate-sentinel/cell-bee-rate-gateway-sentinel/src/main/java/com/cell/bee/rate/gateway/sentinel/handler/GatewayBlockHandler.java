@@ -1,7 +1,7 @@
 package com.cell.bee.rate.gateway.sentinel.handler;
 
 import com.cell.base.core.annotations.ActivePlugin;
-import com.cell.utils.GatewayUtils;
+import com.cell.gate.common.utils.GatewayUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.InvalidMediaTypeException;
 import org.springframework.http.MediaType;

@@ -4,7 +4,7 @@ import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.enums.EnumHttpResponseType;
 import com.cell.base.core.annotations.Command;
 import com.cell.http.framework.reactor.IHttpReactor;
-import com.cell.reactor.impl.DefaultHttpReactor;
+import com.cell.http.framework.reactor.impl.DefaultHttpReactor;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;

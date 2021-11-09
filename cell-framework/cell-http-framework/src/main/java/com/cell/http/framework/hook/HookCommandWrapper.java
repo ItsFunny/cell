@@ -1,7 +1,7 @@
 package com.cell.http.framework.hook;
 
-import com.cell.context.IHttpCommandContext;
-import com.cell.event.IHttpEvent;
+import com.cell.http.framework.context.IHttpCommandContext;
+import com.cell.http.framework.event.IHttpEvent;
 import com.cell.http.framework.reactor.IHttpReactor;
 import lombok.Data;
 

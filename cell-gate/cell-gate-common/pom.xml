@@ -24,7 +24,7 @@
 
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-configuration</artifactId>
+            <artifactId>cell-sdk-configuration</artifactId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>

@@ -8,11 +8,11 @@ import com.cell.base.core.constants.ManagerConstants;
 import com.cell.base.core.executor.IBaseChainExecutor;
 import com.cell.base.core.handler.IChainHandler;
 import com.cell.base.core.services.IHandlerSuit;
-import com.cell.context.IHttpCommandContext;
-import com.cell.context.IHttpHandlerSuit;
-import com.cell.exceptions.IHttpExceptionResolver;
-import com.cell.handler.impl.AbstractHttpHandler;
-import com.cell.http.gate.hook.CommandHookManager;
+import com.cell.http.framework.context.IHttpCommandContext;
+import com.cell.http.framework.context.IHttpHandlerSuit;
+import com.cell.http.framework.exceptions.IHttpExceptionResolver;
+import com.cell.http.framework.handler.impl.AbstractHttpHandler;
+import com.cell.http.framework.hook.CommandHookManager;
 import reactor.core.publisher.Mono;
 
 /**

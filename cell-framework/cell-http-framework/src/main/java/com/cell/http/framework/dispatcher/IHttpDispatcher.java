@@ -1,5 +1,7 @@
 package com.cell.http.framework.dispatcher;
 
+import com.cell.base.framework.dispatcher.IDispatcher;
+
 /**
  * @author Charlie
  * @When
