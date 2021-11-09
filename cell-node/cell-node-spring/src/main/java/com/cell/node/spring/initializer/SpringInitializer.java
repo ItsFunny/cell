@@ -1,15 +1,16 @@
 package com.cell.node.spring.initializer;
 
 import com.cell.base.common.constants.BitConstants;
+import com.cell.base.common.context.AbstractInitOnce;
+import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.ReflectionUtils;
+import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.*;
-import com.cell.base.common.context.AbstractInitOnce;
-import com.cell.base.common.context.InitCTX;
 import com.cell.base.core.enums.EnumLifeCycle;
-import com.cell.sdk.log.LOG;
-import com.cell.plugin.pipeline.manager.IReflectManager;
+import com.cell.base.core.utils.ClassUtil;
+import com.cell.base.core.utils.ReflectUtil;
 import com.cell.node.core.constants.Constants;
 import com.cell.node.core.extension.AbstractNodeExtension;
 import com.cell.node.spring.adapter.IBeanDefinitionRegistryPostProcessorAdapter;
@@ -24,8 +25,8 @@ import com.cell.node.spring.postprocessor.SpringBeanRegistry;
 import com.cell.node.spring.utils.FrameworkUtil;
 import com.cell.node.spring.wrapper.AnnotaionManagerWrapper;
 import com.cell.node.spring.wrapper.AnnotationNodeWrapper;
-import com.cell.base.core.utils.ClassUtil;
-import com.cell.base.core.utils.ReflectUtil;
+import com.cell.plugin.pipeline.manager.IReflectManager;
+import com.cell.sdk.log.LOG;
 import io.netty.util.internal.ConcurrentSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextInitializer;
@@ -37,6 +38,9 @@ import org.springframework.util.CollectionUtils;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Charlie
@@ -79,11 +83,12 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
-        String rootPath = Constants.SCAN_ROOT;
+        Set<String> scanRootPathes = new HashSet<>();
+        scanRootPathes.add(Constants.SCAN_ROOT);
         if (mergedAnnotation != null)
         {
             String[] scans = mergedAnnotation.scanBasePackages();
-            rootPath = scans[0];
+            scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
         }
 
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
@@ -98,8 +103,11 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         filter.interestAnnotations.addAll(interesetAnnotations);
 
         // FIXME ,需要重构该部分,使用reflections
-        Set<Class<?>> activePlugins = ClassUtil.scanPackage(rootPath, filter);
-
+        Set<Class<?>> activePlugins = new HashSet<>();
+        for (String scanRootPathe : scanRootPathes)
+        {
+            activePlugins.addAll(ClassUtil.scanPackage(scanRootPathe, filter));
+        }
 
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> factories = filter.factories;
         Set<Class<? extends IBeanDefinitionRegistryPostProcessorAdapter>> dropOffFactories = new HashSet<>();
@@ -178,7 +186,6 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         @Override
         public boolean accept(Class<?> clazz)
         {
-
             boolean ret = false;
             try
             {

@@ -39,7 +39,6 @@ import java.util.Set;
 public class HttpExtension extends AbstractSpringNodeExtension
 {
     private IDynamicControllerService dynamicControllerService;
-
     private IHttpServer httpServer;
     private IHttpProxy httpProxy;
     private IHttpDispatcher httpDispatcher;
