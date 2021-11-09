@@ -16,7 +16,6 @@ import com.cell.node.discovery.nacos.discovery.abs.Snap;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;
 import lombok.Data;
-import org.springframework.boot.actuate.endpoint.Sanitizer;
 
 import java.util.HashSet;
 import java.util.List;
@@ -165,8 +164,7 @@ public class HttpGateServiceDiscovery extends AbstractServiceDiscovery<DefaultSt
 
     private void handleDelta(Snap snap)
     {
-
-        this.refreshUriRules();
+        this.refreshUriRules(this.getRulesFromMeta(this.serverMetas));
     }
 
     private void refreshUriRules(Set<RuleWp> ruleWps)

@@ -15,10 +15,10 @@ import com.cell.bee.event.simple.SimpleJobCenter;
 import com.cell.bee.event.simple.SimpleJobCenterFactory;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.node.discovery.model.Instance;
-import com.cell.node.discovery.nacos.util.DiscoveryUtils;
-import com.cell.plugin.pipeline.executor.IChainExecutor;
 import com.cell.node.discovery.nacos.discovery.IInstanceEventListener;
 import com.cell.node.discovery.nacos.discovery.INacosNodeDiscovery;
+import com.cell.node.discovery.nacos.util.DiscoveryUtils;
+import com.cell.plugin.pipeline.executor.IChainExecutor;
 import com.cell.sdk.log.LOG;
 import lombok.Data;
 import reactor.core.publisher.Flux;
@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.stream.Collectors;
 
 /**
@@ -46,6 +47,13 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     private final SimpleJobCenter simpleJobCenter = SimpleJobCenterFactory.NewSimpleJobCenter();
     private ISimpleFilter<Instance> filter = instance -> instance.isHealthy();
     private String cluster;
+
+    private Semaphore semaphore;
+
+    private ServiceDiscoverySchedual()
+    {
+        this.semaphore = new Semaphore(1);
+    }
 
 
     public void addListener(IInstanceEventListener listener)
@@ -75,6 +83,23 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     private Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = new HashMap<>(1);
     protected Snap delta;
 
+    private Long lastUpdateTimestamp;
+    private static final long ONE_MIN = Duration.ofMinutes(1).toMillis();
+
+    private boolean tryAcquire()
+    {
+        boolean b = this.semaphore.tryAcquire();
+        if (!b)
+        {
+            return false;
+        }
+        if (this.lastUpdateTimestamp == null || System.currentTimeMillis() - this.lastUpdateTimestamp > ONE_MIN)
+        {
+            return true;
+        }
+        return false;
+    }
+
 
     @Override
     protected void onInit(InitCTX ctx)
@@ -99,16 +124,29 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     {
         Flux.interval(Duration.ofMinutes(1)).map(v ->
         {
+            this.tryAcquire();
             Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster, this.filter);
             return serverInstanceList;
         }).subscribe(serverInstanceList ->
         {
-            if (serverInstanceList.size() == 0)
+            try
             {
-                return;
+                if (serverInstanceList.size() == 0)
+                {
+                    return;
+                }
+                this.simpleJobCenter.addJob(new IInstanceEventListener.InstanceEventWrapper(serverInstanceList));
+            } finally
+            {
+                this.release();
             }
-            this.simpleJobCenter.addJob(new IInstanceEventListener.InstanceEventWrapper(serverInstanceList));
         });
+    }
+
+    private void release()
+    {
+        this.lastUpdateTimestamp = System.currentTimeMillis();
+        this.semaphore.release();
     }
 
     private class InstanceHooker extends SmartSubscriber

@@ -162,13 +162,6 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         ret.instances = v2;
 
         Map<String, Set<ServerCmdMetaInfo>> protoMetas = couple.getV1();
-        for (String s : protoMetas.keySet())
-        {
-            if (CollectionUtils.isEmpty(protoMetas.get(s)))
-            {
-                throw new RuntimeException("asd");
-            }
-        }
         for (String protocol : protoMetas.keySet())
         {
             newAllProtocols.add(protocol);
@@ -188,10 +181,10 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             {
                 if (!CollectionUtils.isEmpty(origins))
                 {
-                    // 如果原先存在,则直接跳过
+                    // 如果原先存在,则直接替换
                     if (origins.contains(cmd))
                     {
-                        origins.remove(cmd);
+                        origins.add(cmd);
                         continue;
                     }
                 }
