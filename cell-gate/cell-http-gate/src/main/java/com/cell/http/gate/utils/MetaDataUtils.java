@@ -3,7 +3,7 @@ package com.cell.http.gate.utils;
 import com.cell.base.common.models.Module;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.statistic.prometheus.services.IStatContextService;
-import com.cell.http.gate.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
 import com.cell.sdk.log.LOG;
 
 /**
@@ -28,7 +28,7 @@ public class MetaDataUtils
         String module = "UNKNOW";
         try
         {
-            ServerCmdMetaInfo info = ServiceDiscovery.getInstance().choseServer(method, uri);
+            ServerCmdMetaInfo info = HttpGateServiceDiscovery.getInstance().choseServer(method, uri);
             if (info != null)
             {
                 module = info.getModule();

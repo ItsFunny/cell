@@ -3,18 +3,20 @@ package com.cell.http.gate.discovery;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule;
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager;
 import com.alibaba.nacos.common.utils.CollectionUtils;
-import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.common.constants.ProtocolConstants;
-import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.base.common.context.InitCTX;
-import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.base.common.enums.EnumHttpRequestType;
+import com.cell.base.core.annotations.AutoPlugin;
+import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
+import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.gate.common.utils.GatewayUtils;
 import com.cell.node.discovery.model.Instance;
 import com.cell.node.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
+import com.cell.node.discovery.nacos.discovery.abs.Snap;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;
 import lombok.Data;
+import org.springframework.boot.actuate.endpoint.Sanitizer;
 
 import java.util.HashSet;
 import java.util.List;
@@ -30,24 +32,24 @@ import java.util.Set;
  * @Date 创建时间：2021-09-08 05:41
  */
 @Data
-public class ServiceDiscovery extends AbstractServiceDiscovery<DefaultStringKeyResolver.StringKeyResolver, String>
+public class HttpGateServiceDiscovery extends AbstractServiceDiscovery<DefaultStringKeyResolver.StringKeyResolver, String>
 {
-    private static ServiceDiscovery instance;
+    private static HttpGateServiceDiscovery instance;
 
     @AutoPlugin
-    public void setInstance(ServiceDiscovery serviceDiscovery)
+    public void setInstance(HttpGateServiceDiscovery serviceDiscovery)
     {
-        ServiceDiscovery.instance = serviceDiscovery;
+        HttpGateServiceDiscovery.instance = serviceDiscovery;
     }
 
-    public static ServiceDiscovery getInstance()
+    public static HttpGateServiceDiscovery getInstance()
     {
         return instance;
     }
 
-    public ServiceDiscovery()
+    public HttpGateServiceDiscovery()
     {
-        this.setCallBack(snap -> ServiceDiscovery.this.refreshUriRules(ServiceDiscovery.this.getRulesFromMeta(this.serverMetas)));
+        this.setCallBack(snap -> this.handleDelta(snap));
     }
 
 
@@ -159,6 +161,12 @@ public class ServiceDiscovery extends AbstractServiceDiscovery<DefaultStringKeyR
     {
         String method;
         String protocol;
+    }
+
+    private void handleDelta(Snap snap)
+    {
+
+        this.refreshUriRules();
     }
 
     private void refreshUriRules(Set<RuleWp> ruleWps)

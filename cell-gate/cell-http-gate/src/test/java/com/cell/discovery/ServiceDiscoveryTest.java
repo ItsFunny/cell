@@ -1,13 +1,13 @@
 package com.cell.discovery;
 
 import com.cell.base.core.concurrent.BaseDefaultEventLoop;
-import com.cell.bee.loadbalance.model.ServerMetaInfo;
-import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
-import com.cell.http.gate.discovery.ServiceDiscovery;
-import com.cell.node.discovery.model.Instance;
-import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.base.core.utils.ClassUtil;
 import com.cell.base.core.utils.ReflectUtil;
+import com.cell.bee.loadbalance.model.ServerMetaInfo;
+import com.cell.bee.transport.model.ServerMetaData;
+import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
+import com.cell.node.discovery.model.Instance;
+import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.sdk.configuration.Configuration;
 import org.junit.Assert;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class ServiceDiscoveryTest
     public void before()
     {
         Configuration.autoInitialize();
-        ServiceDiscovery discovery = (ServiceDiscovery) ReflectUtil.newInstance(ServiceDiscovery.class);
+        HttpGateServiceDiscovery discovery = (HttpGateServiceDiscovery) ReflectUtil.newInstance(HttpGateServiceDiscovery.class);
         discovery.setInstance(discovery);
         discovery.initOnce(null);
 
@@ -95,7 +95,7 @@ public class ServiceDiscoveryTest
     @Test
     public void testClear() throws Exception
     {
-        ServiceDiscovery discovery = ServiceDiscovery.getInstance();
+        HttpGateServiceDiscovery discovery = HttpGateServiceDiscovery.getInstance();
         TimeUnit.SECONDS.sleep(5);
         List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", "asd");
         Assert.assertNull(asd);
@@ -106,7 +106,7 @@ public class ServiceDiscoveryTest
     @Test
     public void testNormalGet() throws Exception
     {
-        ServiceDiscovery discovery = ServiceDiscovery.getInstance();
+        HttpGateServiceDiscovery discovery = HttpGateServiceDiscovery.getInstance();
         TimeUnit.SECONDS.sleep(5);
         List<ServerMetaInfo> asd = (List<ServerMetaInfo>) ClassUtil.invokeMethodValue(discovery, "getServerByUri", post1);
         Assert.assertNotNull(asd);

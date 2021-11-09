@@ -1,18 +1,18 @@
-package com.cell.http.gate.discovery.nacos.http.extension;
+package com.cell.http.gate.extension;
 
 import com.cell.base.common.constants.CommandLineConstants;
+import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.bee.statistic.base.IScheduleCounter;
-import com.cell.base.common.context.InitCTX;
-import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
-import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.gate.common.config.GatePropertyNode;
 import com.cell.gate.common.config.GatewayConfiguration;
 import com.cell.http.gate.config.GatewayMetricsConfigFactory;
-import com.cell.http.gate.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
 import com.cell.http.gate.schedual.SchedualCaculateErrorCount;
 import com.cell.node.core.context.INodeContext;
+import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
+import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
@@ -59,7 +59,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
         GatewayConfiguration.init();
         NacosNodeDiscoveryImpl.setupDiscovery();
 
-        this.serviceDiscovery = new ServiceDiscovery();
+        this.serviceDiscovery = new HttpGateServiceDiscovery();
         String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
         cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
         this.serviceDiscovery.setCluster(cluster);

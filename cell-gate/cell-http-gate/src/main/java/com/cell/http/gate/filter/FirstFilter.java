@@ -4,7 +4,7 @@ import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.gate.common.utils.GatewayUtils;
 import com.cell.http.gate.constants.GatewayConstants;
-import com.cell.http.gate.discovery.ServiceDiscovery;
+import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
 import com.cell.http.gate.wrapper.ServerMetaInfoWrapper;
 import com.cell.sdk.log.LOG;
 import com.cell.base.common.models.Module;
@@ -32,7 +32,7 @@ public class FirstFilter implements GlobalFilter, Ordered
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain)
     {
-        ServiceDiscovery serviceDiscovery = ServiceDiscovery.getInstance();
+        HttpGateServiceDiscovery serviceDiscovery = HttpGateServiceDiscovery.getInstance();
         ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
         ServerCmdMetaInfo metaInfo = serviceDiscovery.choseServer(request.getMethod().name().toLowerCase(), uri.getPath());
