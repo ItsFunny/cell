@@ -1,5 +1,6 @@
 package com.cell.http.gate.filter;
 
+import com.cell.base.common.models.Module;
 import com.cell.base.core.annotations.ActivePlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.gate.common.utils.GatewayUtils;
@@ -7,7 +8,6 @@ import com.cell.http.gate.constants.GatewayConstants;
 import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
 import com.cell.http.gate.wrapper.ServerMetaInfoWrapper;
 import com.cell.sdk.log.LOG;
-import com.cell.base.common.models.Module;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
@@ -48,7 +48,11 @@ public class FirstFilter implements GlobalFilter, Ordered
         exchange.getAttributes().put(GatewayConstants.attributeCmdInfo, wrapper);
         return chain.filter(exchange).onErrorResume(e ->
                 Mono.fromRunnable(() ->
-                        LOG.error(Module.HTTP_GATEWAY, e, "fail")));
+                {
+                    LOG.error(Module.HTTP_GATEWAY, e, "fail");
+                    // TODO ,定制化error
+                    GatewayUtils.fastFinish(exchange, e.getMessage());
+                }));
     }
 
     @Override

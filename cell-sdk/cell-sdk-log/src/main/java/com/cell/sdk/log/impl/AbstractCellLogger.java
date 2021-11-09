@@ -43,13 +43,18 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     public AbstractCellLogger()
     {
         this.blackList = Arrays.asList(
-                "com.cell.log.impl.CellLoggerContext",
-                "com.cell.log.impl.AbstractCellLogger",
+                "com.cell.sdk.log.impl.CellLoggerContext",
+                "com.cell.sdk.log.impl.AbstractCellLogger",
                 "Slf4JLogger",
                 "org.apache.cxf.common.logging",
-                "com.cell.log.LOG",
-                "com.cell.log.bridge.LOGLoggerWrapper"
+                "com.cell.sdk.log.LOG",
+                "com.cell.sdk.log.bridge.LOGLoggerWrapper"
         );
+    }
+
+    public void addBlack(String black)
+    {
+        this.blackList.add(black);
     }
 
     // FIXME 配置
