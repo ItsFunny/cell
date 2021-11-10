@@ -17,11 +17,11 @@
     <url>http://www.example.com</url>
     <dependencies>
         <!--通用指标-->
-        <!--<dependency>-->
-        <!--<groupId>com.cell</groupId>-->
-        <!--<artifactId>cell-metrics-extension-common</artifactId>-->
-        <!--<version>${cell.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-metrics-extension-common</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-node-spring</artifactId>

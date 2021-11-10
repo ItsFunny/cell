@@ -23,8 +23,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="cell-node-spring" />
-    <orderEntry type="module" module-name="cell-sdk-configuration" />
+    <orderEntry type="module" module-name="cell-metrics-extension-common" />
+    <orderEntry type="module" module-name="cell-metrics-extension-base" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:2.3.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:2.3.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:2.3.5.RELEASE" level="project" />
+    <orderEntry type="module" module-name="cell-bee-statistic-prometheus" />
+    <orderEntry type="module" module-name="cell-bee-statistic-base" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-registry-prometheus:1.5.6" level="project" />
+    <orderEntry type="library" name="Maven: io.prometheus:simpleclient_common:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.8.1" level="project" />
+    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.5.6" level="project" />
+    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.12" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.apache.commons:commons-compress:1.19" level="project" />
@@ -63,6 +74,22 @@
     </orderEntry>
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
+    <orderEntry type="module" module-name="cell-extension-common" />
+    <orderEntry type="module" module-name="cell-http-framework" />
+    <orderEntry type="module" module-name="cell-monitor-prometheus" />
+    <orderEntry type="module" module-name="cell-monitor-base" />
+    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
+    <orderEntry type="module" module-name="cell-bee-event" />
+    <orderEntry type="module" module-name="cell-base-framework" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
+    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.14" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.6" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpasyncclient:4.1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.13" level="project" />
+    <orderEntry type="module" module-name="cell-sdk-eventdriven" />
+    <orderEntry type="module" module-name="cell-node-spring" />
+    <orderEntry type="module" module-name="cell-sdk-configuration" />
     <orderEntry type="module" module-name="cell-sdk-log" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-node-core" />
@@ -103,25 +130,6 @@
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="module" module-name="cell-runnable-spring-framework-all" />
     <orderEntry type="module" module-name="cell-http-extension" />
-    <orderEntry type="module" module-name="cell-http-framework" />
-    <orderEntry type="module" module-name="cell-monitor-prometheus" />
-    <orderEntry type="module" module-name="cell-monitor-base" />
-    <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:4.0.1" level="project" />
-    <orderEntry type="module" module-name="cell-bee-event" />
-    <orderEntry type="module" module-name="cell-base-framework" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-actuator:2.3.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator-autoconfigure:2.3.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-actuator:2.3.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: io.micrometer:micrometer-core:1.5.6" level="project" />
-    <orderEntry type="library" name="Maven: org.hdrhistogram:HdrHistogram:2.1.12" level="project" />
-    <orderEntry type="library" scope="RUNTIME" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.5.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore:4.4.13" level="project" />
-    <orderEntry type="library" name="Maven: commons-codec:commons-codec:1.14" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.5.6" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpasyncclient:4.1.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.4.13" level="project" />
-    <orderEntry type="module" module-name="cell-sdk-eventdriven" />
     <orderEntry type="module" module-name="cell-discovery-nacos-http-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
     <orderEntry type="module" module-name="cell-bee-transport" />
@@ -129,11 +137,9 @@
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-common:1.4.1" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-api:1.4.1" level="project" />
-    <orderEntry type="library" name="Maven: io.prometheus:simpleclient:0.5.0" level="project" />
     <orderEntry type="module" module-name="cell-node-discovery" />
     <orderEntry type="module" module-name="cell-bee-keyresolver" />
     <orderEntry type="module" module-name="cell-bee-loadbalance" />
-    <orderEntry type="module" module-name="cell-extension-common" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-extension" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
     <orderEntry type="module" module-name="cell-sdk-timewheel" />

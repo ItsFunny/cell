@@ -1,7 +1,7 @@
 package com.cell;
 
 import com.cell.node.spring.annotation.CellSpringHttpApplication;
-import com.cell.runnable.spring.framework.all.CellSpringFrameworkApplication;
+import org.springframework.boot.SpringApplication;
 
 /**
  * @author Charlie
@@ -16,7 +16,7 @@ public class PrometheusDiscoveryApplication
 {
     public static void main(String[] args)
     {
-        CellSpringFrameworkApplication.run(PrometheusDiscoveryApplication.class, args);
+        SpringApplication.run(PrometheusDiscoveryApplication.class, args);
     }
 
 }

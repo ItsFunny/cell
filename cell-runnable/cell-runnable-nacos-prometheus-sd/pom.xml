@@ -21,33 +21,6 @@
             <artifactId>cell-metrics-prometheus-sd-extension</artifactId>
             <version>${cell.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-runnable-spring-framework-all</artifactId>
-            <version>${cell.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-discovery-nacos-http-extension</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-discovery-nacos-grpc-client-extension</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-discovery-nacos-grpc-server-extension</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-rpc-grpc-server-framework</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.cell</groupId>
-                    <artifactId>cell-rpc-grpc-client-framework</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
 
     </dependencies>
 </project>
