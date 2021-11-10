@@ -10,7 +10,7 @@ import com.cell.http.framework.command.impl.AbstractHttpCommand;
 import com.cell.http.framework.context.IHttpCommandContext;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
 import com.cell.metrics.prometheus.sd.extension.reactor.ServiceReactor;
-import com.cell.metrics.prometheus.sd.extension.sd.RegistrationService;
+import com.cell.metrics.prometheus.sd.extension.sd.IPrometheusServiceDiscovery;
 import com.cell.metrics.prometheus.sd.extension.utils.SDUtils;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -59,7 +59,7 @@ public class AllServiceCommand extends AbstractHttpCommand
     protected void onExecute(IHttpCommandContext ctx, Object bo) throws IOException
     {
         ServiceReactor reactor = (ServiceReactor) ctx.getHttpReactor();
-        RegistrationService registrationService = reactor.getRegistrationService();
+        IPrometheusServiceDiscovery registrationService = reactor.getRegistrationService();
         HttpServletRequest request = ctx.getHttpRequest();
         String query_param_wait = request.getParameter("QUERY_PARAM_WAIT");
         String index = request.getParameter("index");

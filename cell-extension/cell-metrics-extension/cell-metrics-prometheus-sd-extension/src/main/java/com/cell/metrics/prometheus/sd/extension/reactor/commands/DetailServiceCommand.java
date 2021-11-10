@@ -7,7 +7,7 @@ import com.cell.http.framework.command.impl.AbstractHttpCommand;
 import com.cell.http.framework.context.IHttpCommandContext;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
 import com.cell.metrics.prometheus.sd.extension.reactor.ServiceReactor;
-import com.cell.metrics.prometheus.sd.extension.sd.RegistrationService;
+import com.cell.metrics.prometheus.sd.extension.sd.IPrometheusServiceDiscovery;
 import com.cell.metrics.prometheus.sd.extension.utils.SDUtils;
 import lombok.Data;
 import reactor.core.publisher.Mono;
@@ -47,7 +47,7 @@ public class DetailServiceCommand extends AbstractHttpCommand
         Map<String, String> pathUri = ctx.getPathUri();
         String serviceName = pathUri.get("service");
         ServiceReactor reactor = (ServiceReactor) ctx.getHttpReactor();
-        RegistrationService registrationService = reactor.getRegistrationService();
+        IPrometheusServiceDiscovery registrationService = reactor.getRegistrationService();
         ServiceBo bo = (ServiceBo) o;
         Mono<ChangeItem<List<Map<String, Object>>>> service = registrationService.getService(serviceName, SDUtils.getWaitMillis(bo.getQUERY_PARAM_WAIT()), bo.getQUERY_PARAM_INDEX());
         ChangeItem<List<Map<String, Object>>> items = service.block();

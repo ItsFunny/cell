@@ -11,6 +11,7 @@ import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.gate.common.utils.GatewayUtils;
 import com.cell.node.discovery.model.Instance;
+import com.cell.node.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.node.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.abs.Snap;
 import com.cell.resolver.IKeyResolver;
@@ -50,6 +51,7 @@ public class HttpGateServiceDiscovery extends AbstractServiceDiscovery<DefaultSt
     {
         this.setCallBack(snap -> this.handleDelta(snap));
     }
+
 
 
     @Override

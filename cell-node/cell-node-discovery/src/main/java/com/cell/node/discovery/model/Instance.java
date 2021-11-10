@@ -1,5 +1,6 @@
 package com.cell.node.discovery.model;
 
+import com.cell.base.common.constants.ProtocolConstants;
 import lombok.Builder;
 import lombok.Data;
 
@@ -24,6 +25,7 @@ public class Instance
     private byte weight = 1;
     private String clusterName;
     private Map<String, String> metaData;
+//    private byte type= ProtocolConstants.TYPE_HTTP;
 
     private boolean healthy = true;
     private boolean enable = true;

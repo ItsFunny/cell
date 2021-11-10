@@ -21,8 +21,8 @@ import com.cell.node.discovery.model.Instance;
 import com.cell.node.discovery.nacos.config.ConfigFactory;
 import com.cell.node.discovery.nacos.config.NacosConfiguration;
 import com.cell.node.discovery.nacos.util.DiscoveryUtils;
-import com.cell.sdk.log.LOG;
 import com.cell.node.discovery.service.INodeDiscovery;
+import com.cell.sdk.log.LOG;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -121,7 +121,7 @@ public class NacosNodeDiscoveryImpl extends AbstractInitOnce implements INodeDis
         try
         {
             List<com.alibaba.nacos.api.naming.pojo.Instance> allInstances = this.namingService.getAllInstances(serviceName);
-            return DiscoveryUtils.convNaocsInstance2CellInstance(allInstances);
+            return DiscoveryUtils.convNaocsInstance2CellInstance(allInstances, filters);
         } catch (NacosException e)
         {
             throw new CellDiscoveryException(e);

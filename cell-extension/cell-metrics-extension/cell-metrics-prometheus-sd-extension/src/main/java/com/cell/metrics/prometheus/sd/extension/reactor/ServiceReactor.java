@@ -4,7 +4,8 @@ import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.base.core.annotations.ReactorAnno;
 import com.cell.http.framework.reactor.impl.AbstractHttpDymanicCommandReactor;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
-import com.cell.metrics.prometheus.sd.extension.sd.RegistrationService;
+import com.cell.metrics.prometheus.sd.extension.sd.IPrometheusServiceDiscovery;
+import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class ServiceReactor extends AbstractHttpDymanicCommandReactor
 {
     public static final String prometheusServiceReactor = "prometheus_sd";
     @AutoPlugin
-    private RegistrationService registrationService;
+    private IPrometheusServiceDiscovery registrationService;
 
     private static final String CONSUL_IDX_HEADER = "X-Consul-Index";
 

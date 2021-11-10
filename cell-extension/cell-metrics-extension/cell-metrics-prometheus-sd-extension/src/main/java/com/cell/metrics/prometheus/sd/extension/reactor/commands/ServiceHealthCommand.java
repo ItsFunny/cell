@@ -9,7 +9,7 @@ import com.cell.http.framework.context.IHttpCommandContext;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
 import com.cell.metrics.prometheus.sd.extension.model.ServiceInstanceHealth;
 import com.cell.metrics.prometheus.sd.extension.reactor.ServiceReactor;
-import com.cell.metrics.prometheus.sd.extension.sd.RegistrationService;
+import com.cell.metrics.prometheus.sd.extension.sd.IPrometheusServiceDiscovery;
 import com.cell.metrics.prometheus.sd.extension.utils.SDUtils;
 import lombok.Data;
 import reactor.core.publisher.Mono;
@@ -48,7 +48,7 @@ public class ServiceHealthCommand extends AbstractHttpCommand
         Map<String, String> pathUri = ctx.getPathUri();
         String appName = pathUri.get("appName");
         ServiceReactor reactor = (ServiceReactor) ctx.getHttpReactor();
-        RegistrationService registrationService = reactor.getRegistrationService();
+        IPrometheusServiceDiscovery registrationService = reactor.getRegistrationService();
         ServiceHealthCommandBO bo = (ServiceHealthCommandBO) o;
         Mono<ChangeItem<List<ServiceInstanceHealth>>> mono = registrationService.getServiceHealth(appName, SDUtils.getWaitMillis(bo.getWait()), bo.getIndex());
         ChangeItem<List<ServiceInstanceHealth>> block = mono.block();

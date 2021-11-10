@@ -54,7 +54,6 @@ public class GRPCClientDiscoveryExtension extends AbstractSpringNodeExtension
         String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
         cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
         this.serviceDiscovery.setCluster(cluster);
-
     }
 
     @Override

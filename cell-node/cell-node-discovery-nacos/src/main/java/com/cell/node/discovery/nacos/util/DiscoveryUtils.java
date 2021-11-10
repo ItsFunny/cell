@@ -54,12 +54,12 @@ public class DiscoveryUtils
         {
             for (ISimpleFilter filter : filters)
             {
-                if (filter.filter(p))
+                if (!filter.filter(p))
                 {
-                    return true;
+                    return false;
                 }
             }
-            return false;
+            return true;
         }).collect(Collectors.toList());
     }
 

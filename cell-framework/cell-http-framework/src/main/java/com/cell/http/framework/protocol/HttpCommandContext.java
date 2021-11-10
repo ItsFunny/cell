@@ -71,7 +71,7 @@ public class HttpCommandContext extends CommandContext
         IHttpServerRequest request = (IHttpServerRequest) req;
         HttpSummary httpSummary = new HttpSummary();
         httpSummary.setRequestIP(HttpUtils.getIpAddress(request.getInternalRequest()));
-        httpSummary.setProtocolId(request.getInternalRequest().getRequestURL().toString());
+        httpSummary.setProtocolId(request.getInternalRequest().getRequestURI());
         httpSummary.setToken(getHeaderData(TOKEN));
         httpSummary.setReceiveTimestamp(System.currentTimeMillis());
         httpSummary.setSequenceId(getHeaderData(DebugConstants.SEQUENCE_ID, UUIDUtils.uuid2()));

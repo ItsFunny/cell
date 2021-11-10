@@ -26,7 +26,6 @@ import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.discovery.nacos.util.DiscoveryUtils;
 import com.cell.resolver.IKeyResolver;
 import com.cell.sdk.log.LOG;
-import lombok.Data;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -69,6 +68,12 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
     }
 
 
+    @Override
+    public Map<String, List<InstanceWrapper>> getCurrentInstances()
+    {
+        return this.instances;
+    }
+
     @AutoPlugin
     private void setLoadBalancerStrategy(ILoadBalancerStrategy strategy)
     {
@@ -102,7 +107,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         return ret;
     }
 
-    private void transferIfNeed()
+    @Override
+    public void transferIfNeed()
     {
         if (!this.onChange) return;
         Map<String, List<Set<ServerCmdMetaInfo>>> compareChanges = new HashMap<>();
@@ -134,6 +140,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
      */
     private Set<String> protocols = new HashSet<>(1);
 
+    protected Map<String, List<InstanceWrapper>> instances;
+
     private Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare(Map<String, List<Instance>> serverInstanceList)
     {
         long l = AbstractServiceDiscovery.this.changeSeq.get();
@@ -157,8 +165,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         ret.newProtocols = newProtocols;
         ret.downProtocols = downProtocols;
 
-        Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> couple = this.convCellInstanceToGateMeta(serverInstanceList);
-        Map<String, InstanceWrapper> v2 = couple.getV2();
+        Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, List<InstanceWrapper>>> couple = this.convCellInstanceToGateMeta(serverInstanceList);
+        Map<String, List<InstanceWrapper>> v2 = couple.getV2();
         ret.instances = v2;
 
         Map<String, Set<ServerCmdMetaInfo>> protoMetas = couple.getV1();
@@ -217,19 +225,25 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         return new Quadruple(ret, protoMetas, newAllProtocols, (newProtocols.size() > 0 || deltaAddProtocols.size() > 0 || downProtocols.size() > 0 || deltaDownProtocols.size() > 0));
     }
 
-    private Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
+    private Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, List<InstanceWrapper>>> convCellInstanceToGateMeta(Map<String, List<Instance>> m)
     {
         Set<String> keys = m.keySet();
         Map<String, Set<ServerCmdMetaInfo>> metas = new HashMap<>();
-        Map<String, InstanceWrapper> instanceWrapperMap = new HashMap<>();
+        Map<String, List<InstanceWrapper>> instanceWrapperMap = new HashMap<>();
         keys.stream().forEach(k ->
         {
             List<Instance> instances = m.get(k);
             instances.stream().forEach(inst ->
                     {
                         InstanceWrapper wrapper = new InstanceWrapper();
-                        wrapper.instance = inst;
-                        instanceWrapperMap.put(createKeyByInstance(inst), wrapper);
+                        wrapper.setInstance(inst);
+                        String serviceName = inst.getServiceName();
+                        List<InstanceWrapper> instanceWrappers = instanceWrapperMap.get(serviceName);
+                        if (com.cell.base.common.utils.CollectionUtils.isEmpty(instanceWrappers))
+                        {
+                            instanceWrappers = new ArrayList<>();
+                        }
+                        instanceWrappers.add(wrapper);
 
                         ServerMetaInfo info = LBUtils.fromInstance(inst);
                         ServerMetaData metaData = info.getMetaData();
@@ -291,6 +305,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             this.setCallBack(c);
         }
         this.lastUpdateServerMetas = this.serverMetas;
+        this.instances = qudr.getV1().getInstances();
+        // FIXME NPE
         this.callBack.onChange(qudr.getV1());
 //        nodeDiscovery.registerListen(new InstanceHooker());
         this.afterInit(ctx);
@@ -356,7 +372,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
                 这里不更新currentServerMetas, currentServerMetas,只会在请求到来的时候进行更新
              */
             AbstractServiceDiscovery.this.lastUpdateServerMetas = compare.getV2();
-            LOG.info(Module.DISCOVERY, "更新lastUpdateServerMetas:{},{}", this.lastUpdateServerMetas, this.getClass().getName());
+            AbstractServiceDiscovery.this.instances = compare.getV1().getInstances();
             AbstractServiceDiscovery.this.onChange = true;
         }
     }
@@ -382,12 +398,6 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 //            this.updateIfNeeded(compare);
 //        });
 //    }
-
-    @Data
-    public static class InstanceWrapper
-    {
-        private Instance instance;
-    }
 
 
 //    private void filterWith(Couple<Map<String, Set<ServerCmdMetaInfo>>, Map<String, InstanceWrapper>> couple)

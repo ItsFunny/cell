@@ -1,11 +1,13 @@
 package com.cell.http.framework.server;
 
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.models.Module;
 import com.cell.base.framework.proxy.IFrameworkProxy;
 import com.cell.base.framework.server.abs.AbstractServer;
 import com.cell.http.framework.couple.HttpRequestWrapper;
 import com.cell.http.framework.couple.HttpResponseWrapper;
 import com.cell.http.framework.proxy.IHttpProxy;
+import com.cell.sdk.log.LOG;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -41,6 +43,7 @@ public class DefaultHttpServer extends AbstractServer implements IHttpServer
     protected void onStart()
     {
         this.ready = true;
+        LOG.info(Module.HTTP_FRAMEWORK, "http启动,监听的端口号为:{}", this.getPort());
     }
 
     @Override

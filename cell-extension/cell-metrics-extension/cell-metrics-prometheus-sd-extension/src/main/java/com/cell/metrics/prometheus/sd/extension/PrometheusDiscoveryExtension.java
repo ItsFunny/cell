@@ -1,11 +1,14 @@
 package com.cell.metrics.prometheus.sd.extension;
 
+import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.annotations.Plugin;
+import com.cell.metrics.prometheus.sd.extension.sd.IPrometheusServiceDiscovery;
 import com.cell.metrics.prometheus.sd.extension.sd.RegistrationService;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Charlie
@@ -19,10 +22,10 @@ import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 public class PrometheusDiscoveryExtension extends AbstractSpringNodeExtension
 {
 
-    private RegistrationService registrationService;
+    private IPrometheusServiceDiscovery registrationService;
 
     @Plugin
-    public RegistrationService registrationService()
+    public IPrometheusServiceDiscovery registrationService()
     {
         return this.registrationService;
     }
@@ -31,6 +34,9 @@ public class PrometheusDiscoveryExtension extends AbstractSpringNodeExtension
     protected void onInit(INodeContext ctx) throws Exception
     {
         this.registrationService = new RegistrationService();
+        String cluster = ctx.getCommandLine().getOptionValue(CommandLineConstants.CLUSTER);
+        cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
+//        this.registrationService.setCluster(cluster);
         this.registrationService.initOnce(null);
     }
 

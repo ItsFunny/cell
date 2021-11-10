@@ -48,7 +48,6 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     private ISimpleFilter<Instance> filter = instance -> instance.isHealthy();
     private String cluster;
 
-    private Semaphore semaphore;
 
     private ServiceDiscoverySchedual()
     {
@@ -83,6 +82,7 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     private Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = new HashMap<>(1);
     protected Snap delta;
 
+    private Semaphore semaphore;
     private Long lastUpdateTimestamp;
     private static final long ONE_MIN = Duration.ofMinutes(1).toMillis();
 
@@ -93,8 +93,9 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
         {
             return false;
         }
-        if (this.lastUpdateTimestamp == null || System.currentTimeMillis() - this.lastUpdateTimestamp > ONE_MIN)
+        if (this.lastUpdateTimestamp == null || System.currentTimeMillis() - this.lastUpdateTimestamp > ONE_MIN)// 这里设置会导致,可能只有下一次才能触发
         {
+            this.lastUpdateTimestamp = System.currentTimeMillis();
             return true;
         }
         return false;
@@ -124,14 +125,17 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
     {
         Flux.interval(Duration.ofMinutes(1)).map(v ->
         {
-            this.tryAcquire();
+            if (!this.tryAcquire())
+            {
+                return new HashMap<String, List<Instance>>(1);
+            }
             Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster, this.filter);
             return serverInstanceList;
         }).subscribe(serverInstanceList ->
         {
             try
             {
-                if (serverInstanceList.size() == 0)
+                if (serverInstanceList == null || serverInstanceList.size() == 0)
                 {
                     return;
                 }
@@ -145,7 +149,6 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
 
     private void release()
     {
-        this.lastUpdateTimestamp = System.currentTimeMillis();
         this.semaphore.release();
     }
 

@@ -3,23 +3,26 @@ package com.cell.metrics.prometheus.sd.extension.sd;
 import com.alibaba.nacos.client.naming.event.InstancesChangeEvent;
 import com.alibaba.nacos.common.notify.Event;
 import com.alibaba.nacos.common.notify.listener.Subscriber;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.CollectionUtils;
+import com.cell.base.core.filters.ISimpleFilter;
 import com.cell.bee.transport.model.ServerMetaData;
-import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.metrics.prometheus.sd.extension.model.ChangeItem;
 import com.cell.metrics.prometheus.sd.extension.model.ServiceInstanceHealth;
 import com.cell.node.discovery.model.Instance;
+import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.discovery.nacos.util.DiscoveryUtils;
-import com.cell.sdk.log.LOG;
 import com.cell.node.discovery.service.INodeDiscovery;
+import com.cell.sdk.log.LOG;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Semaphore;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -31,7 +34,7 @@ import java.util.stream.Collectors;
  * @Attention:
  * @Date 创建时间：2021-09-22 21:20
  */
-public class RegistrationService extends AbstractInitOnce
+public class RegistrationService extends AbstractInitOnce implements IPrometheusServiceDiscovery
 {
     private static final String[] NO_SERVICE_TAGS = new String[0];
 
@@ -41,9 +44,42 @@ public class RegistrationService extends AbstractInitOnce
     private final Map<String, List<Instance>> delta = new HashMap<>();
     private final List<Instance> down = new ArrayList<>();
 
+    private static final ISimpleFilter<Instance> FILTER = instance -> instance.isHealthy();
+    private static final ISimpleFilter<Instance> HttpFilter = instance ->
+    {
+        Map<String, String> metaData = instance.getMetaData();
+        if (metaData == null)
+        {
+            return false;
+        }
+        return (ServerMetaData.fromMetaData(metaData).getExtraInfo().getType() & ProtocolConstants.TYPE_HTTP) >= ProtocolConstants.TYPE_HTTP;
+    };
     // TODO
     private String cluster;
+    private Semaphore semaphore;
+    private Long lastUpdateTimestamp;
+    private static final long ONE_MIN = Duration.ofMinutes(1).toMillis();
 
+    // TODO ,抽象到一个helper中
+    private boolean tryAcquire()
+    {
+        boolean b = this.semaphore.tryAcquire();
+        if (!b)
+        {
+            return false;
+        }
+        if (this.lastUpdateTimestamp == null || System.currentTimeMillis() - this.lastUpdateTimestamp > ONE_MIN)// 这里设置会导致,可能只有下一次才能触发
+        {
+            this.lastUpdateTimestamp = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    private void release()
+    {
+        this.semaphore.release();
+    }
 
     public Mono<ChangeItem<Map<String, String[]>>> getServiceNames(long waitMillis, Long index)
     {
@@ -57,7 +93,7 @@ public class RegistrationService extends AbstractInitOnce
                 if (CollectionUtils.isEmpty(this.instances.get(service))) continue;
                 set.add(service);
             }
-            Map<String, String[]> result = new HashMap<String, String[]>();
+            Map<String, String[]> result = new HashMap<>();
             for (String item : set)
             {
                 result.put(item, NO_SERVICE_TAGS);
@@ -81,6 +117,8 @@ public class RegistrationService extends AbstractInitOnce
                         List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
                         this.down.addAll(down);
                     }
+                    int code = service.hashCode();
+                    LOG.info(Module.SD_PROMETHEUS, "添加service,{}", service);
                     this.instances.put(service, instances);
                 }
                 this.onChange = false;
@@ -105,7 +143,7 @@ public class RegistrationService extends AbstractInitOnce
                 Set<Instance> instSet = new HashSet<>(instances);
                 for (Instance instance : instSet)
                 {
-                    Map<String, Object> ipObj = new HashMap<String, Object>();
+                    Map<String, Object> ipObj = new HashMap<>();
 
                     ipObj.put("Address", instance.getIp());
                     ipObj.put("Node", instance.getServiceName());
@@ -167,15 +205,16 @@ public class RegistrationService extends AbstractInitOnce
     @Override
     protected void onInit(InitCTX ctx)
     {
+        this.semaphore = new Semaphore(1);
         this.nodeDiscovery = NacosNodeDiscoveryImpl.getInstance();
-        List<String> allServices = this.nodeDiscovery.getAllServices();
-
-        for (String allService : allServices)
-        {
-            List<Instance> serviceAllInstance = this.nodeDiscovery.getServiceAllInstance(allService);
-            this.instances.put(allService, serviceAllInstance);
-        }
-        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
+//        List<String> allServices = this.nodeDiscovery.getAllServices();
+//        for (String allService : allServices)
+//        {
+//            List<Instance> serviceAllInstance = this.nodeDiscovery.getServiceAllInstance(allService, FILTER, HttpFilter);
+//            LOG.info(Module.SD_PROMETHEUS, "添加service,{}", allService);
+//            this.instances.put(allService, serviceAllInstance);
+//        }
+//        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
 
         this.schedualFlush();
     }
@@ -184,25 +223,41 @@ public class RegistrationService extends AbstractInitOnce
     {
         Flux.interval(Duration.ofSeconds(10)).map(v ->
         {
+            if (!this.tryAcquire())
+            {
+                return new ArrayList<String>();
+            }
             List<String> allServices = nodeDiscovery.getAllServices();
             return allServices;
         }).subscribe(allServices ->
         {
-            if (allServices.size() == 0)
+            try
             {
-                return;
-            }
-            synchronized (this.delta)
-            {
-                for (String s : allServices)
+                if (allServices == null || allServices.size() == 0)
                 {
-                    List<Instance> instances = this.nodeDiscovery.getServiceAllInstance(s);
-                    if (CollectionUtils.isNotEmpty(instances))
+                    return;
+                }
+                synchronized (this.delta)
+                {
+                    // FIXME ,这块逻辑有问题
+                    boolean added = false;
+                    for (String s : allServices)
                     {
-                        this.delta.put(instances.get(0).getClusterName(), instances);
+                        List<Instance> instances = this.nodeDiscovery.getServiceAllInstance(s, this.FILTER, this.HttpFilter);
+                        if (CollectionUtils.isNotEmpty(instances))
+                        {
+                            added = true;
+                            this.delta.put(instances.get(0).getServiceName(), instances);
+                        }
+                    }
+                    if (added)
+                    {
+                        this.onChange = true;
                     }
                 }
-                this.onChange = true;
+            } finally
+            {
+                this.release();
             }
         });
     }
