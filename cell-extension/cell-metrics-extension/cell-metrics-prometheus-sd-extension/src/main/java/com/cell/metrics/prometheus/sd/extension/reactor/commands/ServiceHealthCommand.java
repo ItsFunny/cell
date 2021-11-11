@@ -56,6 +56,4 @@ public class ServiceHealthCommand extends AbstractHttpCommand
                 .status(ContextConstants.SUCCESS)
                 .ret(ServiceReactor.createResponseEntity(block)).build());
     }
-
-
 }

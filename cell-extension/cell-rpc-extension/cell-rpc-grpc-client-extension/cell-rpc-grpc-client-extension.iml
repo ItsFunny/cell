@@ -23,14 +23,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
-    <orderEntry type="module" module-name="cell-sdk-timewheel" />
-    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
-    <orderEntry type="module" module-name="cell-rpc-client-base-framework" />
-    <orderEntry type="module" module-name="cell-rpc-common" />
-    <orderEntry type="module" module-name="cell-base-framework" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.10.RELEASE" level="project" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-common-extension" />
     <orderEntry type="module" module-name="cell-node-spring" />
     <orderEntry type="module" module-name="cell-node-core" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter:2.3.5.RELEASE" level="project" />
@@ -52,7 +45,15 @@
     <orderEntry type="library" name="Maven: org.apache.tomcat.embed:tomcat-embed-websocket:9.0.39" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-web:5.2.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:5.2.10.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-expression:5.2.10.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
+    <orderEntry type="module" module-name="cell-sdk-timewheel" />
+    <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
+    <orderEntry type="module" module-name="cell-rpc-client-base-framework" />
+    <orderEntry type="module" module-name="cell-rpc-common" />
+    <orderEntry type="module" module-name="cell-base-framework" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-autoconfigure" />
     <orderEntry type="module" module-name="cell-rpc-grpc-common" />
     <orderEntry type="module" module-name="cell-bee-event" />

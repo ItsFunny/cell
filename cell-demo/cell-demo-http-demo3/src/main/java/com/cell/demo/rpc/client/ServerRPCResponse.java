@@ -1,4 +1,4 @@
-package com.cell.rpc.client;
+package com.cell.demo.rpc.client;
 
 import com.cell.base.core.serialize.DefaultSelfJsonSerialize;
 import lombok.Data;

@@ -19,6 +19,11 @@
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
+            <artifactId>cell-rpc-grpc-common-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
             <artifactId>cell-rpc-grpc-server-framework</artifactId>
             <version>${cell.version}</version>
         </dependency>

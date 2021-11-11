@@ -134,6 +134,7 @@
     <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
     <orderEntry type="module" module-name="cell-extension-common" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-extension" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-common-extension" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
     <orderEntry type="module" module-name="cell-sdk-timewheel" />
     <orderEntry type="module" module-name="cell-rpc-client-base-framework" />

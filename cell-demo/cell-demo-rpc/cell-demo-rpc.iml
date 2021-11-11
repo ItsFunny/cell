@@ -80,6 +80,7 @@
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />
     <orderEntry type="module" module-name="cell-sdk-configuration" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-extension" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-common-extension" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-framework" />
     <orderEntry type="module" module-name="cell-rpc-server-base-framework" />
     <orderEntry type="module" module-name="cell-rpc-common" />

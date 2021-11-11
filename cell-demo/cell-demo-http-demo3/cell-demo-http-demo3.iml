@@ -141,6 +141,7 @@
     <orderEntry type="module" module-name="cell-bee-keyresolver" />
     <orderEntry type="module" module-name="cell-bee-loadbalance" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-extension" />
+    <orderEntry type="module" module-name="cell-rpc-grpc-common-extension" />
     <orderEntry type="module" module-name="cell-rpc-grpc-client-framework" />
     <orderEntry type="module" module-name="cell-sdk-timewheel" />
     <orderEntry type="module" module-name="cell-rpc-client-base-framework" />

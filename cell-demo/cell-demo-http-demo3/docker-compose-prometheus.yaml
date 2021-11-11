@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  grafana:
+    image: grafana/grafana:7.5.5-ubuntu
+    container_name: grafana
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 3000:3000
+    environment:
+      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+    volumes:
+      - /tmp/grafana:/var/lib/grafana
+  prometheus:
+    image: prom/prometheus:v2.26.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#      - ./prometheus_targets:/etc/prometheus/dynamictargets
+    extra_hosts:
+      - "nacos.discovery.com:172.224.2.2"
+      - "demo.com:172.224.2.2"

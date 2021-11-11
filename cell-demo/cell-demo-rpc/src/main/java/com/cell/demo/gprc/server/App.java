@@ -1,4 +1,4 @@
-package com.cell.gprc.server;
+package com.cell.demo.gprc.server;
 
 import com.cell.base.core.serialize.DefaultSelfJsonSerialize;
 import com.cell.grpc.server.framework.command.AbstractGRPCServerCommand;

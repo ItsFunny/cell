@@ -1,9 +1,10 @@
 package com.cell.rpc.grpc.client.extension;
 
+import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.annotations.Plugin;
-import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.core.concurrent.base.EventLoopGroup;
+import com.cell.grpc.common.constants.GRPCConstants;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.node.spring.exntension.ConcurrentExtension;
@@ -33,7 +34,9 @@ public class GRPCDefaultLocalClientExtension extends AbstractSpringNodeExtension
     protected void onInit(INodeContext ctx) throws Exception
     {
         EventLoopGroup eventLoopGroup = ConcurrentExtension.getEventLoopGroup();
-        this.clientServer = new GRPCLocalClientServer(eventLoopGroup);
+        String grpcPort = ctx.getCommandLine().getOptionValue("grpcPort", GRPCConstants.DEFAULT_GRPC_SERVER_PORT + "");
+        String grpcAddr = ctx.getCommandLine().getOptionValue("grpcAddr", GRPCConstants.DEFAULT_GRPC_SERVER_ADDR);
+        this.clientServer = new GRPCLocalClientServer(eventLoopGroup, grpcAddr, Integer.parseInt(grpcPort));
     }
 
     @Override

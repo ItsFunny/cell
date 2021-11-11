@@ -118,17 +118,19 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
         }
         this.cluster = cluster;
         this.nodeDiscovery = n;
+        this.nodeDiscovery.registerListen(new InstanceHooker());
         this.schedualRefresh();
     }
 
     private void schedualRefresh()
     {
-        Flux.interval(Duration.ofMinutes(1)).map(v ->
+        Flux.interval(Duration.ofMinutes(3)).map(v ->
         {
             if (!this.tryAcquire())
             {
                 return new HashMap<String, List<Instance>>(1);
             }
+            LOG.info("开始定时请求nacos,刷新服务列表");
             Map<String, List<Instance>> serverInstanceList = nodeDiscovery.getServerInstanceList(this.cluster, this.filter);
             return serverInstanceList;
         }).subscribe(serverInstanceList ->
@@ -168,6 +170,7 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
             {
                 return;
             }
+            ServiceDiscoverySchedual.this.lastUpdateTimestamp = System.currentTimeMillis();
             InstancesChangeEvent event = (InstancesChangeEvent) eee;
             // FIXME , 处理nacos 的cluster
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->

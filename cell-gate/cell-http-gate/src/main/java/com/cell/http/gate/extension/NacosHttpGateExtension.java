@@ -14,6 +14,7 @@ import com.cell.node.core.context.INodeContext;
 import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
+import org.apache.commons.cli.Options;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -48,11 +49,18 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
         return this.schedualCaculateErrorCount;
     }
 
+    @Override
+    public Options getOptions()
+    {
+        Options options = new Options();
+        options.addOption("gatewayPort", true, "网关port");
+        return options;
+    }
 
     @Override
     public void onInit(INodeContext ctx) throws Exception
     {
-        Integer port = Integer.parseInt(ctx.getCommandLine().getOptionValue("port", "9999"));
+        Integer port = Integer.parseInt(ctx.getCommandLine().getOptionValue("gatewayPort", "9999"));
         this.port = port;
 
         GatewayMetricsConfigFactory.getInstance().init();

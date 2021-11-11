@@ -214,19 +214,20 @@ public class RegistrationService extends AbstractInitOnce implements IPrometheus
 //            LOG.info(Module.SD_PROMETHEUS, "添加service,{}", allService);
 //            this.instances.put(allService, serviceAllInstance);
 //        }
-//        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
+        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
 
         this.schedualFlush();
     }
 
     private void schedualFlush()
     {
-        Flux.interval(Duration.ofSeconds(10)).map(v ->
+        Flux.interval(Duration.ofMinutes(5)).map(v ->
         {
             if (!this.tryAcquire())
             {
                 return new ArrayList<String>();
             }
+            LOG.info("开始定时请求nacos,刷新服务列表");
             List<String> allServices = nodeDiscovery.getAllServices();
             return allServices;
         }).subscribe(allServices ->
@@ -270,7 +271,7 @@ public class RegistrationService extends AbstractInitOnce implements IPrometheus
             LOG.info(Module.SD_PROMETHEUS, "收到event:{},hosts:{}", event);
             // FIXME , 处理nacos 的cluster
             String clusters = event.getClusters();
-
+            RegistrationService.this.lastUpdateTimestamp = System.currentTimeMillis();
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
                     e.getClusterName().equalsIgnoreCase(RegistrationService.this.cluster)).collect(Collectors.toList());
             synchronized (RegistrationService.this.delta)

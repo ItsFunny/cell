@@ -59,7 +59,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.com.cell.App</mainClass>
+                    <mainClass>com.cell.demo.App</mainClass>
                     <outputDirectory>${project.build.directory}</outputDirectory>
                     <includeSystemScope>true</includeSystemScope>
                 </configuration>

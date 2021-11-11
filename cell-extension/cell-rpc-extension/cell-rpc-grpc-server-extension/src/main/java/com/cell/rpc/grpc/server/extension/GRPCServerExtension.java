@@ -8,13 +8,13 @@ import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.base.core.reactor.ICommandReactor;
 import com.cell.base.framework.dispatcher.IDispatcher;
+import com.cell.base.framework.root.Root;
 import com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.server.DefaultGRPServer;
 import com.cell.grpc.server.framework.server.IGRPCServer;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.proxy.IProxy;
-import com.cell.base.framework.root.Root;
 import com.cell.rpc.common.manager.RPCHandlerManager;
 import com.cell.rpc.server.base.framework.channel.DefaultRPCServerChannel;
 import com.cell.rpc.server.base.framework.dispatcher.impl.DefaultRPCServerCommandDispatcher;
@@ -23,7 +23,6 @@ import com.cell.rpc.server.base.framework.proxy.IRPCServerProxy;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.log.LOG;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Set;
@@ -63,14 +62,6 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
         return this.proxy;
     }
 
-    @Override
-    public Options getOptions()
-    {
-        // TODO ,not here
-        Options ret = new Options();
-        ret.addOption("grpcPort", true, "grpc 端口号");
-        return ret;
-    }
 
     @Override
     public Object loadConfiguration(INodeContext ctx) throws Exception

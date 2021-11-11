@@ -19,6 +19,7 @@
     <modules>
         <module>cell-rpc-grpc-server-extension</module>
         <module>cell-rpc-grpc-client-extension</module>
+        <module>cell-rpc-grpc-common-extension</module>
     </modules>
 
 </project>
