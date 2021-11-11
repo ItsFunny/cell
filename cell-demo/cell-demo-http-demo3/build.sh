@@ -2,5 +2,8 @@
 
 mvn clean install -Dmaven.test.skip=true
 
-docker build --no-cache -t cell/demo:0.0.1 .
+imageName=demo
+
+docker rmi -f $(docker images --filter=reference='jokerlvccc/cell_${imageName}*' -qa)
+docker build --no-cache -t jokerlvccc/cell_${imageName}:0.0.1 .
 

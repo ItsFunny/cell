@@ -1,2 +1,16 @@
-- run 
-    - docker run -p 8081:8080 -it --name demo1 -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -v /Users/joker/Java/cell/config:/Users/joker/Java/config cell/demo:0.0.1
+# 端口划分
+- http
+    - 8080
+- rpc
+    - 内置的http: 8081
+    - 7001
+- gateway
+    - 8888
+
+- promethues_discovery
+    - 9999
+- nacos
+    - 8848
+-  prometheus
+    - 3000
+    - 9090

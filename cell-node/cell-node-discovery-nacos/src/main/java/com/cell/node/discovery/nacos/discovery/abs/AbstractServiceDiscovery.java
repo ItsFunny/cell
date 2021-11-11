@@ -158,7 +158,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         Map<String, Set<ServerCmdMetaInfo>> deltaDownProtocols = new HashMap<>();
 
         final Set<String> originAllProtocols = new HashSet<>(this.protocols);
-        final Map<String, Set<ServerCmdMetaInfo>> originAllMetas = new HashMap<>(this.lastUpdateServerMetas);
+        Map<String, Set<ServerCmdMetaInfo>> originAllMetas = this.deepCopy();
+//        final Map<String, Set<ServerCmdMetaInfo>> originAllMetas = new HashMap<>(this.lastUpdateServerMetas);
         final Set<String> newAllProtocols = new HashSet<>();
         ret.deltaAddProtocols = deltaAddProtocols;
         ret.deltaDownProtocols = deltaDownProtocols;
@@ -189,10 +190,10 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             {
                 if (!CollectionUtils.isEmpty(origins))
                 {
-                    // 如果原先存在,则直接替换
+                    // 如果原先存在,则直接删除即可,不需要添加到新增或者是减少的
                     if (origins.contains(cmd))
                     {
-                        origins.add(cmd);
+                        origins.remove(cmd);
                         continue;
                     }
                 }

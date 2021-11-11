@@ -74,7 +74,7 @@ public abstract class AbstractGRPCClientServer extends AbstractRPCClientServer i
         if (stub == null)
         {
             ret = new BasePromise<>(DummyExecutor.getInstance());
-            ret.setFailure(new ProgramaException("asd"));
+            ret.setFailure(new ProgramaException("command not exist"));
             return ret;
         }
 

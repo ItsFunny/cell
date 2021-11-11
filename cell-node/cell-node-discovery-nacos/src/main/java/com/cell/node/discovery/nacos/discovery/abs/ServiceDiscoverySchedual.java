@@ -124,7 +124,7 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
 
     private void schedualRefresh()
     {
-        Flux.interval(Duration.ofMinutes(3)).map(v ->
+        Flux.interval(Duration.ofMinutes(1)).map(v ->
         {
             if (!this.tryAcquire())
             {
@@ -176,7 +176,7 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
                     e.getClusterName().equalsIgnoreCase(ServiceDiscoverySchedual.this.cluster)).collect(Collectors.toList());
             Map<String, List<Instance>> serverInstanceList = new HashMap<>();
-            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts));
+            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts,filter));
         }
     }
 }

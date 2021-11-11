@@ -24,7 +24,7 @@ import java.io.IOException;
  * @Date 创建时间：2021-11-05 15:31
  */
 @CellSpringHttpApplication
-public class App
+public class DemoGrpcServer
 {
     @RPCServerReactorAnno
     public static class DemoRPCServerReactor1 extends AbstractRPCServerReactor
@@ -74,7 +74,7 @@ public class App
     {
         try
         {
-            SpringApplication.run(App.class, args);
+            SpringApplication.run(DemoGrpcServer.class, args);
         } catch (Exception e)
         {
             e.printStackTrace();
