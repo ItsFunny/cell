@@ -37,7 +37,7 @@ public class FinalDispatchFilter implements GlobalFilter, Ordered
         URI mergedUrl = UriComponentsBuilder.fromUri(uri).host(wrapper.getIp()).port(wrapper.getPort())
                 .replacePath(uri.getPath()).build().toUri();
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_REQUEST_URL_ATTR, mergedUrl);
-        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{},method:{},module:{}", uri, wrapper.getIp(), wrapper.getPort(), wrapper.getServiceName(), wrapper.getMethod(), wrapper.getModule());
+        LOG.info(Module.CONFIGURATION, "转发uri:{},host:{},port:{},serviceName:{},method:{},module:{}", mergedUrl, wrapper.getIp(), wrapper.getPort(), wrapper.getServiceName(), wrapper.getMethod(), wrapper.getModule());
         return chain.filter(exchange);
     }
 

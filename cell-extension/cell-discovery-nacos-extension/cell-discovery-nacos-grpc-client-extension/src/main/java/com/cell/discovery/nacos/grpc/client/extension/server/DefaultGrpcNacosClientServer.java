@@ -1,20 +1,20 @@
 package com.cell.discovery.nacos.grpc.client.extension.server;
 
-import com.cell.base.common.context.InitCTX;
-import com.cell.base.common.models.Module;
-import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.core.annotations.AutoPlugin;
-import com.cell.base.core.concurrent.base.EventLoopGroup;
-import com.cell.base.framework.root.Root;
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
+import com.cell.base.common.context.InitCTX;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.node.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
-import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.rpc.grpc.client.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.rpc.grpc.client.util.GRPCUtil;
 import com.cell.sdk.log.LOG;
+import com.cell.base.common.models.Module;
+import com.cell.base.framework.root.Root;
+import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import io.grpc.stub.AbstractStub;
 
 import java.net.URI;
@@ -118,11 +118,6 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
             Set<ServerCmdMetaInfo> serverCmdMetaInfos = protocols.get(protocol);
             for (ServerCmdMetaInfo serverCmdMetaInfo : serverCmdMetaInfos)
             {
-                int code = serverCmdMetaInfo.ID();
-                if (this.stubs.containsKey(code))
-                {
-                    continue;
-                }
                 String staticByInfo = this.createStaticByInfo(serverCmdMetaInfo);
                 BaseGrpcGrpc.BaseGrpcFutureStub stub = this.targetStubs.get(staticByInfo);
                 if (stub == null)
@@ -130,6 +125,7 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
                     stub = this.createStub(staticByInfo);
                     this.targetStubs.put(staticByInfo, stub);
                 }
+                int code = serverCmdMetaInfo.ID();
                 this.stubs.put(code, stub);
                 LOG.info(Module.GRPC_SERVER, "add stub,code={}", code);
             }

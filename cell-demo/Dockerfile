@@ -20,14 +20,22 @@ ENV LOG_LEVEL=INFO
 ARG VM_OPTIONS="-Xmx1g -Xms1g"
 ENV ENV_VM_OPTIONS=$VM_OPTIONS
 
+ARG GRPC_ADDR="localhost"
+ENV ENV_GRPC_ADDR=$GRPC_ADDR
 
 
+ARG CLUSTER="DEFAULT_CLUSTER"
+ENV ENV_CLUSTER=$CLUSTER
 
-ARG APPLICATION_OPTIONS=" -cluster DEFAULT_CLUSTER "
-ENV ENV_APPLICATION_OPTIONS=$APPLICATION_OPTIONS
+ARG RPC_NAME="rpcname"
+ENV ENV_RPC=$RPC_NAME
+
+ENV ENV_APPLICATION_OPTIONS="-rpcName  rpc -cluster DEFAULT_CLUSTER "
 
 # http
 EXPOSE 8080
+# rpc
+EXPOSE 7000
 
 
-CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config -gatewayPort 8080 -type Default "]
+CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config  -port 8080 -grpcPort 7000 -grpcAddr localhost  -type Default "]

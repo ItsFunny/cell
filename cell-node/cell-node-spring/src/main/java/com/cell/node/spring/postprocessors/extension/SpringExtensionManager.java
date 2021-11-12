@@ -1,12 +1,12 @@
 package com.cell.node.spring.postprocessors.extension;
 
 import com.cell.base.common.constants.DebugConstants;
-import com.cell.base.common.exceptions.ConfigException;
-import com.cell.base.common.models.Module;
-import com.cell.base.common.utils.IPUtils;
 import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.common.context.InitCTX;
-import com.cell.sdk.log.LOG;
+import com.cell.base.common.exceptions.ConfigException;
+import com.cell.base.common.models.Module;
+import com.cell.base.common.utils.CollectionUtils;
+import com.cell.base.common.utils.IPUtils;
 import com.cell.node.core.configuration.RootConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.core.exception.ExtensionImportException;
@@ -17,6 +17,7 @@ import com.cell.node.spring.exception.ContainerException;
 import com.cell.node.spring.postprocessor.ManagerFactoryPostProcessor;
 import com.cell.node.spring.tools.Banner;
 import com.cell.node.spring.utils.FrameworkUtil;
+import com.cell.sdk.log.LOG;
 import com.cell.sdk.log.LogLevel;
 import com.google.common.base.Stopwatch;
 import org.apache.commons.cli.*;
@@ -79,6 +80,10 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
     {
         LOG.setLogLevel(LogLevel.DEBUG);
         DefaultApplicationArguments SpringCommand = new DefaultApplicationArguments(ctx.getArgs());
+        if (ctx.getArgs() != null)
+        {
+            LOG.info(Module.CONTAINER, "参数信息为:args list: {}", CollectionUtils.join(Arrays.asList(ctx.getArgs()), ","));
+        }
         List<String> customArgs = new ArrayList<>(SpringCommand.getNonOptionArgs());
         Set<String> springArgs = SpringCommand.getOptionNames();
         LOG.info(Module.CONTAINER, "spring args list: {}", springArgs);

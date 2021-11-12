@@ -101,7 +101,7 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
         Set<ICommandReactor> reactors = Root.getInstance().getReactor(ProtocolConstants.REACTOR_TYPE_RPC_GRPC_SERVER);
         for (ICommandReactor reactor : reactors)
         {
-            LOG.info(Module.GRPC_SERVER, "添加http Reactor,info:{}", reactor);
+            LOG.info(Module.GRPC_SERVER, "添加grpc Reactor,info:{}", reactor.getClass());
             this.dispatcher.addReactor(reactor);
         }
         DefaultRPCServerChannel instance = DefaultRPCServerChannel.getInstance();

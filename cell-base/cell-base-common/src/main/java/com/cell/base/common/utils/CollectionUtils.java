@@ -54,4 +54,19 @@ public class CollectionUtils
     {
         return collection != null && !collection.isEmpty();
     }
+
+
+    public static <T> String join(Iterable<T> collection, String conjunction) {
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+        for (T item : collection) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                sb.append(conjunction);
+            }
+            sb.append(item);
+        }
+        return sb.toString();
+    }
 }

@@ -1,10 +1,10 @@
 package com.cell.bee.lb.impl;
 
 
-import com.cell.base.common.utils.RandomUtils;
 import com.cell.bee.lb.ILoadBalancerStrategy;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -18,21 +18,25 @@ import java.util.Collection;
 // FIXME ,its not weight base
 public class DefaultWeightRoubineStrategy implements ILoadBalancerStrategy
 {
+    // no lock,no atomic
     @Override
     public ServerCmdMetaInfo choseServer(Collection<ServerCmdMetaInfo> servers, String protocol)
     {
         if (servers == null || servers.size() == 0) return null;
         // FIXME
-//        Collections.shuffle(new ArrayList<>(servers));
-        int i = RandomUtils.randomInt(0, servers.size());
-        for (ServerCmdMetaInfo server : servers)
+        ArrayList<ServerCmdMetaInfo> serverCmdMetaInfos = new ArrayList<>(servers);
+        ServerCmdMetaInfo ret = serverCmdMetaInfos.get(0);
+        int minPower = ret.getVotePower();
+        for (int i = 1; i < serverCmdMetaInfos.size(); i++)
         {
-            if (server.isEnable() && server.isHealthy())
+            ServerCmdMetaInfo serverCmdMetaInfo = serverCmdMetaInfos.get(i);
+            if (serverCmdMetaInfo.getVotePower() < minPower)
             {
-                return server;
+                ret = serverCmdMetaInfo;
+                minPower = serverCmdMetaInfo.getVotePower();
             }
         }
-        return null;
+        ret.setVotePower(++minPower);
+        return ret;
     }
-
 }

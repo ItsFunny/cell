@@ -19,6 +19,7 @@ public class ServerCmdMetaInfo extends ServerMetaInfo
     private int id;
     private String protocol;
     protected String module;
+    private int votePower;
 
     public static ServerCmdMetaInfo fromServerMetaInfo(ServerMetaInfo info, String protocol, String module)
     {

@@ -24,6 +24,7 @@
         <module>cell-demo-mono</module>
         <module>cell-demo-microservice</module>
         <module>cell-demo-rpc</module>
+        <module>cell-demo-common</module>
     </modules>
 
     <properties>
