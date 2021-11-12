@@ -107,6 +107,19 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         return ret;
     }
 
+    private Map<String, Set<Integer>> lastCmds()
+    {
+        final Map<String, Set<Integer>> lastCmds = new HashMap<>();
+        final Map<String, Set<ServerCmdMetaInfo>> lastUpdateServerMetas = this.lastUpdateServerMetas;
+        for (String key : lastUpdateServerMetas.keySet())
+        {
+            Set<ServerCmdMetaInfo> serverCmdMetaInfos = lastUpdateServerMetas.get(key);
+            Set<Integer> ids = serverCmdMetaInfos.stream().map(p -> p.ID()).collect(Collectors.toSet());
+            lastCmds.put(key, ids);
+        }
+        return lastCmds;
+    }
+
     @Override
     public void transferIfNeed()
     {
@@ -142,6 +155,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
 
     protected Map<String, List<InstanceWrapper>> instances;
 
+    // TODO gc optimize
     private Quadruple<Snap, Map<String, Set<ServerCmdMetaInfo>>, Set<String>, Boolean> compare(Map<String, List<Instance>> serverInstanceList)
     {
         long l = AbstractServiceDiscovery.this.changeSeq.get();
@@ -158,7 +172,8 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
         Map<String, Set<ServerCmdMetaInfo>> deltaDownProtocols = new HashMap<>();
 
         final Set<String> originAllProtocols = new HashSet<>(this.protocols);
-        Map<String, Set<ServerCmdMetaInfo>> originAllMetas = this.deepCopy();
+//        Map<String, Set<ServerCmdMetaInfo>> originAllMetas = this.deepCopy();
+        Map<String, Set<Integer>> originAllMetas = this.lastCmds();
 //        final Map<String, Set<ServerCmdMetaInfo>> originAllMetas = new HashMap<>(this.lastUpdateServerMetas);
         final Set<String> newAllProtocols = new HashSet<>();
         ret.deltaAddProtocols = deltaAddProtocols;
@@ -183,7 +198,7 @@ public abstract class AbstractServiceDiscovery<K1, K2> extends AbstractInitOnce 
             }
             originAllProtocols.remove(protocol);
 
-            Set<ServerCmdMetaInfo> origins = originAllMetas.get(protocol);
+            Set<Integer> origins = originAllMetas.get(protocol);
             // 1. 增量新增 : 既protocol 原先存在,有新的instance up
             // 2. 增量宕机: 既protocol某几个instance 宕机,
             for (ServerCmdMetaInfo cmd : cmds)
