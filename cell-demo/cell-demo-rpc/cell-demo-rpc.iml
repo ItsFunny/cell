@@ -143,6 +143,7 @@
     <orderEntry type="module" module-name="cell-rpc-grpc-common-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-grpc-server-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
     <orderEntry type="module" module-name="cell-node-core" />

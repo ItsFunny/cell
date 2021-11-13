@@ -3,7 +3,6 @@ package com.cell.rpc.grpc.server.extension;
 import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.models.Module;
-import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.base.core.reactor.ICommandReactor;
@@ -12,6 +11,7 @@ import com.cell.base.framework.root.Root;
 import com.cell.grpc.common.config.GRPCServerConfiguration;
 import com.cell.grpc.server.framework.server.DefaultGRPServer;
 import com.cell.grpc.server.framework.server.IGRPCServer;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.proxy.IProxy;
@@ -22,7 +22,6 @@ import com.cell.rpc.server.base.framework.proxy.DefaultRPCServerProxy;
 import com.cell.rpc.server.base.framework.proxy.IRPCServerProxy;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.log.LOG;
-import org.apache.commons.cli.CommandLine;
 import org.springframework.context.annotation.Bean;
 
 import java.util.Set;
@@ -83,16 +82,11 @@ public class GRPCServerExtension extends AbstractSpringNodeExtension
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-        CommandLine cmd = ctx.getCommandLine();
         this.dispatcher = new DefaultRPCServerCommandDispatcher();
         this.proxy = new DefaultRPCServerProxy(this.dispatcher);
         this.server = new DefaultGRPServer(this.proxy);
-
-        String port = cmd.getOptionValue("grpcPort");
-        if (!StringUtils.isEmpty(port))
-        {
-            this.server.setPort(Short.valueOf(port));
-        }
+        NodeConfiguration.NodeInstance nodeInstance = ctx.getInstanceByType(this.server.type());
+        this.server.setPort(nodeInstance.getVisualPort());
     }
 
     @Override

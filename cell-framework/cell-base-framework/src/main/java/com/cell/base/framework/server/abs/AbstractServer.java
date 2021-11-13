@@ -30,6 +30,7 @@ public abstract class AbstractServer extends AbstractInitOnce implements IServer
     private IFrameworkProxy proxy;
     private ProcessManager manager;
 
+
     public AbstractServer(IFrameworkProxy proxy)
     {
         this.proxy = proxy;

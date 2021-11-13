@@ -69,21 +69,6 @@ public class CellSpringFrameworkApplication
         {
             throw new ProgramaException("asd");
         }
-        boolean existPort = false;
-        for (String arg : args)
-        {
-            if (arg.contains("port"))
-            {
-                existPort = true;
-            }
-        }
-        if (!existPort)
-        {
-            List<String> arrs = new ArrayList<>(Arrays.asList(args));
-            arrs.add("-port");
-            arrs.add(this.port + "");
-            args = arrs.toArray(new String[arrs.size()]);
-        }
         SpringApplication app = this.builder.build();
 
         Class<?> mainClz = ClassUtil.getMainApplicationClass();

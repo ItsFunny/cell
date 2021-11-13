@@ -69,6 +69,7 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
     // 存储的是 instance -对应的stub ,一个instance 有多个 cmdInfo,但是只会有一个stub
     private Map<String, BaseGrpcGrpc.BaseGrpcFutureStub> targetStubs = new HashMap<>();
 
+
     class TargetWrapper
     {
         String key;

@@ -81,6 +81,7 @@
     <orderEntry type="module" module-name="cell-sdk-configuration" />
     <orderEntry type="module" module-name="cell-discovery-nacos-http-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />

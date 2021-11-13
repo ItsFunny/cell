@@ -2,6 +2,7 @@ package com.cell.node.core.context;
 
 import com.cell.base.core.concurrent.base.EventExecutor;
 import com.cell.node.core.app.IApp;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.extension.INodeExtension;
 import org.apache.commons.cli.CommandLine;
 
@@ -18,13 +19,11 @@ import java.util.Map;
  */
 public interface INodeContext
 {
-    String getNodeName();
-
     String getCluster();
 
     EventExecutor getExecutor();
 
-    int getNodeId();
+    String getNodeId();
 
     long getVersion();
 
@@ -41,6 +40,8 @@ public interface INodeContext
     void setMetadata(Map<String, String> meta);
 
     Map<String, String> getMetadata();
+
+    NodeConfiguration.NodeInstance getInstanceByType(byte type);
 
     String getIp();
 }

@@ -22,6 +22,11 @@
             <artifactId>cell-discovery-nacos-base</artifactId>
             <version>${cell.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-discovery-nacos-base</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
     </dependencies>
 
 

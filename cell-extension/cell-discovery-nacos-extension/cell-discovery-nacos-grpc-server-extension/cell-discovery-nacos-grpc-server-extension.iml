@@ -24,6 +24,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
     <orderEntry type="module" module-name="cell-rpc-grpc-server-framework" />
     <orderEntry type="module" module-name="cell-rpc-server-base-framework" />
     <orderEntry type="module" module-name="cell-rpc-common" />

@@ -1,8 +1,11 @@
 package com.cell.node.discovery.nacos.config;
 
+import com.cell.base.common.exceptions.ConfigException;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.log.LOG;
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * @author Charlie
@@ -19,6 +22,7 @@ public class NacosConfiguration
     private static final String NACOS_CONFIG_MODULE = "nacos.properties";
 
     private String serverAddr = "127.0.0.1:8848";
+
 
     private NacosConfiguration()
     {

@@ -1,0 +1,21 @@
+{
+  "nodes": [
+    {
+      "nodeId": "asd",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 8080,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 1234,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    }
+  ]
+}

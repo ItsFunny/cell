@@ -1,13 +1,16 @@
 package com.cell.node.spring.internal;
 
-import com.cell.base.core.annotations.CellOrder;
-import com.cell.base.common.constants.OrderConstants;
+import com.cell.base.common.constants.CommandLineConstants;
+import com.cell.base.common.exceptions.ConfigException;
 import com.cell.base.common.models.Module;
+import com.cell.base.core.annotations.CellOrder;
+import com.cell.node.core.configuration.NodeConfiguration;
+import com.cell.node.core.context.INodeContext;
+import com.cell.node.spring.context.SpringNodeContext;
+import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.configuration.exception.ConfigurationException;
 import com.cell.sdk.log.LOG;
-import com.cell.node.core.context.INodeContext;
-import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 
@@ -22,7 +25,7 @@ import java.nio.file.Paths;
  * @Attention:
  * @Date 创建时间：2021-09-05 07:44
  */
-@CellOrder(OrderConstants.MIN_ORDER - 998)
+@CellOrder(Integer.MIN_VALUE)
 public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;
@@ -57,6 +60,8 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
         {
             tryLocal(path, type);
         }
+
+        NodeConfiguration.setup();
     }
 
     private void tryLocal(String originPath, String type)

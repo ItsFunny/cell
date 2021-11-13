@@ -1,6 +1,7 @@
 package com.cell.rpc.grpc.client.framework.services.impl;
 
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.framework.proxy.IFrameworkProxy;
 import com.cell.base.framework.server.abs.AbstractServer;
 
@@ -36,5 +37,11 @@ public class NacosDiscoveryGRPCClientServer extends AbstractServer
     protected void onInit(InitCTX ctx)
     {
 
+    }
+
+    @Override
+    public byte type()
+    {
+        throw new ProgramaException("not supposed");
     }
 }

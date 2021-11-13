@@ -53,7 +53,7 @@ public class MetricsManagerNode
         {
             long cost = System.currentTimeMillis() - startTime;
             INodeContext ctx = this.statContextService.getNodeContext();
-            this.exceedDelayThresoldCount.labels(ctx.getNodeName(), ctx.getCluster(), wrapper.getModule(), wrapper.getUri().getPath(), wrapper.getMethod()).observe(cost);
+            this.exceedDelayThresoldCount.labels(ctx.getNodeId(), ctx.getCluster(), wrapper.getModule(), wrapper.getUri().getPath(), wrapper.getMethod()).observe(cost);
         });
     }
 }

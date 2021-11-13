@@ -24,6 +24,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
     <orderEntry type="module" module-name="cell-sdk-configuration" />
     <orderEntry type="module" module-name="cell-sdk-log" />

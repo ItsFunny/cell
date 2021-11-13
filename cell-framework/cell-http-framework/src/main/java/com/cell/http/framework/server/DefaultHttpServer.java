@@ -1,5 +1,6 @@
 package com.cell.http.framework.server;
 
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.models.Module;
 import com.cell.base.framework.proxy.IFrameworkProxy;
@@ -79,5 +80,11 @@ public class DefaultHttpServer extends AbstractServer implements IHttpServer
     protected void onShutdown()
     {
 
+    }
+
+    @Override
+    public byte type()
+    {
+        return ProtocolConstants.TYPE_HTTP;
     }
 }

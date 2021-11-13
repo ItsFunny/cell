@@ -122,6 +122,7 @@
     <orderEntry type="module" module-name="cell-http-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-http-extension" />
     <orderEntry type="module" module-name="cell-discovery-nacos-base" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-node-discovery-nacos" />
     <orderEntry type="library" name="Maven: com.alibaba.nacos:nacos-client:1.4.1" level="project" />

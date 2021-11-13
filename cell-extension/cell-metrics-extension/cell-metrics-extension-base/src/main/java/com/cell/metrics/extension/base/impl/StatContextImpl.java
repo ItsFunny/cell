@@ -31,7 +31,7 @@ public class StatContextImpl implements IStatContextService
     @Override
     public String getNodeName()
     {
-        return this.nodeContext.getNodeName();
+        return this.nodeContext.getNodeId();
     }
 
     @Override

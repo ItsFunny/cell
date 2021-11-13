@@ -13,4 +13,7 @@ public interface CommandLineConstants
     String CLUSTER = "cluster";
     String DEFAULT_CLSUTER_VALUE = "DEFAULT_CLUSTER";
 
+    String META = "meta";
+    String NODE_ID = "nodeId";// nodeId
+    String VERSION = "version";
 }

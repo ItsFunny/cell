@@ -2,6 +2,7 @@ package com.cell.node.spring.context;
 
 import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.core.concurrent.base.EventExecutor;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.extension.INodeExtension;
 import com.cell.node.spring.app.SpringNodeAPP;
 import com.cell.node.spring.postprocessors.extension.SpringExtensionManager;
@@ -15,8 +16,6 @@ import java.util.Map;
 @Data
 public class SpringNodeContext implements ISpringNodeContext
 {
-    private String nodeName;
-    private int nodeId;
     private long version;
     private String metadataName;
     private String[] args;
@@ -29,6 +28,8 @@ public class SpringNodeContext implements ISpringNodeContext
 
     private List<INodeExtension> extensions;
 
+    private NodeConfiguration.Node node;
+
     private String ip;
 
     public SpringNodeContext(SpringExtensionManager manager)
@@ -40,6 +41,12 @@ public class SpringNodeContext implements ISpringNodeContext
     public Map<String, String> getMetadata()
     {
         return this.meta;
+    }
+
+    @Override
+    public NodeConfiguration.NodeInstance getInstanceByType(byte type)
+    {
+        return this.node.mustGetInstanceByType(type);
     }
 
 //	public void addExclusive(String node) {
@@ -80,26 +87,11 @@ public class SpringNodeContext implements ISpringNodeContext
     }
 
     @Override
-    public String getNodeName()
+    public String getNodeId()
     {
-        return nodeName;
+        return this.node.getNodeId();
     }
 
-    public void setNodeName(String nodeName)
-    {
-        this.nodeName = nodeName;
-    }
-
-    @Override
-    public int getNodeId()
-    {
-        return nodeId;
-    }
-
-    public void setNodeId(int nodeId)
-    {
-        this.nodeId = nodeId;
-    }
 
     @Override
     public long getVersion()

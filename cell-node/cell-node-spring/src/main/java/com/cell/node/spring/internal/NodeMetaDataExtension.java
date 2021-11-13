@@ -1,10 +1,11 @@
 package com.cell.node.spring.internal;
 
-import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.common.constants.OrderConstants;
+import com.cell.base.common.exceptions.ConfigException;
 import com.cell.base.common.utils.StringUtils;
-import com.cell.base.core.utils.ClassUtil;
+import com.cell.base.core.annotations.CellOrder;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.context.SpringNodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
@@ -27,8 +28,8 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
     public Options getOptions()
     {
         Options options = new Options();
-        options.addOption("meta", true, "-meta metadata name");
-        options.addOption("name", true, "-name node name");
+        options.addOption(CommandLineConstants.NODE_ID, true, "node id");
+        options.addOption(CommandLineConstants.META, true, "-meta metadata name");
         options.addOption(CommandLineConstants.CLUSTER, true, "cluster");
         return options;
     }
@@ -38,44 +39,40 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
     {
         CommandLine cmd = ctx.getCommandLine();
         String meta = "CELL";
-        if (cmd.hasOption("meta"))
+        if (cmd.hasOption(CommandLineConstants.META))
         {
             meta = cmd.getOptionValue("meta");
         }
-        String nodeName = meta + "_" + ClassUtil.getMainApplicationClass().getName();
-        if (cmd.hasOption("name"))
+
+        if (!cmd.hasOption(CommandLineConstants.NODE_ID))
         {
-            // 设置nodeName,
-            nodeName = cmd.getOptionValue("name");
+            throw new ConfigException("nodeId must be setted");
         }
-        ctx.getApp().setApplicationName(nodeName);
-        int id = 0;
-        if (cmd.hasOption("id"))
-        {
-            id = Integer.valueOf(cmd.getOptionValue("id"));
-        }
+        String id = cmd.getOptionValue(CommandLineConstants.NODE_ID);
+
+
         long version = 1;
-        if (cmd.hasOption("id"))
+        if (cmd.hasOption(CommandLineConstants.VERSION))
         {
-            version = Long.valueOf(cmd.getOptionValue("version"));
+            version = Long.valueOf(cmd.getOptionValue(CommandLineConstants.VERSION));
         }
 
         String cluster = cmd.getOptionValue(CommandLineConstants.CLUSTER);
         cluster = StringUtils.isEmpty(cluster) ? CommandLineConstants.DEFAULT_CLSUTER_VALUE : cluster;
 
+        NodeConfiguration.Node node = NodeConfiguration.getInstance().mustGetNode(id);
         SpringNodeContext springNodeContext = (SpringNodeContext) ctx;
-        springNodeContext.setNodeId(id);
-        springNodeContext.setNodeName(nodeName);
         springNodeContext.setMetadataName(meta);
         springNodeContext.setVersion(version);
         springNodeContext.setCluster(cluster);
-
-        // FIXME ,这里还需要进行拉取数据,从配置文件中/或者是url 中加载元数据信息
+        springNodeContext.setNode(node);
+        springNodeContext.getApp().setApplicationName(id);
     }
 
     @Override
     public void onStart(INodeContext ctx) throws Exception
     {
+
 
     }
 

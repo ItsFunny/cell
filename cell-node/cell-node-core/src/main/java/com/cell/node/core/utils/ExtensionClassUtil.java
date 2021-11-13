@@ -1,6 +1,7 @@
 package com.cell.node.core.utils;
 
 import com.cell.base.core.annotations.CellOrder;
+import com.cell.node.core.context.INodeContext;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.ConfigurationClassPostProcessor;
 import org.springframework.core.Conventions;

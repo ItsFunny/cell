@@ -1,5 +1,6 @@
 package com.cell.rpc.client.base.framework.server;
 
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.core.concurrent.base.Promise;
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;
@@ -19,6 +20,12 @@ import com.cell.rpc.grpc.client.framework.annotation.ProxyAnno;
  */
 public abstract class AbstractRPCClientServer extends AbstractServer implements IRPCClientServer
 {
+    @Override
+    public byte type()
+    {
+        throw new ProgramaException("not supposed");
+    }
+
     @ProxyAnno(proxyId = 3)
     public static class DisabpleClientProxy implements IFrameworkProxy
     {

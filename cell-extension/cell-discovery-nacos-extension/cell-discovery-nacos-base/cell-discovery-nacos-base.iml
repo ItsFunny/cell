@@ -23,6 +23,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance-strategy" />
+    <orderEntry type="module" module-name="cell-bee-loadbalance" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-bee-transport" />
     <orderEntry type="module" module-name="cell-base-common" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.5" level="project" />
@@ -83,8 +86,6 @@
     <orderEntry type="library" name="Maven: org.yaml:snakeyaml:1.26" level="project" />
     <orderEntry type="module" module-name="cell-node-discovery" />
     <orderEntry type="module" module-name="cell-bee-keyresolver" />
-    <orderEntry type="module" module-name="cell-bee-loadbalance" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-beans:5.2.10.RELEASE" level="project" />
     <orderEntry type="module" module-name="cell-base-core" />
     <orderEntry type="module" module-name="cell-plugin-pipeline" />
     <orderEntry type="library" name="Maven: net.bytebuddy:byte-buddy:1.7.1" level="project" />

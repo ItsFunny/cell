@@ -1,6 +1,7 @@
 package com.cell.rpc.grpc.client.framework.server;
 
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.base.framework.root.Root;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
@@ -55,5 +56,11 @@ public class GRPCLocalClientServer extends AbstractGRPCClientServer implements I
                 new ArrayList<>(),
                 false);
         this.stub = (BaseGrpcGrpc.BaseGrpcFutureStub) abstractStub;
+    }
+
+    @Override
+    public byte type()
+    {
+        throw new ProgramaException("not supposed");
     }
 }

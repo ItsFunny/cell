@@ -3,7 +3,6 @@ package com.cell.http.extension;
 import com.cell.base.common.constants.OrderConstants;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.models.Module;
-import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.base.core.reactor.ICommandReactor;
@@ -19,11 +18,11 @@ import com.cell.http.framework.server.DefaultHttpServer;
 import com.cell.http.framework.server.IHttpServer;
 import com.cell.http.framework.service.IDynamicControllerService;
 import com.cell.http.framework.service.impl.DynamicControllerServiceImpl;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.sdk.log.LOG;
 import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.Options;
 
 import java.util.Set;
 
@@ -74,27 +73,14 @@ public class HttpExtension extends AbstractSpringNodeExtension
     }
 
     @Override
-    public Options getOptions()
-    {
-        Options options = new Options();
-        options.addOption("port", true, "端口号");
-        return options;
-    }
-
-    @Override
     public void onInit(INodeContext ctx) throws Exception
     {
-        CommandLine cmd = ctx.getCommandLine();
         this.dynamicControllerService = new DynamicControllerServiceImpl();
         this.httpDispatcher = new DefaultHttpDispatcher(ReactorSelectorManager.getInstance());
         this.httpProxy = new DefaultHttpProxy(this.httpDispatcher);
         this.httpServer = new DefaultHttpServer(this.httpProxy);
-
-        String port = cmd.getOptionValue("port");
-        if (!StringUtils.isEmpty(port))
-        {
-            this.httpServer.setPort(Short.valueOf(port));
-        }
+        NodeConfiguration.NodeInstance nodeInstance = ctx.getInstanceByType(this.httpServer.type());
+        this.httpServer.setPort(nodeInstance.getVisualPort());
     }
 
     @Override
