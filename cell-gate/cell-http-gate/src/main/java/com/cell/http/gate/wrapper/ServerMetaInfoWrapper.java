@@ -25,9 +25,8 @@ public class ServerMetaInfoWrapper
 
     public void fillWithMeta(ServerCmdMetaInfo info)
     {
-//        this.ip = info.getIp();
-        this.ip = info.getMetaData().getExtraInfo().getDomain();
-        this.port = info.getPort();
+        this.ip = info.getPublicAddress();
+        this.port = info.getPublicPort();
         this.serviceName = info.getServiceName();
         this.module = info.getModule();
     }

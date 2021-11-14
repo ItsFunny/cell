@@ -2,13 +2,14 @@ package com.cell.node.core.configuration;
 
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ConfigException;
+import com.cell.base.common.exceptions.ValidateException;
+import com.cell.base.common.utils.CollectionUtils;
+import com.cell.base.common.utils.StringUtils;
+import com.cell.base.common.validators.IValidator;
 import com.cell.sdk.configuration.Configuration;
 import lombok.Data;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Charlie
@@ -19,33 +20,119 @@ import java.util.Optional;
  * @Date 创建时间：2021-11-12 18:25
  */
 @Data
-public class NodeConfiguration
+public class NodeConfiguration implements IValidator
 {
     private static NodeConfiguration instance = null;
 
     private static final String serverNodeModule = "public.server.json";
 
+
     private List<Node> nodes;
 
+    private DefaultConfiguraiton defaultProperty;
+
     private static final Map<Byte, NodeInstance> defaultTypeInstance = new HashMap<>();
+    private static final DefaultConfiguraiton DEFAULT_CONFIGURAITON = new DefaultConfiguraiton();
 
     static
     {
+        DEFAULT_CONFIGURAITON.ports = new HashMap<>();
+        DEFAULT_CONFIGURAITON.ports.put(ProtocolConstants.TYPE_HTTP, (short) 8000);
+        DEFAULT_CONFIGURAITON.ports.put(ProtocolConstants.TYPE_RPC, (short) 7000);
+        DEFAULT_CONFIGURAITON.ports.put(ProtocolConstants.TYPE_HTTP_GATE, (short) 9999);
+        DEFAULT_CONFIGURAITON.publicAddress = ProtocolConstants.DEFAULT_PUBLIC_ADDRESS;
         NodeInstance httpInstance = new NodeInstance();
-        httpInstance.setPublicAddress("localhost");
-        httpInstance.setPublicPort(8080);
+        httpInstance.setPublicAddress(ProtocolConstants.LOCAL_HOST);
+        httpInstance.setPublicPort((short) 8080);
         httpInstance.setType(ProtocolConstants.TYPE_HTTP);
         httpInstance.setVisualPort((short) 8080);
 
         NodeInstance rpcServerInstance = new NodeInstance();
-        rpcServerInstance.setPublicAddress("localhost");
-        rpcServerInstance.setPublicPort(7000);
+        rpcServerInstance.setPublicAddress(ProtocolConstants.LOCAL_HOST);
+        rpcServerInstance.setPublicPort((short) 7000);
         rpcServerInstance.setType(ProtocolConstants.TYPE_RPC);
         rpcServerInstance.setVisualPort((short) 7000);
+
+        NodeInstance gateInstance = new NodeInstance();
+        gateInstance.setPublicAddress(ProtocolConstants.LOCAL_HOST);
+        gateInstance.setPublicPort((short) 9999);
+        gateInstance.setType(ProtocolConstants.TYPE_HTTP_GATE);
+        gateInstance.setVisualPort((short) 9999);
 
 
         defaultTypeInstance.put(ProtocolConstants.TYPE_HTTP, httpInstance);
         defaultTypeInstance.put(ProtocolConstants.TYPE_RPC, rpcServerInstance);
+        defaultTypeInstance.put(ProtocolConstants.TYPE_HTTP_GATE, gateInstance);
+    }
+
+    @Data
+    public static class DefaultConfiguraiton
+    {
+        private String publicAddress;
+        private Map<Byte, Short> ports;
+    }
+
+    @Override
+    public void valid() throws ValidateException
+    {
+        if (this.defaultProperty == null)
+        {
+            this.defaultProperty = DEFAULT_CONFIGURAITON;
+        } else
+        {
+            if (StringUtils.isEmpty(this.defaultProperty.publicAddress))
+            {
+                this.defaultProperty.publicAddress = ProtocolConstants.DEFAULT_PUBLIC_ADDRESS;
+            }
+            if (this.defaultProperty.ports == null || this.defaultProperty.ports.size() == 0)
+            {
+                this.defaultProperty.ports = DEFAULT_CONFIGURAITON.ports;
+            } else
+            {
+                Map<Byte, Short> ports = this.defaultProperty.getPorts();
+                if (!ports.containsKey(ProtocolConstants.TYPE_HTTP_GATE))
+                {
+                    ports.put(ProtocolConstants.TYPE_HTTP_GATE, (short) 9999);
+                }
+                if (!ports.containsKey(ProtocolConstants.TYPE_HTTP))
+                {
+                    ports.put(ProtocolConstants.TYPE_HTTP, (short) 8000);
+                }
+                if (!ports.containsKey(ProtocolConstants.TYPE_RPC))
+                {
+                    ports.put(ProtocolConstants.TYPE_RPC, (short) 7000);
+                }
+            }
+        }
+        nodes.stream().forEach(n ->
+        {
+            if (CollectionUtils.isEmpty(n.instances)) return;
+            n.instances.stream().forEach(inst ->
+            {
+                if ((inst.type & ProtocolConstants.VALID) <= 0) throw new ConfigException("not valid config ");
+
+                if ((inst.type & ProtocolConstants.TYPE_HTTP) >= ProtocolConstants.TYPE_HTTP)
+                {
+                    Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_HTTP);
+                    if (inst.visualPort == 0) inst.visualPort = port;
+                    if (inst.publicPort == 0) inst.publicPort = port;
+                } else if ((inst.type & ProtocolConstants.TYPE_RPC) >= ProtocolConstants.TYPE_RPC)
+                {
+                    Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_RPC);
+                    if (inst.visualPort == 0) inst.visualPort = port;
+                    if (inst.publicPort == 0) inst.publicPort = port;
+                } else if ((inst.type & ProtocolConstants.TYPE_HTTP_GATE) >= ProtocolConstants.TYPE_HTTP_GATE)
+                {
+                    Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_HTTP_GATE);
+                    if (inst.visualPort == 0) inst.visualPort = port;
+                    if (inst.publicPort == 0) inst.publicPort = port;
+                }
+                if (StringUtils.isEmpty(inst.publicAddress))
+                {
+                    inst.publicAddress = this.defaultProperty.publicAddress;
+                }
+            });
+        });
     }
 
     @Data
@@ -73,8 +160,8 @@ public class NodeConfiguration
     public static class NodeInstance
     {
         private String publicAddress;
-        private Integer publicPort;
-        private short visualPort;
+        private short publicPort = 0;
+        private short visualPort = 0;
         private byte type = ProtocolConstants.TYPE_HTTP;
     }
 
@@ -87,7 +174,15 @@ public class NodeConfiguration
                 return node;
             }
         }
-        throw new ConfigException("node not exist:" + nodeId);
+        return this.newDefaultNode(nodeId);
+    }
+
+    public static Node newDefaultNode(String nodeId)
+    {
+        Node ret = new Node();
+        ret.setNodeId(nodeId);
+        ret.setInstances(new ArrayList<>());
+        return ret;
     }
 
     public static void setup()

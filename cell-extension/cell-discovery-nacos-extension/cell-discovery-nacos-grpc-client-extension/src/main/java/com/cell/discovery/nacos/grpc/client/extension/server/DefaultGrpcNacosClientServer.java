@@ -1,20 +1,20 @@
 package com.cell.discovery.nacos.grpc.client.extension.server;
 
-import com.cell.base.core.annotations.AutoPlugin;
-import com.cell.base.common.utils.CollectionUtils;
-import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
-import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.models.Module;
+import com.cell.base.common.utils.CollectionUtils;
+import com.cell.base.core.annotations.AutoPlugin;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
+import com.cell.base.framework.root.Root;
+import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.discovery.nacos.grpc.client.extension.discovery.GRPCClientServiceDiscovery;
 import com.cell.grpc.common.cluster.BaseGrpcGrpc;
 import com.cell.node.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
+import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import com.cell.rpc.grpc.client.grpc.client.autoconfigurer.config.GRPCClientConfiguration;
 import com.cell.rpc.grpc.client.util.GRPCUtil;
 import com.cell.sdk.log.LOG;
-import com.cell.base.common.models.Module;
-import com.cell.base.framework.root.Root;
-import com.cell.rpc.grpc.client.framework.server.AbstractGRPCClientServer;
 import io.grpc.stub.AbstractStub;
 
 import java.net.URI;
@@ -128,7 +128,8 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
                 }
                 int code = serverCmdMetaInfo.ID();
                 this.stubs.put(code, stub);
-                LOG.info(Module.GRPC_SERVER, "add stub,code={}", code);
+                LOG.info(Module.GRPC_SERVER, "add stub,code:{},cmd:{}",
+                        code, serverCmdMetaInfo);
             }
         }
     }
@@ -174,7 +175,7 @@ public class DefaultGrpcNacosClientServer extends AbstractGRPCClientServer imple
 
     private String createStaticByInfo(ServerCmdMetaInfo info)
     {
-        return "static://" + info.getIp() + ":" + info.getPort();
+        return "static://" + info.getPublicAddress() + ":" + info.getPublicPort();
     }
 
 }

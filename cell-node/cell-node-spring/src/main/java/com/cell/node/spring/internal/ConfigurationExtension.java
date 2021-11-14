@@ -1,12 +1,9 @@
 package com.cell.node.spring.internal;
 
-import com.cell.base.common.constants.CommandLineConstants;
-import com.cell.base.common.exceptions.ConfigException;
 import com.cell.base.common.models.Module;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
-import com.cell.node.spring.context.SpringNodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.configuration.exception.ConfigurationException;
@@ -62,6 +59,9 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
         }
 
         NodeConfiguration.setup();
+        NodeConfiguration.getInstance().valid();
+        NodeConfiguration instance = NodeConfiguration.getInstance();
+        LOG.info(Module.CONFIGURATION, "配置初始化完毕,server的信息为:{}", instance);
     }
 
     private void tryLocal(String originPath, String type)

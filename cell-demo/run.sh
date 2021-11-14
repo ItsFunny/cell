@@ -25,22 +25,23 @@ function startPrepare() {
     echo "start prometheus"
     docker-compose -f docker-compose-prometheus.yaml up -d
     echo "start prometheus discovery"
-    docker run -p 9999:8080  -it --name 9999 -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -e LOG_LEVEL=INFO -e TYPE=Default -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_prometheus:0.0.1
+    docker run -p 9999:8080  -itd --add-host=demo.com:172.224.2.2 --name 9999 -e ENV_VM_OPTIONS="-Xmx512m -Xms512m " -e LOG_LEVEL=INFO -e TYPE=Default -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_prometheus:0.0.1
 }
 function startRpc() {
     cluster=${2}
     for i in $(seq 1 ${1});do
         grpcPort=`expr ${rpcBeginPort} + ${i} `
         rpcName="rpcServer${grpcPort}"
-        docker run -p ${grpcPort}:7000  -itd --name ${grpcPort} -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -e ENV_APPLICATION_OPTIONS="-cluster ${cluster}  -rpcName  ${rpcName}" -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_demorpc:0.0.1
+        nodeId="${cluster}node${i}rpc"
+        docker run -p ${grpcPort}:7000 --add-host=demo.com:172.224.2.2 -itd --name ${grpcPort} -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -e ENV_APPLICATION_OPTIONS="-cluster ${cluster}  -rpcName  ${rpcName} -nodeId ${nodeId}" -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_demorpc:0.0.1
     done
 }
 function startGateway() {
     index=${1}
     cluster=${2}
     gatewayBeginPort=`expr ${gatewayBeginPort} + 10000 `
-
-    docker run -p ${gatewayBeginPort}:8080  -itd --name ${gatewayBeginPort} -e ENV_APPLICATION_OPTIONS="-cluster ${cluster}" -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_gateway:0.0.1
+    nodeId="${cluster}Gateway"
+    docker run -p ${gatewayBeginPort}:9999 --add-host=demo.com:172.224.2.2  -itd --name ${gatewayBeginPort} -e ENV_APPLICATION_OPTIONS="-cluster ${cluster} -nodeId ${nodeId}" -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_gateway:0.0.1
 }
 function startHttp() {
     cluster=${2}
@@ -48,14 +49,15 @@ function startHttp() {
        httpPort=`expr ${httpBeginPort} + ${i} `
        grpcPort=`expr ${httpLocalRpcBeginPort} + ${i} `
        rpcName="appRpcServer${httpPort}"
-       docker run -p ${httpPort}:8080  -p ${grpcPort}:7000 -itd --name ${httpPort} -e ENV_APPLICATION_OPTIONS="-cluster ${cluster}  -rpcName  ${rpcName}"  -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_demo:0.0.1
+       nodeId="${cluster}node${i}http"
+       docker run  -p ${httpPort}:8000 --add-host=demo.com:172.224.2.2 -p ${grpcPort}:7000 -itd --name ${httpPort} -e ENV_APPLICATION_OPTIONS="-cluster ${cluster}  -rpcName  ${rpcName} -nodeId ${nodeId}"  -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_demo:0.0.1
     done
 }
 
 function start() {
     cleanLogic
     cleanPreapre
-#startPrepare
+startPrepare
     limit=${1}
     for i in $(seq 1 ${limit});do
            cluster="cluster${i}"
@@ -91,5 +93,5 @@ start ${clusterCount} ${rpcCount} ${httpCount}
 #echo "start  http"
 #docker run -p 8080:8080  -p 7000:7000 -it --name 8080 -e ENV_RPC="rpcName1" -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -e LOG_LEVEL=INFO -e TYPE=Default -v /Users/joker/Java/cell/cell-demo/config:/Users/joker/Java/config jokerlvccc/cell_demo:0.0.1
 #echo "start gateway"
-#docker run -p 8888:8080  -it --name 8888 -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -e LOG_LEVEL=INFO -e TYPE=Default -v /Users/joker/Java/cell/cell-demo/config:/Users/joker/Java/config jokerlvccc/cell_gateway:0.0.1
+#docker run -p 8888:8080  -it --name 8888 -e ENV_VM_OPTIONS="-Xmx1g -Xms1g " -v /Users/joker/Java/cell/cell-demo/config:/Users/joker/Java/config jokerlvccc/cell_gateway:0.0.1
 

@@ -37,13 +37,10 @@ public class ServerMetaData
     @Data
     public static class ServerExtraInfo
     {
-        private String domain;
         private byte type = ProtocolConstants.TYPE_HTTP;
         private Map<String, Object> extraInfo;
 
-        private NetworkInfo privateNetwork;
         private NetworkInfo publicNetwork;
-
     }
 
     public ServerMetaData()

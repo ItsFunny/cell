@@ -50,7 +50,7 @@ public class ServerCmdMetaInfo extends ServerMetaInfo
     {
         if (this.id == 0)
         {
-            this.id = Objects.hash(getServiceName(), getProtocol(), getIp(), getPort(), getModule(), getMetaData());
+            this.id = Objects.hash(getServiceName(), getProtocol(), getPublicAddress(), getPublicPort(), getModule(), getMetaData());
         }
         return this.id;
     }
@@ -59,11 +59,11 @@ public class ServerCmdMetaInfo extends ServerMetaInfo
     public String toString()
     {
         return "ServerCmdMetaInfo{" +
-                "protocol='" + protocol + '\'' +
-                ", serviceName='" + serviceName + '\'' +
-                ", ip='" + ip + '\'' +
-                ", port=" + port +
+                "id=" + id +
+                ", protocol='" + protocol + '\'' +
                 ", module='" + module + '\'' +
+                ", votePower=" + votePower +
+                ", serviceName='" + serviceName + '\'' +
                 ", metaData=" + metaData +
                 ", enable=" + enable +
                 ", healthy=" + healthy +

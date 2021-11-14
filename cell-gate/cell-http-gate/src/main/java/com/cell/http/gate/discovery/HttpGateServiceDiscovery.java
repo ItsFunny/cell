@@ -10,10 +10,11 @@ import com.cell.base.core.annotations.AutoPlugin;
 import com.cell.bee.loadbalance.model.ServerCmdMetaInfo;
 import com.cell.bee.transport.model.ServerMetaData;
 import com.cell.gate.common.utils.GatewayUtils;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.discovery.model.Instance;
-import com.cell.node.discovery.nacos.discovery.IInstanceOnChange;
 import com.cell.node.discovery.nacos.discovery.abs.AbstractServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.abs.Snap;
+import com.cell.node.spring.context.ISpringNodeContext;
 import com.cell.resolver.IKeyResolver;
 import com.cell.resolver.impl.DefaultStringKeyResolver;
 import lombok.Data;
@@ -51,7 +52,6 @@ public class HttpGateServiceDiscovery extends AbstractServiceDiscovery<DefaultSt
     {
         this.setCallBack(snap -> this.handleDelta(snap));
     }
-
 
 
     @Override
@@ -112,14 +112,18 @@ public class HttpGateServiceDiscovery extends AbstractServiceDiscovery<DefaultSt
     // 注册自身,网关为硬编码注册
     private void registerSelf(InitCTX ctx)
     {
-        String domain = (String) ctx.getData().get("domain");
+        ISpringNodeContext context = (ISpringNodeContext) ctx.getData().get("ctx");
         String cluster = (String) ctx.getData().get("cluster");
         String ip = (String) ctx.getData().get("ip");
         Integer port = (Integer) ctx.getData().get("port");
         String serviceName = (String) ctx.getData().get("serviceName");
         ServerMetaData serverMetaData = new ServerMetaData();
         ServerMetaData.ServerExtraInfo extraInfo = new ServerMetaData.ServerExtraInfo();
-        extraInfo.setDomain(domain);
+        NodeConfiguration.NodeInstance nodeInstance = context.getInstanceByType(ProtocolConstants.TYPE_HTTP_GATE);
+        ServerMetaData.NetworkInfo pub = new ServerMetaData.NetworkInfo();
+        pub.setPort(nodeInstance.getPublicPort());
+        pub.setAddress(nodeInstance.getPublicAddress());
+        extraInfo.setPublicNetwork(pub);
         serverMetaData.setExtraInfo(extraInfo);
         Map<String, String> metadatas = ServerMetaData.toMetaData(serverMetaData);
         Instance instance = Instance.builder()

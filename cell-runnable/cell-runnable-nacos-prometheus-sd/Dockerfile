@@ -23,11 +23,11 @@ ENV ENV_VM_OPTIONS=$VM_OPTIONS
 
 
 
-ARG APPLICATION_OPTIONS="-path /Users/joker/Java/config -port 8080 -type Default"
+ARG APPLICATION_OPTIONS="-path /Users/joker/Java/config -type Default"
 ENV ENV_APPLICATION_OPTIONS=$APPLICATION_OPTIONS
 
 # http
-EXPOSE 8080
+EXPOSE 8000
 # rpc
 EXPOSE 7000
 

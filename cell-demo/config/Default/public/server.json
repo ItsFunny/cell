@@ -1,0 +1,224 @@
+{
+  "defaultProperty": {
+    "publicAddress": "demo.com",
+    "ports": {
+      "1": 8000,
+      "2": 7000,
+      "4": 9999
+    }
+  },
+  "nodes": [
+    {
+      "nodeId": "cluster1node1http",
+      "instances": [
+        {
+          "type": 1,
+          "publicPort": 8011
+        },
+        {
+          "type": 2,
+          "publicPort": 18011
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1node1rpc",
+      "instances": [
+        {
+          "type": 2,
+          "publicPort": 6011
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1node2http",
+      "instances": [
+        {
+          "type": 1,
+          "publicPort": 8021
+        },
+        {
+          "type": 2,
+          "publicPort": 6012
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1node2rpc",
+      "instances": [
+        {
+          "type": 2,
+          "publicPort": 7003
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "type": 4,
+          "publicPort": 9999
+        }
+      ]
+    },
+    {
+      "nodeId": "node4",
+      "instances": [
+        {
+          "type": 1,
+          "publicPort": 8100
+        },
+        {
+          "type": 2,
+          "publicPort": 7100
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster2GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    },
+    {
+      "nodeId": "node0",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 7000,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    },
+    {
+      "nodeId": "node0",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 7000,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    },
+    {
+      "nodeId": "node0",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 7000,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    },
+    {
+      "nodeId": "node0",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 7000,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    },
+    {
+      "nodeId": "node0",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "type": 1
+        },
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 7000,
+          "visualPort": 7000,
+          "type": 2
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
+          "publicAddress": "demo.com",
+          "publicPort": 9999,
+          "visualPort": 9999,
+          "type": 4
+        }
+      ]
+    }
+  ]
+}

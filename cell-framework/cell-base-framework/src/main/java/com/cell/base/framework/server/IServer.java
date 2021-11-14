@@ -28,7 +28,7 @@ public interface IServer extends IInitOnce
 
     void setPort(short port);
 
-    short getPort();
+    short getPort(); // visual Port
 
     byte type();
 }

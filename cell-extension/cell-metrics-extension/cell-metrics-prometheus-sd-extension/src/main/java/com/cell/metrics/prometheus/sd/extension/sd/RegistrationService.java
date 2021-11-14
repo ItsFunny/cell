@@ -182,7 +182,7 @@ public class RegistrationService extends AbstractInitOnce implements IPrometheus
                 ServerMetaData serverMetaData = ServerMetaData.fromMetaData(instance.getMetaData());
 
                 ServiceInstanceHealth.Node node = ServiceInstanceHealth.Node.builder()
-                        .address(serverMetaData.getExtraInfo().getDomain())
+                        .address(serverMetaData.getExtraInfo().getPublicNetwork().getAddress())
                         .id(instance.getServiceName())
                         .dataCenter("ad")
                         .build();

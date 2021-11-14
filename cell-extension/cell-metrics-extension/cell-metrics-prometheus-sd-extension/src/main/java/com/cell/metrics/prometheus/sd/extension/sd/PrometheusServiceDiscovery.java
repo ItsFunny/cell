@@ -164,14 +164,14 @@ public class PrometheusServiceDiscovery extends AbstractServiceDiscovery<String,
                 ServerMetaData serverMetaData = ServerMetaData.fromMetaData(instance.getMetaData());
 
                 ServiceInstanceHealth.Node node = ServiceInstanceHealth.Node.builder()
-                        .address(serverMetaData.getExtraInfo().getDomain())
+                        .address(serverMetaData.getExtraInfo().getPublicNetwork().getAddress())
                         .id(instance.getServiceName())
                         .dataCenter("ad")
                         .build();
                 ServiceInstanceHealth.Service service = ServiceInstanceHealth.Service.builder()
                         .service(instance.getServiceName())
                         .id(instance.getServiceName() + "_" + instance.getPort())
-                        .port(instance.getPort())
+                        .port(serverMetaData.getExtraInfo().getPublicNetwork().getPort())
                         .build();
                 return ServiceInstanceHealth.builder().node(node).service(service).build();
             }).collect(Collectors.toList());

@@ -1,3 +1,9 @@
+# config
+- http 默认8000
+- rpc 默认7000
+- gateway 默认9999
+# feature
+
 # TODO
 - [x] http
 - [x] gateway

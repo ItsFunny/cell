@@ -33,9 +33,9 @@ ENV ENV_RPC=$RPC_NAME
 ENV ENV_APPLICATION_OPTIONS="-rpcName  rpc -cluster DEFAULT_CLUSTER "
 
 # http
-EXPOSE 8080
+EXPOSE 8000
 # rpc
 EXPOSE 7000
 
 
-CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config  -port 8080 -grpcPort 7000 -grpcAddr localhost  -type Default "]
+CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config  -type Default "]

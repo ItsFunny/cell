@@ -1,19 +1,38 @@
 {
+  "defaultProperty": {
+    "publicAddress": "demo.com",
+    "ports": {
+      "1": 8000
+    }
+  },
   "nodes": [
     {
-      "nodeId": "asd",
+      "nodeId": "node0",
       "instances": [
         {
-          "publicAddress": "demo.com",
-          "publicPort": 9999,
-          "visualPort": 8080,
           "type": 1
         },
         {
+          "type": 2,
+          "publicPort": 8011
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1node1rpc",
+      "instances": [
+        {
+          "type": 2,
+          "publicPort": 6011
+        }
+      ]
+    },
+    {
+      "nodeId": "cluster1GateWay",
+      "instances": [
+        {
           "publicAddress": "demo.com",
-          "publicPort": 1234,
-          "visualPort": 7000,
-          "type": 2
+          "type": 4
         }
       ]
     }

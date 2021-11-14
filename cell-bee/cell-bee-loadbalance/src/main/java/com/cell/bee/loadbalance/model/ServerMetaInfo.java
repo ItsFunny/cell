@@ -17,11 +17,9 @@ import java.util.Objects;
 public class ServerMetaInfo
 {
     protected String serviceName;
-    protected String ip;
-    protected short port;
-
     protected ServerMetaData metaData;
-
+    protected String visualAddress;
+    protected Short visualPort;
     protected boolean enable;
     protected boolean healthy;
 
@@ -32,10 +30,19 @@ public class ServerMetaInfo
         if (this == object) return true;
         if (!(object instanceof ServerMetaInfo)) return false;
         ServerMetaInfo that = (ServerMetaInfo) object;
-        return getPort() == that.getPort() &&
+        return
                 Objects.equals(getServiceName(), that.getServiceName()) &&
-                Objects.equals(getIp(), that.getIp()) &&
-                Objects.equals(getMetaData(), that.getMetaData());
+                        Objects.equals(getMetaData(), that.getMetaData());
+    }
+
+    public String getPublicAddress()
+    {
+        return this.metaData.getExtraInfo().getPublicNetwork().getAddress();
+    }
+
+    public short getPublicPort()
+    {
+        return (short) this.metaData.getExtraInfo().getPublicNetwork().getPort();
     }
 
     @Override
@@ -43,8 +50,6 @@ public class ServerMetaInfo
     {
         return "ServerMetaInfo{" +
                 "serviceName='" + serviceName + '\'' +
-                ", ip='" + ip + '\'' +
-                ", port=" + port +
                 ", metaData=" + metaData +
                 ", enable=" + enable +
                 ", healthy=" + healthy +

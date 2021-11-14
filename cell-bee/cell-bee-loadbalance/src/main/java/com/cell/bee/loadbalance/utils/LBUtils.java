@@ -17,8 +17,8 @@ public class LBUtils
     public static ServerMetaInfo fromInstance(Instance inst)
     {
         final ServerMetaInfo info = new ServerMetaInfo();
-        info.setIp(inst.getIp());
-        info.setPort(Short.valueOf(String.valueOf(inst.getPort())));
+        info.setVisualAddress(inst.getIp());
+        info.setVisualPort(Short.valueOf(String.valueOf(inst.getPort())));
         info.setServiceName(inst.getServiceName());
         info.setHealthy(inst.isHealthy());
         info.setEnable(inst.isEnable());

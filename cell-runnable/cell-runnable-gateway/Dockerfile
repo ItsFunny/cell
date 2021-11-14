@@ -27,7 +27,7 @@ ARG APPLICATION_OPTIONS=" -cluster DEFAULT_CLUSTER "
 ENV ENV_APPLICATION_OPTIONS=$APPLICATION_OPTIONS
 
 # http
-EXPOSE 8080
+EXPOSE 9999
 
 
-CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config -gatewayPort 8080 -type Default "]
+CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS} -path /Users/joker/Java/config  -type Default "]

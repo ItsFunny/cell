@@ -1,6 +1,7 @@
 package com.cell.http.gate.extension;
 
 import com.cell.base.common.constants.CommandLineConstants;
+import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.Plugin;
@@ -10,11 +11,11 @@ import com.cell.gate.common.config.GatewayConfiguration;
 import com.cell.http.gate.config.GatewayMetricsConfigFactory;
 import com.cell.http.gate.discovery.HttpGateServiceDiscovery;
 import com.cell.http.gate.schedual.SchedualCaculateErrorCount;
+import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
-import org.apache.commons.cli.Options;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -50,18 +51,10 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
     }
 
     @Override
-    public Options getOptions()
-    {
-        Options options = new Options();
-        options.addOption("gatewayPort", true, "网关port");
-        return options;
-    }
-
-    @Override
     public void onInit(INodeContext ctx) throws Exception
     {
-        Integer port = Integer.parseInt(ctx.getCommandLine().getOptionValue("gatewayPort", "9999"));
-        this.port = port;
+        NodeConfiguration.NodeInstance nodeInstance = ctx.getInstanceByType(ProtocolConstants.TYPE_HTTP_GATE);
+        this.port = nodeInstance.getVisualPort();
 
         GatewayMetricsConfigFactory.getInstance().init();
         GatewayConfiguration.init();
@@ -88,6 +81,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
         data.put("ip", ctx.getIp());
         data.put("port", this.port);
         data.put("serviceName", ctx.getApp().getApplicationName());
+        data.put("ctx", ctx);
         initCTX.setData(data);
         this.serviceDiscovery.initOnce(initCTX);
         this.schedualCaculateErrorCount.start();
