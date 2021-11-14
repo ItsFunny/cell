@@ -11,6 +11,7 @@ httpBeginPort=8000
 httpLocalRpcBeginPort=18000
 gatewayBeginPort=9999
 configPath=${PWD}/config
+name=$(sh -c hostname)
 function cleanPreapre() {
    # start nacos
 docker-compose -f docker-compose-nacos.yaml  down --remove-orphans
@@ -57,7 +58,10 @@ function startHttp() {
 function start() {
     cleanLogic
     cleanPreapre
-startPrepare
+    if [[ ${name} -ne 'joker' ]];then
+        startPrepare
+        sleep 4
+    fi;
     limit=${1}
     for i in $(seq 1 ${limit});do
            cluster="cluster${i}"

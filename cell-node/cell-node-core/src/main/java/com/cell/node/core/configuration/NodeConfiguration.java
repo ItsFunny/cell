@@ -137,15 +137,17 @@ public class NodeConfiguration implements IValidator
 
     private void swapPort(NodeInstance inst, Short port)
     {
-        if (inst.visualPort == 0 && inst.publicPort == 0)
-        {
-            inst.visualPort = port;
-            inst.publicPort = port;
-        } else
-        {
-            if (inst.visualPort == 0) inst.visualPort = inst.publicPort;
-            if (inst.publicPort == 0) inst.publicPort = inst.visualPort;
-        }
+        if (inst.visualPort != 0) inst.visualPort = port;
+        if (inst.publicPort != 0) inst.publicPort = port;
+//        if (inst.visualPort == 0 && inst.publicPort == 0)
+//        {
+//            inst.visualPort = port;
+//            inst.publicPort = port;
+//        } else
+//        {
+//            if (inst.visualPort == 0) inst.visualPort = inst.publicPort;
+//            if (inst.publicPort == 0) inst.publicPort = inst.visualPort;
+//        }
     }
 
     @Data
