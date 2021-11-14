@@ -25,7 +25,7 @@ import lombok.Data;
 @Data
 public abstract class AbstractServer extends AbstractInitOnce implements IServer
 {
-    private short port = 8081;
+    private short port = 8080;
     private ProxyAnno anno;
     private IFrameworkProxy proxy;
     private ProcessManager manager;

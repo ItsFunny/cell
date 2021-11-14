@@ -6,6 +6,7 @@ import com.cell.rpc.grpc.client.channelfactory.impl.InProcessChannelFactory;
 import com.cell.rpc.grpc.client.channelfactory.impl.InProcessOrAlternativeChannelFactory;
 import com.cell.rpc.grpc.client.channelfactory.impl.NettyChannelFactory;
 import com.cell.rpc.grpc.client.interceptor.GlobalClientInterceptorRegistry;
+import com.cell.rpc.grpc.client.interceptor.LogInterceptor;
 import com.cell.rpc.grpc.client.postprocessor.GRPCClientPostProcessor;
 import com.cell.rpc.grpc.client.stub.impl.AsyncFutureStubFactory;
 import com.cell.rpc.grpc.client.stub.impl.BlockingStubFactory;
@@ -30,6 +31,12 @@ import java.util.List;
 @Configuration
 public class SpringClientConfiguration implements InitializingBean
 {
+    @Bean
+    public LogInterceptor interceptor()
+    {
+        return new LogInterceptor();
+    }
+
     @Bean
     static GRPCClientPostProcessor grpcClientBeanPostProcessor(final ApplicationContext applicationContext)
     {

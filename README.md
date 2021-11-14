@@ -2,7 +2,22 @@
 - http 默认8000
 - rpc 默认7000
 - gateway 默认9999
+- prometheus-servicediscvoery 默认6666
 # feature
+- 统一日志管理
+    - 日志采取一个日志,统一格式打印: 如 LOG.info(ModuleInterface ,xxxx)
+    - 日志归档: 只需要打开开关(目前默认为关闭,且还没加代码),打开之后,日志根据类型,将统一类型的日志放到同一个文件中,根据
+        日志级别也会划分
+    - 性能: 未测试
+- 统一配置文件管理
+    - 支持热刷
+        - 
+            ```.env
+            Configuration.getDefault().getAndMonitorConfig
+            结合 git 即可实现服务之间的配置自动同步并且热更新
+            ```
+    - 模块化: 
+        - 根据不同的module 自定义配置,如 
 
 # TODO
 - [x] http

@@ -3,6 +3,7 @@ package com.cell.http.gate.extension;
 import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.Plugin;
 import com.cell.bee.statistic.base.IScheduleCounter;
@@ -16,6 +17,7 @@ import com.cell.node.core.context.INodeContext;
 import com.cell.node.discovery.nacos.discovery.IServiceDiscovery;
 import com.cell.node.discovery.nacos.discovery.NacosNodeDiscoveryImpl;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
+import com.cell.sdk.log.LOG;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +57,6 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
     {
         NodeConfiguration.NodeInstance nodeInstance = ctx.getInstanceByType(ProtocolConstants.TYPE_HTTP_GATE);
         this.port = nodeInstance.getVisualPort();
-
         GatewayMetricsConfigFactory.getInstance().init();
         GatewayConfiguration.init();
         NacosNodeDiscoveryImpl.setupDiscovery();
@@ -103,6 +104,7 @@ public class NacosHttpGateExtension extends AbstractSpringNodeExtension implemen
     public void customize(ConfigurableWebServerFactory factory)
     {
         factory.setPort(port);
+        LOG.info(Module.HTTP_GATEWAY, "gateway 监听端口为:{}", port);
     }
 
 }

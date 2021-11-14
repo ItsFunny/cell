@@ -99,6 +99,11 @@ public class GRPCUtil
                                                Class<? extends AbstractStub<?>> clz,
                                                String name, List<ClientInterceptor> interceptors, boolean sort)
     {
+        String[] beanNamesForType = applicationContext.getBeanNamesForType(ClientInterceptor.class);
+        for (String s : beanNamesForType)
+        {
+            interceptors.add((ClientInterceptor) applicationContext.getBean(s));
+        }
         final Channel channel;
         try
         {
