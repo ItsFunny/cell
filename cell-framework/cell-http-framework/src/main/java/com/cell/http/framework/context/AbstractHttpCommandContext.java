@@ -123,8 +123,8 @@ public abstract class AbstractHttpCommandContext extends AbstractBaseContext imp
         long consumeTime = currentTime - this.getRequestTimestamp();
         final String sequenceId = this.getCommandContext().getSummary().getSequenceId();
         LOG.info(Module.HTTP_FRAMEWORK,
-                "response,uri={},method={},ip={},sequenceId={},cost={}",
-                this.getCommandContext().getSummary().getProtocolId(), this.getHttpServerRequest().getInternalRequest().getMethod(), this.getSummary().getRequestIP(), sequenceId, consumeTime);
+                "response,uri={},method={},ip={},sequenceId={},cost={},ret={}",
+                this.getCommandContext().getSummary().getProtocolId(), this.getHttpServerRequest().getInternalRequest().getMethod(), this.getSummary().getRequestIP(), sequenceId, consumeTime,wp.getRet());
 
         IServerResponse response = this.getServerResponse();
         if (wp.getHeaders() != null)

@@ -176,7 +176,13 @@ public class ServiceDiscoverySchedual extends AbstractInitOnce
             List<com.alibaba.nacos.api.naming.pojo.Instance> hosts = event.getHosts().stream().filter(e ->
                     e.getClusterName().equalsIgnoreCase(ServiceDiscoverySchedual.this.cluster)).collect(Collectors.toList());
             Map<String, List<Instance>> serverInstanceList = new HashMap<>();
-            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts,filter));
+            serverInstanceList.put(event.getServiceName(), DiscoveryUtils.convNaocsInstance2CellInstance(hosts, filter));
+            if (serverInstanceList.size() == 0)
+            {
+                return;
+            }
+            ServiceDiscoverySchedual.this.lastUpdateTimestamp = System.currentTimeMillis();
+            ServiceDiscoverySchedual.this.simpleJobCenter.addJob(new IInstanceEventListener.InstanceEventWrapper(serverInstanceList));
         }
     }
 }

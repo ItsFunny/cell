@@ -124,26 +124,8 @@
     <orderEntry type="library" name="Maven: io.netty:netty-all:4.1.27.Final" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk15on:1.60" level="project" />
     <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-ext-jdk15on:1.60" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: cn.jnta:hsmGeneralFinance:2.1.2">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/cn/jnta/hsmGeneralFinance/2.1.2/hsmGeneralFinance-2.1.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:4.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.github.rholder:guava-retrying:2.0.0" level="project" />
-    <orderEntry type="module-library">
-      <library name="Maven: cn.sanwei:bxcrypto:3.0.0">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/cn/sanwei/bxcrypto/3.0.0/bxcrypto-3.0.0.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" name="Maven: org.junit.platform:junit-platform-commons:1.6.3" level="project" />
     <orderEntry type="library" name="Maven: org.apiguardian:apiguardian-api:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.reflections:reflections:0.9.12" level="project" />

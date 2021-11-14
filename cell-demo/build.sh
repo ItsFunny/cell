@@ -1,7 +1,12 @@
 #!/bin/bash
 
 docker ps | grep 'cell' | awk -F 'cell' '{print $1}' | awk -F 'jokerlvccc'  '{print $1}'  | xargs docker rm -f
-
+path=${PWD}
+cd ../cell-runnable/cell-runnable-gateway
+./build.sh
+cd ../cell-runnable-nacos-prometheus-sd/
+./build.sh
+cd ${path}
 name=$(sh -c hostname)
 if [[ -n $1 ]];then
     if [[ ${name} -eq 'joker' ]];then

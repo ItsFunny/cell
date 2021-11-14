@@ -25,7 +25,7 @@ function startPrepare() {
     echo "start prometheus"
     docker-compose -f docker-compose-prometheus.yaml up -d
     echo "start prometheus discovery"
-    docker run -p 9999:8080  -itd --add-host=demo.com:172.224.2.2 --name 9999 -e ENV_VM_OPTIONS="-Xmx512m -Xms512m " -e LOG_LEVEL=INFO -e TYPE=Default -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_prometheus:0.0.1
+    docker run -p 8888:8888  -itd --add-host=demo.com:172.224.2.2 --name 8888 -e ENV_VM_OPTIONS="-Xmx512m -Xms512m " -e ENV_APPLICATION_OPTIONS="-nodeId prometheusSd" -v ${configPath}:/Users/joker/Java/config jokerlvccc/cell_prometheus:0.0.1
 }
 function startRpc() {
     cluster=${2}

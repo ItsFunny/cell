@@ -117,9 +117,11 @@ public class RegistrationService extends AbstractInitOnce implements IPrometheus
                         List<Instance> down = instances.stream().filter(p -> origin.contains(p)).collect(Collectors.toList());
                         this.down.addAll(down);
                     }
-                    int code = service.hashCode();
-                    LOG.info(Module.SD_PROMETHEUS, "添加service,{}", service);
-                    this.instances.put(service, instances);
+                    if (CollectionUtils.isNotEmpty(instances))
+                    {
+                        LOG.info(Module.SD_PROMETHEUS, "添加service,{}", service);
+                        this.instances.put(service, instances);
+                    }
                 }
                 this.onChange = false;
             }
@@ -214,14 +216,14 @@ public class RegistrationService extends AbstractInitOnce implements IPrometheus
 //            LOG.info(Module.SD_PROMETHEUS, "添加service,{}", allService);
 //            this.instances.put(allService, serviceAllInstance);
 //        }
-        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
+//        ((NacosNodeDiscoveryImpl) this.nodeDiscovery).registerListen(new Listener());
 
         this.schedualFlush();
     }
 
     private void schedualFlush()
     {
-        Flux.interval(Duration.ofMinutes(5)).map(v ->
+        Flux.interval(Duration.ofMinutes(1)).map(v ->
         {
             if (!this.tryAcquire())
             {

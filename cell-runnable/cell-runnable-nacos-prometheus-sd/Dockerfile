@@ -27,9 +27,7 @@ ARG APPLICATION_OPTIONS="-path /Users/joker/Java/config -type Default"
 ENV ENV_APPLICATION_OPTIONS=$APPLICATION_OPTIONS
 
 # http
-EXPOSE 8000
-# rpc
-EXPOSE 7000
+EXPOSE 8888
 
 
 CMD ["sh","-c","java -server ${ENV_VM_OPTIONS} -Dloader.path=/Users/joker/Java/lib-thrid -jar ./web/execute.jar ${ENV_APPLICATION_OPTIONS}"]

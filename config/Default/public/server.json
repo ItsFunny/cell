@@ -7,6 +7,15 @@
   },
   "nodes": [
     {
+      "nodeId": "prometheusSd",
+      "instances": [
+        {
+          "type": 1,
+          "visualPort": 8888
+        }
+      ]
+    },
+    {
       "nodeId": "node0",
       "instances": [
         {
@@ -31,7 +40,6 @@
       "nodeId": "cluster1GateWay",
       "instances": [
         {
-          "publicAddress": "demo.com",
           "type": 4
         }
       ]

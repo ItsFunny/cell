@@ -114,18 +114,18 @@ public class NodeConfiguration implements IValidator
                 if ((inst.type & ProtocolConstants.TYPE_HTTP) >= ProtocolConstants.TYPE_HTTP)
                 {
                     Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_HTTP);
-                    if (inst.visualPort == 0) inst.visualPort = port;
-                    if (inst.publicPort == 0) inst.publicPort = port;
+                    if (inst.visualPort == 0 || inst.publicPort == 0)
+                    {
+                        swapPort(inst, port);
+                    }
                 } else if ((inst.type & ProtocolConstants.TYPE_RPC) >= ProtocolConstants.TYPE_RPC)
                 {
                     Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_RPC);
-                    if (inst.visualPort == 0) inst.visualPort = port;
-                    if (inst.publicPort == 0) inst.publicPort = port;
+                    swapPort(inst, port);
                 } else if ((inst.type & ProtocolConstants.TYPE_HTTP_GATE) >= ProtocolConstants.TYPE_HTTP_GATE)
                 {
                     Short port = this.defaultProperty.ports.get(ProtocolConstants.TYPE_HTTP_GATE);
-                    if (inst.visualPort == 0) inst.visualPort = port;
-                    if (inst.publicPort == 0) inst.publicPort = port;
+                    swapPort(inst, port);
                 }
                 if (StringUtils.isEmpty(inst.publicAddress))
                 {
@@ -133,6 +133,19 @@ public class NodeConfiguration implements IValidator
                 }
             });
         });
+    }
+
+    private void swapPort(NodeInstance inst, Short port)
+    {
+        if (inst.visualPort == 0 && inst.publicPort == 0)
+        {
+            inst.visualPort = port;
+            inst.publicPort = port;
+        } else
+        {
+            if (inst.visualPort == 0) inst.visualPort = inst.publicPort;
+            if (inst.publicPort == 0) inst.publicPort = inst.visualPort;
+        }
     }
 
     @Data

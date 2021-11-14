@@ -219,6 +219,15 @@
           "type": 4
         }
       ]
+    },
+    {
+      "nodeId": "prometheusSd",
+      "instances": [
+        {
+          "visualPort": 8888,
+          "type": 1
+        }
+      ]
     }
   ]
 }
