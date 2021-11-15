@@ -14,8 +14,6 @@ import org.springframework.boot.SpringApplication;
 @CellSpringHttpApplication
 public class DemoGrpcServer
 {
-
-
     public static void main(String[] args)
     {
         try
@@ -25,7 +23,5 @@ public class DemoGrpcServer
         {
             e.printStackTrace();
         }
-
     }
-
 }

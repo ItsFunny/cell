@@ -38,7 +38,6 @@ import org.springframework.util.CollectionUtils;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -68,6 +67,38 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         this.processors = null;
     }
 
+    private Set<String> getScanPath()
+    {
+        Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
+        Set<String> scanRootPathes = new HashSet<>();
+        CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+
+        Package p = mainApplicationClass.getPackage();
+        String name = p.getName();
+        String[] split = name.split("\\.");
+        // cn.
+        if (split.length <= 2)
+        {
+            scanRootPathes.add(name);
+        } else
+        {
+            // com.cell
+            // cn.asd
+            // org.asdd
+            scanRootPathes.add(split[0] + "." + split[1]);
+        }
+        String[] scans = mergedAnnotation.scanBasePackages();
+        if (scans.length != 0)
+        {
+            scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+        }
+        if (!scanRootPathes.contains("com") && !scanRootPathes.contains("com.cell"))
+        {
+            scanRootPathes.add(Constants.SCAN_ROOT);
+        }
+
+        return scanRootPathes;
+    }
 
     @Override
     protected void onInit(InitCTX ctx)
@@ -83,13 +114,7 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
-        Set<String> scanRootPathes = new HashSet<>();
-        scanRootPathes.add(Constants.SCAN_ROOT);
-        if (mergedAnnotation != null)
-        {
-            String[] scans = mergedAnnotation.scanBasePackages();
-            scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
-        }
+        Set<String> scanRootPathes = this.getScanPath();
 
         Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
         Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
