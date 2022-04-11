@@ -1,5 +1,6 @@
 package com.cell.base.common.utils;
 
+import com.alibaba.fastjson.util.ParameterizedTypeImpl;
 import com.cell.base.common.constants.BitConstants;
 import com.cell.base.common.wrapper.MonoWrapper;
 import org.junit.platform.commons.util.AnnotationUtils;
@@ -8,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import sun.reflect.generics.reflectiveObjects.ParameterizedTypeImpl;
 
 import java.io.File;
 import java.lang.annotation.Annotation;

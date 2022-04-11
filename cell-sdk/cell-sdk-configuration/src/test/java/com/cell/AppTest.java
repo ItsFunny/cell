@@ -1,20 +1,27 @@
 package com.cell;
 
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
+import com.cell.sdk.configuration.Configuration;
+import com.cell.sdk.configuration.exception.ConfigurationException;
+import com.cell.sdk.configuration.model.IConfigValue;
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
+public class AppTest
 {
     /**
      * Rigorous Test :-)
      */
-    @Test
-    public void shouldAnswerWithTrue()
+    public static void main(String[] args)
     {
-        assertTrue( true );
+        try
+        {
+            Configuration.getDefault().initialize("/Users/lvcong/java/cell/config", "test-asd");
+            IConfigValue configValue = Configuration.getDefault().getConfigValue("nacos.properties");
+            System.out.println(configValue);
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

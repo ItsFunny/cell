@@ -44,7 +44,6 @@ public abstract class AbstractRPCServerCommandContext extends AbstractBaseContex
         return (RPCServerCommandContext) this.getCommandContext();
     }
 
-
     @Override
     protected boolean isSetOrExpired()
     {

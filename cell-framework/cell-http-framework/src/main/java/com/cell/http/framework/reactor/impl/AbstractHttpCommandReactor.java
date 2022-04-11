@@ -16,6 +16,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.CollectionUtils;
 
+import java.lang.annotation.Annotation;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -115,7 +116,11 @@ public abstract class AbstractHttpCommandReactor extends AbstractBaseCommandReac
     private void fillCmd(InitCTX ctx)
     {
         Set<Class<? extends IHttpCommand>> httpCommandList = (Set<Class<? extends IHttpCommand>>) ctx.getData().get(HttpConstants.INIT_CTX_CMDS);
-        ReactorAnno anno = ClassUtil.getMergedAnnotation(this.getClass(), ReactorAnno.class);
+        ReactorAnno anno = this.getClass().getAnnotation(ReactorAnno.class);
+        if (anno == null)
+        {
+            anno = ClassUtil.getMergedAnnotation(this.getClass(), ReactorAnno.class);
+        }
         String group = anno.group();
         if (CollectionUtils.isEmpty(httpCommandList)) return;
 

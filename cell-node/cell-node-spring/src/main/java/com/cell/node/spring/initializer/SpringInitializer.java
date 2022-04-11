@@ -28,6 +28,7 @@ import com.cell.node.spring.wrapper.AnnotationNodeWrapper;
 import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.cell.sdk.log.LOG;
 import io.netty.util.internal.ConcurrentSet;
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -72,7 +73,6 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         Set<String> scanRootPathes = new HashSet<>();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
-
         Package p = mainApplicationClass.getPackage();
         String name = p.getName();
         String[] split = name.split("\\.");
@@ -85,12 +85,17 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
             // com.cell
             // cn.asd
             // org.asdd
-            scanRootPathes.add(split[0] + "." + split[1]);
+//            scanRootPathes.add(split[0] + "." + split[1]);
+            scanRootPathes.add(name);
         }
-        String[] scans = mergedAnnotation.scanBasePackages();
-        if (scans.length != 0)
-        {
-            scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+        if (mergedAnnotation!=null){
+            String[] scans = mergedAnnotation.scanBasePackages();
+            if (scans.length != 0)
+            {
+                scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+            }
+        }else{
+
         }
         if (!scanRootPathes.contains("com") && !scanRootPathes.contains("com.cell"))
         {

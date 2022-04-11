@@ -12,7 +12,7 @@
     <groupId>com.cell</groupId>
     <artifactId>cell-base-common</artifactId>
 
-    <name>ering-base-common</name>
+    <name>cell-base-common</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

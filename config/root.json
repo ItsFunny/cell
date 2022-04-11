@@ -1,5 +1,8 @@
 {
   "types": {
+    "test-asd": {
+      "parent": "Default"
+    },
     "Default": {
       "parent": null
     }

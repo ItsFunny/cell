@@ -23,6 +23,7 @@
         <module>cell-rpc-extension</module>
         <module>cell-http-extension</module>
         <module>cell-framework-extension</module>
+        <module>cell-extension-blockchain</module>
     </modules>
 
 </project>

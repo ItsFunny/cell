@@ -168,6 +168,7 @@ public class ConfigRefresher implements Runnable
     }
 
     public void registerListener(String moduleName, String filePath, IConfigListener configListener,
+
                                  IConfigurationParser parser)
     {
         synchronized (this)

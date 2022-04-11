@@ -6,6 +6,7 @@ import com.cell.base.common.enums.EnumHttpRequestType;
 import com.cell.base.common.enums.EnumHttpResponseType;
 import com.cell.base.common.exceptions.ProgramaException;
 import com.cell.base.common.utils.StringUtils;
+import com.cell.base.core.protocol.ICommand;
 import com.cell.http.framework.annotation.HttpCmdAnno;
 import com.cell.http.framework.bo.BuzzContextBO;
 import com.cell.http.framework.command.IBuzzExecutor;
@@ -23,6 +24,8 @@ import lombok.Data;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.agent.ByteBuddyAgent;
 import net.bytebuddy.description.annotation.AnnotationDescription;
+import net.bytebuddy.dynamic.loading.ByteArrayClassLoader;
+import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import net.bytebuddy.dynamic.loading.ClassReloadingStrategy;
 import net.bytebuddy.implementation.FixedValue;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
@@ -410,7 +413,7 @@ public class CellSpringFrameworkApplication
                             .define("buzzClz", this.buzzClz)
                             .build())
                     .make()
-                    .load(CellSpringFrameworkApplication.class.getClassLoader())
+                    .load(this.getClass().getClassLoader(),ClassReloadingStrategy.fromInstalledAgent())
                     .getLoaded()
                     .getDeclaredConstructor()
                     .newInstance();

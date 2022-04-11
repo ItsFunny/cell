@@ -34,6 +34,12 @@ public abstract class AbstractNacosDiscoveryExtension extends AbstractSpringNode
     protected abstract Class<? extends IServer> serverClz();
 
     @Override
+    public boolean isRequired()
+    {
+        return false;
+    }
+
+    @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
         NacosNodeDiscoveryImpl.setupDiscovery();
