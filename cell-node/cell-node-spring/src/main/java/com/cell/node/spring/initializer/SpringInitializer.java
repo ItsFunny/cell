@@ -28,7 +28,6 @@ import com.cell.node.spring.wrapper.AnnotationNodeWrapper;
 import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.cell.sdk.log.LOG;
 import io.netty.util.internal.ConcurrentSet;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -118,18 +117,18 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 
 
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
-        CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+        MultiFilter filter = new MultiFilter();
         Set<String> scanRootPathes = this.getScanPath();
 
-        Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
-        Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
-        interesetAnnotations.addAll(Arrays.asList(interestAnnotations));
-        Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();
-
-
-        MultiFilter filter = new MultiFilter();
-        filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
-        filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
+        CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+        if (mergedAnnotation!=null){
+            Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
+            Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
+            interesetAnnotations.addAll(Arrays.asList(interestAnnotations));
+            Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();
+            filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
+            filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
+        }
         filter.interestAnnotations.addAll(interesetAnnotations);
 
         // FIXME ,需要重构该部分,使用reflections

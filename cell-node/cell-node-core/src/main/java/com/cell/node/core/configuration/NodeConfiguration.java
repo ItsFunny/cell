@@ -3,10 +3,12 @@ package com.cell.node.core.configuration;
 import com.cell.base.common.constants.ProtocolConstants;
 import com.cell.base.common.exceptions.ConfigException;
 import com.cell.base.common.exceptions.ValidateException;
+import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.common.validators.IValidator;
 import com.cell.sdk.configuration.Configuration;
+import com.cell.sdk.log.LOG;
 import lombok.Data;
 
 import java.util.*;
@@ -217,7 +219,8 @@ public class NodeConfiguration implements IValidator
                 instance = Configuration.getDefault().getConfigValue(serverNodeModule).asObject(NodeConfiguration.class);
             } catch (Exception e)
             {
-                throw new ConfigException(e);
+                LOG.erroring(Module.CONFIGURATION,"配置初始化失败,走默认配置");
+                instance=defaultConfiguration();
             }
         }
     }
@@ -225,5 +228,12 @@ public class NodeConfiguration implements IValidator
     public static NodeConfiguration getInstance()
     {
         return instance;
+    }
+
+    public static NodeConfiguration defaultConfiguration()
+    {
+        NodeConfiguration ret = new NodeConfiguration();
+        ret.setNodes(new ArrayList<>());
+        return ret;
     }
 }
