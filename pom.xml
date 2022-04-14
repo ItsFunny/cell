@@ -56,7 +56,7 @@
         <repository>
             <id>local-repo-release</id>
             <name>GitHub Release</name>
-            <url>file:///Users/lvcong/java/maven_repository/maven-repo</url>
+            <url>file:../maven_repository/maven-repo</url>
         </repository>
     </distributionManagement>
 

@@ -25,7 +25,6 @@
         <module>cell-demo-microservice</module>
         <module>cell-demo-rpc</module>
         <module>cell-demo-common</module>
-        <module>cell-demo-web3j</module>
     </modules>
 
     <properties>

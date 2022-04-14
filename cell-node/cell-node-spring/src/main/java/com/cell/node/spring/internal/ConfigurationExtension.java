@@ -45,13 +45,13 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
             type = cmd.getOptionValue("type");
         }
         String path = DEFAULT_PATH;
-        if (cmd.hasOption("path"))
+        if (cmd.hasOption("home"))
         {
-            path = cmd.getOptionValue("path");
+            path = cmd.getOptionValue("home");
         }
         try
         {
-            LOG.info(Module.CONFIGURATION, "配置文件初始化，path =[{}]  type=[{}]", path, type);
+            LOG.info(Module.CONFIGURATION, "配置文件初始化，home =[{}]  type=[{}]", path, type);
             Configuration.getDefault().initialize(path, type);
         } catch (Throwable e)
         {
