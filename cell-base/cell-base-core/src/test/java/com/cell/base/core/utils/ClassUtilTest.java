@@ -8,6 +8,8 @@ public class ClassUtilTest
     @Test
     public void getMainApplicationClass()
     {
+        Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
+        System.out.println(mainApplicationClass);
     }
 
     public static void main(String[] args)

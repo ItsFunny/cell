@@ -3,8 +3,10 @@ package com.cell.sdk.log;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.models.ModuleInterface;
+import com.cell.base.common.utils.StringUtils;
 import com.cell.sdk.log.bridge.ACLoggingFactory;
 import com.cell.sdk.log.config.Log4j2ConfigBuilder;
+import com.cell.sdk.log.constants.LogConstant;
 import com.cell.sdk.log.factory.DefaultSlf4jLoggerFactory;
 import com.cell.sdk.log.impl.DefaultCellLogger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +108,10 @@ public class LOG
         info(module, null, en, msg, data);
     }
 
+    public static void mInfoWithSequenceId(ModuleInterface module,String sequenceId, String msg, LogTypeEnums en, Object... data)
+    {
+        infoWithSequenceId(module,sequenceId,null,en,msg,data);
+    }
     public static void debug(String msg, Object... data)
     {
         debug(null, null, DEFAULT_LOG_TYPE, msg, data);
@@ -134,6 +140,11 @@ public class LOG
     public static void info(ModuleInterface module, String msg, Object... data)
     {
         info(module, null, DEFAULT_LOG_TYPE, msg, data);
+    }
+
+    public static void mInfoWithSequenceId(ModuleInterface module, String sequenceId,String msg, Object... data)
+    {
+        infoWithSequenceId(module,sequenceId, null, DEFAULT_LOG_TYPE, msg, data);
     }
 
     public static void error(ModuleInterface module, Error error, String msg, Object... data)
@@ -220,7 +231,12 @@ public class LOG
 
     public static void info(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
-        cellLogger.log(module, LogLevel.INFO, logTypeEnums, throwable, format, data);
+        cellLogger.log(module, LogConstant.DEFAULT_SEQUENCE, LogLevel.INFO, logTypeEnums, throwable, format, data);
+    }
+
+    public static void infoWithSequenceId(ModuleInterface module, String sequenceId, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
+    {
+        cellLogger.log(module, sequenceId, LogLevel.INFO, logTypeEnums, throwable, format, data);
     }
 
     public static void info(ModuleInterface module, LogTypeEnums logTypeEnums, String format, Object... data)
@@ -230,7 +246,7 @@ public class LOG
 
     public static void debug(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
-        cellLogger.log(module, LogLevel.DEBUG, logTypeEnums, throwable, format, data);
+        cellLogger.log(module, LogConstant.DEFAULT_SEQUENCE, LogLevel.DEBUG, logTypeEnums, throwable, format, data);
     }
 
     public static void debug(Module module, LogTypeEnums logTypeEnums, String format, Object... data)
@@ -240,7 +256,7 @@ public class LOG
 
     public static void error(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
-        cellLogger.log(module, LogLevel.ERROR, logTypeEnums, throwable, format, data);
+        cellLogger.log(module, LogConstant.DEFAULT_SEQUENCE, LogLevel.ERROR, logTypeEnums, throwable, format, data);
     }
 
     public static void warn(ModuleInterface module, LogTypeEnums logTypeEnums, String format, Object... data)
@@ -255,12 +271,12 @@ public class LOG
 
     public static void warn(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
-        cellLogger.log(module, LogLevel.WARN, logTypeEnums, throwable, format, data);
+        cellLogger.log(module, LogConstant.DEFAULT_SEQUENCE, LogLevel.WARN, logTypeEnums, throwable, format, data);
     }
 
     public static void trace(ModuleInterface module, Throwable throwable, LogTypeEnums logTypeEnums, String format, Object... data)
     {
-        cellLogger.log(module, LogLevel.TRACE, logTypeEnums, throwable, format, data);
+        cellLogger.log(module, LogConstant.DEFAULT_SEQUENCE, LogLevel.TRACE, logTypeEnums, throwable, format, data);
     }
 
 //    private static void refreshLog4j(List<String> newAbsFolder, String logFileName)

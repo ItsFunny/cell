@@ -16,7 +16,7 @@ public class LogConfiguration
 {
     private static final LogConfiguration LOG_CONFIGURATION = new LogConfiguration();
     private LogLevel logLevel = LogLevel.DEBUG;
-    private boolean enableFile;
+    private boolean enableFile=true;
 
     public static void setLogLevel(LogLevel logLevel)
     {

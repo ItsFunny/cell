@@ -24,11 +24,6 @@ public class DefaultHashedTimeWheel extends AbstractBaseHashedTimeWheel
         return instance;
     }
 
-    static
-    {
-        instance.initOnce(null);
-    }
-
     @Override
     protected List<WheelTimerConfigurableNode> supporsedTimePrecision()
     {

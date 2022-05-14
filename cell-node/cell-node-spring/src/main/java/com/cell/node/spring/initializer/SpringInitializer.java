@@ -29,6 +29,7 @@ import com.cell.plugin.pipeline.manager.IReflectManager;
 import com.cell.sdk.log.LOG;
 import io.netty.util.internal.ConcurrentSet;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.AnnotatedElementUtils;
@@ -53,6 +54,12 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 {
     private List<IBeanDefinitionRegistryPostProcessorAdapter> processors = new ArrayList<>();
 
+    private static List<String> manualPath = null;
+
+    public static void setManualScanPath(List<String> paths)
+    {
+        manualPath = paths;
+    }
 
     @Override
     public void initialize(ConfigurableApplicationContext applicationContext)
@@ -87,18 +94,28 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 //            scanRootPathes.add(split[0] + "." + split[1]);
             scanRootPathes.add(name);
         }
-        if (mergedAnnotation!=null){
+        if (mergedAnnotation != null)
+        {
             String[] scans = mergedAnnotation.scanBasePackages();
             if (scans.length != 0)
             {
                 scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
             }
-        }else{
-
+        } else
+        {
+            SpringBootApplication annota = ClassUtil.getMergedAnnotation(mainApplicationClass, SpringBootApplication.class);
+            if (annota != null)
+            {
+                scanRootPathes.addAll(Stream.of(annota.scanBasePackages()).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+            }
         }
         if (!scanRootPathes.contains("com") && !scanRootPathes.contains("com.cell"))
         {
             scanRootPathes.add(Constants.SCAN_ROOT);
+        }
+        if (manualPath != null)
+        {
+            scanRootPathes.addAll(manualPath);
         }
 
         return scanRootPathes;
@@ -121,13 +138,16 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         Set<String> scanRootPathes = this.getScanPath();
 
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
-        if (mergedAnnotation!=null){
+        if (mergedAnnotation != null)
+        {
             Class<? extends AbstractNodeExtension>[] excludeNodeExtensions = mergedAnnotation.scanExcludeNodeExtensions();
             Class<? extends Annotation>[] interestAnnotations = mergedAnnotation.scanInterestAnnotations();
             interesetAnnotations.addAll(Arrays.asList(interestAnnotations));
             Class<?>[] excludeClasses = mergedAnnotation.scanExcludeClasses();
             filter.excludeClasses.addAll(Arrays.asList(excludeClasses));
             filter.excludeNodeExtensions.addAll(Arrays.asList(excludeNodeExtensions));
+        } else
+        {
         }
         filter.interestAnnotations.addAll(interesetAnnotations);
 

@@ -26,13 +26,18 @@ import java.nio.file.Paths;
 public class ConfigurationExtension extends AbstractSpringNodeExtension
 {
     private Options options;
-    private String DEFAULT_PATH = "/Users/joker/Java/cell";
+    private static String DEFAULT_PATH = "/Users/joker/Java/cell";
+
+    public static void setDefaultPath(String path)
+    {
+        DEFAULT_PATH = path;
+    }
 
     public ConfigurationExtension()
     {
         options = new Options();
         options.addOption("type", true, "-type 配置类型,");
-        options.addOption("path", true, "-path 根路径");
+        options.addOption("home", true, "-home 根路径");
     }
 
     @Override

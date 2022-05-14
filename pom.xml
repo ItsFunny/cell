@@ -20,10 +20,11 @@
         <module>cell-plugin</module>
         <module>cell-tools</module>
         <module>cell-sdk</module>
+        <module>cell-component</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>ering</name>
+    <name>cell</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 

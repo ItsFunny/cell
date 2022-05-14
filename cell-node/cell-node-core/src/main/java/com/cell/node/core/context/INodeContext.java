@@ -1,6 +1,7 @@
 package com.cell.node.core.context;
 
 import com.cell.base.core.concurrent.base.EventExecutor;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.node.core.app.IApp;
 import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.extension.INodeExtension;
@@ -22,6 +23,7 @@ public interface INodeContext
     String getCluster();
 
     EventExecutor getExecutor();
+    EventLoopGroup getEventLoopGroup();
 
     String getNodeId();
 

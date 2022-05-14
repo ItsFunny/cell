@@ -25,9 +25,9 @@ public class CellLoggerContext
     private static final CellLoggerContext LOG_CONTEXT = new CellLoggerContext();
     final static char[] LOG_LEVEL_SIMPLE = {'T', 'D', 'I', 'W', 'E', 'F', 'O'};
 
-    public static LogEntry createLogEntry(ModuleInterface module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, Optional<ILogHook> afterCreate, String formatMsg, Object... params)
+    public static LogEntry createLogEntry(ModuleInterface module, String sequenceId, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, Optional<ILogHook> afterCreate, String formatMsg, Object... params)
     {
-        LogEntry logEntry = LogEntryFactory.createLogEntry(module, blackList, logLevel, logTypeEnums, err, formatMsg, params);
+        LogEntry logEntry = LogEntryFactory.createLogEntry(module, sequenceId, blackList, logLevel, logTypeEnums, err, formatMsg, params);
         afterCreate.ifPresent(l -> l.hook(logEntry));
         return logEntry;
     }
@@ -45,13 +45,13 @@ public class CellLoggerContext
 
     private static class LogEntryFactory
     {
-        static LogEntry createLogEntry(ModuleInterface module, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, String msg, Object... data)
+        static LogEntry createLogEntry(ModuleInterface module, String sequencId, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, String msg, Object... data)
         {
             LogEntry logEntry = LogEntry.builder()
                     .logLevel(logLevel)
                     .module(module)
                     .logType(logTypeEnums.getCode())
-                    .message(defaultLogFormat(true, logLevel, module, blackList, msg, new Date(), err))
+                    .message(defaultLogFormat(true, logLevel, module, sequencId, blackList, msg, new Date(), err))
                     .objects(data)
                     .build();
             return logEntry;
@@ -60,6 +60,7 @@ public class CellLoggerContext
         public static String defaultLogFormat(boolean isDebug,
                                               LogLevel logLevel,
                                               ModuleInterface module,
+                                              String sequenceId,
                                               List<String> blackList,
                                               String format,
                                               Date timeStamp, Throwable error)
@@ -78,7 +79,9 @@ public class CellLoggerContext
                 sb.append("[").append(module.name()).append("]");
             }
             sb.append('[').append(LOG_LEVEL_SIMPLE[logLevel.getValue()]).append(']');
+//            sb.append(String.format(" sequenceId=%s ", sequenceId));
             sb.append(format);
+
             if (error != null)
             {
                 sb.append(DebugUtil.exceptionStackTraceToString(error));

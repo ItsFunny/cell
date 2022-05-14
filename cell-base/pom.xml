@@ -13,7 +13,7 @@
     <artifactId>cell-base</artifactId>
     <packaging>pom</packaging>
 
-    <name>ering-base</name>
+    <name>cell-base</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <modules>

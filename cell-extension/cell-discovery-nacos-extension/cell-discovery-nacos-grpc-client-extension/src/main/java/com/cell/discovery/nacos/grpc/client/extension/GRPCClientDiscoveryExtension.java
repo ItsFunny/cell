@@ -11,7 +11,6 @@ import com.cell.discovery.nacos.grpc.client.extension.server.DefaultGrpcNacosCli
 import com.cell.discovery.nacos.grpc.client.extension.server.IGRPCNacosClientServer;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
-import com.cell.node.spring.exntension.ConcurrentExtension;
 
 /**
  * @author Charlie
@@ -43,7 +42,7 @@ public class GRPCClientDiscoveryExtension extends AbstractSpringNodeExtension
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
-        EventLoopGroup eventLoopGroup = ConcurrentExtension.getEventLoopGroup();
+        EventLoopGroup eventLoopGroup =ctx.getEventLoopGroup();
         this.nacosClientServer = new DefaultGrpcNacosClientServer(eventLoopGroup);
         this.serviceDiscovery = new GRPCClientServiceDiscovery();
     }

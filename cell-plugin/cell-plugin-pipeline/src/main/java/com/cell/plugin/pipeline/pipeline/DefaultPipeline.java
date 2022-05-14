@@ -23,6 +23,7 @@ public class DefaultPipeline<T, CHAIN_T extends IChainExecutor<V>, V> implements
     private List<T> executors = new ArrayList<>();
     private ChainExecutorFactory<? extends IListChainExecutor> factory;
 
+
     public DefaultPipeline(ChainExecutorFactory<? extends IListChainExecutor> factory)
     {
         this.factory = factory;

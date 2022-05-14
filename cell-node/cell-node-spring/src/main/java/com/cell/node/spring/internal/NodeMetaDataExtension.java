@@ -44,11 +44,11 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
             meta = cmd.getOptionValue("meta");
         }
 
-        if (!cmd.hasOption(CommandLineConstants.NODE_ID))
+        String id = "defaultNode";
+        if (cmd.hasOption(CommandLineConstants.NODE_ID))
         {
-            throw new ConfigException("nodeId must be setted");
+            id = cmd.getOptionValue(CommandLineConstants.NODE_ID);
         }
-        String id = cmd.getOptionValue(CommandLineConstants.NODE_ID);
 
 
         long version = 1;

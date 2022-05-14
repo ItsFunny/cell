@@ -8,6 +8,7 @@ import com.cell.base.common.models.ModuleInterface;
 import com.cell.base.common.services.TypeFul;
 import com.cell.base.common.utils.CollectionUtils;
 import com.cell.sdk.log.*;
+import com.cell.sdk.log.constants.LogConstant;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,6 +32,7 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     private LogLevel logLevel;
     private Module module;
     private List<String> blackList;
+
 
 
     protected abstract Set<ILogConsumer> getLogConsumers(ModuleInterface module, LogTypeEnums logType, LogLevel logLevel);
@@ -63,22 +65,22 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     @Override
     public void info(LogTypeEnums logType, Throwable err, String format, Object... data)
     {
-        this.log(this.module, LogLevel.INFO, logType, err, format, data);
+        this.log(this.module, LogConstant.DEFAULT_SEQUENCE, LogLevel.INFO, logType, err, format, data);
     }
 
     @Override
     public void warn(LogTypeEnums logType, Throwable err, String format, Object... data)
     {
-        this.log(this.module, LogLevel.WARN, logType, err, format, data);
+        this.log(this.module,LogConstant.DEFAULT_SEQUENCE, LogLevel.WARN, logType, err, format, data);
     }
 
     @Override
     public void error(LogTypeEnums logType, Throwable err, String format, Object... data)
     {
-        this.log(this.module, LogLevel.ERROR, logType, err, format, data);
+        this.log(this.module,LogConstant.DEFAULT_SEQUENCE, LogLevel.ERROR, logType, err, format, data);
     }
 
-    public void log(ModuleInterface module, LogLevel logLevel, LogTypeEnums logType, Throwable err, String format, Object... data)
+    public void log(ModuleInterface module, String sequenceId, LogLevel logLevel, LogTypeEnums logType, Throwable err, String format, Object... data)
     {
 // 1. 通过自身的logLevel 过滤,可以认为是全局的logLevel
         if (!this.logAble(logLevel)) return;
@@ -87,7 +89,7 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
         {
             return;
         }
-        final LogEntry logEntry = CellLoggerContext.createLogEntry(module, this.blackList, logLevel, logType, err, afterCreateHook, format, data);
+        final LogEntry logEntry = CellLoggerContext.createLogEntry(module, sequenceId, this.blackList, logLevel, logType, err, afterCreateHook, format, data);
         final DefaultLogEventWrapper defaultLogEventWrapper = new DefaultLogEventWrapper(logEntry);
         logConsumers.stream().filter(c -> c.logAble(logLevel)).forEach(c ->
                 c.consume(defaultLogEventWrapper));

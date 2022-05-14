@@ -2,6 +2,8 @@ package com.cell.node.spring.context;
 
 import com.cell.base.common.constants.CommandLineConstants;
 import com.cell.base.core.concurrent.base.EventExecutor;
+import com.cell.base.core.concurrent.base.EventLoop;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
 import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.extension.INodeExtension;
 import com.cell.node.spring.app.SpringNodeAPP;
@@ -21,6 +23,7 @@ public class SpringNodeContext implements ISpringNodeContext
     private String[] args;
     private SpringNodeAPP NodeApp = new SpringNodeAPP();
     private EventExecutor executor;
+    private EventLoopGroup eventLoopGroup;
     private CommandLine commandLine;
     private SpringExtensionManager manager;
     private String cluster = CommandLineConstants.DEFAULT_CLSUTER_VALUE;

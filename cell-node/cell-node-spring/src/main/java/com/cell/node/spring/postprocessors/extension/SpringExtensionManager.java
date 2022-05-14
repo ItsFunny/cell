@@ -7,6 +7,8 @@ import com.cell.base.common.exceptions.ConfigException;
 import com.cell.base.common.models.Module;
 import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.common.utils.IPUtils;
+import com.cell.base.common.utils.StringUtils;
+import com.cell.base.core.concurrent.BaseDefaultEventLoopGroup;
 import com.cell.node.core.configuration.RootConfiguration;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.core.exception.ExtensionImportException;
@@ -120,6 +122,7 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
                 }
             }
         }
+
         this.fillCtx();
 
         String[] alist = customArgs.toArray(new String[customArgs.size()]);
@@ -127,10 +130,27 @@ public class SpringExtensionManager extends AbstractInitOnce implements Applicat
         CommandLine commands = parser.parse(allOps, alist);
         dCtx.setCommandLine(commands);
         LOG.setLogLevel(LogLevel.INFO);
+
+        Option option = allOps.getOption(threadPoolCount);
+        String value = option.getValue();
+        Integer threadCount = this.getDefaultThreadPoolCount();
+        if (StringUtils.isNotEmpty(value))
+        {
+            threadCount = Integer.parseInt(value);
+        }
+        this.ctx.setEventLoopGroup(new BaseDefaultEventLoopGroup(threadCount));
     }
+
+    private Integer getDefaultThreadPoolCount()
+    {
+        return 256;
+    }
+
+    private static final String threadPoolCount = "threadPoolCount";
 
     private void fillCtx()
     {
+        allOps.addOption("threadPoolCount", true, "线程池数量");
         Option ip = allOps.getOption("ip");
         if (ip != null)
         {
