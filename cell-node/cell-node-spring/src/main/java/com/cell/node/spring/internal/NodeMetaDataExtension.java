@@ -23,6 +23,12 @@ import org.apache.commons.cli.Options;
 @CellOrder(OrderConstants.MIN_ORDER - 997)
 public class NodeMetaDataExtension extends AbstractSpringNodeExtension
 {
+    public static String nodeId = "defaultNode";
+
+    public static void setNodeId(String id)
+    {
+        nodeId = id;
+    }
 
     @Override
     public Options getOptions()
@@ -44,7 +50,7 @@ public class NodeMetaDataExtension extends AbstractSpringNodeExtension
             meta = cmd.getOptionValue("meta");
         }
 
-        String id = "defaultNode";
+        String id = nodeId;
         if (cmd.hasOption(CommandLineConstants.NODE_ID))
         {
             id = cmd.getOptionValue(CommandLineConstants.NODE_ID);

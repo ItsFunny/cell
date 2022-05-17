@@ -20,6 +20,13 @@
     <dependencies>
 
         <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.13</version>
+        </dependency>
+
+
+        <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
         </dependency>
@@ -50,8 +57,8 @@
 
         <!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- --><!-- -->
         <!--<dependency>-->
-            <!--<groupId>cn.jnta</groupId>-->
-            <!--<artifactId>hsmGeneralFinance</artifactId>-->
+        <!--<groupId>cn.jnta</groupId>-->
+        <!--<artifactId>hsmGeneralFinance</artifactId>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
@@ -74,8 +81,8 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>cn.sanwei</groupId>-->
-            <!--<artifactId>bxcrypto</artifactId>-->
+        <!--<groupId>cn.sanwei</groupId>-->
+        <!--<artifactId>bxcrypto</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.junit.platform</groupId>
