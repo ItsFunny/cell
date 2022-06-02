@@ -2,13 +2,19 @@ package com.cell.base.common.utils;
 
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.FillPatternType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.*;
 
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExportUtil
 {
@@ -16,6 +22,7 @@ public class ExportUtil
      * 生成表格数据
      * enum中的值 要与data 中的数据一致
      * 一个enum 对应一种导出
+     *
      * @param data
      * @return
      */
@@ -151,5 +158,58 @@ public class ExportUtil
             }
             sheet.setColumnWidth(columnNum, (columnWidth) * 256);
         }
+    }
+
+
+    public static Map<String, List<String[]>> parseExcelToMap(String filePath, String sheetName) throws Exception
+    {
+        FileInputStream in=new FileInputStream(filePath);
+        Map<String, List<String[]>> map = new HashMap<>();
+        XSSFWorkbook workbook = new XSSFWorkbook(in);
+        for (int i = 0; i < workbook.getNumberOfSheets(); i++)
+        {
+            XSSFSheet sheetAt = workbook.getSheetAt(i);
+
+            if (sheetAt.getSheetName().equals("填写说明"))
+            {
+                continue;
+            }
+            List<String[]> table = new ArrayList<>();
+            if (sheetName == null || sheetName.equals(sheetAt.getSheetName()))
+            {
+                for (int j = 0; j < sheetAt.getPhysicalNumberOfRows(); j++)
+                {
+                    XSSFRow row = sheetAt.getRow(j);
+                    if (row == null)
+                    {
+                        continue;
+                    }
+                    List<String> s = new ArrayList<>();
+                    for (int c = 0; c < row.getLastCellNum(); c++)
+                    {
+                        XSSFCell cell = row.getCell(c);
+                        if (cell != null)
+                        {
+                            cell.setCellType(Cell.CELL_TYPE_STRING);
+                            s.add(row.getCell(c).getStringCellValue());
+                        } else
+                        {
+                            s.add("");
+                        }
+                    }
+                    String[] res = list2StrArray(s);
+                    table.add(res);
+                }
+            }
+            map.put(sheetAt.getSheetName(), table);
+        }
+        return map;
+    }
+
+    private static String[] list2StrArray(List<String> s)
+    {
+        String[] res = new String[s.size()];
+        s.toArray(res);
+        return res;
     }
 }

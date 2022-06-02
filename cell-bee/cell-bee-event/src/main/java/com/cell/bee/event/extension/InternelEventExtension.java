@@ -2,6 +2,8 @@ package com.cell.bee.event.extension;
 
 import com.cell.base.core.annotations.LifeCycle;
 import com.cell.base.core.enums.EnumLifeCycle;
+import com.cell.bee.event.center.EventCenter;
+import com.cell.bee.event.center.JobCenter;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 
@@ -19,6 +21,7 @@ public class InternelEventExtension extends AbstractSpringNodeExtension
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
+        JobCenter.getInstance().registerSubscriber(EventCenter.getInstance());
     }
 
     @Override

@@ -3,9 +3,10 @@ package com.cell.timewheel;
 import com.cell.base.common.context.AbstractInitOnce;
 import com.cell.base.common.context.InitCTX;
 import com.cell.base.core.config.WheelTimerConfigurableNode;
+import com.cell.base.core.timewheel.ITimeWheelTaskExecutor;
+import com.cell.base.core.timewheel.TaskFuncs;
 import com.cell.enums.TimeWheelDeleyLevel;
 import com.cell.task.DefaultTimerTask;
-import com.cell.task.TaskFuncs;
 import io.netty.util.HashedWheelTimer;
 
 import java.util.HashMap;
@@ -22,10 +23,11 @@ import java.util.concurrent.TimeUnit;
  * @Attention:
  * @Date 创建时间：2021/10/29 17:02
  */
-public abstract class AbstractBaseHashedTimeWheel extends AbstractInitOnce
+public abstract class AbstractBaseHashedTimeWheel extends AbstractInitOnce implements ITimeWheelTaskExecutor
 {
     private Map<TimeUnit, SimpleHiercalHashedWheelTimer> timeWheels = null;
 
+    @Override
     public void addTask(TaskFuncs funcs, TimeUnit unit, long delay)
     {
         SimpleHiercalHashedWheelTimer simpleHiercalHashedWheelTimer = this.timeWheels.get(unit);

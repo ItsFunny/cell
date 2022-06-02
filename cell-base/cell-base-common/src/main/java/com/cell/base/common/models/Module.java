@@ -55,6 +55,7 @@ public enum Module implements ModuleInterface
     TASK_CA((short) 48, "CA task"),
     DRUID((short) 49, "druid"),
     ALIBABA((short) 50, "alibaba"),
+    COMPONENT_TASK((short) 51, "task"),
     MICROMETER((short) 10008, "micrometer"),
     UNKNOWN((short) 65535, "UNKNOWN"),
     ;
