@@ -46,6 +46,61 @@ public class DateUtils
         System.out.println(getCurrentDay());
     }
 
+
+    /**
+     * 通过时间秒毫秒数判断两个时间的间隔
+     *
+     * @param form 开始时间
+     * @param to   结束时间
+     * @return 相差天数
+     */
+    public static int differentDays(Date form, Date to)
+    {
+        return (int) ((to.getTime() - form.getTime()) / (1000 * 3600 * 24));
+    }
+
+    /**
+     * 通过时间秒毫秒数判断两个时间的间隔
+     *
+     * @param form 开始时间
+     * @param to   结束时间
+     * @return 相差小时数
+     */
+    public static int differentHours(Date form, Date to)
+    {
+        return (int) ((to.getTime() - form.getTime()) / (1000 * 3600));
+    }
+
+    /**
+     * 通过时间秒毫秒数判断两个时间的间隔
+     *
+     * @param form 开始时间
+     * @param to   结束时间
+     * @return 相差分钟数
+     */
+    public static int differentMinute(Date form, Date to)
+    {
+        return (int) ((to.getTime() - form.getTime()) / (1000 * 60));
+    }
+
+    /**
+     * 判断两个时间相差多少个月
+     *
+     * @param form 开始时间
+     * @param to   结束时间
+     * @return 相差月数
+     */
+    public static int differentMonth(Date form, Date to)
+    {
+        Calendar bef = Calendar.getInstance();
+        Calendar aft = Calendar.getInstance();
+        bef.setTime(form);
+        aft.setTime(to);
+        int result = aft.get(Calendar.MONTH) - bef.get(Calendar.MONTH);
+        int month = (aft.get(Calendar.YEAR) - bef.get(Calendar.YEAR)) * 12;
+        return Math.abs(month + result);
+    }
+    
     public static Long getCurrentDay()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
