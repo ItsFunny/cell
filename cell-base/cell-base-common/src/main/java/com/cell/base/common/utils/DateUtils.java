@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author joker
@@ -21,31 +23,98 @@ public class DateUtils
 {
     public static final int DAY_OF_MILLSECONDS = 1000 * 3600 * 24;
 
-    public static void main(String[] args)
+    public static void main(String[] args)throws Exception
     {
-        Long a = 1594452019403l;
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String format = dateFormat.format(new Date(a));
-        System.out.println(format);
-        System.out.println(Long.parseLong(format));
-        //        //获取当前的年月日
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//        Calendar c = Calendar.getInstance();
-//        c.add(Calendar.DAY_OF_MONTH, 0);
-//        c.add(Calendar.DAY_OF_WEEK, 1);
-//        System.out.println(c.getTime());
-//        System.out.println(c.getTimeInMillis());
-//        long rightNow = Long.parseLong(sdf.format(c.getTime()));
-//        System.out.println(rightNow);
-
-
-        // 获取当前年份的最后一天
-//        Date lastDayOrTheYear = getLastDayOrTheYear(2020);
-//        System.out.println(lastDayOrTheYear);
-        System.out.println(new Date().getTime());
-        System.out.println(getCurrentDay());
+        String str="2013-04-28T18:47:21.000Z";
+        Date date = utcStr2UtcDate(str);
+        System.out.println(date.toString());
+        Date d1 = new Date();
+        System.out.println(d1.getTime());
+        TimeUnit.SECONDS.sleep(10);
+        Date d2=new Date();
+        System.out.println(d2.getTime());
+        System.out.println(d2.getTime()-d1.getTime());
+        System.out.println(differentSeconds(d1,d2));
     }
 
+    public static long getCurrentUTCMills()
+    {
+        Calendar cal = Calendar.getInstance();
+        return cal.getTimeInMillis();
+    }
+
+    public static Date utcStr2UtcDate(String utcTime){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        try
+        {
+         return  sdf.parse(utcTime.replace("Z", " UTC"));//注意是空格+UTC
+        } catch (ParseException e)
+        {
+            throw new RuntimeException(e);
+        }
+    }
+    /**
+     * utc时间转成local时间
+     *
+     * @param utcTime
+     * @return
+     */
+    public static Date utc2Local(String utcTime)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date utcDate = null;
+        try
+        {
+            utcDate = sdf.parse(utcTime);
+        } catch (ParseException e)
+        {
+            throw new RuntimeException(e);
+        }
+        sdf.setTimeZone(TimeZone.getDefault());
+        Date locatlDate = null;
+        String localTime = sdf.format(utcDate.getTime());
+        try
+        {
+            locatlDate = sdf.parse(localTime);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        return locatlDate;
+    }
+
+    /**
+     * local时间转换成UTC时间
+     *
+     * @param localTime
+     * @return
+     */
+    public static Date local2UTC(String localTime)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date localDate = null;
+        try
+        {
+            localDate = sdf.parse(localTime);
+        } catch (ParseException e)
+        {
+            e.printStackTrace();
+        }
+        long localTimeInMillis = localDate.getTime();
+        /** long时间转换成Calendar */
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(localTimeInMillis);
+        /** 取得时间偏移量 */
+        int zoneOffset = calendar.get(java.util.Calendar.ZONE_OFFSET);
+        /** 取得夏令时差 */
+        int dstOffset = calendar.get(java.util.Calendar.DST_OFFSET);
+        /** 从本地时间里扣除这些差量，即可以取得UTC时间*/
+        calendar.add(java.util.Calendar.MILLISECOND, -(zoneOffset + dstOffset));
+        /** 取得的时间就是UTC标准时间 */
+        Date utcDate = new Date(calendar.getTimeInMillis());
+        return utcDate;
+    }
 
     /**
      * 通过时间秒毫秒数判断两个时间的间隔
@@ -83,6 +152,11 @@ public class DateUtils
         return (int) ((to.getTime() - form.getTime()) / (1000 * 60));
     }
 
+    public static int differentSeconds(Date form, Date to)
+    {
+        return (int) ((to.getTime() - form.getTime()) / (1000));
+    }
+
     /**
      * 判断两个时间相差多少个月
      *
@@ -100,14 +174,19 @@ public class DateUtils
         int month = (aft.get(Calendar.YEAR) - bef.get(Calendar.YEAR)) * 12;
         return Math.abs(month + result);
     }
-    
-    public static Long getCurrentDay()
+
+    public static int getCurrentDay()
+    {
+        Calendar c = Calendar.getInstance();
+        int month = c.get(Calendar.DATE);
+        return month;
+    }
+    public static int getCurrentMonth()
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DAY_OF_MONTH, 0);
-        long rightNow = Long.parseLong(sdf.format(c.getTime()));
-        return rightNow;
+        int month = c.get(Calendar.MONTH) + 1;
+        return month;
     }
 
 
@@ -615,6 +694,30 @@ public class DateUtils
         Calendar now = Calendar.getInstance();
         now.setTime(d);
         now.set(Calendar.DATE, now.get(Calendar.DATE) + day);
+        return now.getTime();
+    }
+
+    public static Date getDateAfterSeconds(Date d, int seconds)
+    {
+        Calendar now = Calendar.getInstance();
+        now.setTime(d);
+        now.set(Calendar.SECOND, now.get(Calendar.SECOND) + seconds);
+        return now.getTime();
+    }
+
+    public static Date getDateAfterMinus(Date d, int m)
+    {
+        Calendar now = Calendar.getInstance();
+        now.setTime(d);
+        now.set(Calendar.MINUTE, now.get(Calendar.MINUTE) + m);
+        return now.getTime();
+    }
+
+    public static Date getDateAfterHours(Date d, int h)
+    {
+        Calendar now = Calendar.getInstance();
+        now.setTime(d);
+        now.set(Calendar.HOUR, now.get(Calendar.HOUR) + h);
         return now.getTime();
     }
 
