@@ -38,7 +38,7 @@ public class ManagerTest
             return (str, c) ->
             {
                 System.out.println(str);
-                return c.execute(str);
+                throw new RuntimeException("asd");
             };
         }
     }
@@ -59,9 +59,15 @@ public class ManagerTest
     @Test
     public void testPrint()
     {
-        Manager1 manager1 = new Manager1();
-        manager1.invokeInterestNodes(Arrays.asList(new Node1(), new Node2()));
-        manager1.execute("1", "123").block();
+        try
+        {
+            Manager1 manager1 = new Manager1();
+            manager1.invokeInterestNodes(Arrays.asList(new Node1(), new Node2()));
+            manager1.execute("1", "123").block();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+
     }
 
 }
