@@ -10,7 +10,7 @@ package com.cell.base.core.protocol;
  */
 public interface IContext
 {
-    void discard();
+    default  void discard(){};
 
     default boolean done() {return false;}
 
