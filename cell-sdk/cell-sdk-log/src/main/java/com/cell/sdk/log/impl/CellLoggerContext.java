@@ -6,11 +6,10 @@ import com.cell.sdk.log.ILogHook;
 import com.cell.sdk.log.LogEntry;
 import com.cell.sdk.log.LogLevel;
 import com.cell.sdk.log.LogTypeEnums;
+import com.cell.sdk.log.constants.LogConstant;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author Charlie
@@ -24,6 +23,7 @@ public class CellLoggerContext
 {
     private static final CellLoggerContext LOG_CONTEXT = new CellLoggerContext();
     final static char[] LOG_LEVEL_SIMPLE = {'T', 'D', 'I', 'W', 'E', 'F', 'O'};
+    final static String[] levelColors = {LogConstant.TEXT_CYAN, LogConstant.TEXT_BLUE, LogConstant.TEXT_GREEN, LogConstant.TEXT_YELLOW, LogConstant.TEXT_RED};
 
     public static LogEntry createLogEntry(ModuleInterface module, String sequenceId, List<String> blackList, LogLevel logLevel, LogTypeEnums logTypeEnums, Throwable err, Optional<ILogHook> afterCreate, String formatMsg, Object... params)
     {
@@ -67,6 +67,7 @@ public class CellLoggerContext
         {
             StringBuilder sb = new StringBuilder();
             String dateString = formatDate(timeStamp);
+            sb.append(LogConstant.TEXT_RESET);
             sb.append(dateString);
             sb.append(' ');
             if (isDebug)
@@ -76,9 +77,9 @@ public class CellLoggerContext
             }
             if (module != null)
             {
-                sb.append("[").append(module.name()).append("]");
+                sb.append(LogConstant.TEXT_CYAN).append("[").append(module.name()).append("]");
             }
-            sb.append('[').append(LOG_LEVEL_SIMPLE[logLevel.getValue()]).append(']');
+            sb.append('[').append(levelColors[logLevel.getValue()]).append(LOG_LEVEL_SIMPLE[logLevel.getValue()]).append(']');
 //            sb.append(String.format(" sequenceId=%s ", sequenceId));
             sb.append(format);
 

@@ -1,5 +1,6 @@
 package com.cell;
 
+import com.cell.base.common.utils.BigDecimalUtils;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
@@ -38,13 +39,42 @@ public class Sign
     @Test
     public void test3() throws Exception
     {
-        BigDecimal b1 = new BigDecimal("0.00001");
-        BigDecimal bigDecimal = diviValidOrFraction(b1, new BigDecimal(1), 2);
+//        System.out.println(BigDecimalUtils.diviValidOrFraction(new BigDecimal(123.3333),new BigDecimal(1),2).toString());
+//        System.out.println(BigDecimalUtils.diviValidOrFraction(new BigDecimal(0.0000002),new BigDecimal(1),2));
+
+        BigDecimal b1 = new BigDecimal("0.0000002");
+        BigDecimal bigDecimal = diviValidOrFraction("0.000231", "1", 2);
+        System.out.println(param(new BigDecimal("0.000000000003"), 2));
         System.out.println(bigDecimal.toString());
 
-        BigDecimal b2= new BigDecimal("12.233");
-        BigDecimal bigDecimal2 = diviValidOrFraction(b2, new BigDecimal(1), 2);
+        BigDecimal b2 = new BigDecimal("12.233");
+        BigDecimal bigDecimal2 = diviValidOrFraction("12.22222", "1", 2);
+        System.out.println(param(new BigDecimal("12.2222"), 2));
         System.out.println(bigDecimal2.toString());
+    }
+
+    public static BigDecimal param(BigDecimal value, int precision)
+    {
+        String str = value.stripTrailingZeros().toPlainString();
+        String sub1 = str.substring(0, str.indexOf(".") + 1);
+        String sub2 = str.substring(str.indexOf(".") + 1);
+        StringBuilder buffer = new StringBuilder();
+        int j = 0;
+        for (int i = 0; i < sub2.length(); i++)
+        {
+            if (sub2.charAt(0) - '0' > 0)
+            {
+                return value.setScale(precision, RoundingMode.HALF_UP);
+            } else if (sub2.charAt(i) - '0' == 0)
+            {
+                buffer.append(sub2.charAt(i));
+            } else if (sub2.charAt(i) - '0' > 0 && j < precision)
+            {
+                buffer.append(sub2.charAt(i));
+                j++;
+            }
+        }
+        return new BigDecimal(sub1 + buffer.toString());
     }
 
     /**
@@ -68,29 +98,28 @@ public class Sign
      * @author yutao
      * @date 2018年1月19日下午11:23:30
      */
-    public static BigDecimal diviValidOrFraction(BigDecimal b1, BigDecimal b2, int precision)
+    public static BigDecimal diviValidOrFraction(String v1, String v2, int precision)
     {
         if (precision < 0)
         {
             throw new IllegalArgumentException("The precision must be a positive integer or zero");
         }
+        BigDecimal b1 = new BigDecimal(v1);
+        BigDecimal b2 = new BigDecimal(v2);
         //如果这里不写保留的小数位（eg:10）其默认就会保留一位小数
         //这样之后的判断就会出错
-        BigDecimal divide = b1.divide(b2, 10, RoundingMode.HALF_UP);
+        BigDecimal divide = b1.divide(b2, 30, RoundingMode.DOWN);
         return validOrFraction(divide, precision);
     }
 
+    @Test
+    public void test23123() throws Exception
+    {
+//        System.out.println(BigDecimalUtils.formatBigDecimal(new BigDecimal(1.1233333123123), 4));
+        System.out.println(BigDecimalUtils.formatBigDecimal(new BigDecimal(0.0000000034123), 4));
+        System.out.println(BigDecimalUtils.formatBigDecimal(new BigDecimal(0.096920133333330), 4));
+    }
 
-    /**
-     * 正数部分为0，保留有效位，否则保留小数位
-     *
-     * @param precision
-     * @param b1
-     * @param b2
-     * @return
-     * @author yutao
-     * @date 2018年1月19日下午1:28:29
-     */
     private static BigDecimal validOrFraction(BigDecimal divide, int precision)
     {
 
@@ -108,7 +137,12 @@ public class Sign
             }
         }
         //保留指定小数位
-        return divide.setScale(precision, BigDecimal.ROUND_HALF_UP);
+        return divide.setScale(precision, RoundingMode.HALF_UP);
+    }
+
+    @Test
+    public void test44() throws Exception
+    {
     }
 
     public static double significand(double oldDouble, int scale)
@@ -170,6 +204,7 @@ public class Sign
             return b.divide(one, scale, BigDecimal.ROUND_UP).doubleValue();
         }
     }
+
 
     public static void main(String[] args) throws UnsupportedEncodingException
     {

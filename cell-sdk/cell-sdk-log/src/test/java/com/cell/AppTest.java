@@ -2,6 +2,8 @@ package com.cell;
 
 import com.cell.base.common.models.ModuleInterface;
 import com.cell.sdk.log.LOG;
+import com.cell.sdk.log.LogLevel;
+import com.cell.sdk.log.constants.LogConstant;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -24,7 +26,10 @@ public class AppTest
     @Test
     public void logTest()
     {
-        LOG.info(A.VV,"asd");
+        LOG.trace("trace:{}","trace");
+        LOG.info(A.VV,"info:{}","info");
+        LOG.warn(A.VV,"warn:{}","warn");
+        LOG.erroring(A.VV,"err:{}","err");
     }
 
     /**

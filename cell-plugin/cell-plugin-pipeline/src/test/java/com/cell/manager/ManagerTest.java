@@ -67,7 +67,5 @@ public class ManagerTest
         }catch (Exception e){
             System.out.println(e);
         }
-
     }
-
 }
