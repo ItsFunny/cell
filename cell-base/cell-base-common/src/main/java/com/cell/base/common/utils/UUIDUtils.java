@@ -3,6 +3,7 @@ package com.cell.base.common.utils;
 import org.apache.logging.log4j.core.util.UuidUtil;
 
 import java.security.SecureRandom;
+import java.util.UUID;
 
 /**
  * @author Charlie
@@ -47,7 +48,10 @@ public class UUIDUtils
         return RandomUtils.randomString(3) + randomLong();
     }
 
-    public static void main(String[] args)
+    public static String generateSequenceId(){
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
+        public static void main(String[] args)
     {
         String str = random22LengthString();
         System.out.println("str===" + str);

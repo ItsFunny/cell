@@ -45,6 +45,17 @@ import java.util.stream.Stream;
  */
 public class HttpUtils
 {
+    public static String getRequestPath(HttpServletRequest request)
+    {
+        String url = request.getServletPath();
+        String pathInfo = request.getPathInfo();
+        if (pathInfo != null)
+        {
+            url = org.springframework.util.StringUtils.hasLength(url) ? url + pathInfo : pathInfo;
+        }
+        return url;
+    }
+
     public static class HttpResult
     {
         private int code;
@@ -112,7 +123,7 @@ public class HttpUtils
         {
             httpResult = new HttpResult(response.getStatusLine().getStatusCode(), "");
         }
-        LOG.info(Module.HTTP_CLIENT,"调用http:{},ret:{}",url,httpResult);
+        LOG.info(Module.HTTP_CLIENT, "调用http:{},ret:{}", url, httpResult);
         return httpResult;
     }
 
@@ -175,7 +186,7 @@ public class HttpUtils
         {
             httpResult = new HttpResult(response.getStatusLine().getStatusCode(), "");
         }
-        LOG.info(Module.HTTP_CLIENT,"调用http:{},ret:{}",url,httpResult);
+        LOG.info(Module.HTTP_CLIENT, "调用http:{},ret:{}", url, httpResult);
         return httpResult;
     }
 

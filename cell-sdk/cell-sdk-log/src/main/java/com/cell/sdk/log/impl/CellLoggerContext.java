@@ -81,6 +81,11 @@ public class CellLoggerContext
             }
             sb.append('[').append(levelColors[logLevel.getValue()]).append(LOG_LEVEL_SIMPLE[logLevel.getValue()]).append(']');
 //            sb.append(String.format(" sequenceId=%s ", sequenceId));
+            // TODO
+            if (logLevel == LogLevel.INFO)
+            {
+                sb.append(LogConstant.TEXT_RESET);
+            }
             sb.append(format);
 
             if (error != null)
