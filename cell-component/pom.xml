@@ -17,6 +17,7 @@
         <module>cell-component-http-cellcontext</module>
         <module>cell-component-http-exception</module>
         <module>cell-component-http-swagger</module>
+        <module>cell-component-cache</module>
     </modules>
 
     <dependencies>

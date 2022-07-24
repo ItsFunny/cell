@@ -23,18 +23,11 @@ public class DateUtils
 {
     public static final int DAY_OF_MILLSECONDS = 1000 * 3600 * 24;
 
-    public static void main(String[] args)throws Exception
+    public static void main(String[] args) throws Exception
     {
-        String str="2013-04-28T18:47:21.000Z";
-        Date date = utcStr2UtcDate(str);
-        System.out.println(date.toString());
-        Date d1 = new Date();
-        System.out.println(d1.getTime());
-        TimeUnit.SECONDS.sleep(10);
-        Date d2=new Date();
-        System.out.println(d2.getTime());
-        System.out.println(d2.getTime()-d1.getTime());
-        System.out.println(differentSeconds(d1,d2));
+        int currentMonth = getCurrentMonth();
+        int m = 2022;
+        System.out.println(currentMonth == m);
     }
 
     public static long getCurrentUTCMills()
@@ -43,16 +36,18 @@ public class DateUtils
         return cal.getTimeInMillis();
     }
 
-    public static Date utcStr2UtcDate(String utcTime){
+    public static Date utcStr2UtcDate(String utcTime)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
         try
         {
-         return  sdf.parse(utcTime.replace("Z", " UTC"));//注意是空格+UTC
+            return sdf.parse(utcTime.replace("Z", " UTC"));//注意是空格+UTC
         } catch (ParseException e)
         {
             throw new RuntimeException(e);
         }
     }
+
     /**
      * utc时间转成local时间
      *
@@ -181,9 +176,9 @@ public class DateUtils
         int month = c.get(Calendar.DATE);
         return month;
     }
+
     public static int getCurrentMonth()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         Calendar c = Calendar.getInstance();
         int month = c.get(Calendar.MONTH) + 1;
         return month;
@@ -598,6 +593,12 @@ public class DateUtils
     {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(nowtime);
+        return calendar.get(Calendar.YEAR);
+    }
+
+    public static int getCurrentYear()
+    {
+        Calendar calendar = Calendar.getInstance();
         return calendar.get(Calendar.YEAR);
     }
 

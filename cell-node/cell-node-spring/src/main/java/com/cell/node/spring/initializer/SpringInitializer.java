@@ -79,6 +79,42 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
         Class<?> mainApplicationClass = ClassUtil.getMainApplicationClass();
         Set<String> scanRootPathes = new HashSet<>();
         CellSpringHttpApplication mergedAnnotation = ClassUtil.getMergedAnnotation(mainApplicationClass, CellSpringHttpApplication.class);
+
+        if (mergedAnnotation != null)
+        {
+            String[] scans = mergedAnnotation.scanBasePackages();
+            if (scans.length != 0 && !scans[0].equals("com.cell"))
+            {
+                scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+            } else
+            {
+                addPackagePath(mainApplicationClass, scanRootPathes);
+            }
+        } else
+        {
+            SpringBootApplication annota = ClassUtil.getMergedAnnotation(mainApplicationClass, SpringBootApplication.class);
+            if (annota == null || annota.scanBasePackages().length == 0)
+            {
+                addPackagePath(mainApplicationClass, scanRootPathes);
+            } else
+            {
+                scanRootPathes.addAll(Stream.of(annota.scanBasePackages()).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
+            }
+        }
+        if (!scanRootPathes.contains("com") && !scanRootPathes.contains("com.cell"))
+        {
+            scanRootPathes.add(Constants.SCAN_ROOT);
+        }
+        if (manualPath != null)
+        {
+            scanRootPathes.addAll(manualPath);
+        }
+
+        return scanRootPathes;
+    }
+
+    private void addPackagePath(Class<?> mainApplicationClass, Set<String> scanRootPathes)
+    {
         Package p = mainApplicationClass.getPackage();
         String name = p.getName();
         String[] split = name.split("\\.");
@@ -94,31 +130,6 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
 //            scanRootPathes.add(split[0] + "." + split[1]);
             scanRootPathes.add(name);
         }
-        if (mergedAnnotation != null)
-        {
-            String[] scans = mergedAnnotation.scanBasePackages();
-            if (scans.length != 0)
-            {
-                scanRootPathes.addAll(Stream.of(scans).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
-            }
-        } else
-        {
-            SpringBootApplication annota = ClassUtil.getMergedAnnotation(mainApplicationClass, SpringBootApplication.class);
-            if (annota != null)
-            {
-                scanRootPathes.addAll(Stream.of(annota.scanBasePackages()).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
-            }
-        }
-        if (!scanRootPathes.contains("com") && !scanRootPathes.contains("com.cell"))
-        {
-            scanRootPathes.add(Constants.SCAN_ROOT);
-        }
-        if (manualPath != null)
-        {
-            scanRootPathes.addAll(manualPath);
-        }
-
-        return scanRootPathes;
     }
 
     @Override
