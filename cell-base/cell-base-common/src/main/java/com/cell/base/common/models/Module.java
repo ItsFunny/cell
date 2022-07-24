@@ -19,9 +19,9 @@ public enum Module implements ModuleInterface
     COMMON((short) 10001, "公共模块"),
     NETWORK((short) 10002, "network"),
     RPC((short) 10003, "rpc"),
-
     THIRD_PARTY((short) 10004, "third party"),
     COMMONS_CONFIG((short) 10009, "commons config"),
+    EXCEPTION_HANDLER((short) 10010,"exception"),
     CONTAINER_REGISTRY((short) 100, "container registry"),
     CONTAINER((short) 101, "container"),
     HTTP_FRAMEWORK((short) 102, "HTTP_FRAMEWORK"),

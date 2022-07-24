@@ -17,6 +17,11 @@
     <url>http://www.example.com</url>
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.cell</groupId>
             <artifactId>cell-base-common</artifactId>
             <version>${cell.version}</version>

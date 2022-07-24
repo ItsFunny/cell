@@ -1,10 +1,10 @@
-package com.cell.http.framework.context;
+package com.cell.node.core.context;
 
+import com.cell.base.core.protocol.IServerRequest;
+import com.cell.base.core.protocol.IServerResponse;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 @Data
@@ -17,8 +17,8 @@ public class CellContext
     public static final Long FLAG_DB_CHECK_ROLE = Long.valueOf((1 << 2));
     public static final Long FLAG_DB_CHECK_PERMISSION = Long.valueOf(1 << 3);
     public static final Long FLAG_SKIP_CHECK_ARGUMENT = Long.valueOf(1 << 4);
-    private HttpServletRequest request;
-    private HttpServletResponse response;
+    private IServerRequest request;
+    private IServerResponse response;
 
     private String sequenceId;
     private String protocolId;
