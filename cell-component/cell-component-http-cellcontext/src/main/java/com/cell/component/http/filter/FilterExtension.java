@@ -14,10 +14,10 @@ public class FilterExtension extends AbstractSpringNodeExtension
         //添加过滤器
         registration.setFilter(new ContextPrepareFilter());
         //设置过滤路径，/*所有路径
-        registration.addUrlPatterns("/**");
+        registration.addUrlPatterns("/*");
         registration.setName("context-prepare");
         //设置优先级
-        registration.setOrder(1);
+//        registration.setOrder(-10000);
         return registration;
     }
 

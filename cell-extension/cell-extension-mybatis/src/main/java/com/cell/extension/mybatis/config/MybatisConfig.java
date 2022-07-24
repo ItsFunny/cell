@@ -102,7 +102,7 @@ public class MybatisConfig
             refresh(accountConfig);
         } catch (Exception e)
         {
-            LOG.error(Module.DYNAMIC_DAO, e, "读取配置失败， module = %s", DAO_CONFIG_MODULE_NAME);
+            LOG.error(Module.DYNAMIC_DAO, e, "读取配置失败， module = {}", DAO_CONFIG_MODULE_NAME);
             throw new RuntimeException(e);
         }
     }

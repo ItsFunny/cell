@@ -15,7 +15,7 @@ public class DynamicDataSourceRoute extends AbstractRoutingDataSource
         String datasource = DataSourceContextHolder.getDbType();
         if (!StringUtils.isEmpty(datasource))
         {
-            LOG.info(Module.DYNAMIC_DAO, "当前使用的数据源是： %s, threadId = %s", datasource, Thread.currentThread().getName());
+            LOG.info(Module.DYNAMIC_DAO, "当前使用的数据源是： {}, threadId: {}", datasource, Thread.currentThread().getName());
         }
         return datasource;
     }

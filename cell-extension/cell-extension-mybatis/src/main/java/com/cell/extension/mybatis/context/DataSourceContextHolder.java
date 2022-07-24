@@ -8,11 +8,6 @@ public class DataSourceContextHolder
 {
     private static final ThreadLocal<String> contextHolder = new ThreadLocal<>(); //实际上就是开启多个线程，每个线程进行初始化一个数据源
 
-    /**
-     * 设置数据源，必须在事务开启前调用
-     *
-     * @param dbType
-     */
     public static void setDbType(String dbType)
     {
         if (MybatisConfig.getInstance().getMysqlConfig(dbType) == null)
@@ -20,7 +15,7 @@ public class DataSourceContextHolder
             throw new RuntimeException("未知的数据库：" + dbType);
         }
         contextHolder.set(dbType);
-        LOG.info(Module.DYNAMIC_DAO, "切换数据源： %s, threadId = %s", dbType, Thread.currentThread().getName());
+        LOG.info(Module.DYNAMIC_DAO, "切换数据源： {}, threadId: {}", dbType, Thread.currentThread().getName());
     }
 
     public static String getDbType()
@@ -32,6 +27,6 @@ public class DataSourceContextHolder
     {
         String dbType = contextHolder.get();
         contextHolder.remove();
-        LOG.info(Module.DYNAMIC_DAO, "清除当前方法的数据源： %s, threadId = %s", dbType, Thread.currentThread().getName());
+        LOG.info(Module.DYNAMIC_DAO, "清除当前方法的数据源： {}, threadId = {}", dbType, Thread.currentThread().getName());
     }
 }
