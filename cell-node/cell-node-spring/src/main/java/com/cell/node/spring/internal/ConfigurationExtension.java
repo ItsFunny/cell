@@ -28,6 +28,13 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     private Options options;
     private static String DEFAULT_PATH = "/Users/joker/Java/cell";
 
+    private static String defaultDir = "config";
+
+    public static void setDefaultConfigDirectory(String dir)
+    {
+        defaultDir = dir;
+    }
+
     public static void setDefaultPath(String path)
     {
         DEFAULT_PATH = path;
@@ -72,7 +79,7 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     private void tryLocal(String originPath, String type)
     {
         Path currentRelativePath = Paths.get("");
-        String path = currentRelativePath.toAbsolutePath().toString() + currentRelativePath.getFileSystem().getSeparator() + "config";
+        String path = currentRelativePath.toAbsolutePath().toString() + currentRelativePath.getFileSystem().getSeparator() + defaultDir;
         try
         {
             Configuration.getDefault().initialize(path, type);

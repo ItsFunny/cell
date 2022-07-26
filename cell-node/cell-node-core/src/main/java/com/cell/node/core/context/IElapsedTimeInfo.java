@@ -1,4 +1,4 @@
-package com.cell.component.trace;
+package com.cell.node.core.context;
 
 public interface IElapsedTimeInfo
 {

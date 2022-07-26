@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>cell-component-timewheel</module>
-        <module>cell-component-trace</module>
         <module>cell-component-http-cellcontext</module>
         <module>cell-component-http-exception</module>
         <module>cell-component-http-swagger</module>

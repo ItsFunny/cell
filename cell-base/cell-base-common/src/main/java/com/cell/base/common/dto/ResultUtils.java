@@ -23,6 +23,16 @@ public class ResultUtils
         return ret;
     }
 
+    public static <T> ResultDTO<T> fail(T data)
+    {
+        ResultDTO<T> ret = new ResultDTO<>();
+        ret.setSuccess(false);
+        ret.setErrCode(0);
+        ret.setErrMsg(null);
+        ret.setData(data);
+        return ret;
+    }
+
     public static <T> ResultDTO<T> fail(int code, String msg, T data)
     {
         ResultDTO<T> ret = new ResultDTO<>();
