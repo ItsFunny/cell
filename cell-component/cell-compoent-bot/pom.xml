@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.cell</groupId>
+        <artifactId>cell-component</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cell-compoent-bot</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cell-component-bot-common</module>
+        <module>cell-component-bot-discord</module>
+        <module>cell-component-bot-telegram</module>
+        <module>cell-component-bot-proxy</module>
+        <module>cell-component-bot-twitter</module>
+        <module>cell-component-bot-email</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-component-http-exception</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-extension-mybatis</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-sdk-timewheel</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-sdk-log</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-extension</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-http-framework</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+    </dependencies>
+
+
+</project>
