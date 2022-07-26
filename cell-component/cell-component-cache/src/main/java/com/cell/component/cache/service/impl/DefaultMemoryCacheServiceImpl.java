@@ -13,7 +13,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
 {
-    private Map<K, V> cache = new HashMap<>();
+
+    private Map<K, ValueWrapper<V>> cache = new HashMap<>();
     private ITimeWheelTaskExecutor executor;
     private ReentrantReadWriteLock rwLock;
 
@@ -36,7 +37,12 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
         try
         {
             this.rwLock.readLock().lock();
-            return this.cache.get(k);
+            ValueWrapper<V> ValueWrapper = this.cache.get(k);
+            if (ValueWrapper != null)
+            {
+                return ValueWrapper.getV();
+            }
+            return null;
         } finally
         {
             this.rwLock.readLock().unlock();
@@ -46,10 +52,12 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     @Override
     public void set(K s, V s2, int delaySeconds)
     {
+        ValueWrapper<V> valueWrapper = new ValueWrapper<>();
+        valueWrapper.setV(s2);
         this.rwLock.writeLock().lock();
         try
         {
-            this.cache.put(s, s2);
+            this.cache.put(s, valueWrapper);
             this.executor.addTask((v) ->
             {
                 this.delete(s);
@@ -65,10 +73,13 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     @Override
     public void set(K s, V s2)
     {
+        ValueWrapper<V> valueWrapper = new ValueWrapper<>();
+        valueWrapper.setV(s2);
+
         this.rwLock.writeLock().lock();
         try
         {
-            this.cache.put(s, s2);
+            this.cache.put(s, valueWrapper);
         } finally
         {
             this.rwLock.writeLock().unlock();
@@ -81,7 +92,12 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
         this.rwLock.writeLock().lock();
         try
         {
-            return this.cache.remove(s);
+            ValueWrapper<V> wrapper = this.cache.remove(s);
+            if (wrapper != null)
+            {
+                return wrapper.getV();
+            }
+            return null;
         } finally
         {
             this.rwLock.writeLock().unlock();
