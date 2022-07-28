@@ -2,6 +2,7 @@ package com.cell.node.core.context;
 
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;
+import com.cell.node.core.config.NodeConfig;
 import lombok.Builder;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ import java.util.Map;
 @Builder
 public class CellContext
 {
-    public static final String CELL_CONTEXT="cell_context";
+    public static final String CELL_CONTEXT = "cell_context";
     public static final Long FLAG_SKIP_AUTH_AOP = Long.valueOf(1 << 0);
     public static final Long FLAG_SKIP_DB_CHECK = Long.valueOf(1 << 1);
     public static final Long FLAG_DB_CHECK_ROLE = Long.valueOf((1 << 2));
@@ -20,18 +21,27 @@ public class CellContext
     private IServerRequest request;
     private IServerResponse response;
 
+    private IElapsedTimeInfo trace;
+
     private String sequenceId;
     private String protocolId;
     private String method;
 
 
-    private Map<String,Object>attributes;
+    private Map<String, Object> attributes;
 
     private long flag;
 
     public static CellContext emptyContext()
     {
         CellContext build = CellContext.builder().build();
+        if (NodeConfig.getInstance().isTraceEnable())
+        {
+            build.trace = new ElapsedTimeInfos();
+        } else
+        {
+            build.trace = new DoNoThingTrace();
+        }
         return build;
     }
 

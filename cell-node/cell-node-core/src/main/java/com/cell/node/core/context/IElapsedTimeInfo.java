@@ -2,9 +2,9 @@ package com.cell.node.core.context;
 
 public interface IElapsedTimeInfo
 {
-    void addInfo(String key, String info);
-
-    void setElapsedTime(long elapsedTime);
-
-    long getElapsedTime();
+    void traceInfo(String key, String info);
+    void trace(String key);
+    void traceEnd();
+    void traceEndWithInfo(String info);
+    String dump();
 }

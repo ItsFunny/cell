@@ -12,7 +12,9 @@ public class ContextUtils
 {
     public static CellContext prepareContext(HttpServletRequest request, HttpServletResponse response)
     {
-        CellContext context = CellContext.builder().request(new HttpRequestWrapper(request)).response(new HttpResponseWrapper(response)).build();
+        CellContext context = CellContext.emptyContext();
+        context.setRequest(new HttpRequestWrapper(request));
+        context.setResponse(new HttpResponseWrapper(response));
         context.setProtocolId(HttpUtils.getRequestPath(request));
         context.setSequenceId(UUIDUtils.generateSequenceId());
         context.setMethod(request.getMethod());
