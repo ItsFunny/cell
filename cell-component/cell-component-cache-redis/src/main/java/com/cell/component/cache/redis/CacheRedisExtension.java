@@ -1,26 +1,28 @@
-package com.cell.component.cache;
+package com.cell.component.cache.redis;
 
-import com.cell.component.cache.service.ICacheService;
-import com.cell.component.cache.service.impl.DefaultMemoryCacheServiceImpl;
+import com.cell.component.cache.redis.config.RedisConfig;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
-import com.cell.timewheel.DefaultHashedTimeWheel;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.context.annotation.Bean;
 
-public class CacheExtension extends AbstractSpringNodeExtension
+public class CacheRedisExtension extends AbstractSpringNodeExtension
 {
+
 
     @Override
     protected void onInit(INodeContext ctx) throws Exception
     {
+        RedisConfig.getInstance().seal(ctx);
+    }
 
+    @Override
+    public boolean isRequired()
+    {
+        return false;
     }
 
     @Override
     protected void onStart(INodeContext ctx) throws Exception
     {
-
     }
 
     @Override

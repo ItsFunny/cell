@@ -6,6 +6,7 @@ import com.cell.node.core.config.NodeConfig;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -32,6 +33,12 @@ public class CellContext
 
     private long flag;
 
+    public void setAttribute(String key,Object value){
+        if (this.attributes==null){
+            this.attributes=new HashMap<>();
+        }
+        this.attributes.put(key,value);
+    }
     public static CellContext emptyContext()
     {
         CellContext build = CellContext.builder().build();

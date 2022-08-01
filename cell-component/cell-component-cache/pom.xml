@@ -10,6 +10,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cell-component-cache</artifactId>
+    <dependencies>
+
+        <dependency>
+            <groupId>com.cell</groupId>
+            <artifactId>cell-sdk-timewheel</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

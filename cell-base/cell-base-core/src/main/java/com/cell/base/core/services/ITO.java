@@ -1,5 +1,7 @@
 package com.cell.base.core.services;
 
+import com.cell.base.common.decorators.IDecorator;
+
 /**
  * @author Charlie
  * @When
@@ -10,5 +12,5 @@ package com.cell.base.core.services;
  */
 public interface ITO<T>
 {
-    T to();
+    T to(IDecorator<T> ...t);
 }

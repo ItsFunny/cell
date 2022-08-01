@@ -9,6 +9,7 @@ import org.springframework.beans.PropertyValues;
 import org.springframework.beans.TypeConverter;
 import org.springframework.beans.factory.*;
 import org.springframework.beans.factory.annotation.InjectionMetadata;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.DependencyDescriptor;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessorAdapter;
@@ -501,4 +502,15 @@ public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanP
     }
 
 
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException
+    {
+        if (bean instanceof IBeanSelfAware)
+        {
+            IBeanSelfAware beanSelfAware = (IBeanSelfAware) bean;
+            beanSelfAware.setSelf(beanSelfAware);
+            return beanSelfAware;
+        }
+        return super.postProcessAfterInitialization(bean, beanName);
+    }
 }

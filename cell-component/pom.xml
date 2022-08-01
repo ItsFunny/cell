@@ -18,6 +18,7 @@
         <module>cell-component-http-swagger</module>
         <module>cell-component-cache</module>
         <module>cell-compoent-bot</module>
+        <module>cell-component-cache-redis</module>
     </modules>
 
     <dependencies>
