@@ -67,7 +67,9 @@ public class CellLoggerContext
         {
             StringBuilder sb = new StringBuilder();
             String dateString = formatDate(timeStamp);
-            sb.append(LogConstant.TEXT_RESET);
+
+//            sb.append(LogConstant.TEXT_RESET);
+
             sb.append(dateString);
             sb.append(' ');
             if (isDebug)
@@ -77,15 +79,20 @@ public class CellLoggerContext
             }
             if (module != null)
             {
-                sb.append(LogConstant.TEXT_CYAN).append("[").append(module.name()).append("]");
+                sb
+//                        .append(LogConstant.TEXT_CYAN)
+                        .append("[").append(module.name()).append("]");
             }
-            sb.append('[').append(levelColors[logLevel.getValue()]).append(LOG_LEVEL_SIMPLE[logLevel.getValue()]).append(']');
+            sb.append('[')
+//                    .append(levelColors[logLevel.getValue()])
+                    .append(LOG_LEVEL_SIMPLE[logLevel.getValue()])
+                    .append(']');
 //            sb.append(String.format(" sequenceId=%s ", sequenceId));
             // TODO
-            if (logLevel == LogLevel.INFO)
-            {
-                sb.append(LogConstant.TEXT_RESET);
-            }
+//            if (logLevel == LogLevel.INFO)
+//            {
+//                sb.append(LogConstant.TEXT_RESET);
+//            }
             sb.append(format);
 
             if (error != null)

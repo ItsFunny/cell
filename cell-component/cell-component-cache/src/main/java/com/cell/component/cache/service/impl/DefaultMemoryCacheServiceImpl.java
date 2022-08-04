@@ -1,20 +1,21 @@
 package com.cell.component.cache.service.impl;
 
 import com.cell.base.common.context.InitCTX;
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.core.timewheel.ITimeWheelTaskExecutor;
 import com.cell.component.cache.service.ICacheService;
 import com.cell.node.core.context.INodeContext;
 import reactor.core.publisher.Mono;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.regex.Pattern;
 
-public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
+public class DefaultMemoryCacheServiceImpl<V> implements ICacheService<String, V>
 {
 
-    private Map<K, ValueWrapper<V>> cache = new HashMap<>();
+    private Map<String, ValueWrapper<V>> cache = new HashMap<>();
     private ITimeWheelTaskExecutor executor;
     private ReentrantReadWriteLock rwLock;
 
@@ -32,7 +33,7 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     }
 
     @Override
-    public V get(K k)
+    public V get(String k)
     {
         try
         {
@@ -50,7 +51,7 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     }
 
     @Override
-    public void set(K s, V s2, int delaySeconds)
+    public void set(String s, V s2, int delaySeconds)
     {
         ValueWrapper<V> valueWrapper = new ValueWrapper<>();
         valueWrapper.setV(s2);
@@ -71,7 +72,7 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
 
 
     @Override
-    public void set(K s, V s2)
+    public void set(String s, V s2)
     {
         ValueWrapper<V> valueWrapper = new ValueWrapper<>();
         valueWrapper.setV(s2);
@@ -87,7 +88,50 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     }
 
     @Override
-    public V delete(K s)
+    public void setIfAbsent(String s, V v)
+    {
+        this.rwLock.writeLock().lock();
+        try
+        {
+            if (this.cache.containsKey(s))
+            {
+                return;
+            }
+            ValueWrapper<V> valueWrapper = new ValueWrapper<>();
+            valueWrapper.setV(v);
+            this.cache.put(s, valueWrapper);
+        } finally
+        {
+            this.rwLock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public void setIfAbsent(String s, V v, int delaySeconds)
+    {
+        this.rwLock.writeLock().lock();
+        try
+        {
+            if (this.cache.containsKey(s))
+            {
+                return;
+            }
+            ValueWrapper<V> valueWrapper = new ValueWrapper<>();
+            valueWrapper.setV(v);
+            this.cache.put(s, valueWrapper);
+            this.executor.addTask((vv) ->
+            {
+                this.delete(s);
+                return Mono.empty();
+            }, TimeUnit.SECONDS, delaySeconds);
+        } finally
+        {
+            this.rwLock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public V delete(String s)
     {
         this.rwLock.writeLock().lock();
         try
@@ -105,12 +149,85 @@ public class DefaultMemoryCacheServiceImpl<K, V> implements ICacheService<K, V>
     }
 
     @Override
-    public boolean contains(K k)
+    public Map<String, V> deleteBatchWithReturn(List<String> strings)
+    {
+        Map<String, V> ret = new HashMap<>();
+        this.rwLock.writeLock().lock();
+        try
+        {
+            for (String string : strings)
+            {
+                ValueWrapper<V> v = this.cache.remove(string);
+                if (v != null)
+                {
+                    ret.put(string, v.getV());
+                }
+            }
+        } finally
+        {
+            this.rwLock.writeLock().unlock();
+        }
+        return ret;
+    }
+
+    @Override
+    public void deleteBatch(Collection<String> strings)
+    {
+        if (CollectionUtils.isEmpty(strings))
+        {
+            return;
+        }
+        this.rwLock.writeLock().lock();
+        try
+        {
+            for (String string : strings)
+            {
+                this.cache.remove(string);
+            }
+        } finally
+        {
+            this.rwLock.writeLock().unlock();
+        }
+    }
+
+    @Override
+    public void deleteByPattern(String pattern, Integer limit)
+    {
+        this.deleteBatch(this.keysByPattern(pattern, limit));
+    }
+
+    @Override
+    public boolean contains(String k)
     {
         this.rwLock.readLock().lock();
         try
         {
             return this.cache.containsKey(k);
+        } finally
+        {
+            this.rwLock.readLock().unlock();
+        }
+    }
+
+    @Override
+    public Set<String> keysByPattern(String pattern, Integer limit)
+    {
+        Set<String> ret = new HashSet<>();
+        this.rwLock.readLock().lock();
+        try
+        {
+            for (String k : cache.keySet())
+            {
+                if (Pattern.matches(pattern, k))
+                {
+                    ret.add(k);
+                    if (ret.size() >= limit)
+                    {
+                        break;
+                    }
+                }
+            }
+            return ret;
         } finally
         {
             this.rwLock.readLock().unlock();

@@ -9,10 +9,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(value = Integer.MAX_VALUE-1)
 public class CacheAop
 {
     @Pointcut("@annotation(com.cell.component.cache.aop.CacheAnnotation)")
@@ -41,9 +43,15 @@ public class CacheAop
                 key = (CacheKey) arg;
             }
         }
+        if (context!=null && context.disableCache()){
+            return joinPoint.proceed();
+        }
         if (key != null)
         {
             String keyInfo = key.cacheKey();
+            if (StringUtils.isEmpty(keyInfo)){
+                return joinPoint.proceed();
+            }
             String valueInfo = this.cacheService.get(keyInfo);
             if (StringUtils.isNotEmpty(valueInfo))
             {
@@ -56,7 +64,7 @@ public class CacheAop
 
         Object ret = null;
         ret = joinPoint.proceed();
-        if (key != null)
+        if (key != null && ret!=null)
         {
             String serialize = key.serialize(ret);
             if (StringUtils.isNotEmpty(serialize))

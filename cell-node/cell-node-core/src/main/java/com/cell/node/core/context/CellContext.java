@@ -19,6 +19,7 @@ public class CellContext
     public static final Long FLAG_DB_CHECK_ROLE = Long.valueOf((1 << 2));
     public static final Long FLAG_DB_CHECK_PERMISSION = Long.valueOf(1 << 3);
     public static final Long FLAG_SKIP_CHECK_ARGUMENT = Long.valueOf(1 << 4);
+    public static final Long FLAG_DISABLE_CACHE = Long.valueOf(1 << 5);
     private IServerRequest request;
     private IServerResponse response;
 
@@ -33,12 +34,15 @@ public class CellContext
 
     private long flag;
 
-    public void setAttribute(String key,Object value){
-        if (this.attributes==null){
-            this.attributes=new HashMap<>();
+    public void setAttribute(String key, Object value)
+    {
+        if (this.attributes == null)
+        {
+            this.attributes = new HashMap<>();
         }
-        this.attributes.put(key,value);
+        this.attributes.put(key, value);
     }
+
     public static CellContext emptyContext()
     {
         CellContext build = CellContext.builder().build();
@@ -85,6 +89,11 @@ public class CellContext
     public boolean skipAuth()
     {
         return (flag & FLAG_SKIP_AUTH_AOP) >= FLAG_SKIP_AUTH_AOP;
+    }
+
+    public boolean disableCache()
+    {
+        return (flag & FLAG_DISABLE_CACHE) >= FLAG_DISABLE_CACHE;
     }
 
     @Override

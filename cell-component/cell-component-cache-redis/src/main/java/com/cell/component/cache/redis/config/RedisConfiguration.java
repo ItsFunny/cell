@@ -42,6 +42,7 @@ public class RedisConfiguration
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisConfig.getHost(),
                 redisConfig.getPort());
         configuration.setPassword(RedisPassword.of(redisConfig.getPassword()));
+        configuration.setDatabase(redisConfig.getDbIndex());
         JedisClientConfiguration jedisClientConfiguration = JedisClientConfiguration.builder().usePooling().
                 poolConfig(jedisPoolConfig()).and().readTimeout(Duration.ofMillis(redisConfig.getMaxWaitMillis())).build();
         return new JedisConnectionFactory(configuration, jedisClientConfiguration);

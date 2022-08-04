@@ -23,6 +23,7 @@ public class RedisConfig
     private Long maxWaitMillis;
     private Boolean testOnBorrow;
     private Integer clusterPort;
+    private int dbIndex;
 
     private static RedisConfig instance = new RedisConfig();
 
