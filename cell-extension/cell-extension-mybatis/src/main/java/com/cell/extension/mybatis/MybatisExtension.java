@@ -16,6 +16,7 @@ import com.cell.sdk.log.LOG;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
@@ -93,6 +94,7 @@ public class MybatisExtension extends AbstractSpringNodeExtension
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource, PaginationInterceptor pageInterceptor) throws IOException
     {
         MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
