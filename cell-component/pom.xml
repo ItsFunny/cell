@@ -14,7 +14,6 @@
     <modules>
         <module>cell-component-timewheel</module>
         <module>cell-component-http-cellcontext</module>
-        <module>cell-component-http-exception</module>
         <module>cell-component-http-swagger</module>
         <module>cell-component-cache</module>
         <module>cell-compoent-bot</module>
