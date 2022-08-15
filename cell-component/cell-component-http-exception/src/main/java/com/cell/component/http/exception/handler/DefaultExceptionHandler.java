@@ -7,6 +7,7 @@ import com.cell.base.common.utils.JSONUtil;
 import com.cell.component.http.exception.exception.BusinessException;
 import com.cell.component.http.exception.exception.ErrorConstant;
 import com.cell.component.http.exception.exception.WrapContextException;
+import com.cell.component.http.filter.ICellExceptionHandler;
 import com.cell.http.framework.couple.HttpResponseWrapper;
 import com.cell.node.core.context.CellContext;
 import com.cell.sdk.log.LOG;
@@ -14,8 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@Component
-public class DefaultExceptionHandler implements IExceptionHandler
+public class DefaultExceptionHandler implements ICellExceptionHandler
 {
     @Override
     public void handleException(CellContext context, Throwable e) throws IOException

@@ -4,6 +4,7 @@ import com.cell.base.common.dto.ResultDTO;
 import com.cell.component.http.exception.exception.BusinessException;
 import com.cell.component.http.exception.exception.ErrorConstant;
 import com.cell.component.http.exception.exception.WrapContextException;
+import com.cell.component.http.filter.ICellExceptionHandler;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +31,6 @@ public class GlobalExceptionHandler
 
     protected static Logger LOGGER = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @Autowired
-    private IExceptionHandler exceptionHandler;
 
     //运行时异常
     @ExceptionHandler(RuntimeException.class)

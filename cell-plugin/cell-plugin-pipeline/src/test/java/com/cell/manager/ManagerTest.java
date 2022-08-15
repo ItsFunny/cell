@@ -37,8 +37,9 @@ public class ManagerTest
         {
             return (str, c) ->
             {
-                System.out.println(str);
-                throw new RuntimeException("asd");
+//                System.out.println(str);
+//                throw new RuntimeException("asd");
+                return c.execute(str);
             };
         }
     }
@@ -50,8 +51,9 @@ public class ManagerTest
         {
             return (str, c) ->
             {
-                System.out.println("node2:" + str);
-                return c.execute(str);
+                throw new RuntimeException("zzzzzzzzzz");
+//                System.out.println("node2:" + str);
+//                return c.execute(str);
             };
         }
     }
@@ -65,7 +67,7 @@ public class ManagerTest
             manager1.invokeInterestNodes(Arrays.asList(new Node1(), new Node2()));
             manager1.execute("1", "123").block();
         }catch (Exception e){
-            System.out.println(e);
+//            System.out.println(e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.cell.node.core.context;
 
+import com.cell.base.core.protocol.IContext;
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;
 import com.cell.node.core.config.NodeConfig;
@@ -11,8 +12,9 @@ import java.util.Map;
 
 @Data
 @Builder
-public class CellContext
+public class CellContext implements IContext
 {
+    public static final String sequenceIdHeader = "sequenceId";
     public static final String CELL_CONTEXT = "cell_context";
     public static final Long FLAG_SKIP_AUTH_AOP = Long.valueOf(1 << 0);
     public static final Long FLAG_SKIP_DB_CHECK = Long.valueOf(1 << 1);

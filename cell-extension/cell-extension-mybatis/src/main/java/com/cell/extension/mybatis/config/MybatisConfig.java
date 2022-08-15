@@ -7,12 +7,14 @@ import com.cell.extension.mybatis.constants.DBConstants;
 import com.cell.sdk.configuration.Configuration;
 import com.cell.sdk.configuration.model.IConfigValue;
 import com.cell.sdk.log.LOG;
+import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+@Data
 public class MybatisConfig
 {
 
@@ -46,6 +48,7 @@ public class MybatisConfig
     private MysqlSummary summary;
     private String mysqlKey = DBConstants.MYSQL_KEY;
     private List<String> defaultJsonFields = Arrays.asList("envelopeExtension", "signatureExtension");
+    private int pageLimit = 100000;
 
     public List<String> getDefaultJsonFields()
     {

@@ -46,6 +46,8 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         {
             MybatisConfig.getInstance().setMysqlKey(cmd.getOptionValue(DBConstants.MYSQL_COMMAND));
         }
+        this.paginationInterceptor = new PaginationInterceptor();
+        this.paginationInterceptor.setLimit(MybatisConfig.getInstance().getPageLimit());
     }
 
 
@@ -75,6 +77,7 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         dynamicDataSource.setDefaultTargetDataSource(defaultDataSource); // 程序默认数据源，这个要根据程序调用数据源频次，经常把常调用的数据源作为默认
         return dynamicDataSource;
     }
+
     public DruidDataSource createDruidDataSource(MysqlConfig mysqlConfig)
     {
         DruidDataSource dataSource = new DruidDataSource();
@@ -108,10 +111,12 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         return sqlSessionFactoryBean;
     }
 
+    private PaginationInterceptor paginationInterceptor;
+
     @Bean
     public PaginationInterceptor paginationInterceptor()
     {
-        return new PaginationInterceptor();
+        return this.paginationInterceptor;
     }
 
     @Bean

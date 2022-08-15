@@ -19,6 +19,7 @@
         <module>cell-component-cache</module>
         <module>cell-compoent-bot</module>
         <module>cell-component-cache-redis</module>
+        <module>cell-component-mybatis</module>
     </modules>
 
     <dependencies>

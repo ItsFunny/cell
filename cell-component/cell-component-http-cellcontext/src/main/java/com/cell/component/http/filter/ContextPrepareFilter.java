@@ -1,11 +1,14 @@
 package com.cell.component.http.filter;
 
 import com.cell.base.common.models.Module;
+import com.cell.component.http.filter.manager.FilterManager;
 import com.cell.http.framework.filter.CellFilter;
 import com.cell.http.framework.util.ContextUtils;
 import com.cell.node.core.context.CellContext;
 import com.cell.sdk.log.LOG;
 import com.google.common.base.Stopwatch;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,8 +19,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+@Data
 public class ContextPrepareFilter implements CellFilter
 {
+    @Autowired(required = false)
+    private ICellExceptionHandler exceptionHandler;
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException
     {
@@ -34,7 +41,17 @@ public class ContextPrepareFilter implements CellFilter
         Stopwatch stopwatch = Stopwatch.createStarted();
         try
         {
+            FilterManager.dispatch(ctx);
             filterChain.doFilter(servletRequest, servletResponse);
+        } catch (Exception e)
+        {
+            if (null != this.exceptionHandler)
+            {
+                this.exceptionHandler.handleException(ctx, e);
+            } else
+            {
+                throw e;
+            }
         } finally
         {
             long cost = stopwatch.stop().elapsed(TimeUnit.MILLISECONDS);

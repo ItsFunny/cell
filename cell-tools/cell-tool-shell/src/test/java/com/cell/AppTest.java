@@ -8,6 +8,21 @@ import org.junit.Test;
  */
 public class AppTest
 {
+    public interface AA
+    {
+    }
+
+    public class AC implements AA
+    {
+
+    }
+
+    @Test
+    public void testInter()
+    {
+
+    }
+
     /**
      * Rigorous Test :-)
      */
@@ -38,10 +53,10 @@ public class AppTest
                     System.out.println(line);
                     helper.kill();
                 })).onError((e, h) ->
-        {
-            System.out.println(e);
-            h.kill();
-        })
+                {
+                    System.out.println(e);
+                    h.kill();
+                })
                 .exec();
     }
 }

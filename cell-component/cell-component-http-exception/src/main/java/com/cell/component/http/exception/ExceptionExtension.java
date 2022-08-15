@@ -1,7 +1,7 @@
 package com.cell.component.http.exception;
 
 import com.cell.component.http.exception.handler.DefaultExceptionHandler;
-import com.cell.component.http.exception.handler.IExceptionHandler;
+import com.cell.component.http.filter.ICellExceptionHandler;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.exntension.AbstractSpringNodeExtension;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Bean;
 
 public class ExceptionExtension extends AbstractSpringNodeExtension
 {
-    private IExceptionHandler exceptionHandler;
+    private ICellExceptionHandler exceptionHandler;
 
     @ConditionalOnMissingBean
     @Bean
-    public IExceptionHandler handler()
+    public ICellExceptionHandler handler()
     {
         return this.exceptionHandler;
     }

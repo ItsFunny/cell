@@ -1,5 +1,6 @@
 package com.cell.http.framework.util;
 
+import com.cell.base.common.utils.StringUtils;
 import com.cell.base.common.utils.UUIDUtils;
 import com.cell.http.framework.couple.HttpRequestWrapper;
 import com.cell.http.framework.couple.HttpResponseWrapper;
@@ -16,7 +17,14 @@ public class ContextUtils
         context.setRequest(new HttpRequestWrapper(request));
         context.setResponse(new HttpResponseWrapper(response));
         context.setProtocolId(HttpUtils.getRequestPath(request));
-        context.setSequenceId(UUIDUtils.generateSequenceId());
+        String header = request.getHeader(CellContext.sequenceIdHeader);
+        if (StringUtils.isEmpty(header))
+        {
+            context.setSequenceId(UUIDUtils.generateSequenceId());
+        } else
+        {
+            context.setSequenceId(header);
+        }
         context.setMethod(request.getMethod());
         request.setAttribute(CellContext.CELL_CONTEXT, context);
         return context;

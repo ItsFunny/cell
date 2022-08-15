@@ -7,12 +7,9 @@ import com.cell.base.common.decorators.IDecorator;
 import com.cell.base.core.services.IFactory;
 import com.cell.extension.mybatis.helper.DaoHelper;
 
+import java.util.Optional;
+
 
 public class CellBaseService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ICellBaseService<T>
 {
-    @Override
-    public T getAndInsertOrUpdate(IFactory<QueryWrapper<T>> queryWrapperFactory, IFactory<T> factory, IDecorator<T>... decorators)
-    {
-        return DaoHelper.getAndInsertOrUpdate(this, queryWrapperFactory, factory, decorators);
-    }
 }

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cell-component-http-exception</artifactId>
+    <artifactId>cell-component-mybatis</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -17,14 +17,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-http-extension</artifactId>
-            <version>${cell.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cell</groupId>
-            <artifactId>cell-component-http-cellcontext</artifactId>
-            <version>${cell.version}</version>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>3.2.0</version>
         </dependency>
     </dependencies>
 
