@@ -4,6 +4,8 @@ import com.cell.node.core.context.INodeContext;
 import com.cell.sdk.configuration.Configuration;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Web3JConfig
 {
@@ -11,9 +13,15 @@ public class Web3JConfig
 
     private static final String module = "web3j";
 
-    private Integer chainId;
-    private String address;
-    private String privateKey;
+    private List<Web3jNode> nodes;
+
+    @Data
+    public static class Web3jNode
+    {
+        private Integer chainId;
+        private String address;
+        private String privateKey;
+    }
 
     public static Web3JConfig getInstance()
     {

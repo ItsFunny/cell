@@ -25,7 +25,12 @@ public interface ICellBaseService<T> extends IService<T>
         }
         for (IDecorator<T> decorator : decorators)
         {
-            one = decorator.decorate(one);
+            T ret = decorator.decorate(one);
+            if (ret == null)
+            {
+                return Optional.of(one);
+            }
+            one = ret;
         }
         this.updateById(one);
         return Optional.of(one);

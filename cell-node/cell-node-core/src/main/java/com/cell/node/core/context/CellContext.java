@@ -45,6 +45,25 @@ public class CellContext implements IContext
         this.attributes.put(key, value);
     }
 
+    public Object mustGetAttribute(String key)
+    {
+        Object ret = this.getAttribute(key);
+        if (ret == null)
+        {
+            throw new RuntimeException("attribute is not exist:" + key);
+        }
+        return ret;
+    }
+
+    public Object getAttribute(String key)
+    {
+        if (this.attributes == null)
+        {
+            return null;
+        }
+        return this.attributes.get(key);
+    }
+
     public static CellContext emptyContext()
     {
         CellContext build = CellContext.builder().build();

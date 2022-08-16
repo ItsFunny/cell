@@ -2,6 +2,7 @@ package com.cell.base.common.enums;
 
 public enum ErrorEnums implements ErrorInterface
 {
+    NO_ERROR(0, "SUCCESS"),
     ;
 
     ErrorEnums(int code, String msg)
