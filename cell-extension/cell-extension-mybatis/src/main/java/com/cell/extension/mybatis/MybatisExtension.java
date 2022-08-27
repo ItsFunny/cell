@@ -2,8 +2,9 @@ package com.cell.extension.mybatis;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
-import com.baomidou.mybatisplus.extension.plugins.OptimisticLockerInterceptor;
-import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.cell.base.common.models.Module;
 import com.cell.extension.mybatis.config.MybatisConfig;
@@ -25,6 +26,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import javax.sql.DataSource;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +50,10 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         {
             MybatisConfig.getInstance().setMysqlKey(cmd.getOptionValue(DBConstants.MYSQL_COMMAND));
         }
-        this.paginationInterceptor = new PaginationInterceptor();
-        this.paginationInterceptor.setLimit(MybatisConfig.getInstance().getPageLimit());
+        this.paginationInterceptor = new PaginationInnerInterceptor();
+        this.paginationInterceptor.setMaxLimit(MybatisConfig.getInstance().getPageLimit());
+        // 开启 count 的 join 优化,只针对部分 left join
+        this.paginationInterceptor.setOptimizeJoin(true);
     }
 
 
@@ -99,8 +103,17 @@ public class MybatisExtension extends AbstractSpringNodeExtension
     }
 
     @Bean
+    public MybatisPlusInterceptor mybatisPlusInterceptor(PaginationInnerInterceptor innerInterceptor)
+    {
+        MybatisPlusInterceptor mybatisPlusInterceptor = new MybatisPlusInterceptor();
+        mybatisPlusInterceptor.addInnerInterceptor(innerInterceptor);
+        mybatisPlusInterceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor()); // 乐观锁插件
+        return mybatisPlusInterceptor;
+    }
+
+    @Bean
     @ConditionalOnMissingBean
-    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource, PaginationInterceptor pageInterceptor) throws IOException
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean(DataSource dataSource, MybatisPlusInterceptor pageInterceptor) throws IOException
     {
         MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
@@ -113,19 +126,14 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         return sqlSessionFactoryBean;
     }
 
-    private PaginationInterceptor paginationInterceptor;
+    private PaginationInnerInterceptor paginationInterceptor;
 
     @Bean
-    public PaginationInterceptor paginationInterceptor()
+    public PaginationInnerInterceptor paginationInterceptor()
     {
         return this.paginationInterceptor;
     }
 
-    @Bean
-    public OptimisticLockerInterceptor optimisticLockerInterceptor()
-    {
-        return new OptimisticLockerInterceptor();
-    }
 
     @Override
     protected void onStart(INodeContext ctx) throws Exception

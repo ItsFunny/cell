@@ -6,5 +6,5 @@ cd ../maven_repository/maven-repo/com/cell/
 rm -rf cell-runnable*
 git add .
 git commit -m "update"
-git push origin master -f
+#git push origin master -f
 cd ${PWD}

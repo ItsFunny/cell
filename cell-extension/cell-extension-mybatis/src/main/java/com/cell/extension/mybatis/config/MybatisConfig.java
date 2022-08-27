@@ -48,7 +48,7 @@ public class MybatisConfig
     private MysqlSummary summary;
     private String mysqlKey = DBConstants.MYSQL_KEY;
     private List<String> defaultJsonFields = Arrays.asList("envelopeExtension", "signatureExtension");
-    private int pageLimit = 100000;
+    private long pageLimit = 100000;
 
     public List<String> getDefaultJsonFields()
     {
