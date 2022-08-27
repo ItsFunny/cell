@@ -7,11 +7,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class Web3JConfig
+public class CellWeb3JConfig
 {
-    private static Web3JConfig instance = new Web3JConfig();
+    private static CellWeb3JConfig instance = new CellWeb3JConfig();
 
-    private static final String module = "web3j";
+    private static final String module = "cellWeb3j";
 
     private List<Web3jNode> nodes;
 
@@ -19,18 +19,19 @@ public class Web3JConfig
     public static class Web3jNode
     {
         private Integer chainId;
+        private String name;
         private String address;
         private String privateKey;
     }
 
-    public static Web3JConfig getInstance()
+    public static CellWeb3JConfig getInstance()
     {
         return instance;
     }
 
     public void seal(INodeContext context)
     {
-        instance = Configuration.getDefault().getAndMonitorConfig(module, Web3JConfig.class, (v) ->
+        instance = Configuration.getDefault().getAndMonitorConfig(module, CellWeb3JConfig.class, (v) ->
         {
             instance = v;
         });

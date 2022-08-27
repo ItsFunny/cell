@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.connection.*;
 import org.springframework.data.redis.connection.jedis.JedisClientConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
@@ -38,7 +40,6 @@ public class RedisConfiguration
             configuration.setPassword(RedisPassword.of(redisConfig.getClusterPassword()));
             return new JedisConnectionFactory(configuration);
         }
-
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration(redisConfig.getHost(),
                 redisConfig.getPort());
         configuration.setPassword(RedisPassword.of(redisConfig.getPassword()));

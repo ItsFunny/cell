@@ -34,7 +34,6 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     private List<String> blackList;
 
 
-
     protected abstract Set<ILogConsumer> getLogConsumers(ModuleInterface module, LogTypeEnums logType, LogLevel logLevel);
 
     public abstract void registerConsumers(ILogConsumer consumer);
@@ -71,13 +70,13 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
     @Override
     public void warn(LogTypeEnums logType, Throwable err, String format, Object... data)
     {
-        this.log(this.module,LogConstant.DEFAULT_SEQUENCE, LogLevel.WARN, logType, err, format, data);
+        this.log(this.module, LogConstant.DEFAULT_SEQUENCE, LogLevel.WARN, logType, err, format, data);
     }
 
     @Override
     public void error(LogTypeEnums logType, Throwable err, String format, Object... data)
     {
-        this.log(this.module,LogConstant.DEFAULT_SEQUENCE, LogLevel.ERROR, logType, err, format, data);
+        this.log(this.module, LogConstant.DEFAULT_SEQUENCE, LogLevel.ERROR, logType, err, format, data);
     }
 
     public void log(ModuleInterface module, String sequenceId, LogLevel logLevel, LogTypeEnums logType, Throwable err, String format, Object... data)
@@ -91,7 +90,7 @@ public abstract class AbstractCellLogger extends AbstractInitOnce implements ICe
         }
         final LogEntry logEntry = CellLoggerContext.createLogEntry(module, sequenceId, this.blackList, logLevel, logType, err, afterCreateHook, format, data);
         final DefaultLogEventWrapper defaultLogEventWrapper = new DefaultLogEventWrapper(logEntry);
-        logConsumers.stream().filter(c -> c.logAble(logLevel)).forEach(c ->
+        logConsumers.stream().filter(c -> c.logAble(logEntry)).forEach(c ->
                 c.consume(defaultLogEventWrapper));
     }
 

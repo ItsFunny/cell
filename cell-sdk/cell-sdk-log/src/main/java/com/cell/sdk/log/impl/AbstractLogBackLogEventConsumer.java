@@ -5,6 +5,7 @@ import com.cell.base.common.utils.CollectionUtils;
 import com.cell.sdk.log.*;
 import org.slf4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,36 @@ public abstract class AbstractLogBackLogEventConsumer extends AbstractInitOnce i
     protected volatile List<ILogHook> hooks;
     protected IEntryLayOut layOut;
 
+    // TODO,optimize logFilter
+    private ILogFilter filter;
+
+    private static List<String> blackList = new ArrayList<>();
+
+    public AbstractLogBackLogEventConsumer()
+    {
+        this.filter = new BlackFilter();
+    }
+
+    class BlackFilter implements ILogFilter
+    {
+        @Override
+        public boolean logAble(LogEntry logEntry)
+        {
+            for (String str : blackList)
+            {
+                if (logEntry.getMessage().contains(str))
+                {
+                    return false;
+                }
+            }
+            ILogFilter staticFilter = FilterManager.getLogFilter();
+            if (staticFilter != null)
+            {
+                return staticFilter.logAble(logEntry) || ILogFilter.super.logAble(logEntry);
+            }
+            return ILogFilter.super.logAble(logEntry);
+        }
+    }
 
     @Override
     public ILogEventResult consume(ILogEvent logEvent)
@@ -70,9 +101,9 @@ public abstract class AbstractLogBackLogEventConsumer extends AbstractInitOnce i
     }
 
     @Override
-    public boolean logAble(LogLevel logLevel)
+    public boolean logAble(LogEntry logLevel)
     {
-        return true;
+        return this.filter.logAble(logLevel);
     }
 
     @Override

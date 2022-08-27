@@ -57,6 +57,7 @@ public enum Module implements ModuleInterface
     ALIBABA((short) 50, "alibaba"),
     COMPONENT_TASK((short) 51, "task"),
     DYNAMIC_DAO((short) 52,"DYNAMIC_DAO"),
+    WEB_3J((short) 53,"WEB_3J"),
     MICROMETER((short) 10008, "micrometer"),
     UNKNOWN((short) 65535, "UNKNOWN"),
     ;
