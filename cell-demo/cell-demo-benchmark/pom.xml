@@ -10,7 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cell-demo-benchmark</artifactId>
-
+    <repositories>
+        <repository>
+            <id>itsfunny.github.io</id>
+            <name>charlie-cell</name>
+            <url>https://itsfunny.github.io/maven_repository/maven-repo/</url>
+        </repository>
+    </repositories>
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>

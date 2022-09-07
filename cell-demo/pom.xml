@@ -13,6 +13,13 @@
     <artifactId>cell-demo</artifactId>
     <packaging>pom</packaging>
 
+    <repositories>
+        <repository>
+            <id>itsfunny.github.io</id>
+            <name>charlie-cell</name>
+            <url>https://itsfunny.github.io/maven_repository/maven-repo/</url>
+        </repository>
+    </repositories>
     <name>cell-demo</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
