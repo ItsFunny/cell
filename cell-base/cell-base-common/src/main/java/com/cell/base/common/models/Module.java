@@ -40,6 +40,7 @@ public enum Module implements ModuleInterface
     GRPC_SERVER((short) 115, "GRPC_SERVER"),
     GRPC_CLIENT((short) 116, "GRPC_CLIENT"),
     HOOK((short) 117, "HOOK"),
+    AOP((short) 118,"AOP"),
     ////////////
     RABBITMQ((short) 38, "rabbitmq"),
     KAFKA((short) 39, "kafka"),

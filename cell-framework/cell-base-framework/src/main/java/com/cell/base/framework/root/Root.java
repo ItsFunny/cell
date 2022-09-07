@@ -121,7 +121,7 @@ public class Root implements ApplicationContextAware
             boolean contains = classSet.contains(cmd);
             if (contains && !command.forceOverRide())
             {
-                throw new ProgramaException("asd");
+                throw new ProgramaException("duplicate command" + command);
             }
             classSet.add((Class<? extends ICommand>) cmd);
         });

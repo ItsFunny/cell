@@ -1,7 +1,9 @@
 package com.cell.node.core.aop;
 
+import com.cell.base.common.models.Module;
 import com.cell.node.core.context.CellContext;
 import com.cell.node.core.valid.IValidBasic;
+import com.cell.sdk.log.LOG;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,6 +16,7 @@ public class ArgumentAop
 {
     @Pointcut("@annotation(com.cell.node.core.aop.ArgumentAnnotation)")
     public void argumentCheck() {}
+
 
     @Before("argumentCheck()")
     public void doArgumentCheck(JoinPoint joinPoint)
@@ -41,7 +44,14 @@ public class ArgumentAop
         }
         if (context != null && check != null)
         {
-            check.validBasic(context);
+            try
+            {
+                check.validBasic(context);
+            } catch (IllegalArgumentException e)
+            {
+                LOG.error(Module.AOP, e, "context:{},argument is illegal:{}", context, check);
+                throw e;
+            }
         }
 //        if (context != null)
 //        {
