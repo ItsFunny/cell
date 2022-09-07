@@ -153,4 +153,180 @@ public class Commands
     public static class Command41 extends BaseCommand {}
 
 
+    @HttpCmdAnno(uri = "/bench/42", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command42 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/43", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command43 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/44", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command44 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/45", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command45 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/46", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command46 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/47", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command47 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/48", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command48 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/49", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command49 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/50", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command50 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/51", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command51 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/52", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command52 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/53", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command53 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/54", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command54 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/55", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command55 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/56", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command56 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/57", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command57 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/58", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command58 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/59", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command59 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/60", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command60 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/61", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command61 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/62", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command62 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/63", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command63 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/64", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command64 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/65", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command65 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/66", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command66 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/67", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command67 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/68", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command68 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/69", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command69 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/70", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command70 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/71", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command71 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/72", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command72 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/73", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command73 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/74", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command74 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/75", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command75 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/76", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command76 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/77", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command77 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/78", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command78 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/79", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command79 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/80", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command80 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/81", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command81 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/82", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command82 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/83", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command83 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/84", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command84 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/85", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command85 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/86", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command86 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/87", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command87 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/88", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command88 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/89", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command89 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/90", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command90 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/91", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command91 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/92", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command92 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/93", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command93 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/94", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command94 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/95", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command95 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/96", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command96 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/97", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command97 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/98", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command98 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/99", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command99 extends BaseCommand {}
+
+    @HttpCmdAnno(uri = "/bench/100", requestType = EnumHttpRequestType.HTTP_URL_GET)
+    public static class Command100 extends BaseCommand {}
 }
