@@ -101,13 +101,13 @@ public class SpringInitializer extends AbstractInitOnce implements ApplicationCo
                 scanRootPathes.addAll(Stream.of(annota.scanBasePackages()).filter(StringUtils::isNotEmpty).collect(Collectors.toSet()));
             }
         }
-        // TODO,前缀树
-        scanRootPathes.removeIf(value -> value.startsWith("com.cell"));
-        scanRootPathes.add(Constants.SCAN_ROOT);
         if (manualPath != null)
         {
             scanRootPathes.addAll(manualPath);
         }
+        // TODO,前缀树
+        scanRootPathes.removeIf(value -> value.startsWith("com.cell"));
+        scanRootPathes.add(Constants.SCAN_ROOT);
 
         return scanRootPathes;
     }
