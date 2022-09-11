@@ -956,15 +956,16 @@ public class ClassUtil
 
     public static boolean checkIsAbstract(Class<?> c)
     {
-        Class a;
-        try
-        {
-            a = Class.forName(c.getName());
-        } catch (ClassNotFoundException e)
-        {
-            return false;
-        }
-        return Modifier.isAbstract(a.getModifiers());
+//        Class a;
+//        try
+//        {
+////            LOG.info(Module.COMMON,"class for name:{}",c);
+//            a = Class.forName(c.getName());
+//        } catch (ClassNotFoundException e)
+//        {
+//            return false;
+//        }
+        return Modifier.isAbstract(c.getModifiers());
     }
 
     public static boolean isAsBean(Class<?> c)
