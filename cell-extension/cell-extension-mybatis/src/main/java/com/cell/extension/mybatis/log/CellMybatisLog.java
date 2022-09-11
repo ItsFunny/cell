@@ -21,7 +21,7 @@ public class CellMybatisLog extends Log4j2Impl
     @Override
     public boolean isDebugEnabled()
     {
-        return debugEnable;
+        return true;
     }
 
     @Override
@@ -45,7 +45,9 @@ public class CellMybatisLog extends Log4j2Impl
     @Override
     public void debug(String s)
     {
-        LOG.info(Module.MYBATIS, s);
+        if (debugEnable){
+            LOG.info(Module.MYBATIS, s);
+        }
     }
 
     @Override
