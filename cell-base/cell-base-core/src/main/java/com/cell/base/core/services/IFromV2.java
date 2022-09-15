@@ -2,6 +2,7 @@ package com.cell.base.core.services;
 
 import java.util.function.Consumer;
 
+@Deprecated
 public interface IFromV2<F>
 {
     default void from(F f, Consumer<F>...consumers){
