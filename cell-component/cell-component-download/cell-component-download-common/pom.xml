@@ -3,36 +3,36 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cell</artifactId>
+        <artifactId>cell-component-download</artifactId>
         <groupId>com.cell</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>cell-component</artifactId>
-    <packaging>pom</packaging>
-    <modules>
-        <module>cell-component-timewheel</module>
-        <module>cell-component-http-cellcontext</module>
-        <module>cell-component-http-swagger</module>
-        <module>cell-component-cache</module>
-        <module>cell-compoent-bot</module>
-        <module>cell-component-cache-redis</module>
-        <module>cell-component-mybatis</module>
-        <module>cell-component-download</module>
-        <module>cell-component-blockchain</module>
-    </modules>
+    <artifactId>cell-component-download-common</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-base-common</artifactId>
+            <artifactId>cell-component-blockchain-common</artifactId>
+            <version>${cell.version}</version>
+        </dependency>
+        <dependency>
+            <artifactId>cell-extension-mybatis</artifactId>
+            <groupId>com.cell</groupId>
             <version>${cell.version}</version>
         </dependency>
         <dependency>
             <groupId>com.cell</groupId>
-            <artifactId>cell-node-spring</artifactId>
-            <version>${cell.version}</version>
+            <artifactId>cell-bee-event</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
+
 </project>

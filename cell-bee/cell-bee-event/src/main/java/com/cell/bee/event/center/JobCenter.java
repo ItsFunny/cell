@@ -32,4 +32,9 @@ public class JobCenter
     {
         this.bus.register(o);
     }
+
+    public static void main(String[] args)
+    {
+
+    }
 }
