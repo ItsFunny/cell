@@ -13,4 +13,8 @@ import com.cell.base.common.empty.IEmpty;
  */
 public interface IEvent extends IEmpty
 {
+    String DEFAULT_SEQUENCE_ID="charlie";
+    default String getSequenceId(){
+        return DEFAULT_SEQUENCE_ID;
+    }
 }

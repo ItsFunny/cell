@@ -1,5 +1,6 @@
 package com.cell.base.common.utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Random;
@@ -9,6 +10,14 @@ import java.util.Random;
  */
 public class RandomUtils
 {
+    public static BigDecimal randomBigDecimal(float Max, float Min)
+    {
+        return new BigDecimal(Math.random() * (Max - Min) + Min);
+    }
+    public static boolean hitProbability(Double percent)
+    {
+        return Math.random() <= percent;
+    }
     /**
      * 在一个范围中随机一个整数(包括两端的值)
      *
