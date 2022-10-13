@@ -3,7 +3,6 @@ package com.cell.node.core.context;
 import com.cell.base.core.protocol.IContext;
 import com.cell.base.core.protocol.IServerRequest;
 import com.cell.base.core.protocol.IServerResponse;
-import com.cell.node.core.config.NodeConfig;
 import lombok.Builder;
 import lombok.Data;
 
@@ -30,6 +29,8 @@ public class CellContext implements IContext
     private String sequenceId;
     private String protocolId;
     private String method;
+
+    private Object requestData;
 
 
     private Map<String, Object> attributes;
@@ -64,10 +65,12 @@ public class CellContext implements IContext
         return this.attributes.get(key);
     }
 
+    public static boolean traceEnable = true;
+
     public static CellContext emptyContext()
     {
         CellContext build = CellContext.builder().build();
-        if (NodeConfig.getInstance().isTraceEnable())
+        if (traceEnable)
         {
             build.trace = new ElapsedTimeInfos();
         } else

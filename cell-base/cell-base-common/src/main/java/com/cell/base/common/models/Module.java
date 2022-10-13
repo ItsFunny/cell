@@ -59,6 +59,7 @@ public enum Module implements ModuleInterface
     COMPONENT_TASK((short) 51, "task"),
     DYNAMIC_DAO((short) 52,"DYNAMIC_DAO"),
     WEB_3J((short) 53,"WEB_3J"),
+    WORKER((short) 54,"WORKER"),
     MICROMETER((short) 10008, "micrometer"),
     // web3
     DOWNLOADER((short)20000,"DOWNLOAD" ),

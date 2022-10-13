@@ -17,7 +17,6 @@ public class ArgumentAop
     @Pointcut("@annotation(com.cell.node.core.aop.ArgumentAnnotation)")
     public void argumentCheck() {}
 
-
     @Before("argumentCheck()")
     public void doArgumentCheck(JoinPoint joinPoint)
     {
@@ -44,6 +43,7 @@ public class ArgumentAop
         }
         if (context != null && check != null)
         {
+            context.setRequestData(check);
             try
             {
                 check.validBasic(context);
