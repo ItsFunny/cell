@@ -4,6 +4,7 @@ import com.cell.base.common.enums.ErrorEnums;
 import com.cell.base.common.enums.ErrorInterface;
 import com.cell.base.common.models.Couple;
 import com.cell.base.common.models.Module;
+import com.cell.base.common.utils.CollectionUtils;
 import com.cell.base.common.utils.RandomUtils;
 import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.wrapper.Box;
@@ -13,21 +14,34 @@ import com.cell.extension.blockchain.web3j.consumer.IWeb3jConsumer;
 import com.cell.sdk.log.LOG;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.web3j.abi.FunctionEncoder;
+import org.web3j.abi.FunctionReturnDecoder;
+import org.web3j.abi.TypeReference;
+import org.web3j.abi.datatypes.Function;
+import org.web3j.abi.datatypes.Type;
+import org.web3j.abi.datatypes.Utf8String;
+import org.web3j.abi.datatypes.generated.Uint256;
+import org.web3j.abi.datatypes.generated.Uint8;
 import org.web3j.crypto.*;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.EthFilter;
+import org.web3j.protocol.core.methods.request.Transaction;
+import org.web3j.protocol.core.methods.response.EthCall;
 import org.web3j.protocol.core.methods.response.EthLog;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Numeric;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public class CellWeb3jUtils
 {
     private static Logger log = LoggerFactory.getLogger(CellWeb3jUtils.class);
-
+    public static String emptyAddress = "0x0000000000000000000000000000000000000000";
     private static Map<String, Web3JWrapper> web3jInstances = new HashMap<>();
     private static List<Web3JWrapper> web3jList = new ArrayList<>();
 
@@ -216,5 +230,221 @@ public class CellWeb3jUtils
     private static ErrorInterface handleWeb3j(Web3JWrapper wrapper, IWeb3jConsumer<Web3JWrapper> consumer) throws IOException
     {
         return consumer.consume(wrapper);
+    }
+
+    public static Optional<Integer> getDecimal(String contractAddress)
+    {
+        Box<Integer> box = new Box<>();
+        CellWeb3jUtils.doWithWeb3J((v) ->
+        {
+            int ret = getTokenDecimals(v.getWeb3j(), contractAddress);
+            box.setData(ret);
+            return ErrorEnums.NO_ERROR;
+        });
+        if (box.getData() == null)
+        {
+            return Optional.empty();
+        }
+        return Optional.of(box.getData());
+    }
+
+
+    public static Optional<String> getSupply(String tokenAddress)
+    {
+        Optional<Integer> decimalOpt = getDecimal(tokenAddress);
+        if (decimalOpt.isPresent())
+        {
+            return Optional.empty();
+        }
+        Integer decimals = decimalOpt.get();
+        double pow = Math.pow(10, Double.parseDouble(String.valueOf(decimals)));
+        BigDecimal tokenDecimals = new BigDecimal(pow);
+        Optional<BigInteger> tokenTotalSupplyOpt = getTokenTotalSupply(tokenAddress);
+        if (!tokenTotalSupplyOpt.isPresent())
+        {
+            return Optional.empty();
+        }
+        BigInteger tokenTotalSupply = tokenTotalSupplyOpt.get();
+        BigDecimal supply = new BigDecimal(tokenTotalSupply).divide(tokenDecimals, 0, BigDecimal.ROUND_DOWN);
+        return Optional.of(supply.toString());
+    }
+
+    public static Optional<BigInteger> getTokenTotalSupply(String contractAddress)
+    {
+        Box<BigInteger> box = new Box<>();
+        CellWeb3jUtils.doWithWeb3J((v) ->
+        {
+            BigInteger ret = doGetTokenTotalSupply(v.getWeb3j(), contractAddress);
+            box.setData(ret);
+            return ErrorEnums.NO_ERROR;
+        });
+        if (box.getData() == null)
+        {
+            return Optional.empty();
+        }
+        return Optional.of(box.getData());
+    }
+
+    private static BigInteger doGetTokenTotalSupply(Web3j web3j, String contractAddress)
+    {
+        String methodName = "totalSupply";
+        String fromAddr = emptyAddress;
+        BigInteger totalSupply = BigInteger.ZERO;
+        List<Type> inputParameters = new ArrayList<>();
+        List<TypeReference<?>> outputParameters = new ArrayList<>();
+
+        TypeReference<Uint256> typeReference = new TypeReference<Uint256>()
+        {
+        };
+        outputParameters.add(typeReference);
+
+        Function function = new Function(methodName, inputParameters, outputParameters);
+
+        String data = FunctionEncoder.encode(function);
+        Transaction transaction = Transaction.createEthCallTransaction(fromAddr, contractAddress, data);
+
+        EthCall ethCall;
+        try
+        {
+            ethCall = web3j.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+            List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+            totalSupply = (BigInteger) results.get(0).getValue();
+        } catch (InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        return totalSupply;
+    }
+
+    public static int getTokenDecimals(Web3j web3j, String contractAddress)
+    {
+        String methodName = "decimals";
+        String fromAddr = emptyAddress;
+        int decimal = 0;
+        List<Type> inputParameters = new ArrayList<>();
+        List<TypeReference<?>> outputParameters = new ArrayList<>();
+        TypeReference<Uint8> typeReference = new TypeReference<Uint8>()
+        {
+        };
+        outputParameters.add(typeReference);
+        Function function = new Function(methodName, inputParameters, outputParameters);
+        String data = FunctionEncoder.encode(function);
+        Transaction transaction = Transaction.createEthCallTransaction(fromAddr, contractAddress, data);
+        EthCall ethCall;
+        try
+        {
+            ethCall = web3j.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+            List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+            if (CollectionUtils.isEmpty(results))
+            {
+                return 0;
+            }
+            decimal = Integer.parseInt(results.get(0).getValue().toString());
+        } catch (InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        return decimal;
+    }
+
+
+    public static String getSymbol(String contractAddress)
+    {
+        Box<String> box = new Box<>();
+        CellWeb3jUtils.doWithWeb3J((v) ->
+        {
+            String ret = getTokenSymbol(v.getWeb3j(), contractAddress);
+            box.setData(ret);
+            return ErrorEnums.NO_ERROR;
+        });
+        if (box.getData() == null)
+        {
+            return null;
+        }
+        return box.getData();
+    }
+
+    public static String getTokenName(String contractAddress)
+    {
+        Box<String> box = new Box<>();
+        CellWeb3jUtils.doWithWeb3J((v) ->
+        {
+            String ret = getTokenName(v.getWeb3j(), contractAddress);
+            box.setData(ret);
+            return ErrorEnums.NO_ERROR;
+        });
+        if (box.getData() == null)
+        {
+            return null;
+        }
+        return box.getData();
+    }
+
+    private static String getTokenSymbol(Web3j web3j, String contractAddress)
+    {
+        String methodName = "symbol";
+        String symbol = null;
+        String fromAddr = emptyAddress;
+        List<Type> inputParameters = new ArrayList<>();
+        List<TypeReference<?>> outputParameters = new ArrayList<>();
+
+        TypeReference<Utf8String> typeReference = new TypeReference<Utf8String>()
+        {
+        };
+        outputParameters.add(typeReference);
+
+        Function function = new Function(methodName, inputParameters, outputParameters);
+
+        String data = FunctionEncoder.encode(function);
+        Transaction transaction = Transaction.createEthCallTransaction(fromAddr, contractAddress, data);
+
+        EthCall ethCall;
+        try
+        {
+            ethCall = web3j.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+            List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+            if (Objects.nonNull(results) && results.size() > 0)
+            {
+                symbol = results.get(0).getValue().toString();
+            }
+        } catch (InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        return symbol;
+    }
+
+    private static String getTokenName(Web3j web3j, String contractAddress)
+    {
+        String methodName = "name";
+        String name = null;
+        String fromAddr = emptyAddress;
+        List<Type> inputParameters = new ArrayList<>();
+        List<TypeReference<?>> outputParameters = new ArrayList<>();
+
+        TypeReference<Utf8String> typeReference = new TypeReference<Utf8String>()
+        {
+        };
+        outputParameters.add(typeReference);
+
+        Function function = new Function(methodName, inputParameters, outputParameters);
+
+        String data = FunctionEncoder.encode(function);
+        Transaction transaction = Transaction.createEthCallTransaction(fromAddr, contractAddress, data);
+
+        EthCall ethCall;
+        try
+        {
+            ethCall = web3j.ethCall(transaction, DefaultBlockParameterName.LATEST).sendAsync().get();
+            List<Type> results = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
+            if (Objects.nonNull(results) && results.size() > 0)
+            {
+                name = results.get(0).getValue().toString();
+            }
+        } catch (InterruptedException | ExecutionException e)
+        {
+            e.printStackTrace();
+        }
+        return name;
     }
 }
