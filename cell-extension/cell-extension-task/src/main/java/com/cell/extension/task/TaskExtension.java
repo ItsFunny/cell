@@ -1,6 +1,6 @@
 package com.cell.extension.task;
 
-import com.cell.extension.task.event.JobCenter;
+import com.cell.extension.task.event.CellJobCenter;
 import com.cell.extension.task.worker.JobWorker;
 import com.cell.node.core.context.INodeContext;
 import com.cell.node.spring.app.SpringNodeAPP;
@@ -9,37 +9,31 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.Map;
 
-public class TaskExtension extends AbstractSpringNodeExtension
-{
+public class TaskExtension extends AbstractSpringNodeExtension {
 
     @Override
-    protected void onInit(INodeContext ctx) throws Exception
-    {
-        JobCenter.getInstance().seal(ctx);
+    protected void onInit(INodeContext ctx) throws Exception {
+        CellJobCenter.getInstance().seal(ctx);
     }
 
     @Override
-    protected void onStart(INodeContext ctx) throws Exception
-    {
+    protected void onStart(INodeContext ctx) throws Exception {
         SpringNodeAPP app = (SpringNodeAPP) ctx.getApp();
         ConfigurableApplicationContext appContext = app.getAppContext();
         Map<String, JobWorker> workers = appContext.getBeansOfType(JobWorker.class);
-        for (String s : workers.keySet())
-        {
+        for (String s : workers.keySet()) {
             JobWorker worker = workers.get(s);
-            JobCenter.getInstance().registerSubscriber(worker);
+            CellJobCenter.getInstance().registerSubscriber(worker);
         }
     }
 
     @Override
-    protected void onReady(INodeContext ctx) throws Exception
-    {
+    protected void onReady(INodeContext ctx) throws Exception {
 
     }
 
     @Override
-    protected void onClose(INodeContext ctx) throws Exception
-    {
+    protected void onClose(INodeContext ctx) throws Exception {
 
     }
 }

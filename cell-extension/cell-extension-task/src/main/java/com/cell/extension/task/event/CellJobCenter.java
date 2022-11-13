@@ -1,12 +1,15 @@
-package com.cell.plugin.develop.context.event;
+package com.cell.extension.task.event;
 
 
 import com.cell.base.common.events.IEvent;
+import com.cell.base.common.models.Module;
+import com.cell.base.core.concurrent.base.EventLoopGroup;
+import com.cell.base.core.concurrent.base.Promise;
+import com.cell.extension.task.wrapper.PromiseWrapper;
+import com.cell.node.core.context.INodeContext;
 import com.cell.sdk.log.LOG;
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
-import io.netty.channel.DefaultEventLoopGroup;
-import io.netty.util.concurrent.Promise;
 import lombok.Data;
 
 /**
@@ -18,25 +21,29 @@ import lombok.Data;
  * @Date 创建时间：2021-09-14 21:14
  */
 @Data
-public class JobCenter
+public class CellJobCenter
 {
-    // FIXME ,CUSTOMIZE
-    private static final JobCenter instance = new JobCenter();
+    private static final CellJobCenter instance = new CellJobCenter();
 
-    private DefaultEventLoopGroup eventExecutors = new DefaultEventLoopGroup(256);
-    // TODO
-    private final EventBus bus = new AsyncEventBus("jobCenter", this.eventExecutors);
-    private final EventBus syncBus = new EventBus();
+    private EventLoopGroup eventExecutors;
+    private EventBus bus;
+    private EventBus syncBus;
 
+    public void seal(INodeContext nodeContext)
+    {
+        this.eventExecutors = nodeContext.getEventLoopGroup();
+        this.bus = new AsyncEventBus("jobCenter", this.eventExecutors);
+        this.syncBus = new EventBus();
+    }
 
-    public static JobCenter getInstance()
+    public static CellJobCenter getInstance()
     {
         return instance;
     }
 
     public void addJob(IEvent job)
     {
-        LOG.info("add job async:{}", job);
+        LOG.info(Module.WORKER, "add job async:{}", job);
         this.bus.post(job);
     }
 
@@ -52,6 +59,11 @@ public class JobCenter
         return wp.getPromise();
     }
 
+    public void addAsyncJob(IEvent job)
+    {
+        this.bus.post(job);
+    }
+
     public Promise addSyncPromiseJob(IEvent job)
     {
         PromiseWrapper<Object> wp = new PromiseWrapper<>(job);
@@ -59,17 +71,9 @@ public class JobCenter
         return wp.getPromise();
     }
 
-    public void registerSubscriber(JobWorker o)
+    public void registerSubscriber(Object o)
     {
-        PromiseProxyWorker promiseProxyWorker = new PromiseProxyWorker(o);
-        this.bus.register(promiseProxyWorker);
-        this.syncBus.register(promiseProxyWorker);
         this.bus.register(o);
         this.syncBus.register(o);
-    }
-
-    public static void main(String[] args)
-    {
-
     }
 }

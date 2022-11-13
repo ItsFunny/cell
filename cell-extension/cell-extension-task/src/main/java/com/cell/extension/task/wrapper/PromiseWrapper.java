@@ -3,7 +3,7 @@ package com.cell.extension.task.wrapper;
 import com.cell.base.common.events.IEvent;
 import com.cell.base.core.concurrent.base.Promise;
 import com.cell.base.core.concurrent.promise.BaseDefaultPromise;
-import com.cell.extension.task.event.JobCenter;
+import com.cell.extension.task.event.CellJobCenter;
 
 
 public class PromiseWrapper<T> implements IEvent
@@ -16,7 +16,7 @@ public class PromiseWrapper<T> implements IEvent
     public PromiseWrapper(IEvent data)
     {
         this.data = data;
-        this.promise = new BaseDefaultPromise(JobCenter.getInstance().getEventExecutors().next());
+        this.promise = new BaseDefaultPromise(CellJobCenter.getInstance().getEventExecutors().next());
     }
 
     public IEvent getData()

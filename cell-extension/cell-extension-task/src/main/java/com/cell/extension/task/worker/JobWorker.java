@@ -2,7 +2,6 @@ package com.cell.extension.task.worker;
 
 import com.cell.base.common.events.IEvent;
 import com.cell.base.common.models.Module;
-import com.cell.extension.task.event.JobCenter;
 import com.cell.sdk.log.LOG;
 import com.google.common.eventbus.Subscribe;
 
