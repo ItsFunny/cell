@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>cell-self</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>cell-self-blockchain</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
