@@ -508,7 +508,7 @@ public class SpringBeanDependenciesPostProcessor extends InstantiationAwareBeanP
         if (bean instanceof IBeanSelfAware)
         {
             IBeanSelfAware beanSelfAware = (IBeanSelfAware) bean;
-            beanSelfAware.setSelf(beanSelfAware);
+            beanSelfAware.setSelf(bean);
             return beanSelfAware;
         }
         return super.postProcessAfterInitialization(bean, beanName);

@@ -21,6 +21,7 @@
         <module>cell-tools</module>
         <module>cell-sdk</module>
         <module>cell-component</module>
+        <module>cell-self</module>
     </modules>
     <packaging>pom</packaging>
 
