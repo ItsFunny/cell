@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cell.component.httpsecurity.security.mapper.SecurityMenuResourceMapper">
+
+    <resultMap type="com.cell.component.httpsecurity.security.entity.SecurityMenuResource"
+               id="SecurityMenuResourceResultMap">
+        <result property="menuResourceId" column="menu_resource_id" jdbcType="INTEGER"/>
+        <result property="permissionId" column="permission_id" jdbcType="INTEGER"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="menuUrl" column="menu_url" jdbcType="VARCHAR"/>
+        <result property="parentMenuId" column="parent_menu_id" jdbcType="INTEGER"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_field">
+        menu_resource_id
+        , permission_id, menu_name, menu_url, parent_menu_id, create_date, update_date
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="SecurityMenuResourceResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from security_menu_resource
+        where menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="SecurityMenuResourceResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource">
+        select
+        <include refid="table_field"/>
+        from security_menu_resource
+        <where>
+            <if test="menuResourceId != null">
+                and menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="menuName != null">
+                and menu_name = #{menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="menuUrl != null">
+                and menu_url = #{menuUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="parentMenuId != null">
+                and parent_menu_id = #{parentMenuId,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="SecurityMenuResourceResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource">
+        select
+        <include refid="table_field"/>
+        from security_menu_resource
+        <where>
+            <if test="menuResourceId != null">
+                and menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="menuName != null">
+                and menu_name = #{menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="menuUrl != null">
+                and menu_url = #{menuUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="parentMenuId != null">
+                and parent_menu_id = #{parentMenuId,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="SecurityMenuResourceResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from security_menu_resource
+        where menu_resource_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="menuResourceId" useGeneratedKeys="true"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource">
+        insert into security_menu_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="menuResourceId != null">
+                menu_resource_id,
+            </if>
+            <if test="permissionId != null">
+                permission_id,
+            </if>
+            <if test="menuName != null">
+                menu_name,
+            </if>
+            <if test="menuUrl != null">
+                menu_url,
+            </if>
+            <if test="parentMenuId != null">
+                parent_menu_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="menuResourceId != null">
+                #{menuResourceId,jdbcType=INTEGER},
+            </if>
+            <if test="permissionId != null">
+                #{permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="menuName != null">
+                #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuUrl != null">
+                #{menuUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="parentMenuId != null">
+                #{parentMenuId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="menuResourceId" useGeneratedKeys="true" parameterType="list">
+        insert into security_menu_resource
+        (menu_resource_id, permission_id, menu_name, menu_url, parent_menu_id, create_date, update_date)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (#{item.menuResourceId}, #{item.permissionId}, #{item.menuName}, #{item.menuUrl}, #{item.parentMenuId},
+            #{item.createDate}, #{item.updateDate})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource">
+        update security_menu_resource
+        <set>
+            <if test="permissionId != null">
+                permission_id = #{permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="menuUrl != null and menuUrl != ''">
+                menu_url = #{menuUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="parentMenuId != null">
+                parent_menu_id = #{parentMenuId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过表字段修改实体属性不为null的列-->
+    <update id="updateByField">
+        update security_menu_resource
+        <set>
+            <if test="where.permissionId == null and set.permissionId != null">
+                permission_id = #{set.permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="where.menuName == null and set.menuName != null and set.menuName != ''">
+                menu_name = #{set.menuName,jdbcType=VARCHAR},
+            </if>
+            <if test="where.menuUrl == null and set.menuUrl != null and set.menuUrl != ''">
+                menu_url = #{set.menuUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="where.parentMenuId == null and set.parentMenuId != null">
+                parent_menu_id = #{set.parentMenuId,jdbcType=INTEGER},
+            </if>
+            <if test="where.createDate == null and set.createDate != null">
+                create_date = #{set.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="where.updateDate == null and set.updateDate != null">
+                update_date = #{set.updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="where.menuResourceId != null">
+                and menu_resource_id = #{where.menuResourceId,jdbcType=INTEGER}
+            </if>
+            <if test="where.permissionId != null">
+                and permission_id = #{where.permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="where.menuName != null">
+                and menu_name = #{where.menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="where.menuUrl != null">
+                and menu_url = #{where.menuUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="where.parentMenuId != null">
+                and parent_menu_id = #{where.parentMenuId,jdbcType=INTEGER}
+            </if>
+            <if test="where.createDate != null">
+                and create_date = #{where.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="where.updateDate != null">
+                and update_date = #{where.updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update security_menu_resource
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="permission_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.permissionId}
+                </foreach>
+            </trim>
+            <trim prefix="menu_name = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.menuName}
+                </foreach>
+            </trim>
+            <trim prefix="menu_url = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.menuUrl}
+                </foreach>
+            </trim>
+            <trim prefix="parent_menu_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.parentMenuId}
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.createDate}
+                </foreach>
+            </trim>
+            <trim prefix="update_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when menu_resource_id = #{item.menuResourceId} then #{item.updateDate}
+                </foreach>
+            </trim>
+        </trim>
+        where menu_resource_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.menuResourceId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from security_menu_resource
+        where menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource">
+        delete from security_menu_resource
+        <where>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="menuName != null">
+                and menu_name = #{menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="menuUrl != null">
+                and menu_url = #{menuUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="parentMenuId != null">
+                and parent_menu_id = #{parentMenuId,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from security_menu_resource where menu_resource_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from security_menu_resource
+    </select>
+
+    <select id="countByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityMenuResource"
+            resultType="int">
+        select count(*) from security_menu_resource
+        <where>
+            <if test="menuResourceId != null">
+                and menu_resource_id = #{menuResourceId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="menuName != null">
+                and menu_name = #{menuName,jdbcType=VARCHAR}
+            </if>
+            <if test="menuUrl != null">
+                and menu_url = #{menuUrl,jdbcType=VARCHAR}
+            </if>
+            <if test="parentMenuId != null">
+                and parent_menu_id = #{parentMenuId,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -88,18 +88,19 @@ public class DefaultMemoryCacheServiceImpl<V> implements ICacheService<String, V
     }
 
     @Override
-    public void setIfAbsent(String s, V v)
+    public Boolean setIfAbsent(String s, V v)
     {
         this.rwLock.writeLock().lock();
         try
         {
             if (this.cache.containsKey(s))
             {
-                return;
+                return true;
             }
             ValueWrapper<V> valueWrapper = new ValueWrapper<>();
             valueWrapper.setV(v);
             this.cache.put(s, valueWrapper);
+            return false;
         } finally
         {
             this.rwLock.writeLock().unlock();
@@ -107,14 +108,14 @@ public class DefaultMemoryCacheServiceImpl<V> implements ICacheService<String, V
     }
 
     @Override
-    public void setIfAbsent(String s, V v, int delaySeconds)
+    public Boolean setIfAbsent(String s, V v, int delaySeconds)
     {
         this.rwLock.writeLock().lock();
         try
         {
             if (this.cache.containsKey(s))
             {
-                return;
+                return true;
             }
             ValueWrapper<V> valueWrapper = new ValueWrapper<>();
             valueWrapper.setV(v);
@@ -128,6 +129,7 @@ public class DefaultMemoryCacheServiceImpl<V> implements ICacheService<String, V
         {
             this.rwLock.writeLock().unlock();
         }
+        return false;
     }
 
     @Override

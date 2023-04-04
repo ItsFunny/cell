@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cell.component.httpsecurity.security.mapper.SecurityUserInfoMapper">
+
+    <resultMap type="com.cell.component.httpsecurity.security.entity.SecurityUserInfo" id="SecurityUserInfoResultMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="haedImg" column="haed_img" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="mask" column="mask" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_field">
+        user_id
+        , user_name, haed_img, email, password, type, status, mask, create_date, update_date
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="SecurityUserInfoResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from security_user_info
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="SecurityUserInfoResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo">
+        select
+        <include refid="table_field"/>
+        from security_user_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="haedImg != null">
+                and haed_img = #{haedImg,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="mask != null">
+                and mask = #{mask,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="SecurityUserInfoResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo">
+        select
+        <include refid="table_field"/>
+        from security_user_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="haedImg != null">
+                and haed_img = #{haedImg,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="mask != null">
+                and mask = #{mask,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="SecurityUserInfoResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from security_user_info
+        where user_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo">
+        insert into security_user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="haedImg != null">
+                haed_img,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="mask != null">
+                mask,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="haedImg != null">
+                #{haedImg,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+            <if test="mask != null">
+                #{mask,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="userId" useGeneratedKeys="true" parameterType="list">
+        insert into security_user_info
+        (user_id, user_name, haed_img, email, password, type, status, mask, create_date, update_date)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (#{item.userId}, #{item.userName}, #{item.haedImg}, #{item.email}, #{item.password}, #{item.type},
+            #{item.status}, #{item.mask}, #{item.createDate}, #{item.updateDate})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo">
+        update security_user_info
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="haedImg != null and haedImg != ''">
+                haed_img = #{haedImg,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null and password != ''">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="mask != null and mask != ''">
+                mask = #{mask,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过表字段修改实体属性不为null的列-->
+    <update id="updateByField">
+        update security_user_info
+        <set>
+            <if test="where.userName == null and set.userName != null and set.userName != ''">
+                user_name = #{set.userName,jdbcType=VARCHAR},
+            </if>
+            <if test="where.haedImg == null and set.haedImg != null and set.haedImg != ''">
+                haed_img = #{set.haedImg,jdbcType=VARCHAR},
+            </if>
+            <if test="where.email == null and set.email != null and set.email != ''">
+                email = #{set.email,jdbcType=VARCHAR},
+            </if>
+            <if test="where.password == null and set.password != null and set.password != ''">
+                password = #{set.password,jdbcType=VARCHAR},
+            </if>
+            <if test="where.type == null and set.type != null">
+                type = #{set.type,jdbcType=INTEGER},
+            </if>
+            <if test="where.status == null and set.status != null">
+                status = #{set.status,jdbcType=INTEGER},
+            </if>
+            <if test="where.mask == null and set.mask != null and set.mask != ''">
+                mask = #{set.mask,jdbcType=VARCHAR},
+            </if>
+            <if test="where.createDate == null and set.createDate != null">
+                create_date = #{set.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="where.updateDate == null and set.updateDate != null">
+                update_date = #{set.updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="where.userId != null">
+                and user_id = #{where.userId,jdbcType=INTEGER}
+            </if>
+            <if test="where.userName != null">
+                and user_name = #{where.userName,jdbcType=VARCHAR}
+            </if>
+            <if test="where.haedImg != null">
+                and haed_img = #{where.haedImg,jdbcType=VARCHAR}
+            </if>
+            <if test="where.email != null">
+                and email = #{where.email,jdbcType=VARCHAR}
+            </if>
+            <if test="where.password != null">
+                and password = #{where.password,jdbcType=VARCHAR}
+            </if>
+            <if test="where.type != null">
+                and type = #{where.type,jdbcType=INTEGER}
+            </if>
+            <if test="where.status != null">
+                and status = #{where.status,jdbcType=INTEGER}
+            </if>
+            <if test="where.mask != null">
+                and mask = #{where.mask,jdbcType=VARCHAR}
+            </if>
+            <if test="where.createDate != null">
+                and create_date = #{where.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="where.updateDate != null">
+                and update_date = #{where.updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update security_user_info
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="user_name = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.userName}
+                </foreach>
+            </trim>
+            <trim prefix="haed_img = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.haedImg}
+                </foreach>
+            </trim>
+            <trim prefix="email = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.email}
+                </foreach>
+            </trim>
+            <trim prefix="password = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.password}
+                </foreach>
+            </trim>
+            <trim prefix="type = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.type}
+                </foreach>
+            </trim>
+            <trim prefix="status = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.status}
+                </foreach>
+            </trim>
+            <trim prefix="mask = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.mask}
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.createDate}
+                </foreach>
+            </trim>
+            <trim prefix="update_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when user_id = #{item.userId} then #{item.updateDate}
+                </foreach>
+            </trim>
+        </trim>
+        where user_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.userId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from security_user_info
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo">
+        delete from security_user_info
+        <where>
+            <if test="userName != null">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="haedImg != null">
+                and haed_img = #{haedImg,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="mask != null">
+                and mask = #{mask,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from security_user_info where user_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from security_user_info
+    </select>
+
+    <select id="countByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityUserInfo"
+            resultType="int">
+        select count(*) from security_user_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userName != null">
+                and user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="haedImg != null">
+                and haed_img = #{haedImg,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null">
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null">
+                and password = #{password,jdbcType=VARCHAR}
+            </if>
+            <if test="type != null">
+                and type = #{type,jdbcType=INTEGER}
+            </if>
+            <if test="status != null">
+                and status = #{status,jdbcType=INTEGER}
+            </if>
+            <if test="mask != null">
+                and mask = #{mask,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -29,6 +29,7 @@ public class CellContext implements IContext
     private String sequenceId;
     private String protocolId;
     private String method;
+    private String ip;
 
     private Object requestData;
 
@@ -123,6 +124,6 @@ public class CellContext implements IContext
     @Override
     public String toString()
     {
-        return String.format("protocol:%s,method:%s,sequenceId:%s,", this.protocolId, this.method, this.sequenceId);
+        return String.format("protocol:%s,ip:%s,method:%s,sequenceId:%s,", this.protocolId,this.ip, this.method, this.sequenceId);
     }
 }

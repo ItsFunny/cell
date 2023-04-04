@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cell.component.httpsecurity.security.mapper.SecurityPermissionMapper">
+
+    <resultMap type="com.cell.component.httpsecurity.security.entity.SecurityPermission"
+               id="SecurityPermissionResultMap">
+        <result property="permissionId" column="permission_id" jdbcType="INTEGER"/>
+        <result property="permissionType" column="permission_type" jdbcType="VARCHAR"/>
+        <result property="permissionDesc" column="permission_desc" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_field">
+        permission_id
+        , permission_type, permission_desc, create_date, update_date
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="SecurityPermissionResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from security_permission
+        where permission_id = #{permissionId,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="SecurityPermissionResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission">
+        select
+        <include refid="table_field"/>
+        from security_permission
+        <where>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionType != null">
+                and permission_type = #{permissionType,jdbcType=VARCHAR}
+            </if>
+            <if test="permissionDesc != null">
+                and permission_desc = #{permissionDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="SecurityPermissionResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission">
+        select
+        <include refid="table_field"/>
+        from security_permission
+        <where>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionType != null">
+                and permission_type = #{permissionType,jdbcType=VARCHAR}
+            </if>
+            <if test="permissionDesc != null">
+                and permission_desc = #{permissionDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="SecurityPermissionResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from security_permission
+        where permission_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="permissionId" useGeneratedKeys="true"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission">
+        insert into security_permission
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="permissionId != null">
+                permission_id,
+            </if>
+            <if test="permissionType != null">
+                permission_type,
+            </if>
+            <if test="permissionDesc != null">
+                permission_desc,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="permissionId != null">
+                #{permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="permissionType != null">
+                #{permissionType,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionDesc != null">
+                #{permissionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="permissionId" useGeneratedKeys="true" parameterType="list">
+        insert into security_permission
+        (permission_id, permission_type, permission_desc, create_date, update_date)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (#{item.permissionId}, #{item.permissionType}, #{item.permissionDesc}, #{item.createDate},
+            #{item.updateDate})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission">
+        update security_permission
+        <set>
+            <if test="permissionType != null and permissionType != ''">
+                permission_type = #{permissionType,jdbcType=VARCHAR},
+            </if>
+            <if test="permissionDesc != null and permissionDesc != ''">
+                permission_desc = #{permissionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where permission_id = #{permissionId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过表字段修改实体属性不为null的列-->
+    <update id="updateByField">
+        update security_permission
+        <set>
+            <if test="where.permissionType == null and set.permissionType != null and set.permissionType != ''">
+                permission_type = #{set.permissionType,jdbcType=VARCHAR},
+            </if>
+            <if test="where.permissionDesc == null and set.permissionDesc != null and set.permissionDesc != ''">
+                permission_desc = #{set.permissionDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="where.createDate == null and set.createDate != null">
+                create_date = #{set.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="where.updateDate == null and set.updateDate != null">
+                update_date = #{set.updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="where.permissionId != null">
+                and permission_id = #{where.permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="where.permissionType != null">
+                and permission_type = #{where.permissionType,jdbcType=VARCHAR}
+            </if>
+            <if test="where.permissionDesc != null">
+                and permission_desc = #{where.permissionDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="where.createDate != null">
+                and create_date = #{where.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="where.updateDate != null">
+                and update_date = #{where.updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update security_permission
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="permission_type = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when permission_id = #{item.permissionId} then #{item.permissionType}
+                </foreach>
+            </trim>
+            <trim prefix="permission_desc = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when permission_id = #{item.permissionId} then #{item.permissionDesc}
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when permission_id = #{item.permissionId} then #{item.createDate}
+                </foreach>
+            </trim>
+            <trim prefix="update_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when permission_id = #{item.permissionId} then #{item.updateDate}
+                </foreach>
+            </trim>
+        </trim>
+        where permission_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.permissionId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from security_permission
+        where permission_id = #{permissionId,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission">
+        delete from security_permission
+        <where>
+            <if test="permissionType != null">
+                and permission_type = #{permissionType,jdbcType=VARCHAR}
+            </if>
+            <if test="permissionDesc != null">
+                and permission_desc = #{permissionDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from security_permission where permission_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from security_permission
+    </select>
+
+    <select id="countByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityPermission"
+            resultType="int">
+        select count(*) from security_permission
+        <where>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionType != null">
+                and permission_type = #{permissionType,jdbcType=VARCHAR}
+            </if>
+            <if test="permissionDesc != null">
+                and permission_desc = #{permissionDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+</mapper>

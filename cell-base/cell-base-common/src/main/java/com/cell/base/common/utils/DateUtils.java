@@ -4,6 +4,8 @@
  */
 package com.cell.base.common.utils;
 
+import com.cell.base.common.models.Triple;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,6 +36,13 @@ public class DateUtils
     {
         Calendar cal = Calendar.getInstance();
         return cal.getTimeInMillis();
+    }
+    public static Triple<Integer,Integer,Integer>getCurrentYearMonthDay(){
+        Calendar now = Calendar.getInstance();
+        int year = now.get(Calendar.YEAR);
+        int month = now.get(Calendar.MONTH) + 1;
+        int day = now.get(Calendar.DAY_OF_MONTH);
+        return new Triple<>(year,month,day);
     }
 
     public static Date utcStr2UtcDate(String utcTime)

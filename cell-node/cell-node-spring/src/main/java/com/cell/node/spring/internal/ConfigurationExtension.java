@@ -1,6 +1,7 @@
 package com.cell.node.spring.internal;
 
 import com.cell.base.common.models.Module;
+import com.cell.base.common.utils.StringUtils;
 import com.cell.base.core.annotations.CellOrder;
 import com.cell.node.core.configuration.NodeConfiguration;
 import com.cell.node.core.context.INodeContext;
@@ -29,6 +30,7 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     private static String DEFAULT_PATH = "/Users/joker/Java/cell";
 
     private static String defaultDir = "config";
+    public static String type=null;
 
     public static void setDefaultConfigDirectory(String dir)
     {
@@ -51,10 +53,11 @@ public class ConfigurationExtension extends AbstractSpringNodeExtension
     public void onInit(INodeContext ctx) throws Exception
     {
         CommandLine cmd = ctx.getCommandLine();
-        String type = null;
-        if (cmd.hasOption("type"))
-        {
-            type = cmd.getOptionValue("type");
+        if (StringUtils.isEmpty(type)){
+            if (cmd.hasOption("type"))
+            {
+                type = cmd.getOptionValue("type");
+            }
         }
         String path = DEFAULT_PATH;
         if (cmd.hasOption("home"))

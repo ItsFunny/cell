@@ -30,6 +30,10 @@ public class RedisCacheServiceImpl implements ICacheService<String, String> , IC
 
     private StringRedisTemplate template;
 
+    public StringRedisTemplate getTemplate(){
+        return this.template;
+    }
+
 
     @Override
     public void start(INodeContext context)
@@ -113,15 +117,15 @@ public class RedisCacheServiceImpl implements ICacheService<String, String> , IC
     }
 
     @Override
-    public void setIfAbsent(String s, String s2)
+    public Boolean setIfAbsent(String s, String s2)
     {
-        this.template.opsForValue().setIfAbsent(s,s2);
+        return this.template.opsForValue().setIfAbsent(s,s2);
     }
 
     @Override
-    public void setIfAbsent(String s, String s2, int delaySeconds)
+    public Boolean setIfAbsent(String s, String s2, int delaySeconds)
     {
-        this.template.opsForValue().setIfAbsent(s,s2, Duration.ofSeconds(delaySeconds));
+        return this.template.opsForValue().setIfAbsent(s,s2, Duration.ofSeconds(delaySeconds));
     }
 
     @Override

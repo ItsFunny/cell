@@ -18,7 +18,7 @@ public interface JobWorker
         this.doExecuteJob(event);
     }
 
-    void doExecuteJob(IEvent event);
+    Object doExecuteJob(IEvent event);
 
     boolean predict(IEvent event);
 

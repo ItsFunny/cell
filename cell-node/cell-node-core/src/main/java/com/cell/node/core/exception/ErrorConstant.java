@@ -14,6 +14,8 @@ public enum ErrorConstant implements ErrorInterface
     TOKEN_ILLEGAL(600, "TOKEN ILLEGAL"),
     TOKEN_EXPIRED(601, "TOKEN EXPIRED"),
     AUTH_FAILED(700, "Insufficient permissions"),
+    USER_FORBIDDEN(701, "User is banned"),
+    USER_NOT_LOGIN(702, "User is not login"),
     ARGUMENT_ILLEGAL(703, "Argument is illegal"),
     ACCOUNT_ALREADY_EXISTS(998, "[SERVER]Account already exists"),
     LOGIN_FIRST(999, "[Server] Please login firstly"),

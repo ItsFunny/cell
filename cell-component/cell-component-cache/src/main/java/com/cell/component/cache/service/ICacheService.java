@@ -15,8 +15,8 @@ public interface ICacheService<K, V>
 
     void set(K k, V v, int delaySeconds);
     void set(K k, V v);
-    void setIfAbsent(K k, V v);
-    void setIfAbsent(K k, V v, int delaySeconds);
+    Boolean setIfAbsent(K k, V v);
+    Boolean setIfAbsent(K k, V v, int delaySeconds);
 
 
     V delete(K k);

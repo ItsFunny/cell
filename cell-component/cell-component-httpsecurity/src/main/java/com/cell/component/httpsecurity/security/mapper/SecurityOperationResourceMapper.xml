@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cell.component.httpsecurity.security.mapper.SecurityOperationResourceMapper">
+
+    <resultMap type="com.cell.component.httpsecurity.security.entity.SecurityOperationResource"
+               id="SecurityOperationResourceResultMap">
+        <result property="opId" column="op_id" jdbcType="INTEGER"/>
+        <result property="permissionId" column="permission_id" jdbcType="INTEGER"/>
+        <result property="opName" column="op_name" jdbcType="VARCHAR"/>
+        <result property="opRule" column="op_rule" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_field">
+        op_id
+        , permission_id, op_name, op_rule, create_date
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="SecurityOperationResourceResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from security_operation_resource
+        where op_id = #{opId,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="SecurityOperationResourceResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource">
+        select
+        <include refid="table_field"/>
+        from security_operation_resource
+        <where>
+            <if test="opId != null">
+                and op_id = #{opId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="opName != null">
+                and op_name = #{opName,jdbcType=VARCHAR}
+            </if>
+            <if test="opRule != null">
+                and op_rule = #{opRule,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="SecurityOperationResourceResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource">
+        select
+        <include refid="table_field"/>
+        from security_operation_resource
+        <where>
+            <if test="opId != null">
+                and op_id = #{opId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="opName != null">
+                and op_name = #{opName,jdbcType=VARCHAR}
+            </if>
+            <if test="opRule != null">
+                and op_rule = #{opRule,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="SecurityOperationResourceResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from security_operation_resource
+        where op_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="opId" useGeneratedKeys="true"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource">
+        insert into security_operation_resource
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="opId != null">
+                op_id,
+            </if>
+            <if test="permissionId != null">
+                permission_id,
+            </if>
+            <if test="opName != null">
+                op_name,
+            </if>
+            <if test="opRule != null">
+                op_rule,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="opId != null">
+                #{opId,jdbcType=INTEGER},
+            </if>
+            <if test="permissionId != null">
+                #{permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="opName != null">
+                #{opName,jdbcType=VARCHAR},
+            </if>
+            <if test="opRule != null">
+                #{opRule,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="opId" useGeneratedKeys="true" parameterType="list">
+        insert into security_operation_resource
+        (op_id, permission_id, op_name, op_rule, create_date)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (#{item.opId}, #{item.permissionId}, #{item.opName}, #{item.opRule}, #{item.createDate})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource">
+        update security_operation_resource
+        <set>
+            <if test="permissionId != null">
+                permission_id = #{permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="opName != null and opName != ''">
+                op_name = #{opName,jdbcType=VARCHAR},
+            </if>
+            <if test="opRule != null and opRule != ''">
+                op_rule = #{opRule,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where op_id = #{opId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过表字段修改实体属性不为null的列-->
+    <update id="updateByField">
+        update security_operation_resource
+        <set>
+            <if test="where.permissionId == null and set.permissionId != null">
+                permission_id = #{set.permissionId,jdbcType=INTEGER},
+            </if>
+            <if test="where.opName == null and set.opName != null and set.opName != ''">
+                op_name = #{set.opName,jdbcType=VARCHAR},
+            </if>
+            <if test="where.opRule == null and set.opRule != null and set.opRule != ''">
+                op_rule = #{set.opRule,jdbcType=VARCHAR},
+            </if>
+            <if test="where.createDate == null and set.createDate != null">
+                create_date = #{set.createDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="where.opId != null">
+                and op_id = #{where.opId,jdbcType=INTEGER}
+            </if>
+            <if test="where.permissionId != null">
+                and permission_id = #{where.permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="where.opName != null">
+                and op_name = #{where.opName,jdbcType=VARCHAR}
+            </if>
+            <if test="where.opRule != null">
+                and op_rule = #{where.opRule,jdbcType=VARCHAR}
+            </if>
+            <if test="where.createDate != null">
+                and create_date = #{where.createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update security_operation_resource
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="permission_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when op_id = #{item.opId} then #{item.permissionId}
+                </foreach>
+            </trim>
+            <trim prefix="op_name = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when op_id = #{item.opId} then #{item.opName}
+                </foreach>
+            </trim>
+            <trim prefix="op_rule = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when op_id = #{item.opId} then #{item.opRule}
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when op_id = #{item.opId} then #{item.createDate}
+                </foreach>
+            </trim>
+        </trim>
+        where op_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.opId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from security_operation_resource
+        where op_id = #{opId,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource">
+        delete from security_operation_resource
+        <where>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="opName != null">
+                and op_name = #{opName,jdbcType=VARCHAR}
+            </if>
+            <if test="opRule != null">
+                and op_rule = #{opRule,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from security_operation_resource where op_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from security_operation_resource
+    </select>
+
+    <select id="countByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityOperationResource"
+            resultType="int">
+        select count(*) from security_operation_resource
+        <where>
+            <if test="opId != null">
+                and op_id = #{opId,jdbcType=INTEGER}
+            </if>
+            <if test="permissionId != null">
+                and permission_id = #{permissionId,jdbcType=INTEGER}
+            </if>
+            <if test="opName != null">
+                and op_name = #{opName,jdbcType=VARCHAR}
+            </if>
+            <if test="opRule != null">
+                and op_rule = #{opRule,jdbcType=VARCHAR}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+</mapper>

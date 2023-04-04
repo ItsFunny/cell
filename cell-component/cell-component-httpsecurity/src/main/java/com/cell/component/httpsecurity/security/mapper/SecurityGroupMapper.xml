@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cell.component.httpsecurity.security.mapper.SecurityGroupMapper">
+
+    <resultMap type="com.cell.component.httpsecurity.security.entity.SecurityGroup" id="SecurityGroupResultMap">
+        <result property="groupId" column="group_id" jdbcType="INTEGER"/>
+        <result property="parentGroupId" column="parent_group_id" jdbcType="INTEGER"/>
+        <result property="groupName" column="group_name" jdbcType="VARCHAR"/>
+        <result property="groupLevel" column="group_level" jdbcType="INTEGER"/>
+        <result property="groupWeight" column="group_weight" jdbcType="INTEGER"/>
+        <result property="groupDesc" column="group_desc" jdbcType="VARCHAR"/>
+        <result property="userAmount" column="user_amount" jdbcType="INTEGER"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="table_field">
+        group_id
+        , parent_group_id, group_name, group_level, group_weight, group_desc, user_amount, create_date, update_date
+    </sql>
+
+    <!--通过Id查询单个-->
+    <select id="getById" resultMap="SecurityGroupResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="table_field"/>
+        from security_group
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </select>
+
+
+    <!--通过实体不为空的属性作为筛选条件查询列表-->
+    <select id="listByEntity" resultMap="SecurityGroupResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup">
+        select
+        <include refid="table_field"/>
+        from security_group
+        <where>
+            <if test="groupId != null">
+                and group_id = #{groupId,jdbcType=INTEGER}
+            </if>
+            <if test="parentGroupId != null">
+                and parent_group_id = #{parentGroupId,jdbcType=INTEGER}
+            </if>
+            <if test="groupName != null">
+                and group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupLevel != null">
+                and group_level = #{groupLevel,jdbcType=INTEGER}
+            </if>
+            <if test="groupWeight != null">
+                and group_weight = #{groupWeight,jdbcType=INTEGER}
+            </if>
+            <if test="groupDesc != null">
+                and group_desc = #{groupDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="userAmount != null">
+                and user_amount = #{userAmount,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过实体不为空的属性作为筛选条件查询单个-->
+    <select id="getByEntity" resultMap="SecurityGroupResultMap"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup">
+        select
+        <include refid="table_field"/>
+        from security_group
+        <where>
+            <if test="groupId != null">
+                and group_id = #{groupId,jdbcType=INTEGER}
+            </if>
+            <if test="parentGroupId != null">
+                and parent_group_id = #{parentGroupId,jdbcType=INTEGER}
+            </if>
+            <if test="groupName != null">
+                and group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupLevel != null">
+                and group_level = #{groupLevel,jdbcType=INTEGER}
+            </if>
+            <if test="groupWeight != null">
+                and group_weight = #{groupWeight,jdbcType=INTEGER}
+            </if>
+            <if test="groupDesc != null">
+                and group_desc = #{groupDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="userAmount != null">
+                and user_amount = #{userAmount,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <!--通过Id列表作为筛选条件查询列表，列表长度不为0-->
+    <select id="listByIds" resultMap="SecurityGroupResultMap" parameterType="list">
+        select
+        <include refid="table_field"/>
+        from security_group
+        where group_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--新增实体属性不为null的列-->
+    <insert id="insert" keyProperty="groupId" useGeneratedKeys="true"
+            parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup">
+        insert into security_group
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                group_id,
+            </if>
+            <if test="parentGroupId != null">
+                parent_group_id,
+            </if>
+            <if test="groupName != null">
+                group_name,
+            </if>
+            <if test="groupLevel != null">
+                group_level,
+            </if>
+            <if test="groupWeight != null">
+                group_weight,
+            </if>
+            <if test="groupDesc != null">
+                group_desc,
+            </if>
+            <if test="userAmount != null">
+                user_amount,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="groupId != null">
+                #{groupId,jdbcType=INTEGER},
+            </if>
+            <if test="parentGroupId != null">
+                #{parentGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null">
+                #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupLevel != null">
+                #{groupLevel,jdbcType=INTEGER},
+            </if>
+            <if test="groupWeight != null">
+                #{groupWeight,jdbcType=INTEGER},
+            </if>
+            <if test="groupDesc != null">
+                #{groupDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="userAmount != null">
+                #{userAmount,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <!--批量新增所有列，列表长度不能为0，且列表id统一为null或者统一不为null-->
+    <insert id="insertBatch" keyProperty="groupId" useGeneratedKeys="true" parameterType="list">
+        insert into security_group
+        (group_id, parent_group_id, group_name, group_level, group_weight, group_desc, user_amount, create_date,
+        update_date)
+        values
+        <foreach item="item" collection="list" separator="," open="" close="" index="index">
+            (#{item.groupId}, #{item.parentGroupId}, #{item.groupName}, #{item.groupLevel}, #{item.groupWeight},
+            #{item.groupDesc}, #{item.userAmount}, #{item.createDate}, #{item.updateDate})
+        </foreach>
+    </insert>
+
+    <!--通过主键修改实体属性不为null的列-->
+    <update id="update" parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup">
+        update security_group
+        <set>
+            <if test="parentGroupId != null">
+                parent_group_id = #{parentGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="groupName != null and groupName != ''">
+                group_name = #{groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="groupLevel != null">
+                group_level = #{groupLevel,jdbcType=INTEGER},
+            </if>
+            <if test="groupWeight != null">
+                group_weight = #{groupWeight,jdbcType=INTEGER},
+            </if>
+            <if test="groupDesc != null and groupDesc != ''">
+                group_desc = #{groupDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="userAmount != null">
+                user_amount = #{userAmount,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </update>
+
+    <!--通过表字段修改实体属性不为null的列-->
+    <update id="updateByField">
+        update security_group
+        <set>
+            <if test="where.parentGroupId == null and set.parentGroupId != null">
+                parent_group_id = #{set.parentGroupId,jdbcType=INTEGER},
+            </if>
+            <if test="where.groupName == null and set.groupName != null and set.groupName != ''">
+                group_name = #{set.groupName,jdbcType=VARCHAR},
+            </if>
+            <if test="where.groupLevel == null and set.groupLevel != null">
+                group_level = #{set.groupLevel,jdbcType=INTEGER},
+            </if>
+            <if test="where.groupWeight == null and set.groupWeight != null">
+                group_weight = #{set.groupWeight,jdbcType=INTEGER},
+            </if>
+            <if test="where.groupDesc == null and set.groupDesc != null and set.groupDesc != ''">
+                group_desc = #{set.groupDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="where.userAmount == null and set.userAmount != null">
+                user_amount = #{set.userAmount,jdbcType=INTEGER},
+            </if>
+            <if test="where.createDate == null and set.createDate != null">
+                create_date = #{set.createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="where.updateDate == null and set.updateDate != null">
+                update_date = #{set.updateDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <where>
+            <if test="where.groupId != null">
+                and group_id = #{where.groupId,jdbcType=INTEGER}
+            </if>
+            <if test="where.parentGroupId != null">
+                and parent_group_id = #{where.parentGroupId,jdbcType=INTEGER}
+            </if>
+            <if test="where.groupName != null">
+                and group_name = #{where.groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="where.groupLevel != null">
+                and group_level = #{where.groupLevel,jdbcType=INTEGER}
+            </if>
+            <if test="where.groupWeight != null">
+                and group_weight = #{where.groupWeight,jdbcType=INTEGER}
+            </if>
+            <if test="where.groupDesc != null">
+                and group_desc = #{where.groupDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="where.userAmount != null">
+                and user_amount = #{where.userAmount,jdbcType=INTEGER}
+            </if>
+            <if test="where.createDate != null">
+                and create_date = #{where.createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="where.updateDate != null">
+                and update_date = #{where.updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </update>
+
+    <!--通过主键修改实体列表，列表长度不能为0，注意：当实体属性为null时，对应的列也会别更新为null-->
+    <update id="updateBatch" parameterType="list">
+        update security_group
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="parent_group_id = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.parentGroupId}
+                </foreach>
+            </trim>
+            <trim prefix="group_name = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.groupName}
+                </foreach>
+            </trim>
+            <trim prefix="group_level = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.groupLevel}
+                </foreach>
+            </trim>
+            <trim prefix="group_weight = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.groupWeight}
+                </foreach>
+            </trim>
+            <trim prefix="group_desc = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.groupDesc}
+                </foreach>
+            </trim>
+            <trim prefix="user_amount = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.userAmount}
+                </foreach>
+            </trim>
+            <trim prefix="create_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.createDate}
+                </foreach>
+            </trim>
+            <trim prefix="update_date = case" suffix="end,">
+                <foreach collection="list" item="item" index="index">
+                    when group_id = #{item.groupId} then #{item.updateDate}
+                </foreach>
+            </trim>
+        </trim>
+        where group_id in
+        <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item.groupId,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete
+        from security_group
+        where group_id = #{groupId,jdbcType=INTEGER}
+    </delete>
+
+    <!--通过实体非空属性删除-->
+    <delete id="deleteByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup">
+        delete from security_group
+        <where>
+            <if test="parentGroupId != null">
+                and parent_group_id = #{parentGroupId,jdbcType=INTEGER}
+            </if>
+            <if test="groupName != null">
+                and group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupLevel != null">
+                and group_level = #{groupLevel,jdbcType=INTEGER}
+            </if>
+            <if test="groupWeight != null">
+                and group_weight = #{groupWeight,jdbcType=INTEGER}
+            </if>
+            <if test="groupDesc != null">
+                and group_desc = #{groupDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="userAmount != null">
+                and user_amount = #{userAmount,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </delete>
+
+    <!--通过主键列表删除，列表长度不能为0-->
+    <delete id="deleteByIds" parameterType="list">
+        delete from security_group where group_id in
+        <foreach item="item" collection="list" separator="," open="(" close=")" index="index">
+            #{item}
+        </foreach>
+    </delete>
+
+    <select id="countAll" resultType="int">
+        select count(*)
+        from security_group
+    </select>
+
+    <select id="countByEntity" parameterType="com.cell.component.httpsecurity.security.entity.SecurityGroup"
+            resultType="int">
+        select count(*) from security_group
+        <where>
+            <if test="groupId != null">
+                and group_id = #{groupId,jdbcType=INTEGER}
+            </if>
+            <if test="parentGroupId != null">
+                and parent_group_id = #{parentGroupId,jdbcType=INTEGER}
+            </if>
+            <if test="groupName != null">
+                and group_name = #{groupName,jdbcType=VARCHAR}
+            </if>
+            <if test="groupLevel != null">
+                and group_level = #{groupLevel,jdbcType=INTEGER}
+            </if>
+            <if test="groupWeight != null">
+                and group_weight = #{groupWeight,jdbcType=INTEGER}
+            </if>
+            <if test="groupDesc != null">
+                and group_desc = #{groupDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="userAmount != null">
+                and user_amount = #{userAmount,jdbcType=INTEGER}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate,jdbcType=TIMESTAMP}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+</mapper>
