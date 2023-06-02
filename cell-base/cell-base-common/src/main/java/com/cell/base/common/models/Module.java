@@ -60,8 +60,10 @@ public enum Module implements ModuleInterface
     DYNAMIC_DAO((short) 52,"DYNAMIC_DAO"),
     WEB_3J((short) 53,"WEB_3J"),
     WORKER((short) 54,"WORKER"),
+    WEB_SECURITY((short) 55,"WEB_SECURITY"),
     MICROMETER((short) 10008, "micrometer"),
     UNKNOWN((short) 65535, "UNKNOWN"),
+
     ;
     private short moduleId;
     private String desc;

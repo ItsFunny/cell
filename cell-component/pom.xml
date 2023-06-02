@@ -19,7 +19,6 @@
         <module>cell-compoent-bot</module>
         <module>cell-component-cache-redis</module>
         <module>cell-component-mybatis</module>
-        <module>cell-component-httpsecurity</module>
     </modules>
 
     <dependencies>
