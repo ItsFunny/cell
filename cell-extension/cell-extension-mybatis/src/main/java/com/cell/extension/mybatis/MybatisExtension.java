@@ -79,6 +79,7 @@ public class MybatisExtension extends AbstractSpringNodeExtension
         {
             LOG.info(Module.MYBATIS, "当前使用的数据源是{}:{}", defaultMysqlKey, defaultDataSource.getUrl());
         }
+        LOG.info(Module.MYBATIS, "当前所有数据源{}", mysqlConfigs);
         dynamicDataSource.setTargetDataSources(targetDataSources);
         dynamicDataSource.setDefaultTargetDataSource(defaultDataSource); // 程序默认数据源，这个要根据程序调用数据源频次，经常把常调用的数据源作为默认
         return dynamicDataSource;

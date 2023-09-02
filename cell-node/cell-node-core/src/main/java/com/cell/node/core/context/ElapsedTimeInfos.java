@@ -1,6 +1,7 @@
 package com.cell.node.core.context;
 
 import com.cell.base.common.utils.StringUtils;
+import com.cell.sdk.log.LOG;
 import com.google.common.base.Stopwatch;
 import lombok.Data;
 
@@ -161,25 +162,30 @@ public class ElapsedTimeInfos implements IElapsedTimeInfo
     @Override
     public String dump()
     {
-        StringBuilder sb = new StringBuilder();
-        int size = traces.size();
-        int index = 0;
-        for (String s : traces.keySet())
-        {
-            TraceNode node = traces.get(s);
-            if (node.parent!=null){
-                index++;
-                continue;
-            }
-            node.end();
-            node.doDump(true, sb);
-            index++;
-            if (index != size - 1)
+        try {
+            StringBuilder sb = new StringBuilder();
+            int size = traces.size();
+            int index = 0;
+            for (String s : traces.keySet())
             {
-                sb.append(",");
+                TraceNode node = traces.get(s);
+                if (node.parent!=null){
+                    index++;
+                    continue;
+                }
+                node.end();
+                node.doDump(true, sb);
+                index++;
+                if (index != size - 1)
+                {
+                    sb.append(",");
+                }
             }
+            return sb.toString();
+        }catch (Exception e){
+            LOG.error("dump failed:{}",e);
+            return "dump failed";
         }
-        return sb.toString();
     }
 
     public static void main(String[] args) throws Exception

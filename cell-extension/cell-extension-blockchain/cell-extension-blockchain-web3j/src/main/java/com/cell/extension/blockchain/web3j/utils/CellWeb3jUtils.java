@@ -174,10 +174,12 @@ public class CellWeb3jUtils {
         ErrorInterface result = null;
         int failCount = 0;
         Web3JWrapper successWrapper = null;
+        List<String> errorMsg=new ArrayList<>();
         for (Web3JWrapper wrapper : wrappers) {
             try {
                 result = handleWeb3j(wrapper, consumer);
             } catch (IOException | ClientConnectionException e) {
+                errorMsg.add(e.getMessage());
                 continue;
             }
             if (result != null && result.ok()) {
@@ -188,8 +190,8 @@ public class CellWeb3jUtils {
             failCount++;
         }
         if (failCount > 2) {
-            LOG.info(Module.HTTP_CLIENT, "execute web3j successfully, failCount:{},successWrapper:{}",
-                    failCount, successWrapper);
+            LOG.info(Module.HTTP_CLIENT, "execute web3j successfully, failCount:{},successWrapper:{},errorMsg:{}",
+                    failCount, successWrapper,errorMsg);
         }
     }
 
